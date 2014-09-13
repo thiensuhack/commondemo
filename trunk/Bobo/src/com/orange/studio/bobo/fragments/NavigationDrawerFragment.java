@@ -1,4 +1,11 @@
-package com.orange.studio.bobo;
+package com.orange.studio.bobo.fragments;
+
+import com.orange.studio.bobo.R;
+import com.orange.studio.bobo.R.drawable;
+import com.orange.studio.bobo.R.id;
+import com.orange.studio.bobo.R.layout;
+import com.orange.studio.bobo.R.menu;
+import com.orange.studio.bobo.R.string;
 
 import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;

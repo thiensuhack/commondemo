@@ -1,5 +1,7 @@
 
-package com.orange.studio.bobo;
+package com.orange.studio.bobo.configs;
+
+import com.orange.studio.bobo.R;
 
 
 public final class OrangeConfig {
@@ -155,5 +157,10 @@ public final class OrangeConfig {
 	public static class Extra {
 		public static final String FRAGMENT_INDEX = "com.nostra13.example.universalimageloader.FRAGMENT_INDEX";
 		public static final String IMAGE_POSITION = "com.nostra13.example.universalimageloader.IMAGE_POSITION";
+	}
+	public class URLRequestApi{
+		public static final String domain="http://test.adreward.onetechonline.com/v2";
+		public static final String GET_REGIST_CGM = domain+"/registergcm";
+		public static final String GET_REMOVE_CGM = domain+"/unregistergcm";
 	}
 }

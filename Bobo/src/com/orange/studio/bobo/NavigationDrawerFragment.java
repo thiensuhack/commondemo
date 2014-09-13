@@ -119,7 +119,16 @@ public class NavigationDrawerFragment extends Fragment {
 		return mDrawerLayout != null
 				&& mDrawerLayout.isDrawerOpen(mFragmentContainerView);
 	}
-
+	public void openNaviDrawer() {
+		if(isDrawerOpen()){
+			mDrawerLayout.closeDrawer(mFragmentContainerView);
+		}
+		else{
+			mDrawerLayout.openDrawer(mFragmentContainerView);
+		}
+		
+	}
+	
 	/**
 	 * Users of this fragment must call this method to set up the navigation
 	 * drawer interactions.

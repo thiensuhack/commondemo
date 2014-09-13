@@ -16,8 +16,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.orange.studio.bobo.NavigationDrawerFragment;
 import com.orange.studio.bobo.R;
+import com.orange.studio.bobo.fragments.NavigationDrawerFragment;
 
 public class HomeActivity extends ActionBarActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks, OnClickListener {

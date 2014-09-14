@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="45dp"
-    android:background="@drawable/action_bar_bg1"
+    android:background="@drawable/action_bar_background"
     android:orientation="vertical"
     android:paddingLeft="3dp"
     tools:context=".activities.HomeActivity" >
@@ -12,17 +12,17 @@
         android:id="@+id/naviMenuIcon"
         android:layout_width="30dp"
         android:layout_height="35dp"
+        android:layout_centerVertical="true"
         android:background="@drawable/ic_navi_drawer_menu"
-        android:visibility="visible"
-        android:layout_centerVertical="true"/>
+        android:visibility="visible" />
 
     <TextView
         android:id="@+id/appTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/naviMenuIcon"
         android:layout_centerVertical="true"
         android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@+id/naviMenuIcon"
         android:text="@string/app_name"
         android:textColor="@color/white"
         android:textSize="18sp"
@@ -41,9 +41,10 @@
             android:id="@+id/iconShopping"
             android:layout_width="35dp"
             android:layout_height="35dp"
+            android:layout_marginRight="5dp"
             android:background="@drawable/ic_shopping"
-            android:visibility="visible"
-            android:layout_marginRight="5dp" />
+            android:visibility="visible" />
+
         <ImageView
             android:id="@+id/iconBobo"
             android:layout_width="45dp"

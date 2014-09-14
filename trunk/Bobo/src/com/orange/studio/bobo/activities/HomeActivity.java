@@ -1,6 +1,5 @@
 package com.orange.studio.bobo.activities;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,10 +8,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.orange.studio.bobo.R;
@@ -73,7 +70,8 @@ public class HomeActivity extends ActionBarActivity implements
 
 	@Override
 	public void onNavigationDrawerItemSelected(int position) {
-		Fragment mFragment=HomeFragment.instantiate(getApplicationContext(), HomeFragment.class.getName());
+		Fragment mFragment = HomeFragment.instantiate(getApplicationContext(),
+				HomeFragment.class.getName());
 		replaceFragment(mFragment);
 	}
 
@@ -128,34 +126,12 @@ public class HomeActivity extends ActionBarActivity implements
 		}
 	}
 
-	public static class PlaceholderFragment extends Fragment {
-		private static final String ARG_SECTION_NUMBER = "section_number";
-
-		public static PlaceholderFragment newInstance(int sectionNumber) {
-			PlaceholderFragment fragment = new PlaceholderFragment();
-			Bundle args = new Bundle();
-			args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-			fragment.setArguments(args);
-			return fragment;
-		}
-
-		public PlaceholderFragment() {
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_home, container,
-					false);
-			return rootView;
-		}
-
-		@Override
-		public void onAttach(Activity activity) {
-			super.onAttach(activity);
-			((HomeActivity) activity).onSectionAttached(getArguments().getInt(
-					ARG_SECTION_NUMBER));
+	@Override
+	public void onBackPressed() {
+		if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
+			finish();
+		} else {
+			super.onBackPressed();
 		}
 	}
-
 }

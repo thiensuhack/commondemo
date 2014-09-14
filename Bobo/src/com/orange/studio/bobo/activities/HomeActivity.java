@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.orange.studio.bobo.R;
+import com.orange.studio.bobo.fragments.HomeFragment;
 import com.orange.studio.bobo.fragments.NavigationDrawerFragment;
 
 public class HomeActivity extends ActionBarActivity implements
@@ -72,11 +73,8 @@ public class HomeActivity extends ActionBarActivity implements
 
 	@Override
 	public void onNavigationDrawerItemSelected(int position) {
-		FragmentManager fragmentManager = getSupportFragmentManager();
-		fragmentManager
-				.beginTransaction()
-				.replace(R.id.container,
-						PlaceholderFragment.newInstance(position + 1)).commit();
+		Fragment mFragment=HomeFragment.instantiate(getApplicationContext(), HomeFragment.class.getName());
+		replaceFragment(mFragment);
 	}
 
 	public void onSectionAttached(int number) {

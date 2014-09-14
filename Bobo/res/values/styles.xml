@@ -15,5 +15,11 @@
         <!-- <item name="android:windowNoTitle">true</item> -->
         <item name="android:windowFullscreen">true</item>
     </style>
-
+<style name="OrangeCustomCirclePageIndicator" parent="@android:style/Theme.Light">
+<!--         <item name="fillColor">#FF888888</item> -->
+<!--         <item name="strokeColor">#FF000000</item> -->
+<!--         <item name="strokeWidth">2dp</item> -->
+<!--         <item name="radius">10dp</item> -->
+<!--         <item name="centered">true</item> -->
+    </style>
 </resources>

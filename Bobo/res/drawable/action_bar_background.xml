@@ -9,8 +9,8 @@
         android:top="3dp" />
 
     <gradient
-        android:startColor="@color/bright_green"
-        android:endColor="@color/green"
+        android:startColor="@color/bright_pink"
+        android:endColor="@color/dark_pink"
         android:angle="270" />
 
 </shape>

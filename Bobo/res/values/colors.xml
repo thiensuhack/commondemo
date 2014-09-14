@@ -6,4 +6,7 @@
     <color name="green">#74C219</color>
     <color name="bright_green">#A3EF10</color>
 
+    <color name="pink">#D2007D</color>
+    <color name="bright_pink">#EB008C</color>
+    <color name="dark_pink">#9A005B</color>
 </resources>

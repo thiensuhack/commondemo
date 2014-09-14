@@ -2,27 +2,27 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/action_bar_background"
+    android:layout_height="45dp"
+    android:background="@drawable/action_bar_bg1"
     android:orientation="vertical"
-    android:paddingBottom="5dp"
     android:paddingLeft="3dp"
-    android:paddingRight="3dp"
-    android:paddingTop="5dp"
     tools:context=".activities.HomeActivity" >
 
     <ImageView
         android:id="@+id/naviMenuIcon"
         android:layout_width="30dp"
-        android:layout_height="25dp"
-        android:background="@drawable/ic_navi_drawer"
-        android:visibility="visible" />
+        android:layout_height="35dp"
+        android:background="@drawable/ic_navi_drawer_menu"
+        android:visibility="visible"
+        android:layout_centerVertical="true"/>
 
     <TextView
         android:id="@+id/appTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_toRightOf="@+id/naviMenuIcon"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
         android:text="@string/app_name"
         android:textColor="@color/white"
         android:textSize="18sp"
@@ -33,22 +33,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="3dp"
-        android:background="@color/white"
         android:clickable="true"
         android:gravity="center"
-        android:orientation="vertical" >
+        android:orientation="horizontal" >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingLeft="2dp"
-            android:paddingRight="2dp"
-            android:text="\?"
-            android:textColor="@color/green"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/iconShopping"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@drawable/ic_shopping"
+            android:visibility="visible"
+            android:layout_marginRight="5dp" />
+        <ImageView
+            android:id="@+id/iconBobo"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="@drawable/ic_bobo_app_bar"
+            android:visibility="visible" />
     </LinearLayout>
 
 </RelativeLayout>

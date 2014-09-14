@@ -15,14 +15,10 @@
         android:layout_width="fill_parent"
         android:layout_height="100dp" />
 
-    <com.viewpagerindicator.CirclePageIndicator
-        android:id="@+id/indicatorHome"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dip"
-        app:radius="10dp"
-        app:fillColor="@color/pink"
-        app:pageColor="#ffffff"
-        app:strokeColor="@color/dark_pink"/>
+<!--     <com.viewpagerindicator.CirclePageIndicator -->
+<!--         android:id="@+id/indicatorHome" -->
+<!--         android:layout_width="fill_parent" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:padding="10dip"/> -->
 
 </LinearLayout>

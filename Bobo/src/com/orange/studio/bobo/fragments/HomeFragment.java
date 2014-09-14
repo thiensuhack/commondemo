@@ -59,8 +59,8 @@ public class HomeFragment extends BaseFragment {
 				.displayer(new FadeInBitmapDisplayer(300)).build();
 
 		mViewPager = (ViewPager) mView.findViewById(R.id.viewPagerHome);
-		mCirclePageIndicator = (CirclePageIndicator) mView
-				.findViewById(R.id.indicatorHome);
+//		mCirclePageIndicator = (CirclePageIndicator) mView
+//				.findViewById(R.id.indicatorHome);
 
 	}
 
@@ -184,7 +184,7 @@ public class HomeFragment extends BaseFragment {
 			if(result!=null && result.size()>0){
 				mSilderAdapter=new ImageHomeSlider(result);
 				mViewPager.setAdapter(mSilderAdapter);
-				mCirclePageIndicator.setViewPager(mViewPager);
+//				mCirclePageIndicator.setViewPager(mViewPager);
 			}
 		}
 	}

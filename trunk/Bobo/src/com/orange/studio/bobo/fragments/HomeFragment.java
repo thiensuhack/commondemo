@@ -32,9 +32,9 @@ public class HomeFragment extends BaseFragment {
 	private ViewPager mViewPager = null;
 	private CirclePageIndicator mCirclePageIndicator = null;
 	private DisplayImageOptions options;
-	private ImageHomeSlider mSilderAdapter=null;
-	private LoadHomeSliderTask mLoadHomeSliderTask=null;
-	
+	private ImageHomeSlider mSilderAdapter = null;
+	private LoadHomeSliderTask mLoadHomeSliderTask = null;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -59,25 +59,29 @@ public class HomeFragment extends BaseFragment {
 				.displayer(new FadeInBitmapDisplayer(300)).build();
 
 		mViewPager = (ViewPager) mView.findViewById(R.id.viewPagerHome);
-//		mCirclePageIndicator = (CirclePageIndicator) mView
-//				.findViewById(R.id.indicatorHome);
+		mCirclePageIndicator = (CirclePageIndicator) mView
+				.findViewById(R.id.indicatorHome);
 
 	}
 
 	private void initListener() {
 
 	}
-	private void loadData(){
-		if(mLoadHomeSliderTask==null || mLoadHomeSliderTask.getStatus()==Status.FINISHED){
-			mLoadHomeSliderTask=new LoadHomeSliderTask();
+
+	private void loadData() {
+		if (mLoadHomeSliderTask == null
+				|| mLoadHomeSliderTask.getStatus() == Status.FINISHED) {
+			mLoadHomeSliderTask = new LoadHomeSliderTask();
 			mLoadHomeSliderTask.execute();
 		}
 	}
+
 	@Override
 	public void onResume() {
 		super.onResume();
 		loadData();
 	}
+
 	private class ImageHomeSlider extends PagerAdapter {
 		private LayoutInflater inflater;
 		private List<HomeSliderDTO> mData = new ArrayList<HomeSliderDTO>();
@@ -99,11 +103,11 @@ public class HomeFragment extends BaseFragment {
 
 		@Override
 		public Object instantiateItem(ViewGroup view, int position) {
-			View imageLayout = inflater.inflate(
+			View mContainer = inflater.inflate(
 					R.layout.layout_image_home_slider, view, false);
-			assert imageLayout != null;
-			ImageView imageView = (ImageView) imageLayout
-					.findViewById(R.id.image);
+			assert mContainer != null;
+			ImageView imageView = (ImageView) mContainer
+					.findViewById(R.id.imageHomeSlider);
 
 			ImageLoader.getInstance().displayImage(
 					mData.get(position).imageURL, imageView, options,
@@ -143,8 +147,8 @@ public class HomeFragment extends BaseFragment {
 						}
 					});
 
-			view.addView(imageLayout, 0);
-			return imageLayout;
+			view.addView(mContainer, 0);
+			return mContainer;
 		}
 
 		@Override
@@ -161,30 +165,34 @@ public class HomeFragment extends BaseFragment {
 			return null;
 		}
 	}
-	private class LoadHomeSliderTask extends AsyncTask<Void, Void, List<HomeSliderDTO>>{
+
+	private class LoadHomeSliderTask extends
+			AsyncTask<Void, Void, List<HomeSliderDTO>> {
 
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			
+
 		}
+
 		@Override
 		protected List<HomeSliderDTO> doInBackground(Void... arg0) {
-			List<HomeSliderDTO> result=new ArrayList<HomeSliderDTO>();
+			List<HomeSliderDTO> result = new ArrayList<HomeSliderDTO>();
 			for (int i = 0; i < 10; i++) {
-				HomeSliderDTO item=new HomeSliderDTO();
-				item.imageURL=OrangeConfig.IMAGES[i];
+				HomeSliderDTO item = new HomeSliderDTO();
+				item.imageURL = OrangeConfig.IMAGES[i];
 				result.add(item);
 			}
 			return result;
 		}
+
 		@Override
 		protected void onPostExecute(List<HomeSliderDTO> result) {
 			super.onPostExecute(result);
-			if(result!=null && result.size()>0){
-				mSilderAdapter=new ImageHomeSlider(result);
+			if (result != null && result.size() > 0) {
+				mSilderAdapter = new ImageHomeSlider(result);
 				mViewPager.setAdapter(mSilderAdapter);
-//				mCirclePageIndicator.setViewPager(mViewPager);
+				mCirclePageIndicator.setViewPager(mViewPager);
 			}
 		}
 	}

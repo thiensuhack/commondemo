@@ -8,7 +8,7 @@
     <ImageView
         android:id="@+id/proImage"
         android:layout_width="90dp"
-        android:layout_height="110dp"
+        android:layout_height="150dp"
         android:layout_centerHorizontal="true" />
 
     <TextView

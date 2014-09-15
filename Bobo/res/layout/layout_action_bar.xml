@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/naviMenuIcon"
-        android:layout_width="30dp"
-        android:layout_height="35dp"
+        android:layout_width="40dp"
+        android:layout_height="50dp"
         android:layout_centerVertical="true"
         android:background="@drawable/ic_navi_drawer_menu"
         android:visibility="visible" />

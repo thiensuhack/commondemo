@@ -5,17 +5,12 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.objects.MenuItemDTO;
 
@@ -88,7 +83,12 @@ public class MenuDrawerAdapter extends OrangeBaseAdapter {
 		}
 		MenuItemDTO mData = mListData.get(position);
 		viewHolder.menuDrawerName.setText(mData.menuName);
-		viewHolder.menuDrawerTotal.setText(String.valueOf(mData.menuTotal));
+		if(mData.menuTotal<1){
+			viewHolder.menuDrawerTotal.setText(String.valueOf(mData.menuTotal));
+		}
+		else{
+			viewHolder.menuDrawerTotal.setText("");
+		}
 		viewHolder.menuDrawerIcon.setBackgroundResource(mData.resId);
 		if(mData.menuId%2!=0){
 			convertView.setBackgroundResource(R.drawable.item_even_menu_drawer_selector);

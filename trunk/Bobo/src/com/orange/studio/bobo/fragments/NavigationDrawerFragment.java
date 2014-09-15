@@ -109,24 +109,101 @@ public class NavigationDrawerFragment extends Fragment {
 						selectItem(position);
 					}
 				});
-		for (int i = 1; i < 8; i++) {
-			MenuItemDTO item = new MenuItemDTO();
-			item.menuId = i;
-			item.resId = R.drawable.ic_launcher;
-			item.menuName = "Menu" + i;
-			item.menuTotal = 130;
-			mMenuList.add(item);
-		}
-		// mDrawerListView.setAdapter(new ArrayAdapter<String>(getActionBar()
-		// .getThemedContext(), android.R.layout.simple_list_item_1,
-		// android.R.id.text1, new String[] {
-		// getString(R.string.title_section1),
-		// getString(R.string.title_section2),
-		// getString(R.string.title_section3), }));
+//		for (int i = 1; i < 8; i++) {
+//			MenuItemDTO item = new MenuItemDTO();
+//			item.menuId = i;
+//			item.resId = R.drawable.ic_launcher;
+//			item.menuName = "Menu" + i;
+//			item.menuTotal = 130;
+//			mMenuList.add(item);
+//		}
+		createMenuDrawer();
+		
 		mMenuDrawerAdapter.updateDataList(mMenuList);
 		mDrawerListView.setAdapter(mMenuDrawerAdapter);
 		mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 		return mDrawerListView;
+	}
+
+	private void createMenuDrawer() {
+		int index=1;
+		MenuItemDTO item1 = new MenuItemDTO();
+		item1.menuId = index;
+		item1.resId = R.drawable.ic_launcher;
+		item1.menuName = "Home";
+		item1.menuTotal = 0;
+		
+		index++;
+		MenuItemDTO item2 = new MenuItemDTO();
+		item2.menuId = index;
+		item2.resId = R.drawable.ic_launcher;
+		item2.menuName = "Product";
+		item2.menuTotal = 459;
+		
+		index++;
+		MenuItemDTO item3 = new MenuItemDTO();
+		item3.menuId = index;
+		item3.resId = R.drawable.ic_launcher;
+		item3.menuName = "Shop";
+		item3.menuTotal = 4;
+		
+		index++;
+		MenuItemDTO item4 = new MenuItemDTO();
+		item4.menuId = index;
+		item4.resId = R.drawable.ic_launcher;
+		item4.menuName = "New Arrivals";
+		item4.menuTotal = 29;
+		
+		index++;
+		MenuItemDTO item5 = new MenuItemDTO();
+		item5.menuId = index;
+		item5.resId = R.drawable.ic_launcher;
+		item5.menuName = "Best Seller";
+		item5.menuTotal = 49;
+		
+		index++;
+		MenuItemDTO item6 = new MenuItemDTO();
+		item6.menuId = index;
+		item6.resId = R.drawable.ic_launcher;
+		item6.menuName = "Apparel";
+		item6.menuTotal = 25;
+		
+		index++;
+		MenuItemDTO item7 = new MenuItemDTO();
+		item7.menuId = index;
+		item7.resId = R.drawable.ic_launcher;
+		item7.menuName = "Accessories";
+		item7.menuTotal = 299;
+		
+		index++;
+		MenuItemDTO item8= new MenuItemDTO();
+		item8.menuId = index;
+		item8.resId = R.drawable.ic_launcher;
+		item8.menuName = "Clearance";
+		item8.menuTotal = 9;
+		
+		index++;
+		MenuItemDTO item9 = new MenuItemDTO();
+		item9.menuId = index;
+		item9.resId = R.drawable.ic_launcher;
+		item9.menuName = "Event-Spin To Win";
+		item9.menuTotal = 0;
+		
+		index++;
+		MenuItemDTO item10 = new MenuItemDTO();
+		item10.menuId = index;
+		item10.resId = R.drawable.ic_launcher;
+		item10.menuName = "About Us";
+		item10.menuTotal = 0;
+		
+		index++;
+		MenuItemDTO item11 = new MenuItemDTO();
+		item11.menuId = index;
+		item11.resId = R.drawable.ic_launcher;
+		item11.menuName = "Contact Us";
+		item11.menuTotal = 0;
+		
+		mMenuList.add(item1);
 	}
 
 	public boolean isDrawerOpen() {

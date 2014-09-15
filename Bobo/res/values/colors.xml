@@ -9,4 +9,13 @@
     <color name="pink">#D2007D</color>
     <color name="bright_pink">#EB008C</color>
     <color name="dark_pink">#9A005B</color>
+    
+    <color name="gray">#CCCCCC</color>
+    <color name="dark_gray">#898989</color>
+    <color name="bright_gray">#F1F1F1</color>
+    
+    <color name="red">#FF0000</color>
+    
+    <color name="orange">#FF6600</color>
+    <color name="bright_orange">#FF9900</color>
 </resources>

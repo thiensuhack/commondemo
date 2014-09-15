@@ -20,7 +20,7 @@ import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.objects.ProductDTO;
 
 public class GridProductAdapter extends OrangeBaseAdapter {
-	
+
 	private class ProductViewHolder {
 		public TextView proName;
 		public TextView proPrice;
@@ -30,7 +30,8 @@ public class GridProductAdapter extends OrangeBaseAdapter {
 
 	private Activity mActivity;
 	private List<ProductDTO> mListData;
-	private static LayoutInflater mInflater = null;
+	private LayoutInflater mInflater = null;
+	
 
 	public GridProductAdapter(Activity _mActivity) {
 		super();
@@ -88,13 +89,13 @@ public class GridProductAdapter extends OrangeBaseAdapter {
 		} else {
 			viewHolder = (ProductViewHolder) convertView.getTag();
 		}
-		ProductDTO mData=mListData.get(position);
+		ProductDTO mData = mListData.get(position);
 		viewHolder.proName.setText(mData.proName);
 		viewHolder.proPrice.setText(String.valueOf(mData.proPrice));
-		viewHolder.proPriceDiscount.setText(String.valueOf(mData.proPriceDiscount));
-		ImageLoader.getInstance().displayImage(
-				mData.proImageURL, viewHolder.proImage, options,
-				new SimpleImageLoadingListener() {
+		viewHolder.proPriceDiscount.setText(String
+				.valueOf(mData.proPriceDiscount));
+		ImageLoader.getInstance().displayImage(mData.proImageURL,
+				viewHolder.proImage, options, new SimpleImageLoadingListener() {
 					@Override
 					public void onLoadingStarted(String imageUri, View view) {
 					}
@@ -120,13 +121,13 @@ public class GridProductAdapter extends OrangeBaseAdapter {
 							message = "Unknown error";
 							break;
 						}
-						Toast.makeText(mActivity, message,
-								Toast.LENGTH_SHORT).show();
+						Toast.makeText(mActivity, message, Toast.LENGTH_SHORT)
+								.show();
 					}
 
 					@Override
-					public void onLoadingComplete(String imageUri,
-							View view, Bitmap loadedImage) {
+					public void onLoadingComplete(String imageUri, View view,
+							Bitmap loadedImage) {
 					}
 				});
 		return convertView;

@@ -18,7 +18,7 @@
         <item name="fillColor">@color/pink</item>
         <item name="strokeColor">@color/dark_pink</item>
         <item name="strokeWidth">0.5dp</item>
-        <item name="radius">5dp</item>
+        <item name="radius">3dp</item>
         <item name="centered">true</item>
     </style>
 

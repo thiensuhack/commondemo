@@ -30,13 +30,13 @@ public class GridProductAdapter extends OrangeBaseAdapter {
 
 	private Activity mActivity;
 	private List<ProductDTO> mListData;
-	private static LayoutInflater inflater = null;
+	private static LayoutInflater mInflater = null;
 
 	public GridProductAdapter(Activity _mActivity) {
 		super();
 		mActivity = _mActivity;
 		mListData = new ArrayList<ProductDTO>();
-		inflater = (LayoutInflater) mActivity
+		mInflater = (LayoutInflater) mActivity
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
 
@@ -73,7 +73,7 @@ public class GridProductAdapter extends OrangeBaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ProductViewHolder viewHolder;
 		if (convertView == null) {
-			convertView = inflater.inflate(R.layout.layout_item_product,
+			convertView = mInflater.inflate(R.layout.layout_item_product,
 					parent, false);
 			viewHolder = new ProductViewHolder();
 			viewHolder.proImage = (ImageView) convertView

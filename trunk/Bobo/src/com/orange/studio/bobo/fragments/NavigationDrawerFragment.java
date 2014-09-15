@@ -1,23 +1,19 @@
 package com.orange.studio.bobo.fragments;
 
-import com.orange.studio.bobo.R;
-import com.orange.studio.bobo.R.drawable;
-import com.orange.studio.bobo.R.id;
-import com.orange.studio.bobo.R.layout;
-import com.orange.studio.bobo.R.menu;
-import com.orange.studio.bobo.R.string;
+import java.util.ArrayList;
+import java.util.List;
 
-import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,17 +21,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-/**
- * Fragment used for managing interactions for and presentation of a navigation
- * drawer. See the <a href=
- * "https://developer.android.com/design/patterns/navigation-drawer.html#Interaction"
- * > design guidelines</a> for a complete explanation of the behaviors
- * implemented here.
- */
+import com.orange.studio.bobo.R;
+import com.orange.studio.bobo.adapters.MenuDrawerAdapter;
+import com.orange.studio.bobo.objects.MenuItemDTO;
+
 public class NavigationDrawerFragment extends Fragment {
 
 	/**
@@ -67,6 +59,9 @@ public class NavigationDrawerFragment extends Fragment {
 	private boolean mFromSavedInstanceState;
 	private boolean mUserLearnedDrawer;
 
+	private MenuDrawerAdapter mMenuDrawerAdapter = null;
+	private List<MenuItemDTO> mMenuList = null;
+
 	public NavigationDrawerFragment() {
 	}
 
@@ -89,6 +84,8 @@ public class NavigationDrawerFragment extends Fragment {
 
 		// Select either the default item (0) or the last selected item.
 		selectItem(mCurrentSelectedPosition);
+		mMenuDrawerAdapter = new MenuDrawerAdapter(getActivity());
+		mMenuList = new ArrayList<MenuItemDTO>();
 	}
 
 	@Override
@@ -112,12 +109,22 @@ public class NavigationDrawerFragment extends Fragment {
 						selectItem(position);
 					}
 				});
-		mDrawerListView.setAdapter(new ArrayAdapter<String>(getActionBar()
-				.getThemedContext(), android.R.layout.simple_list_item_1,
-				android.R.id.text1, new String[] {
-						getString(R.string.title_section1),
-						getString(R.string.title_section2),
-						getString(R.string.title_section3), }));
+		for (int i = 1; i < 8; i++) {
+			MenuItemDTO item = new MenuItemDTO();
+			item.menuId = i;
+			item.resId = R.drawable.ic_launcher;
+			item.menuName = "Menu" + i;
+			item.menuTotal = 130;
+			mMenuList.add(item);
+		}
+		// mDrawerListView.setAdapter(new ArrayAdapter<String>(getActionBar()
+		// .getThemedContext(), android.R.layout.simple_list_item_1,
+		// android.R.id.text1, new String[] {
+		// getString(R.string.title_section1),
+		// getString(R.string.title_section2),
+		// getString(R.string.title_section3), }));
+		mMenuDrawerAdapter.updateDataList(mMenuList);
+		mDrawerListView.setAdapter(mMenuDrawerAdapter);
 		mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 		return mDrawerListView;
 	}
@@ -126,16 +133,16 @@ public class NavigationDrawerFragment extends Fragment {
 		return mDrawerLayout != null
 				&& mDrawerLayout.isDrawerOpen(mFragmentContainerView);
 	}
+
 	public void openNaviDrawer() {
-		if(isDrawerOpen()){
+		if (isDrawerOpen()) {
 			mDrawerLayout.closeDrawer(mFragmentContainerView);
-		}
-		else{
+		} else {
 			mDrawerLayout.openDrawer(mFragmentContainerView);
 		}
-		
+
 	}
-	
+
 	/**
 	 * Users of this fragment must call this method to set up the navigation
 	 * drawer interactions.

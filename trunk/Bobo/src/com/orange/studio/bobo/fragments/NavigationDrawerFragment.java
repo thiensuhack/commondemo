@@ -204,6 +204,17 @@ public class NavigationDrawerFragment extends Fragment {
 		item11.menuTotal = 0;
 		
 		mMenuList.add(item1);
+		mMenuList.add(item2);
+		mMenuList.add(item3);
+		mMenuList.add(item4);
+		mMenuList.add(item5);
+		mMenuList.add(item6);
+		mMenuList.add(item7);
+		mMenuList.add(item8);
+		mMenuList.add(item9);
+		mMenuList.add(item10);
+		mMenuList.add(item11);
+		
 	}
 
 	public boolean isDrawerOpen() {

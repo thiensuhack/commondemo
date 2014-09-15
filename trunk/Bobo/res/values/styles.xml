@@ -1,13 +1,11 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light"></style>
 
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme"></style>
 
-    <style name="AppNavigationDrawerBaseTheme" parent="Theme.AppCompat.Light">
- 
-    </style>
+    <style name="AppNavigationDrawerBaseTheme" parent="Theme.AppCompat.Light"></style>
 
     <!-- Application theme. -->
     <style name="AppNavigationDrawerTheme" parent="AppNavigationDrawerBaseTheme">
@@ -15,11 +13,28 @@
         <!-- <item name="android:windowNoTitle">true</item> -->
         <item name="android:windowFullscreen">true</item>
     </style>
-<style name="OrangeCustomCirclePageIndicator" parent="@android:style/Theme.Light">
+
+    <style name="OrangeCustomCirclePageIndicator" parent="@android:style/Theme.Light">
         <item name="fillColor">@color/pink</item>
         <item name="strokeColor">@color/dark_pink</item>
         <item name="strokeWidth">0.5dp</item>
         <item name="radius">5dp</item>
         <item name="centered">true</item>
     </style>
+
+    <style name="ProNameStyle">
+        <item name="android:textColor">@color/pink</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="ProPriceCurrentStyle">
+        <item name="android:textColor">@color/pink</item>
+        <item name="android:textSize">11sp</item>
+    </style>
+
+    <style name="ProPriceDisCountStyle">
+        <item name="android:textColor">@color/pink</item>
+        <item name="android:textSize">11sp</item>
+    </style>
+
 </resources>

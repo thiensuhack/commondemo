@@ -25,6 +25,7 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.configs.OrangeConfig;
+import com.orange.studio.bobo.customviews.ExpandableHeightGridView;
 import com.orange.studio.bobo.objects.HomeSliderDTO;
 import com.viewpagerindicator.CirclePageIndicator;
 
@@ -34,7 +35,8 @@ public class HomeFragment extends BaseFragment {
 	private DisplayImageOptions options;
 	private ImageHomeSlider mSilderAdapter = null;
 	private LoadHomeSliderTask mLoadHomeSliderTask = null;
-
+	private ExpandableHeightGridView mGridView=null;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

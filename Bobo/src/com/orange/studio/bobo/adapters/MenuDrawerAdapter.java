@@ -25,7 +25,6 @@ public class MenuDrawerAdapter extends OrangeBaseAdapter {
 	private Activity mActivity;
 	private List<MenuItemDTO> mListData;
 	private LayoutInflater mInflater = null;
-	
 
 	public MenuDrawerAdapter(Activity _mActivity) {
 		super();
@@ -83,17 +82,18 @@ public class MenuDrawerAdapter extends OrangeBaseAdapter {
 		}
 		MenuItemDTO mData = mListData.get(position);
 		viewHolder.menuDrawerName.setText(mData.menuName);
-		if(mData.menuTotal<1){
+		if (mData.menuTotal > 0) {
 			viewHolder.menuDrawerTotal.setText(String.valueOf(mData.menuTotal));
-		}
-		else{
+		} else {
 			viewHolder.menuDrawerTotal.setText("");
 		}
 		viewHolder.menuDrawerIcon.setBackgroundResource(mData.resId);
-		if(mData.menuId%2!=0){
-			convertView.setBackgroundResource(R.drawable.item_even_menu_drawer_selector);
-		}else{
-			convertView.setBackgroundResource(R.drawable.item_odd_menu_drawer_selector);
+		if (mData.menuId % 2 != 0) {
+			convertView
+					.setBackgroundResource(R.drawable.item_even_menu_drawer_selector);
+		} else {
+			convertView
+					.setBackgroundResource(R.drawable.item_odd_menu_drawer_selector);
 		}
 		return convertView;
 	}

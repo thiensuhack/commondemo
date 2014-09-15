@@ -24,9 +24,11 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.orange.studio.bobo.R;
+import com.orange.studio.bobo.adapters.GridProductAdapter;
 import com.orange.studio.bobo.configs.OrangeConfig;
 import com.orange.studio.bobo.customviews.ExpandableHeightGridView;
 import com.orange.studio.bobo.objects.HomeSliderDTO;
+import com.orange.studio.bobo.objects.ProductDTO;
 import com.viewpagerindicator.CirclePageIndicator;
 
 public class HomeFragment extends BaseFragment {
@@ -34,8 +36,12 @@ public class HomeFragment extends BaseFragment {
 	private CirclePageIndicator mCirclePageIndicator = null;
 	private DisplayImageOptions options;
 	private ImageHomeSlider mSilderAdapter = null;
+	
 	private LoadHomeSliderTask mLoadHomeSliderTask = null;
-	private ExpandableHeightGridView mGridView=null;
+	private ExpandableHeightGridView mGridView = null;
+	private List<ProductDTO> mListProducts = null;
+	private GridProductAdapter mProductAdapter = null;
+	private LoadProductsTask mLoadProductsTask=null;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -63,6 +69,11 @@ public class HomeFragment extends BaseFragment {
 		mViewPager = (ViewPager) mView.findViewById(R.id.viewPagerHome);
 		mCirclePageIndicator = (CirclePageIndicator) mView
 				.findViewById(R.id.indicatorHome);
+		mGridView = (ExpandableHeightGridView) mView
+				.findViewById(R.id.homeGridView);
+		mGridView.setExpanded(true);
+		mProductAdapter = new GridProductAdapter(getActivity());
+		mGridView.setAdapter(mProductAdapter);
 
 	}
 
@@ -77,11 +88,17 @@ public class HomeFragment extends BaseFragment {
 			mLoadHomeSliderTask.execute();
 		}
 	}
-
+	private void loadProductData(){
+		if(mLoadProductsTask==null || mLoadProductsTask.getStatus()==Status.FINISHED){
+			mLoadProductsTask=new LoadProductsTask();
+			mLoadProductsTask.execute();
+		}
+	}
 	@Override
 	public void onResume() {
 		super.onResume();
 		loadData();
+		loadProductData();
 	}
 
 	private class ImageHomeSlider extends PagerAdapter {
@@ -195,6 +212,38 @@ public class HomeFragment extends BaseFragment {
 				mSilderAdapter = new ImageHomeSlider(result);
 				mViewPager.setAdapter(mSilderAdapter);
 				mCirclePageIndicator.setViewPager(mViewPager);
+			}
+		}
+	}
+
+	private class LoadProductsTask extends
+			AsyncTask<Void, Void, List<ProductDTO>> {
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+
+		}
+
+		@Override
+		protected List<ProductDTO> doInBackground(Void... arg0) {
+			List<ProductDTO> result = new ArrayList<ProductDTO>();
+			for (int i = 0; i < 10; i++) {
+				ProductDTO item = new ProductDTO();
+				item.proImageURL = OrangeConfig.IMAGES[i];
+				item.proName="Product Name"+(i+1);
+				item.proPrice=1000000;
+				item.proPriceDiscount=2500000;
+				result.add(item);
+			}
+			return result;
+		}
+
+		@Override
+		protected void onPostExecute(List<ProductDTO> result) {
+			super.onPostExecute(result);
+			if (result != null && result.size() > 0) {
+				mProductAdapter.updateDataList(result);
 			}
 		}
 	}

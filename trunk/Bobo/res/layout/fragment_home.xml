@@ -3,17 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-Auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:fillViewport="true" >
+    android:fillViewport="true"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.orange.studio.bobo.HomeActivity$PlaceholderFragment" >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        tools:context="com.orange.studio.bobo.HomeActivity$PlaceholderFragment" >
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
         <android.support.v4.view.ViewPager
             android:id="@+id/viewPagerHome"
@@ -27,17 +27,19 @@
             android:layout_height="wrap_content"
             android:padding="10dip" />
 
-        <com.orange.studio.bobo.customviewsExpandableHeightGridView
+        <com.orange.studio.bobo.customviews.ExpandableHeightGridView
             android:id="@+id/homeGridView"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="15dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="10dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="15dp"
+            android:layout_weight="1"
+            android:background="@color/bright_gray"
             android:horizontalSpacing="10dp"
             android:isScrollContainer="false"
-            android:numColumns="5"
+            android:numColumns="2"
             android:stretchMode="columnWidth"
             android:verticalSpacing="10dp" />
     </LinearLayout>

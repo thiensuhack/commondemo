@@ -34,7 +34,7 @@ import com.viewpagerindicator.CirclePageIndicator;
 public class HomeFragment extends BaseFragment {
 	private ViewPager mViewPager = null;
 	private CirclePageIndicator mCirclePageIndicator = null;
-	private DisplayImageOptions options;
+	
 	private ImageHomeSlider mSilderAdapter = null;
 	
 	private LoadHomeSliderTask mLoadHomeSliderTask = null;
@@ -81,7 +81,7 @@ public class HomeFragment extends BaseFragment {
 
 	}
 
-	private void loadData() {
+	private void loadHomeSliderData() {
 		if (mLoadHomeSliderTask == null
 				|| mLoadHomeSliderTask.getStatus() == Status.FINISHED) {
 			mLoadHomeSliderTask = new LoadHomeSliderTask();
@@ -97,7 +97,7 @@ public class HomeFragment extends BaseFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		loadData();
+		loadHomeSliderData();
 		loadProductData();
 	}
 

@@ -11,10 +11,13 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.fragments.HomeFragment;
 import com.orange.studio.bobo.fragments.NavigationDrawerFragment;
+import com.orange.studio.bobo.fragments.ProductDetailFragment;
+import com.orange.studio.bobo.objects.ProductDTO;
 
 public class HomeActivity extends ActionBarActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks, OnClickListener {
@@ -22,9 +25,11 @@ public class HomeActivity extends ActionBarActivity implements
 	private NavigationDrawerFragment mNavigationDrawerFragment;
 	private ActionBar mActionbar;
 	private CharSequence mTitle;
-
+	private TextView mAppTitle=null;	
 	private ImageView mNavIconMenu = null;
 
+	private ProductDTO mCurrentProduct=null;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -58,20 +63,56 @@ public class HomeActivity extends ActionBarActivity implements
 
 	private void initView() {
 		mNavIconMenu = (ImageView) findViewById(R.id.naviMenuIcon);
+		mAppTitle=(TextView)findViewById(R.id.appTitle);
 	}
 
 	private void initListener() {
 		mNavIconMenu.setOnClickListener(this);
 	}
-
+	public void setAppTitle(String title){
+		mAppTitle.setText(title);
+	}
 	private void updateTitleAndDrawer(Fragment fragment) {
-
+		String mFragmentName = fragment.getClass().getName();
+		if (mFragmentName.equals(HomeFragment.class.getName())) {
+			setAppTitle(getString(R.string.app_name));
+			return;
+		}
+		if (mFragmentName.equals(ProductDetailFragment.class.getName())) {
+			if(mCurrentProduct!=null){
+				setAppTitle(mCurrentProduct.proName);
+			}
+			return;
+		}
+		setAppTitle(getString(R.string.app_name));
+		return;
 	}
 
 	@Override
 	public void onNavigationDrawerItemSelected(int position) {
-		Fragment mFragment = HomeFragment.instantiate(getApplicationContext(),
-				HomeFragment.class.getName());
+		Fragment mFragment = null;
+		switch (position) {
+		case 0:
+
+			break;
+		case 1:
+			break;
+		case 2:
+			break;
+		case -11:
+			mFragment=ProductDetailFragment.instantiate(getApplicationContext(), 
+					ProductDetailFragment.class.getName());
+//			if(mCurrentProduct!=null){
+//				setTitle(mCurrentProduct.proName);
+//			}
+			break;
+		default:
+			mFragment = HomeFragment.instantiate(getApplicationContext(),
+					HomeFragment.class.getName());
+			//setTitle(getString(R.string.app_name));
+			break;
+		}
+		
 		replaceFragment(mFragment);
 	}
 
@@ -97,6 +138,9 @@ public class HomeActivity extends ActionBarActivity implements
 	}
 
 	private void replaceFragment(Fragment fragment) {
+		if(fragment==null){
+			return;
+		}
 		String backStateName = fragment.getClass().getName();
 		String fragmentTag = backStateName;
 		FragmentManager fragmentManager = getSupportFragmentManager();
@@ -133,5 +177,13 @@ public class HomeActivity extends ActionBarActivity implements
 		} else {
 			super.onBackPressed();
 		}
+	}
+
+	public ProductDTO getCurrentProduct() {
+		return mCurrentProduct;
+	}
+
+	public void setCurrentProduct(ProductDTO mCurrentProduct) {
+		this.mCurrentProduct = mCurrentProduct;
 	}
 }

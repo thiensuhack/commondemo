@@ -1,6 +1,7 @@
 package com.orange.studio.bobo.fragments;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.orange.studio.bobo.activities.HomeActivity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,5 +18,8 @@ public class BaseFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		return super.onCreateView(inflater, container, savedInstanceState);
+	}
+	protected HomeActivity getHomeActivity(){
+		return (HomeActivity)getActivity();
 	}
 }

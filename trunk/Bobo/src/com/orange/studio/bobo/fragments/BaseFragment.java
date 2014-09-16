@@ -9,8 +9,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 
-public class BaseFragment extends Fragment {
+public class BaseFragment extends Fragment implements OnItemClickListener{
 	protected View mView = null;
 	protected DisplayImageOptions options;
 
@@ -21,5 +23,10 @@ public class BaseFragment extends Fragment {
 	}
 	protected HomeActivity getHomeActivity(){
 		return (HomeActivity)getActivity();
+	}
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		
 	}
 }

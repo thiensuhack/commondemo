@@ -63,7 +63,7 @@
             android:id="@+id/addToCardBtn"
             style="@style/ButtonPinkStyle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:text="@string/btn_add_to_cart_label" />
     </LinearLayout>
 

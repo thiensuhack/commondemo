@@ -1,5 +1,7 @@
 package com.orange.studio.bobo.activities;
 
+import java.util.List;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,12 +13,14 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.fragments.HomeFragment;
 import com.orange.studio.bobo.fragments.NavigationDrawerFragment;
 import com.orange.studio.bobo.fragments.ProductDetailFragment;
+import com.orange.studio.bobo.fragments.ShoppingCartFragment;
 import com.orange.studio.bobo.objects.ProductDTO;
 
 public class HomeActivity extends ActionBarActivity implements
@@ -25,10 +29,13 @@ public class HomeActivity extends ActionBarActivity implements
 	private NavigationDrawerFragment mNavigationDrawerFragment;
 	private ActionBar mActionbar;
 	private CharSequence mTitle;
-	private TextView mAppTitle=null;	
+	private TextView mAppTitle = null;
 	private ImageView mNavIconMenu = null;
+	private View mShoppingCartBtn = null;
 
-	private ProductDTO mCurrentProduct=null;
+	private ProductDTO mCurrentProduct = null;
+
+	public List<ProductDTO> mListItemCart=null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -63,15 +70,20 @@ public class HomeActivity extends ActionBarActivity implements
 
 	private void initView() {
 		mNavIconMenu = (ImageView) findViewById(R.id.naviMenuIcon);
-		mAppTitle=(TextView)findViewById(R.id.appTitle);
+		mAppTitle = (TextView) findViewById(R.id.appTitle);
+		mShoppingCartBtn = (RelativeLayout) findViewById(R.id.homeShoppingCartBtn);
+
 	}
 
 	private void initListener() {
 		mNavIconMenu.setOnClickListener(this);
+		mShoppingCartBtn.setOnClickListener(this);
 	}
-	public void setAppTitle(String title){
+
+	public void setAppTitle(String title) {
 		mAppTitle.setText(title);
 	}
+
 	private void updateTitleAndDrawer(Fragment fragment) {
 		String mFragmentName = fragment.getClass().getName();
 		if (mFragmentName.equals(HomeFragment.class.getName())) {
@@ -79,9 +91,13 @@ public class HomeActivity extends ActionBarActivity implements
 			return;
 		}
 		if (mFragmentName.equals(ProductDetailFragment.class.getName())) {
-			if(mCurrentProduct!=null){
+			if (mCurrentProduct != null) {
 				setAppTitle(mCurrentProduct.proName);
 			}
+			return;
+		}
+		if (mFragmentName.equals(ShoppingCartFragment.class.getName())) {
+			setAppTitle(getString(R.string.app_name));
 			return;
 		}
 		setAppTitle(getString(R.string.app_name));
@@ -100,19 +116,21 @@ public class HomeActivity extends ActionBarActivity implements
 		case 2:
 			break;
 		case -11:
-			mFragment=ProductDetailFragment.instantiate(getApplicationContext(), 
+			mFragment = ProductDetailFragment.instantiate(
+					getApplicationContext(),
 					ProductDetailFragment.class.getName());
-//			if(mCurrentProduct!=null){
-//				setTitle(mCurrentProduct.proName);
-//			}
+			break;
+		case -12:
+			mFragment = ShoppingCartFragment.instantiate(
+					getApplicationContext(),
+					ShoppingCartFragment.class.getName());
 			break;
 		default:
 			mFragment = HomeFragment.instantiate(getApplicationContext(),
 					HomeFragment.class.getName());
-			//setTitle(getString(R.string.app_name));
 			break;
 		}
-		
+
 		replaceFragment(mFragment);
 	}
 
@@ -138,7 +156,7 @@ public class HomeActivity extends ActionBarActivity implements
 	}
 
 	private void replaceFragment(Fragment fragment) {
-		if(fragment==null){
+		if (fragment == null) {
 			return;
 		}
 		String backStateName = fragment.getClass().getName();
@@ -164,7 +182,9 @@ public class HomeActivity extends ActionBarActivity implements
 		case R.id.naviMenuIcon:
 			mNavigationDrawerFragment.openNaviDrawer();
 			break;
-
+		case R.id.homeShoppingCartBtn:
+			onNavigationDrawerItemSelected(-12);
+			break;
 		default:
 			break;
 		}

@@ -240,7 +240,7 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener {
 				item.proName = "Product Name" + (i + 1);
 				item.proPrice = 1000000;
 				item.proPriceDiscount = 2500000;
-				item.proDescriptions="Sẽ mãi luôn yêu em, luôn bên em quan tâm em mỗi ngày Vì anh không muốn mất em lần nữa, hãy lắng nghe lòng anh Bởi vì khi xa nhau, tim anh đau, nhớ đến em rất nhiều";
+				item.proDescriptions = "Sẽ mãi luôn yêu em, luôn bên em quan tâm em mỗi ngày Vì anh không muốn mất em lần nữa, hãy lắng nghe lòng anh Bởi vì khi xa nhau, tim anh đau, nhớ đến em rất nhiều";
 				result.add(item);
 			}
 			return result;
@@ -250,6 +250,7 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener {
 		protected void onPostExecute(List<ProductDTO> result) {
 			super.onPostExecute(result);
 			if (result != null && result.size() > 0) {
+				getHomeActivity().mListItemCart = result;
 				mProductAdapter.updateDataList(result);
 			}
 		}

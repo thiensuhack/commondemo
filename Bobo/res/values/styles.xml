@@ -48,7 +48,7 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/white</item>
     </style>
-
+    <!-- Button Styles -->
     <style name="ButtonBaseStyle">
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">13sp</item>
@@ -56,6 +56,14 @@
 
     <style name="ButtonPinkStyle" parent="@style/ButtonBaseStyle">
         <item name="android:background">@drawable/button_pink</item>
+    </style>
+    <!-- ListView Style -->
+    <style name="ListViewStyle">
+        <item name="android:dividerHeight">0dp</item>
+        <item name="android:scrollbarStyle">outsideOverlay</item>
+        <item name="android:verticalSpacing">2dp</item>
+        <item name="android:divider">@color/green</item>
+        <item name="android:background">@color/white</item>
     </style>
 
 </resources>

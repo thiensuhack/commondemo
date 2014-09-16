@@ -18,13 +18,13 @@
 
     <TextView
         android:id="@+id/appTitle"
+        style="@style/AppTitleBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="5dp"
         android:layout_toRightOf="@+id/naviMenuIcon"
-        android:text="@string/app_name"
-        style="@style/AppTitleBarStyle" />
+        android:text="@string/app_name" />
 
     <LinearLayout
         android:id="@+id/appQuestion"
@@ -36,12 +36,12 @@
         android:orientation="horizontal" >
 
         <RelativeLayout
+            android:id="@+id/homeShoppingCartBtn"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginRight="5dp" >
 
             <ImageView
-                android:id="@+id/iconShopping"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:background="@drawable/ic_shopping"
@@ -55,7 +55,7 @@
                 android:layout_marginTop="5dp"
                 android:background="@drawable/shopping_cart_background"
                 android:gravity="center"
-                android:text="5"
+                android:text="7"
                 android:textColor="@color/pink"
                 android:textSize="9sp" />
         </RelativeLayout>

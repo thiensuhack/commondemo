@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -28,7 +29,7 @@ import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.adapters.MenuDrawerAdapter;
 import com.orange.studio.bobo.objects.MenuItemDTO;
 
-public class NavigationDrawerFragment extends Fragment {
+public class NavigationDrawerFragment extends Fragment implements OnItemClickListener{
 
 	/**
 	 * Remember the position of the selected item.
@@ -101,22 +102,8 @@ public class NavigationDrawerFragment extends Fragment {
 			Bundle savedInstanceState) {
 		mDrawerListView = (ListView) inflater.inflate(
 				R.layout.fragment_navigation_drawer, container, false);
-		mDrawerListView
-				.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-					@Override
-					public void onItemClick(AdapterView<?> parent, View view,
-							int position, long id) {
-						selectItem(position);
-					}
-				});
-		// for (int i = 1; i < 8; i++) {
-		// MenuItemDTO item = new MenuItemDTO();
-		// item.menuId = i;
-		// item.resId = R.drawable.ic_launcher;
-		// item.menuName = "Menu" + i;
-		// item.menuTotal = 130;
-		// mMenuList.add(item);
-		// }
+		mDrawerListView.setOnItemClickListener(this);
+
 		createMenuDrawer();
 
 		mMenuDrawerAdapter.updateDataList(mMenuList);
@@ -416,5 +403,11 @@ public class NavigationDrawerFragment extends Fragment {
 		 * Called when an item in the navigation drawer is selected.
 		 */
 		void onNavigationDrawerItemSelected(int position);
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view,
+			int position, long id) {
+		selectItem(position);		
 	}
 }

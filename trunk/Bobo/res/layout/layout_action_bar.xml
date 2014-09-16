@@ -24,9 +24,7 @@
         android:layout_marginLeft="5dp"
         android:layout_toRightOf="@+id/naviMenuIcon"
         android:text="@string/app_name"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        style="@style/AppTitleBarStyle" />
 
     <LinearLayout
         android:id="@+id/appQuestion"

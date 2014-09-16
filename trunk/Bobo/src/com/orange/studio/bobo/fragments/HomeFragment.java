@@ -14,6 +14,8 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -31,18 +33,18 @@ import com.orange.studio.bobo.objects.HomeSliderDTO;
 import com.orange.studio.bobo.objects.ProductDTO;
 import com.viewpagerindicator.CirclePageIndicator;
 
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment implements OnItemClickListener {
 	private ViewPager mViewPager = null;
 	private CirclePageIndicator mCirclePageIndicator = null;
-	
+
 	private ImageHomeSlider mSilderAdapter = null;
-	
+
 	private LoadHomeSliderTask mLoadHomeSliderTask = null;
 	private ExpandableHeightGridView mGridView = null;
 	private List<ProductDTO> mListProducts = null;
 	private GridProductAdapter mProductAdapter = null;
-	private LoadProductsTask mLoadProductsTask=null;
-	
+	private LoadProductsTask mLoadProductsTask = null;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -78,7 +80,7 @@ public class HomeFragment extends BaseFragment {
 	}
 
 	private void initListener() {
-
+		mGridView.setOnItemClickListener(this);
 	}
 
 	private void loadHomeSliderData() {
@@ -88,12 +90,15 @@ public class HomeFragment extends BaseFragment {
 			mLoadHomeSliderTask.execute();
 		}
 	}
-	private void loadProductData(){
-		if(mLoadProductsTask==null || mLoadProductsTask.getStatus()==Status.FINISHED){
-			mLoadProductsTask=new LoadProductsTask();
+
+	private void loadProductData() {
+		if (mLoadProductsTask == null
+				|| mLoadProductsTask.getStatus() == Status.FINISHED) {
+			mLoadProductsTask = new LoadProductsTask();
 			mLoadProductsTask.execute();
 		}
 	}
+
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -230,10 +235,11 @@ public class HomeFragment extends BaseFragment {
 			List<ProductDTO> result = new ArrayList<ProductDTO>();
 			for (int i = 0; i < 10; i++) {
 				ProductDTO item = new ProductDTO();
-				item.proImageURL = OrangeConfig.IMAGES[i];
-				item.proName="Product Name"+(i+1);
-				item.proPrice=1000000;
-				item.proPriceDiscount=2500000;
+				// item.proImageURL = OrangeConfig.IMAGES[i];
+				item.proImageURL = "http://www.bobo-u.com/24-home_default/black-dress-1.jpg";
+				item.proName = "Product Name" + (i + 1);
+				item.proPrice = 1000000;
+				item.proPriceDiscount = 2500000;
 				result.add(item);
 			}
 			return result;
@@ -245,6 +251,16 @@ public class HomeFragment extends BaseFragment {
 			if (result != null && result.size() > 0) {
 				mProductAdapter.updateDataList(result);
 			}
+		}
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		ProductDTO mProduct = mProductAdapter.getItem(position);
+		if (mProduct != null) {
+			getHomeActivity().setCurrentProduct(mProduct);
+			getHomeActivity().onNavigationDrawerItemSelected(-11);
 		}
 	}
 }

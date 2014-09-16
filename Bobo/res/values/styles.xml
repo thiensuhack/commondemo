@@ -49,4 +49,13 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="ButtonBaseStyle">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="ButtonPinkStyle" parent="@style/ButtonBaseStyle">
+        <item name="android:background">@drawable/button_pink</item>
+    </style>
+
 </resources>

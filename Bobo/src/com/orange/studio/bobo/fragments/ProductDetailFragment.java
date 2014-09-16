@@ -31,6 +31,8 @@ public class ProductDetailFragment extends BaseFragment {
 	private TextView mProName = null;
 	private TextView mProPrice = null;
 	private TextView mProPriceDiscount = null;
+	private TextView mProPriceDescription = null;
+	
 	private ProductDTO mProduct = null;
 
 	@Override
@@ -58,11 +60,13 @@ public class ProductDetailFragment extends BaseFragment {
 		mProPrice = (TextView) mView.findViewById(R.id.productDetailPrice);
 		mProPriceDiscount = (TextView) mView
 				.findViewById(R.id.productDetailPriceDiscount);
+		mProPriceDescription=(TextView)mView.findViewById(R.id.productDetailDiscription);
 		mProduct = getHomeActivity().getCurrentProduct();
 		if (mProduct != null) {
 			mProName.setText(mProduct.proName);
 			mProPrice.setText(String.valueOf(mProduct.proPrice));
 			mProPriceDiscount.setText(String.valueOf(mProduct.proPriceDiscount));
+			mProPriceDescription.setText(mProduct.proDescriptions);
 		}
 	}
 

@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class BaseFragment extends Fragment implements OnItemClickListener{
+public class BaseFragment extends Fragment{
 	protected View mView = null;
 	protected DisplayImageOptions options;
 
@@ -23,10 +23,5 @@ public class BaseFragment extends Fragment implements OnItemClickListener{
 	}
 	protected HomeActivity getHomeActivity(){
 		return (HomeActivity)getActivity();
-	}
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
-		
 	}
 }

@@ -6,12 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.adapters.ListItemShoppingCartAdapter;
+import com.orange.studio.bobo.objects.ProductDTO;
 
-public class ShoppingCartFragment extends BaseFragment {
+public class ShoppingCartFragment extends BaseFragment implements OnItemClickListener{
 	private ListView mListView=null;
 	private ListItemShoppingCartAdapter mAdapter=null;
 	@Override
@@ -32,7 +34,7 @@ public class ShoppingCartFragment extends BaseFragment {
 		mListView=(ListView)mView.findViewById(R.id.myListView);
 		mAdapter=new ListItemShoppingCartAdapter(getActivity());
 		mListView.setAdapter(mAdapter);
-		
+	
 		if(getHomeActivity().mListItemCart!=null){
 			mAdapter.updateDataList(getHomeActivity().mListItemCart);
 		}
@@ -43,6 +45,10 @@ public class ShoppingCartFragment extends BaseFragment {
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		super.onItemClick(parent, view, position, id);
+		ProductDTO mProduct = mAdapter.getItem(position);
+		if (mProduct != null) {
+			getHomeActivity().setCurrentProduct(mProduct);
+			getHomeActivity().onNavigationDrawerItemSelected(-11);
+		}
 	}
 }

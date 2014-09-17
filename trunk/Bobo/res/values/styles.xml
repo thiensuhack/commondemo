@@ -59,11 +59,11 @@
     </style>
     <!-- ListView Style -->
     <style name="ListViewStyle">
-        <item name="android:dividerHeight">0dp</item>
+        <item name="android:dividerHeight">5dp</item>
         <item name="android:scrollbarStyle">outsideOverlay</item>
-        <item name="android:verticalSpacing">2dp</item>
-        <item name="android:divider">@color/green</item>
-        <item name="android:background">@color/white</item>
+        <item name="android:verticalSpacing">5dp</item>
+        <item name="android:divider">@color/white</item>
+        <item name="android:background">@color/bright_gray</item>
     </style>
 
 </resources>

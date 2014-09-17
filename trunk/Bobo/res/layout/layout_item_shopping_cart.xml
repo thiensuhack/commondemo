@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal" >
+    android:orientation="horizontal"
+    android:focusable="false" >
 
     <ImageView
         android:id="@+id/proImageShoppingCart"
@@ -30,7 +31,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="San pham 1" />
-        <TextView
+
+        <TextView
             android:id="@+id/proPriceDiscountShoppingCart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -40,12 +42,12 @@
             android:id="@+id/proCounterShoppingCart"
             android:layout_width="70dp"
             android:layout_height="30dp"
+            android:inputType="number"
             android:lines="1"
             android:maxLines="1"
             android:singleLine="true"
             android:text="11"
-            android:textSize="12sp" 
-            android:inputType="number" />
+            android:textSize="12sp" />
     </LinearLayout>
 
     <ImageView
@@ -53,6 +55,7 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_gravity="center"
-        android:background="@drawable/ic_launcher" />
+        android:background="@drawable/ic_launcher"
+        android:focusable="false" />
 
 </LinearLayout>

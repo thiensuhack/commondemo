@@ -113,82 +113,86 @@ public class NavigationDrawerFragment extends Fragment implements
 		return mDrawerListView;
 	}
 
+	private String getMenuName(int resID) {
+		return getActivity().getString(resID);
+	}
+
 	private void createMenuDrawer() {
 		int index = 1;
 		MenuItemDTO item1 = new MenuItemDTO();
 		item1.menuId = index;
 		item1.resId = R.drawable.ic_menu_home;
-		item1.menuName = "Home";
+		item1.menuName = getMenuName(R.string.menu_drawer_home);
 		item1.menuTotal = 0;
 
 		index++;
 		MenuItemDTO item2 = new MenuItemDTO();
 		item2.menuId = index;
 		item2.resId = R.drawable.ic_menu_product;
-		item2.menuName = "Product";
+		item2.menuName = getMenuName(R.string.menu_drawer_product);
 		item2.menuTotal = 459;
 
 		index++;
 		MenuItemDTO item3 = new MenuItemDTO();
 		item3.menuId = index;
 		item3.resId = R.drawable.ic_menu_shop;
-		item3.menuName = "Shop";
+		item3.menuName = getMenuName(R.string.menu_drawer_shop);;
 		item3.menuTotal = 4;
 
 		index++;
 		MenuItemDTO item4 = new MenuItemDTO();
 		item4.menuId = index;
 		item4.resId = R.drawable.ic_menu_new_arivals;
-		item4.menuName = "New Arrivals";
+		item4.menuName = getMenuName(R.string.menu_drawer_new_arrivals);
 		item4.menuTotal = 29;
 
 		index++;
 		MenuItemDTO item5 = new MenuItemDTO();
 		item5.menuId = index;
 		item5.resId = R.drawable.ic_menu_best_seller;
-		item5.menuName = "Best Seller";
+		item5.menuName = getMenuName(R.string.menu_drawer_best_seller);
 		item5.menuTotal = 49;
 
 		index++;
 		MenuItemDTO item6 = new MenuItemDTO();
 		item6.menuId = index;
 		item6.resId = R.drawable.ic_menu_apparel;
-		item6.menuName = "Apparel";
+		item6.menuName = getMenuName(R.string.menu_drawer_apparel);
 		item6.menuTotal = 25;
 
 		index++;
 		MenuItemDTO item7 = new MenuItemDTO();
 		item7.menuId = index;
 		item7.resId = R.drawable.ic_menu_accessories;
-		item7.menuName = "Accessories";
+		item7.menuName = getMenuName(R.string.menu_drawer_accessories);
 		item7.menuTotal = 299;
 
 		index++;
 		MenuItemDTO item8 = new MenuItemDTO();
 		item8.menuId = index;
 		item8.resId = R.drawable.ic_menu_clearance;
-		item8.menuName = "Clearance";
+		item8.menuName = getMenuName(R.string.menu_drawer_clearance);
 		item8.menuTotal = 9;
 
 		index++;
 		MenuItemDTO item9 = new MenuItemDTO();
 		item9.menuId = index;
 		item9.resId = R.drawable.ic_menu_event_spin_to_win;
-		item9.menuName = "Event-Spin To Win";
+		item9.menuName = getMenuName(R.string.menu_drawer_event_spin_to_win);
 		item9.menuTotal = 0;
 
 		index++;
 		MenuItemDTO item10 = new MenuItemDTO();
 		item10.menuId = index;
 		item10.resId = R.drawable.ic_menu_about_us;
-		item10.menuName = "About Us";
+		item10.menuName = getMenuName(R.string.menu_drawer_about_us);
 		item10.menuTotal = 0;
 
 		index++;
 		MenuItemDTO item11 = new MenuItemDTO();
 		item11.menuId = index;
 		item11.resId = R.drawable.ic_menu_contact_us;
-		item11.menuName = "Contact Us";
+		item11.menuName = getMenuName(R.string.menu_drawer_contact_us);
 		item11.menuTotal = 0;
 
 		mMenuList.add(item1);

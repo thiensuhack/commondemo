@@ -206,7 +206,7 @@ public class HomeActivity extends ActionBarActivity implements
 			mNavigationDrawerFragment.openNaviDrawer();
 			break;
 		case R.id.iconBobo:
-			onNavigationDrawerItemSelected(-13);
+			onNavigationDrawerItemSelected(9);
 			break;
 		case R.id.homeShoppingCartBtn:
 			onNavigationDrawerItemSelected(-12);

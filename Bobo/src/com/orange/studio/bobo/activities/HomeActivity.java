@@ -17,6 +17,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.orange.studio.bobo.R;
+import com.orange.studio.bobo.fragments.AboutFragment;
+import com.orange.studio.bobo.fragments.ContactUsFragment;
 import com.orange.studio.bobo.fragments.HomeFragment;
 import com.orange.studio.bobo.fragments.NavigationDrawerFragment;
 import com.orange.studio.bobo.fragments.ProductDetailFragment;
@@ -32,7 +34,8 @@ public class HomeActivity extends ActionBarActivity implements
 	private TextView mAppTitle = null;
 	private ImageView mNavIconMenu = null;
 	private View mShoppingCartBtn = null;
-
+	private ImageView mAppIcon=null;
+	
 	private ProductDTO mCurrentProduct = null;
 
 	public List<ProductDTO> mListItemCart=null;
@@ -70,13 +73,14 @@ public class HomeActivity extends ActionBarActivity implements
 
 	private void initView() {
 		mNavIconMenu = (ImageView) findViewById(R.id.naviMenuIcon);
+		mAppIcon=(ImageView)findViewById(R.id.iconBobo);
 		mAppTitle = (TextView) findViewById(R.id.appTitle);
 		mShoppingCartBtn = (RelativeLayout) findViewById(R.id.homeShoppingCartBtn);
-
 	}
 
 	private void initListener() {
 		mNavIconMenu.setOnClickListener(this);
+		mAppIcon.setOnClickListener(this);
 		mShoppingCartBtn.setOnClickListener(this);
 	}
 
@@ -100,6 +104,14 @@ public class HomeActivity extends ActionBarActivity implements
 			setAppTitle(getString(R.string.app_name));
 			return;
 		}
+		if (mFragmentName.equals(AboutFragment.class.getName())) {
+			setAppTitle(getString(R.string.menu_drawer_about_us));
+			return;
+		}
+		if (mFragmentName.equals(ContactUsFragment.class.getName())) {
+			setAppTitle(getString(R.string.menu_drawer_contact_us));
+			return;
+		}
 		setAppTitle(getString(R.string.app_name));
 		return;
 	}
@@ -109,11 +121,22 @@ public class HomeActivity extends ActionBarActivity implements
 		Fragment mFragment = null;
 		switch (position) {
 		case 0:
-
+			mFragment = HomeFragment.instantiate(getApplicationContext(),
+					HomeFragment.class.getName());
 			break;
 		case 1:
 			break;
 		case 2:
+			break;
+		case 9:
+			mFragment = AboutFragment.instantiate(
+					getApplicationContext(),
+					AboutFragment.class.getName());
+			break;
+		case 10:
+			mFragment = ContactUsFragment.instantiate(
+					getApplicationContext(),
+					ContactUsFragment.class.getName());
 			break;
 		case -11:
 			mFragment = ProductDetailFragment.instantiate(
@@ -124,7 +147,7 @@ public class HomeActivity extends ActionBarActivity implements
 			mFragment = ShoppingCartFragment.instantiate(
 					getApplicationContext(),
 					ShoppingCartFragment.class.getName());
-			break;
+			break;		
 		default:
 			mFragment = HomeFragment.instantiate(getApplicationContext(),
 					HomeFragment.class.getName());
@@ -181,6 +204,9 @@ public class HomeActivity extends ActionBarActivity implements
 		switch (id) {
 		case R.id.naviMenuIcon:
 			mNavigationDrawerFragment.openNaviDrawer();
+			break;
+		case R.id.iconBobo:
+			onNavigationDrawerItemSelected(-13);
 			break;
 		case R.id.homeShoppingCartBtn:
 			onNavigationDrawerItemSelected(-12);

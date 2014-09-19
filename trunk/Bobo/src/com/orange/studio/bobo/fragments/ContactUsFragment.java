@@ -11,9 +11,9 @@ import android.webkit.WebView;
 
 import com.orange.studio.bobo.R;
 
-public class AboutFragment extends BaseFragment {
+public class ContactUsFragment extends BaseFragment {
 	private WebView mWebView=null;
-	private String mAboutUrl="http://www.bobo-u.com/en/content/4-about-us";
+	private String mAboutUrl="http://www.bobo-u.com/en/contact-us";
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

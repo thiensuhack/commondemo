@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    
     <string name="app_name">BOBO-U Fashion</string>
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
@@ -15,6 +16,9 @@
     <string name="btn_add_to_cart_label">Add to card</string>
     <string name="msg_load_more">Loading...</string>
 
+    
+    
+    <!-- menu drawer -->
     <string name="menu_drawer_home">Home</string>
     <string name="menu_drawer_product">Product</string>
     <string name="menu_drawer_shop">Shop</string>

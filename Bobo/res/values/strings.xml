@@ -15,4 +15,15 @@
     <string name="btn_add_to_cart_label">Add to card</string>
     <string name="msg_load_more">Loading...</string>
 
+    <string name="menu_drawer_home">Home</string>
+    <string name="menu_drawer_product">Product</string>
+    <string name="menu_drawer_shop">Shop</string>
+    <string name="menu_drawer_new_arrivals">New Arrivals</string>
+    <string name="menu_drawer_best_seller">Best Seller</string>
+    <string name="menu_drawer_apparel">Apparel</string>
+    <string name="menu_drawer_accessories">Accessories</string>
+    <string name="menu_drawer_clearance">Clearance</string>
+    <string name="menu_drawer_event_spin_to_win">Event-Spin To Win</string>
+    <string name="menu_drawer_about_us">About Us</string>
+    <string name="menu_drawer_contact_us">Contact Us</string>
 </resources>

@@ -7,7 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.adapters.ListItemsCartAdapter;
@@ -17,6 +19,8 @@ public class ShoppingCartFragment extends BaseFragment implements
 	private ListView mListView = null;
 	private ListItemsCartAdapter mAdapter = null;
 	private ShoppingCartHandler mHandler=null;
+	private TextView mNotFoundMessage=null;
+	private View mNotFoundContainer=null;
 	
 	public interface ShoppingCartHandler{
 		public void removeItemCart(String proId);
@@ -42,10 +46,18 @@ public class ShoppingCartFragment extends BaseFragment implements
 		mHandler=new ShoppingCartHandler() {			
 			@Override
 			public void removeItemCart(String proId) {
-				getHomeActivity().removeCartItem(proId);
-				mAdapter.notifyDataSetChanged();
+				try {
+					getHomeActivity().removeCartItem(proId);
+					mAdapter.updateDataList(getHomeActivity().mListItemCart);
+					checkItemsCart();
+				} catch (Exception e) {
+					return;
+				}
 			}
 		};
+		mNotFoundContainer=(LinearLayout)mView.findViewById(R.id.notFoundContainer);
+		mNotFoundMessage=(TextView)mView.findViewById(R.id.notFoundTextMessage);
+		mNotFoundMessage.setText(getActivity().getString(R.string.msg_empty_items_cart));
 		
 		mListView = (ListView) mView.findViewById(R.id.myListView);
 		mAdapter = new ListItemsCartAdapter(getActivity(),mHandler);
@@ -53,13 +65,20 @@ public class ShoppingCartFragment extends BaseFragment implements
 		if (getHomeActivity().isHasItemsCart()) {
 			mAdapter.updateDataList(getHomeActivity().mListItemCart);
 		}
-		
+		checkItemsCart();
 	}
-
 	private void initListener() {
 		//mListView.setOnItemClickListener(this);
 	}
-
+	private void checkItemsCart(){
+		if(mAdapter!=null && mAdapter.getCount()>0){
+			mListView.setVisibility(View.VISIBLE);
+			mNotFoundContainer.setVisibility(View.GONE);			
+		}else{
+			mNotFoundContainer.setVisibility(View.VISIBLE);
+			mListView.setVisibility(View.GONE);
+		}
+	}
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
@@ -69,5 +88,9 @@ public class ShoppingCartFragment extends BaseFragment implements
 //			getHomeActivity().onNavigationDrawerItemSelected(-11);
 //		}
 		return;
+	}
+	@Override
+	public void onResume() {
+		super.onResume();				
 	}
 }

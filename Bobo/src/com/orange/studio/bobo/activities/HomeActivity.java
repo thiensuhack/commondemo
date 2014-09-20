@@ -96,7 +96,7 @@ public class HomeActivity extends ActionBarActivity implements
 		}
 		if (mFragmentName.equals(ProductDetailFragment.class.getName())) {
 			if (mCurrentProduct != null) {
-				setAppTitle(mCurrentProduct.proName);
+				setAppTitle(mCurrentProduct.name);
 			}
 			return;
 		}

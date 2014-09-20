@@ -63,10 +63,10 @@ public class ProductDetailFragment extends BaseFragment {
 		mProPriceDescription=(TextView)mView.findViewById(R.id.productDetailDiscription);
 		mProduct = getHomeActivity().getCurrentProduct();
 		if (mProduct != null) {
-			mProName.setText(mProduct.proName);
-			mProPrice.setText(String.valueOf(mProduct.proPrice));
-			mProPriceDiscount.setText(String.valueOf(mProduct.proPriceDiscount));
-			mProPriceDescription.setText(mProduct.proDescriptions);
+			mProName.setText(mProduct.name);
+			mProPrice.setText(String.valueOf(mProduct.price));
+			mProPriceDiscount.setText(String.valueOf(mProduct.wholesale_price));
+			mProPriceDescription.setText(mProduct.description);
 		}
 	}
 

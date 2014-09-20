@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/myListView"
     style="@style/ListViewStyle"
     android:layout_width="fill_parent"
-    android:layout_height="match_parent" >
-
-</ListView>
+    android:layout_height="match_parent"
+    tools:context="com.orange.studio.bobo.fragments.ShoppingCartFragment" />

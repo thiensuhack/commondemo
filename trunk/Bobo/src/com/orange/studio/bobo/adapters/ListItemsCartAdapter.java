@@ -7,12 +7,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.orange.studio.bobo.R;
+import com.orange.studio.bobo.activities.HomeActivity;
 import com.orange.studio.bobo.objects.ProductDTO;
 
 public class ListItemsCartAdapter extends OrangeBaseAdapter {
@@ -87,14 +89,24 @@ public class ListItemsCartAdapter extends OrangeBaseAdapter {
 		} else {
 			viewHolder = (ProductViewHolder) convertView.getTag();
 		}
-		ProductDTO mData = mListData.get(position);
+		final ProductDTO mData = mListData.get(position);
 		viewHolder.proName.setText(mData.name);
 		viewHolder.proPrice.setText(String.valueOf(mData.price));
 		viewHolder.proPriceDiscount.setText(String
 				.valueOf(mData.wholesale_price));
 		viewHolder.proCounter.setText(String.valueOf(mData.cartCounter));
+		viewHolder.proImage.setOnClickListener(new OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+				try {
+					((HomeActivity)mActivity).removeCartItem(mData.id);	
+				} catch (Exception e) {
+					return;
+				}				
+			}
+		});
 		ImageLoader.getInstance().displayImage(mData.id_default_image,
-				viewHolder.proImage, options, null);
+				viewHolder.proImage, options, null);		
 		return convertView;
 	}
 

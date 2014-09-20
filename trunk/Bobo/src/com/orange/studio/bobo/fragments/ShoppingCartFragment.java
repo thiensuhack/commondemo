@@ -33,9 +33,8 @@ public class ShoppingCartFragment extends BaseFragment implements OnItemClickLis
 	private void initView(){
 		mListView=(ListView)mView.findViewById(R.id.myListView);
 		mAdapter=new ListItemShoppingCartAdapter(getActivity());
-		mListView.setAdapter(mAdapter);
-	
-		if(getHomeActivity().mListItemCart!=null){
+		mListView.setAdapter(mAdapter);	
+		if(getHomeActivity().isHasItemsCart()){
 			mAdapter.updateDataList(getHomeActivity().mListItemCart);
 		}
 	}

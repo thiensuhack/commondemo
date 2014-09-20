@@ -10,7 +10,10 @@ public final class OrangeConfig {
 	public static String LANGUAGE_DEFAULT = "1";
 	public static String ITEMS_PAGE="20";
 	
-	
+	public static class CartItemsRule{
+		public static final int MAX_ITEMS_CART=11; //max type products cart is 11
+		public static final int MAX_PRODUCT_ITEMS_CART=5; // max products counter is 5
+	}
 	public static class UrlRequest{
 		public static final String domain="http://bobo.vdigi.vn/api";
 		public static String PRODUCT_HOME=domain+"products";

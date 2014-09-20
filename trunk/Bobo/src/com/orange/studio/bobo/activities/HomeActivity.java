@@ -1,5 +1,6 @@
 package com.orange.studio.bobo.activities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
@@ -15,8 +16,11 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.orange.studio.bobo.R;
+import com.orange.studio.bobo.configs.OrangeConfig;
+import com.orange.studio.bobo.configs.OrangeConfig.CartItemsRule;
 import com.orange.studio.bobo.fragments.AboutFragment;
 import com.orange.studio.bobo.fragments.ContactUsFragment;
 import com.orange.studio.bobo.fragments.HomeFragment;
@@ -34,12 +38,12 @@ public class HomeActivity extends ActionBarActivity implements
 	private TextView mAppTitle = null;
 	private ImageView mNavIconMenu = null;
 	private View mShoppingCartBtn = null;
-	private ImageView mAppIcon=null;
-	
+	private ImageView mAppIcon = null;
+
 	private ProductDTO mCurrentProduct = null;
 
-	public List<ProductDTO> mListItemCart=null;
-	
+	public List<ProductDTO> mListItemCart = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -73,7 +77,7 @@ public class HomeActivity extends ActionBarActivity implements
 
 	private void initView() {
 		mNavIconMenu = (ImageView) findViewById(R.id.naviMenuIcon);
-		mAppIcon=(ImageView)findViewById(R.id.iconBobo);
+		mAppIcon = (ImageView) findViewById(R.id.iconBobo);
 		mAppTitle = (TextView) findViewById(R.id.appTitle);
 		mShoppingCartBtn = (RelativeLayout) findViewById(R.id.homeShoppingCartBtn);
 	}
@@ -129,13 +133,11 @@ public class HomeActivity extends ActionBarActivity implements
 		case 2:
 			break;
 		case 9:
-			mFragment = AboutFragment.instantiate(
-					getApplicationContext(),
+			mFragment = AboutFragment.instantiate(getApplicationContext(),
 					AboutFragment.class.getName());
 			break;
 		case 10:
-			mFragment = ContactUsFragment.instantiate(
-					getApplicationContext(),
+			mFragment = ContactUsFragment.instantiate(getApplicationContext(),
 					ContactUsFragment.class.getName());
 			break;
 		case -11:
@@ -147,7 +149,7 @@ public class HomeActivity extends ActionBarActivity implements
 			mFragment = ShoppingCartFragment.instantiate(
 					getApplicationContext(),
 					ShoppingCartFragment.class.getName());
-			break;		
+			break;
 		default:
 			mFragment = HomeFragment.instantiate(getApplicationContext(),
 					HomeFragment.class.getName());
@@ -231,5 +233,48 @@ public class HomeActivity extends ActionBarActivity implements
 
 	public void setCurrentProduct(ProductDTO mCurrentProduct) {
 		this.mCurrentProduct = mCurrentProduct;
+	}
+
+	public boolean isHasItemsCart() {
+		if (mListItemCart != null && mListItemCart.size() > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	public void addToCart(ProductDTO proItem) {
+		if (proItem == null) {
+			return;
+		}
+		if (mListItemCart == null) {
+			mListItemCart = new ArrayList<ProductDTO>();
+		}
+		if (mListItemCart.size() > CartItemsRule.MAX_ITEMS_CART) {
+			Toast.makeText(
+					getApplicationContext(),
+					"max cart items:" + String.valueOf(CartItemsRule.MAX_ITEMS_CART),
+					Toast.LENGTH_LONG).show();
+			return;
+		}
+		for (ProductDTO item : mListItemCart) {
+			if (item.id.equals(proItem.id)) {
+				item.cartCounter++;
+				return;
+			}
+		}
+		proItem.cartCounter++;
+		mListItemCart.add(proItem);
+		return;
+	}
+
+	public void removeCartItem(String proId) {
+		if (proId == null || mListItemCart == null) {
+			return;
+		}
+		for (ProductDTO item : mListItemCart) {
+			if (item.id.equals(proId)) {
+				mListItemCart.remove(item);
+			}
+		}
 	}
 }

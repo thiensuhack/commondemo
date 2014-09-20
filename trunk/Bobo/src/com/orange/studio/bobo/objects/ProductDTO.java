@@ -40,4 +40,9 @@ public class ProductDTO {
 	
 	public String proImageURL;
 
+	public int cartCounter;
+	
+	public ProductDTO(){
+		cartCounter=0;
+	}
 }

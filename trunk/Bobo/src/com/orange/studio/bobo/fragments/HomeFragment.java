@@ -1,15 +1,7 @@
 package com.orange.studio.bobo.fragments;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
-import org.json.JSONException;
-import org.xml.sax.InputSource;
-import org.xml.sax.XMLReader;
 
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
@@ -19,7 +11,6 @@ import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +34,6 @@ import com.orange.studio.bobo.models.ProductModel;
 import com.orange.studio.bobo.objects.HomeSliderDTO;
 import com.orange.studio.bobo.objects.ProductDTO;
 import com.orange.studio.bobo.utils.OrangeUtils;
-import com.orange.studio.bobo.xml.XMLHandler;
 import com.viewpagerindicator.CirclePageIndicator;
 
 public class HomeFragment extends BaseFragment implements OnItemClickListener {

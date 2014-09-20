@@ -5,21 +5,17 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.objects.ProductDTO;
 
-public class ListItemShoppingCartAdapter extends OrangeBaseAdapter {
+public class ListItemsCartAdapter extends OrangeBaseAdapter {
 
 	private class ProductViewHolder {
 		public TextView proName;
@@ -33,7 +29,7 @@ public class ListItemShoppingCartAdapter extends OrangeBaseAdapter {
 	private List<ProductDTO> mListData;
 	private LayoutInflater mInflater = null;
 
-	public ListItemShoppingCartAdapter(Activity _mActivity) {
+	public ListItemsCartAdapter(Activity _mActivity) {
 		super();
 		mActivity = _mActivity;
 		mListData = new ArrayList<ProductDTO>();
@@ -96,7 +92,7 @@ public class ListItemShoppingCartAdapter extends OrangeBaseAdapter {
 		viewHolder.proPrice.setText(String.valueOf(mData.price));
 		viewHolder.proPriceDiscount.setText(String
 				.valueOf(mData.wholesale_price));
-		viewHolder.proCounter.setText("1");
+		viewHolder.proCounter.setText(String.valueOf(mData.cartCounter));
 		ImageLoader.getInstance().displayImage(mData.id_default_image,
 				viewHolder.proImage, options, null);
 		return convertView;

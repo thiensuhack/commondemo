@@ -105,9 +105,10 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener {
 	public void onResume() {
 		super.onResume();
 		loadHomeSliderData();
-		if(mProductAdapter==null || mProductAdapter.getCount()<1){
-			loadProductData();
-		}		
+//		if(mProductAdapter==null || mProductAdapter.getCount()<1){
+//			loadProductData();
+//		}		
+		loadProductData();
 		getHomeActivity().updateItemCartCounter();
 	}
 

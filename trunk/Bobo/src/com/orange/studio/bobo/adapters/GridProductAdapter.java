@@ -90,10 +90,10 @@ public class GridProductAdapter extends OrangeBaseAdapter {
 			viewHolder = (ProductViewHolder) convertView.getTag();
 		}
 		ProductDTO mData = mListData.get(position);
-		viewHolder.proName.setText(mData.proName);
-		viewHolder.proPrice.setText(String.valueOf(mData.proPrice));
+		viewHolder.proName.setText(mData.name);
+		viewHolder.proPrice.setText(String.valueOf(mData.price));
 		viewHolder.proPriceDiscount.setText(String
-				.valueOf(mData.proPriceDiscount));
+				.valueOf(mData.wholesale_price));
 		ImageLoader.getInstance().displayImage(mData.proImageURL,
 				viewHolder.proImage, options, new SimpleImageLoadingListener() {
 					@Override

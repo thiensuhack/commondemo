@@ -237,10 +237,10 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener {
 				ProductDTO item = new ProductDTO();
 				// item.proImageURL = OrangeConfig.IMAGES[i];
 				item.proImageURL = "http://www.bobo-u.com/24-home_default/black-dress-1.jpg";
-				item.proName = "Product Name" + (i + 1);
-				item.proPrice = 1000000;
-				item.proPriceDiscount = 2500000;
-				item.proDescriptions = "Sẽ mãi luôn yêu em, luôn bên em quan tâm em mỗi ngày Vì anh không muốn mất em lần nữa, hãy lắng nghe lòng anh Bởi vì khi xa nhau, tim anh đau, nhớ đến em rất nhiều";
+				item.name = "Product Name" + (i + 1);
+				item.price = 1000000;
+				item.wholesale_price = 2500000;
+				item.description = "Sẽ mãi luôn yêu em, luôn bên em quan tâm em mỗi ngày Vì anh không muốn mất em lần nữa, hãy lắng nghe lòng anh Bởi vì khi xa nhau, tim anh đau, nhớ đến em rất nhiều";
 				result.add(item);
 			}
 			return result;

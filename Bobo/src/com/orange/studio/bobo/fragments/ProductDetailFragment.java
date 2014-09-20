@@ -8,6 +8,7 @@ import android.os.AsyncTask.Status;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,7 +67,7 @@ public class ProductDetailFragment extends BaseFragment {
 			mProName.setText(mProduct.name);
 			mProPrice.setText(String.valueOf(mProduct.price));
 			mProPriceDiscount.setText(String.valueOf(mProduct.wholesale_price));
-			mProPriceDescription.setText(mProduct.description);
+			mProPriceDescription.setText(Html.fromHtml(mProduct.description));
 		}
 	}
 

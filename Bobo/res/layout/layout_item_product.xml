@@ -18,6 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/proImage"
+        android:lines="2"
+        android:maxLines="2"
         android:text="Hydrogen SM041-Áo sơ mi (Xanh)" />
 
     <TextView

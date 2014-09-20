@@ -22,49 +22,54 @@
         android:layout_height="wrap_content"
         android:padding="10dip" />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:layout_height="match_parent" >
 
-        <TextView
-            android:id="@+id/productDetailName"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="20sp" >
-        </TextView>
+            android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/productDetailPrice"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/pink"
-            android:textSize="15sp" >
-        </TextView>
+            <TextView
+                android:id="@+id/productDetailName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="20sp" >
+            </TextView>
 
-        <TextView
-            android:id="@+id/productDetailPriceDiscount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/gray"
-            android:textSize="15sp" >
-        </TextView>
+            <TextView
+                android:id="@+id/productDetailPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/pink"
+                android:textSize="15sp" >
+            </TextView>
 
-        <TextView
-            android:id="@+id/productDetailDiscription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="15sp" >
-        </TextView>
+            <TextView
+                android:id="@+id/productDetailPriceDiscount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray"
+                android:textSize="15sp" >
+            </TextView>
 
-        <Button
-            android:id="@+id/addToCardBtn"
-            style="@style/ButtonPinkStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:text="@string/btn_add_to_cart_label" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/productDetailDiscription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="15sp" >
+            </TextView>
+
+            <Button
+                android:id="@+id/addToCardBtn"
+                style="@style/ButtonPinkStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text="@string/btn_add_to_cart_label" />
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

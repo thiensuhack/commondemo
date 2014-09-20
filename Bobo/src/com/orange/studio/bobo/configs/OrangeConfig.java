@@ -6,8 +6,10 @@ import com.orange.studio.bobo.R;
 
 public final class OrangeConfig {
 	
+	public static int DBVERSION=1;
 	public static String LANGUAGE_DEFAULT = "1";
 	public static String ITEMS_PAGE="20";
+	
 	
 	public static class UrlRequest{
 		public static final String domain="http://bobo.vdigi.vn/api";
@@ -20,6 +22,10 @@ public final class OrangeConfig {
 		public static final String DISPLAY="display";
 		public static final String SORT="sort";
 		public static final String LITMIT="limit";		
+	}
+	public static class Cache{
+		public static final String LIST_PRODUCT_CACHE_KEY="producthomecache";
+		public static final int LIST_PRODUCT_CACHE_NUMBER=100;
 	}
 	public static final String[] IMAGES = new String[] {
 			// Heavy images

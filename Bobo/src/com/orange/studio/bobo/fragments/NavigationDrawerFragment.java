@@ -384,7 +384,7 @@ public class NavigationDrawerFragment extends Fragment implements
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
+			long id) {		
 		selectItem(position);
 	}
 }

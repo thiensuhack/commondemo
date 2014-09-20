@@ -44,7 +44,6 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener {
 
 	private LoadHomeSliderTask mLoadHomeSliderTask = null;
 	private ExpandableHeightGridView mGridView = null;
-	private List<ProductDTO> mListProducts = null;
 	private GridProductAdapter mProductAdapter = null;
 	private LoadProductsTask mLoadProductsTask = null;
 
@@ -106,7 +105,9 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener {
 	public void onResume() {
 		super.onResume();
 		loadHomeSliderData();
-		loadProductData();
+		if(mProductAdapter==null || mProductAdapter.getCount()<1){
+			loadProductData();
+		}		
 	}
 
 	private class ImageHomeSlider extends PagerAdapter {
@@ -237,21 +238,8 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener {
 
 		@Override
 		protected List<ProductDTO> doInBackground(Void... arg0) {
-			Bundle mParams=OrangeUtils.createRequestBundle(OrangeConfig.ITEMS_PAGE);
-			
+			Bundle mParams=OrangeUtils.createRequestBundle(OrangeConfig.ITEMS_PAGE);			
 			return ProductModel.getInstance().getListProduct(UrlRequest.PRODUCT_HOME, null, mParams);
-//			List<ProductDTO> result = new ArrayList<ProductDTO>();
-//			for (int i = 0; i < 10; i++) {
-//				ProductDTO item = new ProductDTO();
-//				// item.proImageURL = OrangeConfig.IMAGES[i];
-//				item.proImageURL = "http://www.bobo-u.com/24-home_default/black-dress-1.jpg";
-//				item.name = "Product Name" + (i + 1);
-//				item.price = "1000000";
-//				item.wholesale_price = "2500000";
-//				item.description = "Sẽ mãi luôn yêu em, luôn bên em quan tâm em mỗi ngày Vì anh không muốn mất em lần nữa, hãy lắng nghe lòng anh Bởi vì khi xa nhau, tim anh đau, nhớ đến em rất nhiều";
-//				result.add(item);
-//			}
-//			return result;
 		}
 
 		@Override

@@ -9,6 +9,7 @@ public final class OrangeConfig {
 	public static int DBVERSION=1;
 	public static String LANGUAGE_DEFAULT = "1";
 	public static String ITEMS_PAGE="20";
+	public static String App_Key="LW6TL3P7Z7KRFM3UYKWHJ3N28GEZLRBT";
 	
 	public static class CartItemsRule{
 		public static final int MAX_ITEMS_CART=11; //max type products cart is 11

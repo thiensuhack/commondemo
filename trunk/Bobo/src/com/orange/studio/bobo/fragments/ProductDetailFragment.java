@@ -17,8 +17,8 @@ import android.widget.TextView;
 import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.adapters.ProductDetailImageSlider;
 import com.orange.studio.bobo.configs.OrangeConfig;
-import com.orange.studio.bobo.objects.HomeSliderDTO;
 import com.orange.studio.bobo.objects.ProductDTO;
+import com.orange.studio.bobo.objects.ProductImageDTO;
 import com.viewpagerindicator.CirclePageIndicator;
 
 public class ProductDetailFragment extends BaseFragment {
@@ -35,7 +35,8 @@ public class ProductDetailFragment extends BaseFragment {
 	private TextView mProPriceDescription = null;
 	
 	private ProductDTO mProduct = null;
-
+	private List<ProductImageDTO> mHomeSlider=null;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -68,6 +69,12 @@ public class ProductDetailFragment extends BaseFragment {
 			mProPrice.setText(String.valueOf(mProduct.price));
 			mProPriceDiscount.setText(String.valueOf(mProduct.wholesale_price));
 			mProPriceDescription.setText(Html.fromHtml(mProduct.description));
+			if(mProduct.associations.images.size()>0){
+				mSilderAdapter = new ProductDetailImageSlider(getActivity(),
+						mProduct.associations.images);
+				mViewPager.setAdapter(mSilderAdapter);
+				mCirclePageIndicator.setViewPager(mViewPager);
+			}			
 		}
 	}
 
@@ -78,7 +85,7 @@ public class ProductDetailFragment extends BaseFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		loadProductDetailSliderData();
+		//loadProductDetailSliderData();
 	}
 
 	private void loadProductDetailSliderData() {
@@ -90,7 +97,7 @@ public class ProductDetailFragment extends BaseFragment {
 	}
 
 	private class LoadHomeSliderTask extends
-			AsyncTask<Void, Void, List<HomeSliderDTO>> {
+			AsyncTask<Void, Void, List<ProductImageDTO>> {
 
 		@Override
 		protected void onPreExecute() {
@@ -99,18 +106,18 @@ public class ProductDetailFragment extends BaseFragment {
 		}
 
 		@Override
-		protected List<HomeSliderDTO> doInBackground(Void... arg0) {
-			List<HomeSliderDTO> result = new ArrayList<HomeSliderDTO>();
+		protected List<ProductImageDTO> doInBackground(Void... arg0) {
+			List<ProductImageDTO> result = new ArrayList<ProductImageDTO>();
 			for (int i = 0; i < 10; i++) {
-				HomeSliderDTO item = new HomeSliderDTO();
-				item.imageURL = OrangeConfig.IMAGES[i];
+				ProductImageDTO item = new ProductImageDTO();
+				item.url = OrangeConfig.IMAGES[i];
 				result.add(item);
 			}
 			return result;
 		}
 
 		@Override
-		protected void onPostExecute(List<HomeSliderDTO> result) {
+		protected void onPostExecute(List<ProductImageDTO> result) {
 			super.onPostExecute(result);
 			if (result != null && result.size() > 0) {
 				mSilderAdapter = new ProductDetailImageSlider(getActivity(),

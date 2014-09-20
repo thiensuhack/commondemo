@@ -30,7 +30,7 @@ import com.zuzu.db.store.SimpleStoreIF;
 public class ProductModel implements ProductIF{
 	private static ProductIF _instance;
 	private static final Lock createLock = new ReentrantLock();
-	private static final int STORE_EXPIRE = 3*60; //3 minutes
+	private static final int STORE_EXPIRE = 1*60; //3 minutes
 		
 	public ProductModel() {
 	}

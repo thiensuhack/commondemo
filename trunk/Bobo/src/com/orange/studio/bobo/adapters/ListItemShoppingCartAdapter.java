@@ -97,7 +97,7 @@ public class ListItemShoppingCartAdapter extends OrangeBaseAdapter {
 		viewHolder.proPriceDiscount.setText(String
 				.valueOf(mData.wholesale_price));
 		viewHolder.proCounter.setText("1");
-		ImageLoader.getInstance().displayImage(mData.proImageURL,
+		ImageLoader.getInstance().displayImage(mData.id_default_image,
 				viewHolder.proImage, options, null);
 		return convertView;
 	}

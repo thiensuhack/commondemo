@@ -17,17 +17,17 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.orange.studio.bobo.R;
-import com.orange.studio.bobo.objects.HomeSliderDTO;
+import com.orange.studio.bobo.objects.ProductImageDTO;
 
 public class ProductDetailImageSlider extends PagerAdapter {
 
 	private LayoutInflater inflater;
-	private List<HomeSliderDTO> mData = new ArrayList<HomeSliderDTO>();
+	private List<ProductImageDTO> mData = new ArrayList<ProductImageDTO>();
 	private DisplayImageOptions options;
 	private Activity mActivity = null;
 
 	public ProductDetailImageSlider(Activity _mActivity,
-			List<HomeSliderDTO> _mData) {
+			List<ProductImageDTO> _mData) {
 		mActivity = _mActivity;
 		inflater = LayoutInflater.from(mActivity);
 		mData = _mData;
@@ -58,7 +58,7 @@ public class ProductDetailImageSlider extends PagerAdapter {
 		ImageView imageView = (ImageView) mContainer
 				.findViewById(R.id.imageHomeSlider);
 
-		ImageLoader.getInstance().displayImage(mData.get(position).imageURL,
+		ImageLoader.getInstance().displayImage(mData.get(position).url,
 				imageView, options, null);
 
 		view.addView(mContainer, 0);

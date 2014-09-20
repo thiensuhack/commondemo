@@ -7,19 +7,23 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import com.orange.studio.bobo.configs.OrangeConfig;
 import com.orange.studio.bobo.objects.ProductDTO;
+import com.orange.studio.bobo.objects.ProductImageDTO;
 
 public class XMLHandler extends DefaultHandler {
 
 	public List<ProductDTO> mListProducts = null;
 
 	public ProductDTO data = null;
-
+	public ProductImageDTO imagePro=null;
+	
 	private String elementValue = null;
 	private boolean elementOn = false;
 
 	private boolean isProNameTag = false;
 	private boolean isDescription=false;
+	private boolean isListImages=false;
 	
 	private String attrId="";
 	
@@ -52,6 +56,19 @@ public class XMLHandler extends DefaultHandler {
 			attrId=attributes.getValue("id");
 			return;
 		}
+		if(localName.equals("id_default_image")){
+			data.id_default_image=attributes.getValue("xlink:href")+"?ws_key="+OrangeConfig.App_Key;
+			return;
+		}
+		if(localName.equals("images")){
+			isListImages=true;
+			return;
+		}
+		if(localName.equalsIgnoreCase("image") && isListImages){
+			imagePro=new ProductImageDTO();
+			imagePro.url=attributes.getValue("xlink:href")+"?ws_key="+OrangeConfig.App_Key;			
+			return;
+		}
 	}
 
 	@Override
@@ -63,7 +80,19 @@ public class XMLHandler extends DefaultHandler {
 		if (localName.equalsIgnoreCase("id")) {
 			data.id = elementValue;
 			return;
+		}		
+		//parser image list
+		if(localName.equalsIgnoreCase("images")){
+			isListImages=false;
+			return;
 		}
+		if(localName.equalsIgnoreCase("image") && isListImages){	
+			imagePro.id=elementValue;
+			data.associations.images.add(imagePro);
+			return;
+		}
+		//end parser image list
+		
 		if(localName.equalsIgnoreCase("language")){
 			if(attrId.equals(mCurrentLanguage)){
 				if(isProNameTag){

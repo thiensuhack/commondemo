@@ -5,6 +5,7 @@ public class ProductDTO {
 	public String id_manufacturer;
 	public String id_supplier;
 	public String id_category_default;
+	public String id_default_image;
 	public String id_tax_rules_group;
 	public String quantity;
 	public String id_shop_default;
@@ -38,11 +39,11 @@ public class ProductDTO {
 	public String available_later;
 	public AssociationDTO associations;
 	
-	public String proImageURL;
 
 	public int cartCounter;
 	
 	public ProductDTO(){
 		cartCounter=0;
+		associations=new AssociationDTO();
 	}
 }

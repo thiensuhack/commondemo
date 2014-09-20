@@ -17,7 +17,7 @@ public class OrangeUtils {
 	}
 	public static Bundle createRequestBundle(String limit) {		
 		Bundle result = new Bundle();
-		result.putString(REQUEST_PARAMS_NAME.WS_KEY, "LW6TL3P7Z7KRFM3UYKWHJ3N28GEZLRBT");
+		result.putString(REQUEST_PARAMS_NAME.WS_KEY, OrangeConfig.App_Key);
 		result.putString(REQUEST_PARAMS_NAME.DISPLAY, "full");
 		result.putString(REQUEST_PARAMS_NAME.SORT, "id_DESC");
 		if(limit!=null){

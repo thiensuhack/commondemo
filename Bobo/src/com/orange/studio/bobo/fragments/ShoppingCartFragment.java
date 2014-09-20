@@ -11,13 +11,17 @@ import android.widget.ListView;
 
 import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.adapters.ListItemsCartAdapter;
-import com.orange.studio.bobo.objects.ProductDTO;
 
 public class ShoppingCartFragment extends BaseFragment implements
 		OnItemClickListener {
 	private ListView mListView = null;
 	private ListItemsCartAdapter mAdapter = null;
-
+	private ShoppingCartHandler mHandler=null;
+	
+	public interface ShoppingCartHandler{
+		public void removeItemCart(String proId);
+	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -34,25 +38,36 @@ public class ShoppingCartFragment extends BaseFragment implements
 	}
 
 	private void initView() {
+		
+		mHandler=new ShoppingCartHandler() {			
+			@Override
+			public void removeItemCart(String proId) {
+				getHomeActivity().removeCartItem(proId);
+				mAdapter.notifyDataSetChanged();
+			}
+		};
+		
 		mListView = (ListView) mView.findViewById(R.id.myListView);
-		mAdapter = new ListItemsCartAdapter(getActivity());
+		mAdapter = new ListItemsCartAdapter(getActivity(),mHandler);
 		mListView.setAdapter(mAdapter);
 		if (getHomeActivity().isHasItemsCart()) {
 			mAdapter.updateDataList(getHomeActivity().mListItemCart);
 		}
+		
 	}
 
 	private void initListener() {
-		mListView.setOnItemClickListener(this);
+		//mListView.setOnItemClickListener(this);
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		ProductDTO mProduct = mAdapter.getItem(position);
-		if (mProduct != null) {
-			getHomeActivity().setCurrentProduct(mProduct);
-			getHomeActivity().onNavigationDrawerItemSelected(-11);
-		}
+//		ProductDTO mProduct = mAdapter.getItem(position);
+//		if (mProduct != null) {
+//			getHomeActivity().setCurrentProduct(mProduct);
+//			getHomeActivity().onNavigationDrawerItemSelected(-11);
+//		}
+		return;
 	}
 }

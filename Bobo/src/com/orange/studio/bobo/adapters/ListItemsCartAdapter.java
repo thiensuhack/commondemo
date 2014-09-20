@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.activities.HomeActivity;
+import com.orange.studio.bobo.fragments.ShoppingCartFragment.ShoppingCartHandler;
 import com.orange.studio.bobo.objects.ProductDTO;
 
 public class ListItemsCartAdapter extends OrangeBaseAdapter {
@@ -25,15 +26,18 @@ public class ListItemsCartAdapter extends OrangeBaseAdapter {
 		public TextView proPriceDiscount;
 		public TextView proCounter;
 		public ImageView proImage;
+		public ImageView proRemoveImage;
 	}
 
 	private Activity mActivity;
 	private List<ProductDTO> mListData;
 	private LayoutInflater mInflater = null;
-
-	public ListItemsCartAdapter(Activity _mActivity) {
+	private ShoppingCartHandler mHandler=null;
+	
+	public ListItemsCartAdapter(Activity _mActivity,ShoppingCartHandler _mHandler) {
 		super();
 		mActivity = _mActivity;
+		mHandler=_mHandler;
 		mListData = new ArrayList<ProductDTO>();
 		mInflater = (LayoutInflater) mActivity
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -77,6 +81,8 @@ public class ListItemsCartAdapter extends OrangeBaseAdapter {
 			viewHolder = new ProductViewHolder();
 			viewHolder.proImage = (ImageView) convertView
 					.findViewById(R.id.proImageShoppingCart);
+			viewHolder.proRemoveImage = (ImageView) convertView
+					.findViewById(R.id.proRemoveShoppingCart);
 			viewHolder.proName = (TextView) convertView
 					.findViewById(R.id.proNameShoppingCart);
 			viewHolder.proPrice = (TextView) convertView
@@ -95,11 +101,11 @@ public class ListItemsCartAdapter extends OrangeBaseAdapter {
 		viewHolder.proPriceDiscount.setText(String
 				.valueOf(mData.wholesale_price));
 		viewHolder.proCounter.setText(String.valueOf(mData.cartCounter));
-		viewHolder.proImage.setOnClickListener(new OnClickListener() {			
+		viewHolder.proRemoveImage.setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View v) {
 				try {
-					((HomeActivity)mActivity).removeCartItem(mData.id);	
+					mHandler.removeItemCart(mData.id);
 				} catch (Exception e) {
 					return;
 				}				

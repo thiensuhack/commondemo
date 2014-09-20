@@ -108,6 +108,7 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener {
 		if(mProductAdapter==null || mProductAdapter.getCount()<1){
 			loadProductData();
 		}		
+		getHomeActivity().updateItemCartCounter();
 	}
 
 	private class ImageHomeSlider extends PagerAdapter {
@@ -246,7 +247,7 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener {
 		protected void onPostExecute(List<ProductDTO> result) {
 			super.onPostExecute(result);
 			if (result != null && result.size() > 0) {
-				getHomeActivity().mListItemCart = result;
+				//getHomeActivity().mListItemCart = result;
 				mProductAdapter.updateDataList(result);
 			}
 		}

@@ -10,12 +10,12 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.orange.studio.bobo.R;
-import com.orange.studio.bobo.adapters.ListItemShoppingCartAdapter;
+import com.orange.studio.bobo.adapters.ListItemsCartAdapter;
 import com.orange.studio.bobo.objects.ProductDTO;
 
 public class ShoppingCartFragment extends BaseFragment implements OnItemClickListener{
 	private ListView mListView=null;
-	private ListItemShoppingCartAdapter mAdapter=null;
+	private ListItemsCartAdapter mAdapter=null;
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -32,7 +32,7 @@ public class ShoppingCartFragment extends BaseFragment implements OnItemClickLis
 	}
 	private void initView(){
 		mListView=(ListView)mView.findViewById(R.id.myListView);
-		mAdapter=new ListItemShoppingCartAdapter(getActivity());
+		mAdapter=new ListItemsCartAdapter(getActivity());
 		mListView.setAdapter(mAdapter);	
 		if(getHomeActivity().isHasItemsCart()){
 			mAdapter.updateDataList(getHomeActivity().mListItemCart);

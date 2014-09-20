@@ -19,7 +19,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.orange.studio.bobo.R;
-import com.orange.studio.bobo.configs.OrangeConfig;
 import com.orange.studio.bobo.configs.OrangeConfig.CartItemsRule;
 import com.orange.studio.bobo.fragments.AboutFragment;
 import com.orange.studio.bobo.fragments.ContactUsFragment;
@@ -39,7 +38,8 @@ public class HomeActivity extends ActionBarActivity implements
 	private ImageView mNavIconMenu = null;
 	private View mShoppingCartBtn = null;
 	private ImageView mAppIcon = null;
-
+	private TextView mTotalItemsCart=null;
+	
 	private ProductDTO mCurrentProduct = null;
 
 	public List<ProductDTO> mListItemCart = null;
@@ -80,6 +80,7 @@ public class HomeActivity extends ActionBarActivity implements
 		mAppIcon = (ImageView) findViewById(R.id.iconBobo);
 		mAppTitle = (TextView) findViewById(R.id.appTitle);
 		mShoppingCartBtn = (RelativeLayout) findViewById(R.id.homeShoppingCartBtn);
+		mTotalItemsCart=(TextView)findViewById(R.id.totalItemsCart);
 	}
 
 	private void initListener() {
@@ -256,14 +257,20 @@ public class HomeActivity extends ActionBarActivity implements
 					Toast.LENGTH_LONG).show();
 			return;
 		}
+		boolean isExisted=false;
 		for (ProductDTO item : mListItemCart) {
 			if (item.id.equals(proItem.id)) {
 				item.cartCounter++;
-				return;
+				isExisted=true;
+				break;
 			}
 		}
-		proItem.cartCounter++;
-		mListItemCart.add(proItem);
+		if(!isExisted){
+			proItem.cartCounter++;
+			mListItemCart.add(proItem);
+		}		
+		updateItemCartCounter();
+		Toast.makeText(getApplicationContext(),"Added:" + proItem.name,Toast.LENGTH_LONG).show();
 		return;
 	}
 
@@ -276,5 +283,20 @@ public class HomeActivity extends ActionBarActivity implements
 				mListItemCart.remove(item);
 			}
 		}
+		updateItemCartCounter();
+	}
+	public void updateItemCartCounter(){
+		if(isHasItemsCart()){
+			mTotalItemsCart.setText(String.valueOf(mListItemCart.size()));
+			mTotalItemsCart.setVisibility(View.VISIBLE);
+		}else{
+			mTotalItemsCart.setText("0");
+			mTotalItemsCart.setVisibility(View.GONE);
+		}
+	}
+	@Override
+	protected void onResume() {
+		super.onResume();
+		updateItemCartCounter();
 	}
 }

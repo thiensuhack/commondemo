@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:background="@drawable/item_product_selector"
     android:focusable="false" >
 
     <ImageView
@@ -11,7 +12,7 @@
         android:layout_height="60dp"
         android:layout_gravity="center"
         android:layout_margin="5dp"
-        android:background="@drawable/ic_launcher" />
+        android:src="@drawable/ic_launcher" />
 
     <LinearLayout
         android:layout_width="0dp"

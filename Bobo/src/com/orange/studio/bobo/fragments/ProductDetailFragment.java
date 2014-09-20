@@ -11,7 +11,10 @@ import android.support.v4.view.ViewPager;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.orange.studio.bobo.R;
@@ -21,7 +24,7 @@ import com.orange.studio.bobo.objects.ProductDTO;
 import com.orange.studio.bobo.objects.ProductImageDTO;
 import com.viewpagerindicator.CirclePageIndicator;
 
-public class ProductDetailFragment extends BaseFragment {
+public class ProductDetailFragment extends BaseFragment implements OnClickListener{
 
 	private ViewPager mViewPager = null;
 	private CirclePageIndicator mCirclePageIndicator = null;
@@ -33,9 +36,9 @@ public class ProductDetailFragment extends BaseFragment {
 	private TextView mProPrice = null;
 	private TextView mProPriceDiscount = null;
 	private TextView mProPriceDescription = null;
+	private Button mAddToCardBtn=null;
 	
 	private ProductDTO mProduct = null;
-	private List<ProductImageDTO> mHomeSlider=null;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -63,6 +66,8 @@ public class ProductDetailFragment extends BaseFragment {
 		mProPriceDiscount = (TextView) mView
 				.findViewById(R.id.productDetailPriceDiscount);
 		mProPriceDescription=(TextView)mView.findViewById(R.id.productDetailDiscription);
+		mAddToCardBtn=(Button)mView.findViewById(R.id.addToCardBtn);
+		
 		mProduct = getHomeActivity().getCurrentProduct();
 		if (mProduct != null) {
 			mProName.setText(mProduct.name);
@@ -79,13 +84,13 @@ public class ProductDetailFragment extends BaseFragment {
 	}
 
 	private void initListener() {
-
+		mAddToCardBtn.setOnClickListener(this);
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		//loadProductDetailSliderData();
+		getHomeActivity().updateItemCartCounter();
 	}
 
 	private void loadProductDetailSliderData() {
@@ -127,5 +132,15 @@ public class ProductDetailFragment extends BaseFragment {
 			}
 		}
 	}
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.addToCardBtn:
+			getHomeActivity().addToCart(mProduct);
+			break;
 
+		default:
+			break;
+		}
+	}
 }

@@ -1,36 +1,42 @@
 package com.orange.studio.bobo.xml;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
+import android.os.Debug;
+import android.util.Log;
+
+import com.orange.studio.bobo.objects.ProductDTO;
  
 public class XMLHandler extends DefaultHandler {
  
-    String elementValue = null;
-    Boolean elementOn = false;
-    public static XMLGettersSetters data = null;
- 
-    public static XMLGettersSetters getXMLData() {
-        return data;
+    
+    public List<ProductDTO> mListProducts=null;
+    
+    public ProductDTO data = null;
+    
+    private String elementValue = null;
+    private Boolean elementOn = false;
+    
+    public XMLHandler(){
+    	super();
+    	mListProducts=new ArrayList<ProductDTO>();
     }
  
-    public static void setXMLData(XMLGettersSetters data) {
-        XMLHandler.data = data;
-    }
- 
-    /** 
-     * This will be called when the tags of the XML starts.
-     **/
     @Override
     public void startElement(String uri, String localName, String qName,
             Attributes attributes) throws SAXException {
         elementOn = true;
- 
-        if (localName.equals("CATALOG"))
-        {
-            data = new XMLGettersSetters();
-        } else if (localName.equals("CD")) {
-        	
+        
+        if (localName.equals("product"))
+        {        	
+            data = new ProductDTO();
+        } else if (localName.equals("language")) {
+        	Log.i("language", elementValue);
         }
     }
     @Override
@@ -38,19 +44,21 @@ public class XMLHandler extends DefaultHandler {
             throws SAXException {
  
         elementOn = false;
- 
-        if (localName.equalsIgnoreCase("title"))
-            data.title=elementValue;
-        else if (localName.equalsIgnoreCase("artist"))
-            data.artist=elementValue;
-        else if (localName.equalsIgnoreCase("country"))
-            data.country=elementValue;
-        else if (localName.equalsIgnoreCase("company"))
-            data.comp=elementValue;
+
+        if (localName.equalsIgnoreCase("id"))
+            data.id=elementValue;
+        else if (localName.equalsIgnoreCase("name"))
+            data.name=elementValue;
+        else if (localName.equalsIgnoreCase("quantity"))
+            data.quantity=elementValue;
+        else if (localName.equalsIgnoreCase("id_manufacturer"))
+            data.id_manufacturer=elementValue;
         else if (localName.equalsIgnoreCase("price"))
             data.price=elementValue;
-        else if (localName.equalsIgnoreCase("year"))
-            data.year=elementValue;
+        else if (localName.equalsIgnoreCase("wholesale_price"))
+            data.wholesale_price=elementValue;
+        else if (localName.equalsIgnoreCase("product"))
+        	mListProducts.add(data);
     }
  
     @Override
@@ -60,7 +68,6 @@ public class XMLHandler extends DefaultHandler {
             elementValue = new String(ch, start, length);
             elementOn = false;
         }
- 
     }
  
 }

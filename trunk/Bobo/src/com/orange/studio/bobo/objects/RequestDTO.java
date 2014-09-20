@@ -6,5 +6,5 @@ public class RequestDTO {
 	public String display;
 	public String sort;
 	public int limit;
-	public int proId;
+	public int proId;	
 }

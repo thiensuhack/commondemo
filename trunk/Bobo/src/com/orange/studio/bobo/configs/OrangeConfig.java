@@ -5,7 +5,22 @@ import com.orange.studio.bobo.R;
 
 
 public final class OrangeConfig {
-
+	
+	public static String LANGUAGE_DEFAULT = "1";
+	public static String ITEMS_PAGE="20";
+	
+	public static class UrlRequest{
+		public static final String domain="http://bobo.vdigi.vn/api";
+		public static String PRODUCT_HOME=domain+"products";
+		public static String PRODUCT_DETAIL=domain+"products/"; //products/{proId}/
+	}
+	public static class REQUEST_PARAMS_NAME{
+		public static final String WS_KEY="ws_key";
+		public static final String OUTPUT_FORMAT="output_format";
+		public static final String DISPLAY="display";
+		public static final String SORT="sort";
+		public static final String LITMIT="limit";		
+	}
 	public static final String[] IMAGES = new String[] {
 			// Heavy images
 			"http://www.ioncannon.net/wp-content/uploads/2011/06/test9.webp",

@@ -7,6 +7,7 @@ import java.util.List;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.json.JSONException;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
@@ -36,9 +37,12 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.adapters.GridProductAdapter;
 import com.orange.studio.bobo.configs.OrangeConfig;
+import com.orange.studio.bobo.configs.OrangeConfig.UrlRequest;
 import com.orange.studio.bobo.customviews.ExpandableHeightGridView;
+import com.orange.studio.bobo.models.ProductModel;
 import com.orange.studio.bobo.objects.HomeSliderDTO;
 import com.orange.studio.bobo.objects.ProductDTO;
+import com.orange.studio.bobo.utils.OrangeUtils;
 import com.orange.studio.bobo.xml.XMLHandler;
 import com.viewpagerindicator.CirclePageIndicator;
 
@@ -230,25 +234,7 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener {
 		}
 	}
 
-	public void LoadXML() {
-		try {
-			SAXParserFactory saxPF = SAXParserFactory.newInstance();
-			SAXParser saxP = saxPF.newSAXParser();
-			XMLReader xmlR = saxP.getXMLReader();
-			URL url = new URL("http://bobo.vdigi.vn/api/products?ws_key=LW6TL3P7Z7KRFM3UYKWHJ3N28GEZLRBT&output_format=JSON&display=full&sort=id_DESC&limit=3"); 
-			XMLHandler myXMLHandler = new XMLHandler();
-			xmlR.setContentHandler(myXMLHandler);
-			xmlR.parse(new InputSource(url.openStream()));
-			if(myXMLHandler.mListProducts!=null && myXMLHandler.mListProducts.size()>0){
-				for (int i = 0; i < myXMLHandler.mListProducts.size(); i++) {
-					Log.i("ProName: ", myXMLHandler.mListProducts.get(i).name);
-				}
-			}
-			
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-	}
+
 
 	private class LoadProductsTask extends
 			AsyncTask<Void, Void, List<ProductDTO>> {
@@ -261,19 +247,21 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener {
 
 		@Override
 		protected List<ProductDTO> doInBackground(Void... arg0) {
-			LoadXML();
-			List<ProductDTO> result = new ArrayList<ProductDTO>();
-			for (int i = 0; i < 10; i++) {
-				ProductDTO item = new ProductDTO();
-				// item.proImageURL = OrangeConfig.IMAGES[i];
-				item.proImageURL = "http://www.bobo-u.com/24-home_default/black-dress-1.jpg";
-				item.name = "Product Name" + (i + 1);
-				item.price = "1000000";
-				item.wholesale_price = "2500000";
-				item.description = "Sẽ mãi luôn yêu em, luôn bên em quan tâm em mỗi ngày Vì anh không muốn mất em lần nữa, hãy lắng nghe lòng anh Bởi vì khi xa nhau, tim anh đau, nhớ đến em rất nhiều";
-				result.add(item);
-			}
-			return result;
+			Bundle mParams=OrangeUtils.createRequestBundle(OrangeConfig.ITEMS_PAGE);
+			
+			return ProductModel.getInstance().getListProduct(UrlRequest.PRODUCT_HOME, null, mParams);
+//			List<ProductDTO> result = new ArrayList<ProductDTO>();
+//			for (int i = 0; i < 10; i++) {
+//				ProductDTO item = new ProductDTO();
+//				// item.proImageURL = OrangeConfig.IMAGES[i];
+//				item.proImageURL = "http://www.bobo-u.com/24-home_default/black-dress-1.jpg";
+//				item.name = "Product Name" + (i + 1);
+//				item.price = "1000000";
+//				item.wholesale_price = "2500000";
+//				item.description = "Sẽ mãi luôn yêu em, luôn bên em quan tâm em mỗi ngày Vì anh không muốn mất em lần nữa, hãy lắng nghe lòng anh Bởi vì khi xa nhau, tim anh đau, nhớ đến em rất nhiều";
+//				result.add(item);
+//			}
+//			return result;
 		}
 
 		@Override

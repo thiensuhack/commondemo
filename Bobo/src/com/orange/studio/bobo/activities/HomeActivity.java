@@ -265,8 +265,9 @@ public class HomeActivity extends ActionBarActivity implements
 				break;
 			}
 		}
-		if(!isExisted){
-			proItem.cartCounter++;
+		
+		if(!isExisted){			
+			proItem.cartCounter=1;
 			mListItemCart.add(proItem);
 		}		
 		updateItemCartCounter();
@@ -278,9 +279,10 @@ public class HomeActivity extends ActionBarActivity implements
 		if (proId == null || mListItemCart == null) {
 			return;
 		}
-		for (ProductDTO item : mListItemCart) {
-			if (item.id.equals(proId)) {
-				mListItemCart.remove(item);
+		for (int i = 0; i < mListItemCart.size(); i++) {
+			if (mListItemCart.get(i).id.equals(proId)) {
+				mListItemCart.remove(i);
+				break;
 			}
 		}
 		updateItemCartCounter();

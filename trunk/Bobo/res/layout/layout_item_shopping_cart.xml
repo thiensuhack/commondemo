@@ -2,48 +2,54 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/item_product_selector"
-    android:orientation="horizontal" >
+    android:background="@drawable/item_cart_product_selector"
+    android:orientation="horizontal"
+    android:padding="5dp" >
 
     <ImageView
         android:id="@+id/proImageShoppingCart"
-        android:layout_width="70dp"
-        android:layout_height="90dp"
+        android:layout_width="80dp"
+        android:layout_height="100dp"
         android:layout_gravity="center"
-        android:layout_margin="5dp"
         android:src="@drawable/ic_launcher" />
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginLeft="5dp"
         android:layout_weight="1"
         android:orientation="vertical" >
 
         <TextView
             android:id="@+id/proNameShoppingCart"
             android:layout_width="match_parent"
+            style="@style/ProNameStyle"
             android:layout_height="wrap_content"
-            android:text="San pham 1"
             android:lines="2"
-            android:maxLines="2" />
+            android:maxLines="2"
+            android:text="San pham 1" />
 
         <TextView
             android:id="@+id/proPriceShoppingCart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/ProPriceCurrentStyle"
             android:text="San pham 1" />
 
         <TextView
             android:id="@+id/proPriceDiscountShoppingCart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/ProPriceDisCountStyle"
             android:text="San pham 1" />
 
         <EditText
             android:id="@+id/proCounterShoppingCart"
             android:layout_width="70dp"
             android:layout_height="30dp"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:inputType="number"
             android:lines="1"
             android:maxLines="1"
@@ -53,12 +59,12 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/proExitShoppingCart"
+        android:id="@+id/proRemoveShoppingCart"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_gravity="center"
+        android:layout_margin="5dp"
         android:background="@drawable/btn_remove_item_cart"
-        android:focusable="false"
-        android:layout_margin="5dp" />
+        android:focusable="false" />
 
 </LinearLayout>

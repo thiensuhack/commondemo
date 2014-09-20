@@ -29,12 +29,12 @@
 
     <style name="ProPriceCurrentStyle">
         <item name="android:textColor">@color/red</item>
-        <item name="android:textSize">11sp</item>
+        <item name="android:textSize">13sp</item>
     </style>
 
     <style name="ProPriceDisCountStyle">
         <item name="android:textColor">@color/gray</item>
-        <item name="android:textSize">11sp</item>
+        <item name="android:textSize">13sp</item>
     </style>
 
     <style name="MenuDrawerStyle">

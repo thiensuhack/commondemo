@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/proImage"
-        android:orientation="vertical">
+        android:orientation="vertical" >
 
         <TextView
             android:id="@+id/proName"
@@ -41,6 +41,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="279.000 VND" />
+
+        <Button
+            android:id="@+id/btnAddCartGrid"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:background="@drawable/btn_add_cart_grid"
+            android:text="@string/btn_add_to_cart_label"
+            android:textColor="@color/white"
+            android:textSize="11sp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp" />
     </LinearLayout>
 
 </RelativeLayout>

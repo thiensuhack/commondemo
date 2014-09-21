@@ -72,16 +72,16 @@
     <ImageView
         android:id="@+id/fragmentHomeMenuPrevious"
         style="@style/MenuHomeFragmentStyle"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_gravity="center"
         android:background="@drawable/item_menu_previous_selector" />
 
     <ImageView
         android:id="@+id/fragmentHomeMenuNext"
         style="@style/MenuHomeFragmentStyle"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_gravity="center"
         android:background="@drawable/item_menu_next_selector" />
 

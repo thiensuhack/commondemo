@@ -108,6 +108,7 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 
 		mMenuHomeScrollView = (HorizontalScrollView) mView
 				.findViewById(R.id.menuHomeScrollView);
+		mMenuHomeScrollView.setHorizontalScrollBarEnabled(false);
 	}
 
 	private void initListener() {
@@ -323,14 +324,20 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 			loadProductData();
 			break;
 		case R.id.fragmentHomeMenuNext:
+			if(mCurrentTab==4){
+				return;
+			}
 			mCurrentTab++;
-			if (mCurrentTab > 5) {
-				mCurrentTab = 5;
+			if (mCurrentTab > 4) {
+				mCurrentTab = 4;
 			}
 			switchMenuTabByIndex(mCurrentTab, true);
 			loadProductData();
 			break;
 		case R.id.fragmentHomeMenuPrevious:
+			if(mCurrentTab==1){
+				return;
+			}
 			mCurrentTab--;
 			if (mCurrentTab < 1) {
 				mCurrentTab = 1;

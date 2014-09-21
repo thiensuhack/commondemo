@@ -7,16 +7,20 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -36,7 +40,8 @@ import com.orange.studio.bobo.objects.ProductDTO;
 import com.orange.studio.bobo.utils.OrangeUtils;
 import com.viewpagerindicator.CirclePageIndicator;
 
-public class HomeFragment extends BaseFragment implements OnItemClickListener {
+public class HomeFragment extends BaseFragment implements OnItemClickListener,
+		OnClickListener {
 	private ViewPager mViewPager = null;
 	private CirclePageIndicator mCirclePageIndicator = null;
 
@@ -46,6 +51,17 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener {
 	private ExpandableHeightGridView mGridView = null;
 	private GridProductAdapter mProductAdapter = null;
 	private LoadProductsTask mLoadProductsTask = null;
+	private HorizontalScrollView mMenuHomeScrollView = null;
+
+	private View mMenuAll = null;
+	private View mMenuBestSeller = null;
+	private View mMenuFeaturedProducts = null;
+	private View mMenuFeaturedPopular = null;
+//	private View mMenuFeaturedProducts3 = null;
+	private View mPreviousBtn = null;
+	private View mNextBtn = null;
+
+	private int mCurrentTab = 1;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -79,10 +95,29 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener {
 		mProductAdapter = new GridProductAdapter(getActivity());
 		mGridView.setAdapter(mProductAdapter);
 
+		mMenuAll = (TextView) mView.findViewById(R.id.fragmentHomeMenuAll);
+		mMenuBestSeller = (TextView) mView
+				.findViewById(R.id.fragmentHomeMenuBestSeller);
+		mMenuFeaturedProducts = (TextView) mView
+				.findViewById(R.id.fragmentHomeMenuFeaturedProducts);
+		mMenuFeaturedPopular = (TextView) mView
+				.findViewById(R.id.fragmentHomeMenuFeaturedPopular);		
+		mPreviousBtn = (ImageView) mView
+				.findViewById(R.id.fragmentHomeMenuPrevious);
+		mNextBtn = (ImageView) mView.findViewById(R.id.fragmentHomeMenuNext);
+
+		mMenuHomeScrollView = (HorizontalScrollView) mView
+				.findViewById(R.id.menuHomeScrollView);
 	}
 
 	private void initListener() {
 		mGridView.setOnItemClickListener(this);
+		mMenuAll.setOnClickListener(this);
+		mMenuBestSeller.setOnClickListener(this);
+		mMenuFeaturedProducts.setOnClickListener(this);
+		mMenuFeaturedPopular.setOnClickListener(this);
+		mNextBtn.setOnClickListener(this);
+		mPreviousBtn.setOnClickListener(this);
 	}
 
 	private void loadHomeSliderData() {
@@ -105,9 +140,9 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener {
 	public void onResume() {
 		super.onResume();
 		loadHomeSliderData();
-//		if(mProductAdapter==null || mProductAdapter.getCount()<1){
-//			loadProductData();
-//		}		
+		// if(mProductAdapter==null || mProductAdapter.getCount()<1){
+		// loadProductData();
+		// }
 		loadProductData();
 		getHomeActivity().updateItemCartCounter();
 	}
@@ -227,8 +262,6 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener {
 		}
 	}
 
-
-
 	private class LoadProductsTask extends
 			AsyncTask<Void, Void, List<ProductDTO>> {
 
@@ -240,15 +273,17 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener {
 
 		@Override
 		protected List<ProductDTO> doInBackground(Void... arg0) {
-			Bundle mParams=OrangeUtils.createRequestBundle(OrangeConfig.ITEMS_PAGE);			
-			return ProductModel.getInstance().getListProduct(UrlRequest.PRODUCT_HOME, null, mParams);
+			Bundle mParams = OrangeUtils
+					.createRequestBundle(OrangeConfig.ITEMS_PAGE);
+			return ProductModel.getInstance().getListProduct(
+					UrlRequest.PRODUCT_HOME, null, mParams);
 		}
 
 		@Override
 		protected void onPostExecute(List<ProductDTO> result) {
 			super.onPostExecute(result);
 			if (result != null && result.size() > 0) {
-				//getHomeActivity().mListItemCart = result;
+				// getHomeActivity().mListItemCart = result;
 				mProductAdapter.updateDataList(result);
 			}
 		}
@@ -262,5 +297,125 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener {
 			getHomeActivity().setCurrentProduct(mProduct);
 			getHomeActivity().onNavigationDrawerItemSelected(-11);
 		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.fragmentHomeMenuAll:
+			mCurrentTab=1;
+			switchMenuTabByViewId(R.id.fragmentHomeMenuAll);
+			loadProductData();
+			break;
+		case R.id.fragmentHomeMenuBestSeller:
+			mCurrentTab=2;
+			switchMenuTabByViewId(R.id.fragmentHomeMenuBestSeller);
+			loadProductData();
+			break;
+		case R.id.fragmentHomeMenuFeaturedProducts:
+			mCurrentTab=3;
+			switchMenuTabByViewId(R.id.fragmentHomeMenuFeaturedProducts);
+			loadProductData();
+			break;
+		case R.id.fragmentHomeMenuFeaturedPopular:
+			mCurrentTab=4;
+			switchMenuTabByViewId(R.id.fragmentHomeMenuFeaturedPopular);
+			loadProductData();
+			break;
+		case R.id.fragmentHomeMenuNext:
+			mCurrentTab++;
+			if (mCurrentTab > 5) {
+				mCurrentTab = 5;
+			}
+			switchMenuTabByIndex(mCurrentTab, true);
+			loadProductData();
+			break;
+		case R.id.fragmentHomeMenuPrevious:
+			mCurrentTab--;
+			if (mCurrentTab < 1) {
+				mCurrentTab = 1;
+			}
+			switchMenuTabByIndex(mCurrentTab, false);
+			loadProductData();
+			break;
+		default:
+			break;
+		}
+	}
+	public void switchMenuTabByViewId(int viewId) {
+		switch (viewId) {
+		case R.id.fragmentHomeMenuAll:
+			mMenuAll.setBackgroundResource(R.drawable.item_menu_home_fragment_active);
+			mMenuBestSeller
+					.setBackgroundResource(R.drawable.item_menu_home_fragment_normal);
+			mMenuFeaturedProducts
+					.setBackgroundResource(R.drawable.item_menu_home_fragment_normal);
+			mMenuFeaturedPopular
+					.setBackgroundResource(R.drawable.item_menu_home_fragment_normal);
+			break;
+		case R.id.fragmentHomeMenuBestSeller:
+			mMenuAll.setBackgroundResource(R.drawable.item_menu_home_fragment_normal);
+			mMenuBestSeller
+					.setBackgroundResource(R.drawable.item_menu_home_fragment_active);
+			mMenuFeaturedProducts
+					.setBackgroundResource(R.drawable.item_menu_home_fragment_normal);
+			mMenuFeaturedPopular
+					.setBackgroundResource(R.drawable.item_menu_home_fragment_normal);
+			break;
+		case R.id.fragmentHomeMenuFeaturedProducts:
+			mMenuAll.setBackgroundResource(R.drawable.item_menu_home_fragment_normal);
+			mMenuBestSeller
+					.setBackgroundResource(R.drawable.item_menu_home_fragment_normal);
+			mMenuFeaturedProducts
+					.setBackgroundResource(R.drawable.item_menu_home_fragment_active);
+			mMenuFeaturedPopular
+					.setBackgroundResource(R.drawable.item_menu_home_fragment_normal);
+			break;
+		case R.id.fragmentHomeMenuFeaturedPopular:
+			mMenuAll.setBackgroundResource(R.drawable.item_menu_home_fragment_normal);
+			mMenuBestSeller
+					.setBackgroundResource(R.drawable.item_menu_home_fragment_normal);
+			mMenuFeaturedProducts
+					.setBackgroundResource(R.drawable.item_menu_home_fragment_normal);
+			mMenuFeaturedPopular
+					.setBackgroundResource(R.drawable.item_menu_home_fragment_active);
+			break;
+		default:
+			break;
+		}
+	}
+	private void switchMenuTabByIndex(int tabIndex, boolean isNext) {
+		int mVx = 0;
+		switch (tabIndex) {
+		case 1:
+			switchMenuTabByViewId(R.id.fragmentHomeMenuAll);
+			mVx = mMenuHomeScrollView.getScrollX();
+			break;
+		case 2:
+			switchMenuTabByViewId(R.id.fragmentHomeMenuBestSeller);
+			mVx = mMenuBestSeller.getWidth();
+			break;
+		case 3:
+			switchMenuTabByViewId(R.id.fragmentHomeMenuFeaturedProducts);
+			mVx = mMenuFeaturedProducts.getWidth();
+			break;
+		case 4:
+			switchMenuTabByViewId(R.id.fragmentHomeMenuFeaturedPopular);
+			mVx = mMenuFeaturedPopular.getWidth();
+			break;
+		default:
+			break;
+		}
+		if (!isNext) {
+			mVx = mVx * (-1);
+		}
+		final int tempVx = mVx;
+		new Handler().postDelayed(new Runnable() {
+			public void run() {
+				mMenuHomeScrollView.smoothScrollTo(
+						(int) mMenuHomeScrollView.getScrollX() + tempVx,
+						(int) mMenuHomeScrollView.getScrollY());
+			}
+		}, 100L);
 	}
 }

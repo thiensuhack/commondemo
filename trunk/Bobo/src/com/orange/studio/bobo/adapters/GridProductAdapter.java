@@ -5,18 +5,17 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.orange.studio.bobo.R;
+import com.orange.studio.bobo.activities.HomeActivity;
 import com.orange.studio.bobo.objects.ProductDTO;
 
 public class GridProductAdapter extends OrangeBaseAdapter {
@@ -26,6 +25,7 @@ public class GridProductAdapter extends OrangeBaseAdapter {
 		public TextView proPrice;
 		public TextView proPriceDiscount;
 		public ImageView proImage;
+		public Button addToCart;
 	}
 
 	private Activity mActivity;
@@ -85,51 +85,28 @@ public class GridProductAdapter extends OrangeBaseAdapter {
 					.findViewById(R.id.proPrice);
 			viewHolder.proPriceDiscount = (TextView) convertView
 					.findViewById(R.id.proPriceDisCount);
+			viewHolder.addToCart = (Button) convertView
+					.findViewById(R.id.btnAddCartGrid);
 			convertView.setTag(viewHolder);
 		} else {
 			viewHolder = (ProductViewHolder) convertView.getTag();
 		}
-		ProductDTO mData = mListData.get(position);
+		final ProductDTO mData = mListData.get(position);
 		viewHolder.proName.setText(mData.name);
 		viewHolder.proPrice.setText(String.valueOf(mData.price));
 		viewHolder.proPriceDiscount.setText(String
 				.valueOf(mData.wholesale_price));
+		viewHolder.addToCart.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				try {
+					((HomeActivity)mActivity).addToCart(mData);
+				} catch (Exception e) {
+				}
+			}
+		});
 		ImageLoader.getInstance().displayImage(mData.id_default_image,
-				viewHolder.proImage, options, new SimpleImageLoadingListener() {
-					@Override
-					public void onLoadingStarted(String imageUri, View view) {
-					}
-
-					@Override
-					public void onLoadingFailed(String imageUri, View view,
-							FailReason failReason) {
-						String message = null;
-						switch (failReason.getType()) {
-						case IO_ERROR:
-							message = "Input/Output error";
-							break;
-						case DECODING_ERROR:
-							message = "Image can't be decoded";
-							break;
-						case NETWORK_DENIED:
-							message = "Downloads are denied";
-							break;
-						case OUT_OF_MEMORY:
-							message = "Out Of Memory error";
-							break;
-						case UNKNOWN:
-							message = "Unknown error";
-							break;
-						}
-						Toast.makeText(mActivity, message, Toast.LENGTH_SHORT)
-								.show();
-					}
-
-					@Override
-					public void onLoadingComplete(String imageUri, View view,
-							Bitmap loadedImage) {
-					}
-				});
+				viewHolder.proImage, options, null);
 		return convertView;
 	}
 

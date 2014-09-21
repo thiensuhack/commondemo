@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/gray"
+    android:orientation="horizontal" >
+
+    <HorizontalScrollView
+        android:id="@+id/menuHomeScrollView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/fragmentHomeMenuAll"
+                style="@style/MenuHomeFragmentStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/item_menu_home_fragment_active"
+                android:text="@string/fragment_home_menu_all" />
+
+            <View
+                style="@style/DeviderVerticalStyle"
+                android:layout_width="0.5dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:id="@+id/fragmentHomeMenuBestSeller"
+                style="@style/MenuHomeFragmentStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/item_menu_home_fragment_normal"
+                android:text="@string/fragment_home_menu_best_seller" />
+
+            <View
+                style="@style/DeviderVerticalStyle"
+                android:layout_width="0.5dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:id="@+id/fragmentHomeMenuFeaturedProducts"
+                style="@style/MenuHomeFragmentStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/item_menu_home_fragment_normal"
+                android:text="@string/fragment_home_menu_featured_products" />
+
+            <View
+                style="@style/DeviderVerticalStyle"
+                android:layout_width="0.5dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:id="@+id/fragmentHomeMenuFeaturedPopular"
+                style="@style/MenuHomeFragmentStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/item_menu_home_fragment_normal"
+                android:text="@string/fragment_home_menu_popular" />            
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <ImageView
+        android:id="@+id/fragmentHomeMenuPrevious"
+        style="@style/MenuHomeFragmentStyle"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_gravity="center"
+        android:background="@drawable/item_menu_previous_selector" />
+
+    <ImageView
+        android:id="@+id/fragmentHomeMenuNext"
+        style="@style/MenuHomeFragmentStyle"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_gravity="center"
+        android:background="@drawable/item_menu_next_selector" />
+
+</LinearLayout>

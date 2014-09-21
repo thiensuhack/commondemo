@@ -31,4 +31,10 @@
     <string name="menu_drawer_event_spin_to_win">Event-Spin To Win</string>
     <string name="menu_drawer_about_us">About Us</string>
     <string name="menu_drawer_contact_us">Contact Us</string>
+    
+    <!-- Fragment Home Menu -->
+    <string name="fragment_home_menu_all">ALL</string>
+    <string name="fragment_home_menu_best_seller">BEST SELLER</string>
+    <string name="fragment_home_menu_featured_products">FEATURED PRODUCTS</string>
+    <string name="fragment_home_menu_popular">POPULAR</string>
 </resources>

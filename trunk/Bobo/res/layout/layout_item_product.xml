@@ -47,12 +47,14 @@
             android:layout_width="wrap_content"
             android:layout_height="25dp"
             android:layout_gravity="center"
+            android:layout_marginBottom="3dp"
+            android:layout_marginTop="3dp"
             android:background="@drawable/btn_add_cart_grid"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:text="@string/btn_add_to_cart_label"
             android:textColor="@color/white"
-            android:textSize="11sp"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp" />
+            android:textSize="11sp" />
     </LinearLayout>
 
 </RelativeLayout>

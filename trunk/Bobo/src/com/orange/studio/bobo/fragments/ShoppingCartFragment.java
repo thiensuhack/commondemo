@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.adapters.ListItemsCartAdapter;
+import com.orange.studio.bobo.objects.ProductDTO;
 
 public class ShoppingCartFragment extends BaseFragment implements
 		OnItemClickListener {
@@ -68,7 +69,7 @@ public class ShoppingCartFragment extends BaseFragment implements
 		checkItemsCart();
 	}
 	private void initListener() {
-		//mListView.setOnItemClickListener(this);
+		mListView.setOnItemClickListener(this);
 	}
 	private void checkItemsCart(){
 		if(mAdapter!=null && mAdapter.getCount()>0){
@@ -82,11 +83,11 @@ public class ShoppingCartFragment extends BaseFragment implements
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-//		ProductDTO mProduct = mAdapter.getItem(position);
-//		if (mProduct != null) {
-//			getHomeActivity().setCurrentProduct(mProduct);
-//			getHomeActivity().onNavigationDrawerItemSelected(-11);
-//		}
+		ProductDTO mProduct = mAdapter.getItem(position);
+		if (mProduct != null) {
+			getHomeActivity().setCurrentProduct(mProduct);
+			getHomeActivity().onNavigationDrawerItemSelected(-11);
+		}
 		return;
 	}
 	@Override

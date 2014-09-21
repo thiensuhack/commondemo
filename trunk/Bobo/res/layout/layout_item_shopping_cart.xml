@@ -23,8 +23,8 @@
 
         <TextView
             android:id="@+id/proNameShoppingCart"
-            android:layout_width="match_parent"
             style="@style/ProNameStyle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lines="2"
             android:maxLines="2"
@@ -32,16 +32,16 @@
 
         <TextView
             android:id="@+id/proPriceShoppingCart"
+            style="@style/ProPriceCurrentStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/ProPriceCurrentStyle"
             android:text="San pham 1" />
 
         <TextView
             android:id="@+id/proPriceDiscountShoppingCart"
+            style="@style/ProPriceDisCountStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/ProPriceDisCountStyle"
             android:text="San pham 1" />
 
         <EditText
@@ -65,6 +65,7 @@
         android:layout_gravity="center"
         android:layout_margin="5dp"
         android:background="@drawable/btn_remove_item_cart"
-        android:focusable="false" />
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
 
 </LinearLayout>

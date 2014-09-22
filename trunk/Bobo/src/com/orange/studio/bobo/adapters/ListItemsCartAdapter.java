@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.orange.studio.bobo.R;
-import com.orange.studio.bobo.activities.HomeActivity;
 import com.orange.studio.bobo.fragments.ShoppingCartFragment.ShoppingCartHandler;
 import com.orange.studio.bobo.objects.ProductDTO;
 
@@ -27,17 +26,20 @@ public class ListItemsCartAdapter extends OrangeBaseAdapter {
 		public TextView proCounter;
 		public ImageView proImage;
 		public ImageView proRemoveImage;
+		public ImageView proDecrease;
+		public ImageView proIncrease;
 	}
 
 	private Activity mActivity;
 	private List<ProductDTO> mListData;
 	private LayoutInflater mInflater = null;
-	private ShoppingCartHandler mHandler=null;
-	
-	public ListItemsCartAdapter(Activity _mActivity,ShoppingCartHandler _mHandler) {
+	private ShoppingCartHandler mHandler = null;
+
+	public ListItemsCartAdapter(Activity _mActivity,
+			ShoppingCartHandler _mHandler) {
 		super();
 		mActivity = _mActivity;
-		mHandler=_mHandler;
+		mHandler = _mHandler;
 		mListData = new ArrayList<ProductDTO>();
 		mInflater = (LayoutInflater) mActivity
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -91,28 +93,54 @@ public class ListItemsCartAdapter extends OrangeBaseAdapter {
 					.findViewById(R.id.proPriceDiscountShoppingCart);
 			viewHolder.proCounter = (TextView) convertView
 					.findViewById(R.id.proCounterShoppingCart);
+			viewHolder.proDecrease = (ImageView) convertView
+					.findViewById(R.id.itemCartDecreaseBtn);
+			viewHolder.proIncrease = (ImageView) convertView
+					.findViewById(R.id.itemCartIncreaseBtn);
 			convertView.setTag(viewHolder);
 		} else {
 			viewHolder = (ProductViewHolder) convertView.getTag();
 		}
 		final ProductDTO mData = mListData.get(position);
 		viewHolder.proName.setText(mData.name);
-		viewHolder.proPrice.setText(String.valueOf(mData.price));
-		viewHolder.proPriceDiscount.setText(String
-				.valueOf(mData.wholesale_price));
+		viewHolder.proPrice.setText("$" + String.valueOf(mData.price));
+		viewHolder.proPriceDiscount.setText("$"
+				+ String.valueOf(mData.wholesale_price));
 		viewHolder.proCounter.setText(String.valueOf(mData.cartCounter));
-		viewHolder.proRemoveImage.setOnClickListener(new OnClickListener() {			
+		viewHolder.proRemoveImage.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				try {
 					mHandler.removeItemCart(mData.id);
 				} catch (Exception e) {
 					return;
-				}				
+				}
+			}
+		});
+		viewHolder.proDecrease.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				try {
+					mHandler.decreaseItemCart(mData);
+				} catch (Exception e) {
+					return;
+				}
+			}
+		});
+		viewHolder.proIncrease.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				try {
+					mHandler.increaseItemCart(mData);
+				} catch (Exception e) {
+					return;
+				}
 			}
 		});
 		ImageLoader.getInstance().displayImage(mData.id_default_image,
-				viewHolder.proImage, options, null);		
+				viewHolder.proImage, options, null);
 		return convertView;
 	}
 

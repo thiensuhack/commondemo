@@ -79,8 +79,8 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 
 	private void initView() {
 		options = new DisplayImageOptions.Builder()
-				.showImageForEmptyUri(R.drawable.ic_launcher)
-				.showImageOnFail(R.drawable.ic_launcher)
+				.showImageForEmptyUri(R.drawable.ic_bobo_app)
+				.showImageOnFail(R.drawable.ic_bobo_app)
 				.resetViewBeforeLoading(true).cacheOnDisk(true)
 				.imageScaleType(ImageScaleType.EXACTLY)
 				.bitmapConfig(Bitmap.Config.RGB_565).considerExifParams(true)

@@ -124,11 +124,11 @@ public class XMLHandler extends DefaultHandler {
 			return;
 		}
 		if (localName.equalsIgnoreCase("price")) {
-			data.price = elementValue;
+			data.price = convertStringToFloat(elementValue);
 			return;
 		}
 		if (localName.equalsIgnoreCase("wholesale_price")) {
-			data.wholesale_price = elementValue;
+			data.wholesale_price = convertStringToFloat(elementValue);
 			return;
 		}
 		if (localName.equalsIgnoreCase("product"))
@@ -146,5 +146,11 @@ public class XMLHandler extends DefaultHandler {
 			elementOn = false;
 		}
 	}
-
+	private double convertStringToFloat(String value){
+		try {
+			return Double.valueOf(value);
+		} catch (Exception e) {
+			return 0;
+		}
+	}
 }

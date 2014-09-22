@@ -15,8 +15,8 @@
     </style>
 
     <style name="OrangeCustomCirclePageIndicator" parent="@android:style/Theme.Light">
-        <item name="fillColor">@color/bright_pink</item>
-        <item name="strokeColor">@color/dark_pink</item>
+        <item name="fillColor">@color/pink</item>
+        <item name="strokeColor">@color/gray</item>
         <item name="strokeWidth">0.5dp</item>
         <item name="radius">3dp</item>
         <item name="centered">true</item>
@@ -25,16 +25,19 @@
     <style name="ProNameStyle">
         <item name="android:textColor">@color/pink</item>
         <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="ProPriceCurrentStyle">
         <item name="android:textColor">@color/red</item>
         <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="ProPriceDisCountStyle">
         <item name="android:textColor">@color/gray</item>
         <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="MenuDrawerStyle">

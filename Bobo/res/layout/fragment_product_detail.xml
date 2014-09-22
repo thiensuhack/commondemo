@@ -41,7 +41,8 @@
                 android:layout_height="wrap_content"
                 android:text="Black Dress 1"
                 android:textColor="@color/black"
-                android:textSize="20sp" >
+                android:textSize="20sp"
+                android:textStyle="bold" >
             </TextView>
 
             <TextView
@@ -50,7 +51,8 @@
                 android:layout_height="wrap_content"
                 android:text="$9.00"
                 android:textColor="@color/pink"
-                android:textSize="15sp" >
+                android:textSize="15sp"
+                android:textStyle="bold" >
             </TextView>
 
             <TextView
@@ -59,7 +61,8 @@
                 android:layout_height="wrap_content"
                 android:text="$1.00"
                 android:textColor="@color/gray"
-                android:textSize="15sp" >
+                android:textSize="15sp"
+                android:textStyle="bold" >
             </TextView>
 
             <WebView

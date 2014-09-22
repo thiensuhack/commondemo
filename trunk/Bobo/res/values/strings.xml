@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    
     <string name="app_name">BOBO-U Fashion</string>
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
@@ -15,7 +14,13 @@
     <string name="btn_featured_products">FEATURED PRODUCTS</string>
     <string name="btn_add_to_cart_label">Add to card</string>
     <string name="msg_load_more">Loading...</string>
-
+    <!-- dialogs -->
+    <string name="dialog_exit_app_title">Exit Bobo</string>
+    <string name="dialog_exit_app_message">Exit BOBO-U Fashion?</string>
+    <string name="dialog_exit_app_btn_Ok">OK</string>
+	<string name="dialog_exit_app_btn_Cancel">Cancel</string>
+	<string name="exit_label">Close</string>
+	
     <string name="msg_empty_items_cart">Your shopping cart is empty.</string>
     <string name="txt_btn_retry">RETRY</string>
     <string name="not_found_data_message">NOT FOUND DATA :(</string>
@@ -31,10 +36,11 @@
     <string name="menu_drawer_event_spin_to_win">Event-Spin To Win</string>
     <string name="menu_drawer_about_us">About Us</string>
     <string name="menu_drawer_contact_us">Contact Us</string>
-    
+
     <!-- Fragment Home Menu -->
     <string name="fragment_home_menu_all">ALL</string>
     <string name="fragment_home_menu_best_seller">BEST SELLER</string>
     <string name="fragment_home_menu_featured_products">FEATURED PRODUCTS</string>
     <string name="fragment_home_menu_popular">POPULAR</string>
+
 </resources>

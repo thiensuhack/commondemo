@@ -18,8 +18,8 @@ public class ProductDTO {
 	public String online_only;
 	public String ecotax;
 	public String minimal_quantity;
-	public String price;
-	public String wholesale_price;
+	public double price;
+	public double wholesale_price;
 	public String unit_price_ratio;
 	public String additional_shipping_cost;
 	public String text_fields;

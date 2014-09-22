@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.TextView;
@@ -35,7 +36,7 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 	private TextView mProName = null;
 	private TextView mProPrice = null;
 	private TextView mProPriceDiscount = null;
-	private TextView mProPriceDescription = null;
+	private WebView mProPriceDescription = null;
 	private Button mAddToCardBtn=null;
 	
 	private ProductDTO mProduct = null;
@@ -65,15 +66,17 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 		mProPrice = (TextView) mView.findViewById(R.id.productDetailPrice);
 		mProPriceDiscount = (TextView) mView
 				.findViewById(R.id.productDetailPriceDiscount);
-		mProPriceDescription=(TextView)mView.findViewById(R.id.productDetailDiscription);
+		mProPriceDescription=(WebView)mView.findViewById(R.id.productDetailDiscription);
 		mAddToCardBtn=(Button)mView.findViewById(R.id.addToCardBtn);
 		
 		mProduct = getHomeActivity().getCurrentProduct();
 		if (mProduct != null) {
 			mProName.setText(mProduct.name);
-			mProPrice.setText(String.valueOf(mProduct.price));
-			mProPriceDiscount.setText(String.valueOf(mProduct.wholesale_price));
-			mProPriceDescription.setText(Html.fromHtml(mProduct.description));
+			mProPrice.setText("$"+String.valueOf(mProduct.price));
+			mProPriceDiscount.setText("$"+String.valueOf(mProduct.wholesale_price));
+			String descriptions="<body style='text-align: justify;'>"+mProduct.description+"</body>";
+			//mProPriceDescription.setText(Html.fromHtml(descriptions));
+			mProPriceDescription.loadData(descriptions,"text/html", "utf-8");
 			if(mProduct.associations.images.size()>0){
 				mSilderAdapter = new ProductDetailImageSlider(getActivity(),
 						mProduct.associations.images);

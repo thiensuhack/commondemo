@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-Auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     android:padding="10dp" >
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fillViewport="true"
         android:orientation="vertical"
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -25,11 +25,13 @@
             style="@style/OrangeCustomCirclePageIndicator"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/viewPagerProductDetail"
             android:padding="10dip" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/indicatorProductDetail"
             android:orientation="vertical"
             android:paddingBottom="10dp" >
 
@@ -37,6 +39,7 @@
                 android:id="@+id/productDetailName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="Black Dress 1"
                 android:textColor="@color/black"
                 android:textSize="20sp" >
             </TextView>
@@ -45,6 +48,7 @@
                 android:id="@+id/productDetailPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="$9.00"
                 android:textColor="@color/pink"
                 android:textSize="15sp" >
             </TextView>
@@ -53,25 +57,37 @@
                 android:id="@+id/productDetailPriceDiscount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="$1.00"
                 android:textColor="@color/gray"
                 android:textSize="15sp" >
             </TextView>
 
-            <TextView
+            <WebView
                 android:id="@+id/productDetailDiscription"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="15sp" >
-            </TextView>
+                android:layout_height="wrap_content" />
 
             <Button
                 android:id="@+id/addToCardBtn"
                 style="@style/ButtonPinkStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
+                android:layout_gravity="center"
                 android:text="@string/btn_add_to_cart_label" />
         </LinearLayout>
-    </LinearLayout>
+
+        <TextView
+            android:id="@+id/proSaleOff"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/ic_sale_off"
+            android:gravity="center"
+            android:text="99%"
+            android:textColor="@color/white"
+            android:textSize="12sp" >
+        </TextView>
+    </RelativeLayout>
 
 </ScrollView>

@@ -93,8 +93,8 @@ public class GridProductAdapter extends OrangeBaseAdapter {
 		}
 		final ProductDTO mData = mListData.get(position);
 		viewHolder.proName.setText(mData.name);
-		viewHolder.proPrice.setText(String.valueOf(mData.price));
-		viewHolder.proPriceDiscount.setText(String
+		viewHolder.proPrice.setText("$"+String.valueOf(mData.price));
+		viewHolder.proPriceDiscount.setText("$"+String
 				.valueOf(mData.wholesale_price));
 		viewHolder.addToCart.setOnClickListener(new OnClickListener() {
 			@Override

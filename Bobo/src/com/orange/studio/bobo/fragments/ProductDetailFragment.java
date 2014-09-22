@@ -74,7 +74,7 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 			mProName.setText(mProduct.name);
 			mProPrice.setText("$"+String.valueOf(mProduct.price));
 			mProPriceDiscount.setText("$"+String.valueOf(mProduct.wholesale_price));
-			String descriptions="<body style='text-align: justify;'>"+mProduct.description+"</body>";
+			String descriptions="<body style='text-align: justify;font-size:17px'>"+mProduct.description+"</body>";
 			//mProPriceDescription.setText(Html.fromHtml(descriptions));
 			mProPriceDescription.loadData(descriptions,"text/html", "utf-8");
 			if(mProduct.associations.images.size()>0){

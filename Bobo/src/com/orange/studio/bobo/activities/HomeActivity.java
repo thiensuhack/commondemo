@@ -1,5 +1,6 @@
 package com.orange.studio.bobo.activities;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,17 +41,19 @@ public class HomeActivity extends ActionBarActivity implements
 	private ImageView mNavIconMenu = null;
 	private View mShoppingCartBtn = null;
 	private ImageView mAppIcon = null;
-	private TextView mTotalItemsCart=null;
-	
+	private TextView mTotalItemsCart = null;
+
 	private ProductDTO mCurrentProduct = null;
 
 	public List<ProductDTO> mListItemCart = null;
-	
-	public interface MainHomeActivityHandler{
+
+	public interface MainHomeActivityHandler {
 		public void exitApplication();
 	}
-	private MainHomeActivityHandler mHandler=null;
-	private ExitDialog mExitDialog=null;
+
+	private MainHomeActivityHandler mHandler = null;
+	private ExitDialog mExitDialog = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -87,9 +90,9 @@ public class HomeActivity extends ActionBarActivity implements
 		mAppIcon = (ImageView) findViewById(R.id.iconBobo);
 		mAppTitle = (TextView) findViewById(R.id.appTitle);
 		mShoppingCartBtn = (RelativeLayout) findViewById(R.id.homeShoppingCartBtn);
-		mTotalItemsCart=(TextView)findViewById(R.id.totalItemsCart);
-		mHandler=new MainHomeActivityHandler() {
-			
+		mTotalItemsCart = (TextView) findViewById(R.id.totalItemsCart);
+		mHandler = new MainHomeActivityHandler() {
+
 			@Override
 			public void exitApplication() {
 				try {
@@ -100,7 +103,7 @@ public class HomeActivity extends ActionBarActivity implements
 				}
 			}
 		};
-		mExitDialog=new ExitDialog(this, mHandler);
+		mExitDialog = new ExitDialog(this, mHandler);
 	}
 
 	private void initListener() {
@@ -271,28 +274,26 @@ public class HomeActivity extends ActionBarActivity implements
 		if (mListItemCart == null) {
 			mListItemCart = new ArrayList<ProductDTO>();
 		}
-		if (mListItemCart.size() > CartItemsRule.MAX_ITEMS_CART) {
-			Toast.makeText(
-					getApplicationContext(),
-					"max cart items:" + String.valueOf(CartItemsRule.MAX_ITEMS_CART),
-					Toast.LENGTH_LONG).show();
-			return;
-		}
-		boolean isExisted=false;
+
+		boolean isExisted = false;
 		for (ProductDTO item : mListItemCart) {
 			if (item.id.equals(proItem.id)) {
+				if (item.cartCounter >= CartItemsRule.MAX_ITEMS_CART) {
+					return;
+				}
 				item.cartCounter++;
-				isExisted=true;
+				isExisted = true;
 				break;
 			}
 		}
-		
-		if(!isExisted){			
-			proItem.cartCounter=1;
-			mListItemCart.add(proItem);
-		}		
+
+		if (!isExisted) {
+			proItem.cartCounter = 1;
+			mListItemCart.add(0, proItem);
+		}
 		updateItemCartCounter();
-		Toast.makeText(getApplicationContext(),"Added:" + proItem.name,Toast.LENGTH_LONG).show();
+		Toast.makeText(getApplicationContext(), "Added:" + proItem.name,
+				Toast.LENGTH_SHORT).show();
 		return;
 	}
 
@@ -308,15 +309,45 @@ public class HomeActivity extends ActionBarActivity implements
 		}
 		updateItemCartCounter();
 	}
-	public void updateItemCartCounter(){
-		if(isHasItemsCart()){
+
+	public void decreaseCartItem(String proId) {
+		if (proId == null || mListItemCart == null) {
+			return;
+		}
+		for (int i = 0; i < mListItemCart.size(); i++) {
+			if (mListItemCart.get(i).id.equals(proId)
+					&& mListItemCart.get(i).cartCounter > 0) {
+				mListItemCart.get(i).cartCounter--;
+				break;
+			}
+		}
+		updateItemCartCounter();
+	}
+
+	public void updateItemCartCounter() {
+		if (isHasItemsCart()) {
 			mTotalItemsCart.setText(String.valueOf(mListItemCart.size()));
 			mTotalItemsCart.setVisibility(View.VISIBLE);
-		}else{
+		} else {
 			mTotalItemsCart.setText("0");
 			mTotalItemsCart.setVisibility(View.GONE);
 		}
 	}
+
+	public double getTotalPriceItemsCart() {
+		if (mListItemCart == null || mListItemCart.size() < 1) {
+			return 0;
+		}
+		double result = 0;
+		for (ProductDTO item : mListItemCart) {
+			result += item.price * item.cartCounter;
+		}
+		result = result*100;
+		result = Math.round(result);
+		result = result /100;
+		return result;
+	}
+
 	@Override
 	protected void onResume() {
 		super.onResume();

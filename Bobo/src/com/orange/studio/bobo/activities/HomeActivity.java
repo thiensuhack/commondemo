@@ -18,8 +18,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.configs.OrangeConfig.CartItemsRule;
+import com.orange.studio.bobo.dialogs.ExitDialog;
 import com.orange.studio.bobo.fragments.AboutFragment;
 import com.orange.studio.bobo.fragments.ContactUsFragment;
 import com.orange.studio.bobo.fragments.HomeFragment;
@@ -43,7 +45,12 @@ public class HomeActivity extends ActionBarActivity implements
 	private ProductDTO mCurrentProduct = null;
 
 	public List<ProductDTO> mListItemCart = null;
-
+	
+	public interface MainHomeActivityHandler{
+		public void exitApplication();
+	}
+	private MainHomeActivityHandler mHandler=null;
+	private ExitDialog mExitDialog=null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -81,6 +88,19 @@ public class HomeActivity extends ActionBarActivity implements
 		mAppTitle = (TextView) findViewById(R.id.appTitle);
 		mShoppingCartBtn = (RelativeLayout) findViewById(R.id.homeShoppingCartBtn);
 		mTotalItemsCart=(TextView)findViewById(R.id.totalItemsCart);
+		mHandler=new MainHomeActivityHandler() {
+			
+			@Override
+			public void exitApplication() {
+				try {
+					ImageLoader.getInstance().clearMemoryCache();
+					finish();
+				} catch (Exception e) {
+					return;
+				}
+			}
+		};
+		mExitDialog=new ExitDialog(this, mHandler);
 	}
 
 	private void initListener() {
@@ -222,7 +242,8 @@ public class HomeActivity extends ActionBarActivity implements
 	@Override
 	public void onBackPressed() {
 		if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
-			finish();
+			mExitDialog.show();
+			return;
 		} else {
 			super.onBackPressed();
 		}

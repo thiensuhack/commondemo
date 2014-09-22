@@ -100,8 +100,7 @@ public class ShoppingCartFragment extends BaseFragment implements
 		if (getHomeActivity().isHasItemsCart()) {
 			mAdapter.updateDataList(getHomeActivity().mListItemCart);
 		}
-		checkItemsCart();
-		updateTotalPrice();
+		
 	}
 	private void initListener() {
 		mCheckOutBtn.setOnClickListener(this);
@@ -143,6 +142,8 @@ public class ShoppingCartFragment extends BaseFragment implements
 	}
 	@Override
 	public void onResume() {
-		super.onResume();				
+		super.onResume();	
+		checkItemsCart();
+		updateTotalPrice();
 	}
 }

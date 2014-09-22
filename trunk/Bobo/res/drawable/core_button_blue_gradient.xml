@@ -16,10 +16,12 @@
     </item>
     <item>
         <shape>
-            <gradient
-                android:startColor="@color/bright_pink"
-                android:endColor="@color/pink"
-                android:angle="270" />
+<!--             <gradient -->
+<!--                 android:startColor="@color/bright_pink" -->
+<!--                 android:endColor="@color/pink" -->
+<!--                 android:angle="270" /> -->
+<solid
+                android:color="@color/pink" />
             <corners
                 android:radius="3dp" />
             <padding

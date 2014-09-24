@@ -20,7 +20,7 @@ public class ProductDTO {
 	public String minimal_quantity;
 	public double price;
 	public double wholesale_price;
-	public String unit_price_ratio;
+	public double unit_price_ratio;
 	public String additional_shipping_cost;
 	public String text_fields;
 	public String active;

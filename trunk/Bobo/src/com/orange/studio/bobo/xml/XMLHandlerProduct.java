@@ -11,7 +11,7 @@ import com.orange.studio.bobo.configs.OrangeConfig;
 import com.orange.studio.bobo.objects.ProductDTO;
 import com.orange.studio.bobo.objects.ProductImageDTO;
 
-public class XMLHandler extends DefaultHandler {
+public class XMLHandlerProduct extends DefaultHandler {
 
 	public List<ProductDTO> mListProducts = null;
 
@@ -29,7 +29,7 @@ public class XMLHandler extends DefaultHandler {
 	
 	
 	private String mCurrentLanguage="1";
-	public XMLHandler(String language) {
+	public XMLHandlerProduct(String language) {
 		super();
 		mCurrentLanguage=language;
 		mListProducts = new ArrayList<ProductDTO>();
@@ -129,6 +129,10 @@ public class XMLHandler extends DefaultHandler {
 		}
 		if (localName.equalsIgnoreCase("wholesale_price")) {
 			data.wholesale_price = convertStringToFloat(elementValue);
+			return;
+		}
+		if (localName.equalsIgnoreCase("unit_price_ratio")) {
+			data.unit_price_ratio = convertStringToFloat(elementValue);
 			return;
 		}
 		if (localName.equalsIgnoreCase("product"))

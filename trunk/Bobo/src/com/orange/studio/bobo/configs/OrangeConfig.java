@@ -32,8 +32,8 @@ public final class OrangeConfig {
 		public static final String LIST_PRODUCT_CACHE_KEY="producthomecache";
 		public static final int LIST_PRODUCT_CACHE_NUMBER=100;
 		
-		public static final String LIST_CATEGORY_CACHE_KEY="categorycache";
-		public static final int LIST_CATEGORY_CACHE_NUMBER=100;
+		public static final String LIST_COMMON_CACHE_KEY="categorycache";
+		public static final int LIST_COMMON_CACHE_NUMBER=100;
 	}
 	public static final String[] IMAGES = new String[] {
 			// Heavy images

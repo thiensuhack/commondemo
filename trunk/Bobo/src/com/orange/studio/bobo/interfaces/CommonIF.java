@@ -7,6 +7,6 @@ import android.os.Bundle;
 import com.orange.studio.bobo.objects.MenuItemDTO;
 import com.orange.studio.bobo.objects.RequestDTO;
 
-public interface CategoryIF {
+public interface CommonIF {
 	public List<MenuItemDTO> getListMenuCategory(String url,RequestDTO request,Bundle params);
 }

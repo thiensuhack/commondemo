@@ -14,6 +14,29 @@
     <string name="btn_featured_products">FEATURED PRODUCTS</string>
     <string name="btn_add_to_cart_label">Add to card</string>
     <string name="msg_load_more">Loading...</string>
+    <!-- Register -->
+    <string name="first_name_label">First name:</string>
+    <string name="last_name_label">Last name:</string>
+    <string name="password_label">Password:</string>
+    <string name="confirm_password_label">Confirm password:</string>
+    <string name="email_label">Email:</string>
+    
+    <string name="first_name_hint">Your first name</string>
+    <string name="last_name_hint">Your last name</string>
+    <string name="password_hint">Password</string>
+    <string name="confirm_password_hint">Confirm password</string>
+    <string name="email_hint">Your email</string>
+    
+    <!-- Login -->
+    <string name="user_name_label">User name:</string>
+    <string name="password_login_label">Password:</string>
+    <string name="user_name_hint">User name/Email</string>
+    <string name="password_login_hint">Your password</string>
+    
+    
+    <!-- Buttons -->
+    <string name="register_btn_label">Register</string>
+    <string name="login_btn_label">Login</string>
     
     <!-- Cart Items -->
     <string name="items_cart_total_price">Total Price:</string>

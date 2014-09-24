@@ -17,8 +17,9 @@ public final class OrangeConfig {
 	}
 	public static class UrlRequest{
 		public static final String domain="http://bobo.vdigi.vn/api";
-		public static String PRODUCT_HOME=domain+"products";
-		public static String PRODUCT_DETAIL=domain+"products/"; //products/{proId}/
+		public static String PRODUCT_HOME=domain+"/products";
+		public static String PRODUCT_DETAIL=domain+"/products/"; //products/{proId}/
+		public static String CATEGORY_MENU=domain+"/categories/";
 	}
 	public static class REQUEST_PARAMS_NAME{
 		public static final String WS_KEY="ws_key";
@@ -30,6 +31,9 @@ public final class OrangeConfig {
 	public static class Cache{
 		public static final String LIST_PRODUCT_CACHE_KEY="producthomecache";
 		public static final int LIST_PRODUCT_CACHE_NUMBER=100;
+		
+		public static final String LIST_CATEGORY_CACHE_KEY="categorycache";
+		public static final int LIST_CATEGORY_CACHE_NUMBER=100;
 	}
 	public static final String[] IMAGES = new String[] {
 			// Heavy images

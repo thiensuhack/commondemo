@@ -81,14 +81,14 @@ public class MenuDrawerAdapter extends OrangeBaseAdapter {
 			viewHolder = (CustomViewHolder) convertView.getTag();
 		}
 		MenuItemDTO mData = mListData.get(position);
-		viewHolder.menuDrawerName.setText(mData.menuName);
-		if (mData.menuTotal > 0) {
-			viewHolder.menuDrawerTotal.setText(String.valueOf(mData.menuTotal));
+		viewHolder.menuDrawerName.setText(mData.name);
+		if (mData.total > 0) {
+			viewHolder.menuDrawerTotal.setText(String.valueOf(mData.total));
 		} else {
 			viewHolder.menuDrawerTotal.setText("");
 		}
 		viewHolder.menuDrawerIcon.setBackgroundResource(mData.resId);
-		if (mData.menuId % 2 != 0) {
+		if (mData.position % 2 != 0) {
 			convertView
 					.setBackgroundResource(R.drawable.item_even_menu_drawer_selector);
 		} else {

@@ -24,7 +24,7 @@ import com.orange.studio.bobo.interfaces.ProductIF;
 import com.orange.studio.bobo.objects.ProductDTO;
 import com.orange.studio.bobo.objects.RequestDTO;
 import com.orange.studio.bobo.utils.OrangeUtils;
-import com.orange.studio.bobo.xml.XMLHandler;
+import com.orange.studio.bobo.xml.XMLHandlerProduct;
 import com.zuzu.db.store.SimpleStoreIF;
 
 public class ProductModel implements ProductIF{
@@ -98,7 +98,7 @@ public class ProductModel implements ProductIF{
 			SAXParser saxP = saxPF.newSAXParser();
 			XMLReader xmlR = saxP.getXMLReader();
 			URL mUrl = new URL(url); 
-			XMLHandler myXMLHandler = new XMLHandler(OrangeConfig.LANGUAGE_DEFAULT);
+			XMLHandlerProduct myXMLHandler = new XMLHandlerProduct(OrangeConfig.LANGUAGE_DEFAULT);
 			xmlR.setContentHandler(myXMLHandler);
 			xmlR.parse(new InputSource(mUrl.openStream()));
 			if(myXMLHandler.mListProducts!=null && myXMLHandler.mListProducts.size()>0){

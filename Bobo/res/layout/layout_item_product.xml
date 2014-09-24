@@ -26,9 +26,10 @@
             android:layout_alignParentTop="true"
             android:background="@drawable/ic_sale_off"
             android:gravity="center"
-            android:text="99%"
+            android:text="0%"
             android:textColor="@color/white"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:visibility="gone" />
     </RelativeLayout>
 
     <LinearLayout
@@ -44,7 +45,8 @@
             android:layout_height="wrap_content"
             android:lines="2"
             android:maxLines="2"
-            android:text="Hydrogen SM041-Áo sơ mi (Xanh)" />
+            android:text="Hydrogen SM041-Áo sơ mi (Xanh)"
+            android:layout_marginTop="5dp" />
 
         <TextView
             android:id="@+id/proPrice"
@@ -63,7 +65,7 @@
         <Button
             android:id="@+id/btnAddCartGrid"
             android:layout_width="wrap_content"
-            android:layout_height="25dp"
+            android:layout_height="30dp"
             android:layout_gravity="center"
             android:layout_marginBottom="3dp"
             android:layout_marginTop="3dp"

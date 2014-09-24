@@ -1,5 +1,6 @@
 package com.orange.studio.bobo.adapters;
 
+import java.lang.Character.UnicodeBlock;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class GridProductAdapter extends OrangeBaseAdapter {
 		public TextView proPriceDiscount;
 		public ImageView proImage;
 		public Button addToCart;
+		public TextView saleOffIcon;
 	}
 
 	private Activity mActivity;
@@ -87,6 +89,7 @@ public class GridProductAdapter extends OrangeBaseAdapter {
 					.findViewById(R.id.proPriceDisCount);
 			viewHolder.addToCart = (Button) convertView
 					.findViewById(R.id.btnAddCartGrid);
+			viewHolder.saleOffIcon=(TextView)convertView.findViewById(R.id.proSaleOff);
 			convertView.setTag(viewHolder);
 		} else {
 			viewHolder = (ProductViewHolder) convertView.getTag();
@@ -96,6 +99,8 @@ public class GridProductAdapter extends OrangeBaseAdapter {
 		viewHolder.proPrice.setText("$"+String.valueOf(mData.price));
 		viewHolder.proPriceDiscount.setText("$"+String
 				.valueOf(mData.wholesale_price));
+		viewHolder.saleOffIcon.setText(String.valueOf(mData.unit_price_ratio));
+		viewHolder.saleOffIcon.setVisibility(mData.unit_price_ratio>0?View.VISIBLE:View.GONE);
 		viewHolder.addToCart.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {

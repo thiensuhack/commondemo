@@ -237,7 +237,7 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 		@Override
 		protected List<ProductDTO> doInBackground(Void... arg0) {
 			Bundle mParams = OrangeUtils
-					.createRequestBundle(OrangeConfig.ITEMS_PAGE);
+					.createRequestBundle(OrangeConfig.ITEMS_PAGE,null);
 			return ProductModel.getInstance().getListProduct(
 					UrlRequest.PRODUCT_HOME, null, mParams);
 		}

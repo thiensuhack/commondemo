@@ -34,7 +34,6 @@ public class XMLHandlerCategory extends DefaultHandler {
 	public void startElement(String uri, String localName, String qName,
 			Attributes attributes) throws SAXException {
 		elementOn = true;
-
 		if (localName.equals("category")) {
 			data = new MenuItemDTO();
 			return;
@@ -77,7 +76,7 @@ public class XMLHandlerCategory extends DefaultHandler {
 		}		
 		if (localName.equalsIgnoreCase("category") && data.name!=null && data.name.trim().length()>0)
 		{
-			mListCategory.add(data);
+			mListCategory.add(0,data);
 			return;
 		}
 	}

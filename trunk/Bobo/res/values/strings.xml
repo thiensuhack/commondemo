@@ -18,13 +18,13 @@
     <string name="first_name_label">First name:</string>
     <string name="last_name_label">Last name:</string>
     <string name="password_label">Password:</string>
-    <string name="confirm_password_label">Confirm password:</string>
+    <string name="confirm_password_label">Re-Password:</string>
     <string name="email_label">Email:</string>
     
     <string name="first_name_hint">Your first name</string>
     <string name="last_name_hint">Your last name</string>
     <string name="password_hint">Password</string>
-    <string name="confirm_password_hint">Confirm password</string>
+    <string name="confirm_password_hint">Confirm Password</string>
     <string name="email_hint">Your email</string>
     
     <!-- Login -->

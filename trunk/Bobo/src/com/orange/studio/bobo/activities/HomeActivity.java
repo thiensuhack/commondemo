@@ -1,6 +1,5 @@
 package com.orange.studio.bobo.activities;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 

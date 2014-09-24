@@ -6,6 +6,8 @@ import java.util.List;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.os.AsyncTask;
+import android.os.AsyncTask.Status;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -15,19 +17,18 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.adapters.MenuDrawerAdapter;
+import com.orange.studio.bobo.configs.OrangeConfig.UrlRequest;
+import com.orange.studio.bobo.models.CategoryModel;
 import com.orange.studio.bobo.objects.MenuItemDTO;
+import com.orange.studio.bobo.utils.OrangeUtils;
 
 public class NavigationDrawerFragment extends Fragment implements
 		OnItemClickListener {
@@ -63,7 +64,9 @@ public class NavigationDrawerFragment extends Fragment implements
 
 	private MenuDrawerAdapter mMenuDrawerAdapter = null;
 	private List<MenuItemDTO> mMenuList = null;
-
+	
+	private GetCategoryTask mGetCategoryTask=null;
+	
 	public NavigationDrawerFragment() {
 	}
 
@@ -105,9 +108,9 @@ public class NavigationDrawerFragment extends Fragment implements
 				R.layout.fragment_navigation_drawer, container, false);
 		mDrawerListView.setOnItemClickListener(this);
 
-		createMenuDrawer();
+		//createMenuDrawer();
 
-		mMenuDrawerAdapter.updateDataList(mMenuList);
+		//mMenuDrawerAdapter.updateDataList(mMenuList);
 		mDrawerListView.setAdapter(mMenuDrawerAdapter);
 		mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 		return mDrawerListView;
@@ -120,80 +123,91 @@ public class NavigationDrawerFragment extends Fragment implements
 	private void createMenuDrawer() {
 		int index = 1;
 		MenuItemDTO item1 = new MenuItemDTO();
-		item1.menuId = index;
+		item1.id = String.valueOf(index);
+		item1.position=index;
 		item1.resId = R.drawable.ic_menu_home;
-		item1.menuName = getMenuName(R.string.menu_drawer_home);
-		item1.menuTotal = 0;
+		item1.name = getMenuName(R.string.menu_drawer_home);
+		item1.total = 0;
 
 		index++;
 		MenuItemDTO item2 = new MenuItemDTO();
-		item2.menuId = index;
+		item2.id = String.valueOf(index);
+		item2.position=index;
 		item2.resId = R.drawable.ic_menu_product;
-		item2.menuName = getMenuName(R.string.menu_drawer_product);
-		item2.menuTotal = 459;
+		item2.name = getMenuName(R.string.menu_drawer_product);
+		item2.total = 459;
 
 		index++;
 		MenuItemDTO item3 = new MenuItemDTO();
-		item3.menuId = index;
+		item3.id = String.valueOf(index);
+		item3.position=index;
 		item3.resId = R.drawable.ic_menu_shop;
-		item3.menuName = getMenuName(R.string.menu_drawer_shop);;
-		item3.menuTotal = 4;
+		item3.name = getMenuName(R.string.menu_drawer_shop);;
+		item3.total = 4;
 
 		index++;
 		MenuItemDTO item4 = new MenuItemDTO();
-		item4.menuId = index;
+		item4.id = String.valueOf(index);
+		item4.position=index;
 		item4.resId = R.drawable.ic_menu_new_arivals;
-		item4.menuName = getMenuName(R.string.menu_drawer_new_arrivals);
-		item4.menuTotal = 29;
+		item4.name = getMenuName(R.string.menu_drawer_new_arrivals);
+		item4.total = 29;
 
 		index++;
 		MenuItemDTO item5 = new MenuItemDTO();
-		item5.menuId = index;
+		item5.id = String.valueOf(index);
+		item5.position=index;
 		item5.resId = R.drawable.ic_menu_best_seller;
-		item5.menuName = getMenuName(R.string.menu_drawer_best_seller);
-		item5.menuTotal = 49;
+		item5.name = getMenuName(R.string.menu_drawer_best_seller);
+		item5.total = 49;
 
 		index++;
 		MenuItemDTO item6 = new MenuItemDTO();
-		item6.menuId = index;
+		item6.id = String.valueOf(index);
+		item6.position=index;
 		item6.resId = R.drawable.ic_menu_apparel;
-		item6.menuName = getMenuName(R.string.menu_drawer_apparel);
-		item6.menuTotal = 25;
+		item6.name = getMenuName(R.string.menu_drawer_apparel);
+		item6.total = 25;
 
 		index++;
 		MenuItemDTO item7 = new MenuItemDTO();
-		item7.menuId = index;
+		item7.id = String.valueOf(index);
+		item7.position=index;
 		item7.resId = R.drawable.ic_menu_accessories;
-		item7.menuName = getMenuName(R.string.menu_drawer_accessories);
-		item7.menuTotal = 299;
+		item7.name = getMenuName(R.string.menu_drawer_accessories);
+		item7.total = 299;
 
 		index++;
 		MenuItemDTO item8 = new MenuItemDTO();
-		item8.menuId = index;
+		item8.id = String.valueOf(index);
+		item8.position=index;
 		item8.resId = R.drawable.ic_menu_clearance;
-		item8.menuName = getMenuName(R.string.menu_drawer_clearance);
-		item8.menuTotal = 9;
+		item8.name = getMenuName(R.string.menu_drawer_clearance);
+		item8.total = 9;
 
 		index++;
 		MenuItemDTO item9 = new MenuItemDTO();
-		item9.menuId = index;
+		item9.id = String.valueOf(index);
+		item9.position=index;
 		item9.resId = R.drawable.ic_menu_event_spin_to_win;
-		item9.menuName = getMenuName(R.string.menu_drawer_event_spin_to_win);
-		item9.menuTotal = 0;
+		item9.name = getMenuName(R.string.menu_drawer_event_spin_to_win);
+		item9.total = 0;
 
 		index++;
 		MenuItemDTO item10 = new MenuItemDTO();
-		item10.menuId = index;
+		item10.id = String.valueOf(index);
+		item10.position=index;
 		item10.resId = R.drawable.ic_menu_about_us;
-		item10.menuName = getMenuName(R.string.menu_drawer_about_us);
-		item10.menuTotal = 0;
+		item10.name = getMenuName(R.string.menu_drawer_about_us);
+		item10.total = 0;
 
 		index++;
 		MenuItemDTO item11 = new MenuItemDTO();
-		item11.menuId = index;
+		item11.id = String.valueOf(index);
+		item11.position=index;
 		item11.resId = R.drawable.ic_menu_contact_us;
-		item11.menuName = getMenuName(R.string.menu_drawer_contact_us);
-		item11.menuTotal = 0;
+		item11.name = getMenuName(R.string.menu_drawer_contact_us);
+		item11.total = 0;
 
 		mMenuList.add(item1);
 		mMenuList.add(item2);
@@ -385,6 +399,68 @@ public class NavigationDrawerFragment extends Fragment implements
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {		
+		MenuItemDTO item=mMenuDrawerAdapter.getItem(position);
+		if(item.tag!=null && item.tag.equals("about")){
+			selectItem(-11);
+			return;
+		}
+		if(item.tag!=null && item.tag.equals("contactus")){
+			selectItem(-12);
+			return;
+		}
 		selectItem(position);
+	}
+	private void getMenuCategory(){
+		if(mGetCategoryTask==null || mGetCategoryTask.getStatus()==Status.FINISHED){
+			mGetCategoryTask=new GetCategoryTask();
+			mGetCategoryTask.execute();
+		}
+	}
+	public class GetCategoryTask extends AsyncTask<Void, Void, List<MenuItemDTO>>{
+		
+		@Override
+		protected List<MenuItemDTO> doInBackground(Void... params) {
+			Bundle mParams = OrangeUtils
+					.createRequestBundle(null);
+			return CategoryModel.getInstance().getListMenuCategory(UrlRequest.CATEGORY_MENU, null, mParams);
+		}
+		@Override
+		protected void onPostExecute(List<MenuItemDTO> result) {
+			super.onPostExecute(result);
+			if(result!=null && result.size()>0){
+				int index=0;
+				
+				for (index = 0; index < result.size(); index++) {
+					result.get(index).resId=R.drawable.ic_menu_home;
+					result.get(index).position=(index+1);
+				}
+				
+				MenuItemDTO item10 = new MenuItemDTO();
+				item10.id = String.valueOf(index);
+				item10.position=(index+1);
+				item10.resId = R.drawable.ic_menu_about_us;
+				item10.name = getMenuName(R.string.menu_drawer_about_us);
+				item10.total = 0;
+				item10.tag="about";
+				
+				index++;
+				MenuItemDTO item11 = new MenuItemDTO();
+				item11.id = String.valueOf(index);
+				item11.position=(index+1);
+				item11.resId = R.drawable.ic_menu_contact_us;
+				item11.name = getMenuName(R.string.menu_drawer_contact_us);
+				item11.total = 0;
+				item11.tag="contactus";
+				result.add(item10);
+				result.add(item11);
+				
+				mMenuDrawerAdapter.updateDataList(result);
+			}
+		}
+	}
+	@Override
+	public void onResume() {
+		super.onResume();
+		getMenuCategory();
 	}
 }

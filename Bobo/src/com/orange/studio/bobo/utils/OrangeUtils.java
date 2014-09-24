@@ -15,10 +15,14 @@ public class OrangeUtils {
 		return SQLiteStore.getInstance(name, mContext, OrangeConfig.DBVERSION,
 				items);
 	}
-	public static Bundle createRequestBundle(String limit) {		
+	public static Bundle createRequestBundle(String limit,String displayFields) {		
 		Bundle result = new Bundle();
 		result.putString(REQUEST_PARAMS_NAME.WS_KEY, OrangeConfig.App_Key);
-		result.putString(REQUEST_PARAMS_NAME.DISPLAY, "full");
+		if(displayFields!=null){
+			result.putString(REQUEST_PARAMS_NAME.DISPLAY, displayFields);
+		}else{
+			result.putString(REQUEST_PARAMS_NAME.DISPLAY, "full");
+		}		
 		result.putString(REQUEST_PARAMS_NAME.SORT, "id_DESC");
 		if(limit!=null){
 			result.putString(REQUEST_PARAMS_NAME.LITMIT, limit);

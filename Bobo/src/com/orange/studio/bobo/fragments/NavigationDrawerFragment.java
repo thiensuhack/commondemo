@@ -401,11 +401,11 @@ public class NavigationDrawerFragment extends Fragment implements
 			long id) {		
 		MenuItemDTO item=mMenuDrawerAdapter.getItem(position);
 		if(item.tag!=null && item.tag.equals("about")){
-			selectItem(-11);
+			selectItem(9);
 			return;
 		}
 		if(item.tag!=null && item.tag.equals("contactus")){
-			selectItem(-12);
+			selectItem(10);
 			return;
 		}
 		selectItem(position);
@@ -420,8 +420,9 @@ public class NavigationDrawerFragment extends Fragment implements
 		
 		@Override
 		protected List<MenuItemDTO> doInBackground(Void... params) {
+			String fields="[id,name]";
 			Bundle mParams = OrangeUtils
-					.createRequestBundle(null);
+					.createRequestBundle(null,fields);
 			return CategoryModel.getInstance().getListMenuCategory(UrlRequest.CATEGORY_MENU, null, mParams);
 		}
 		@Override

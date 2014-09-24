@@ -27,6 +27,7 @@ import com.orange.studio.bobo.fragments.ContactUsFragment;
 import com.orange.studio.bobo.fragments.HomeFragment;
 import com.orange.studio.bobo.fragments.NavigationDrawerFragment;
 import com.orange.studio.bobo.fragments.ProductDetailFragment;
+import com.orange.studio.bobo.fragments.RegisterFragment;
 import com.orange.studio.bobo.fragments.ShoppingCartFragment;
 import com.orange.studio.bobo.objects.ProductDTO;
 
@@ -172,6 +173,11 @@ public class HomeActivity extends ActionBarActivity implements
 			mFragment = ShoppingCartFragment.instantiate(
 					getApplicationContext(),
 					ShoppingCartFragment.class.getName());
+			break;
+		case -13:
+			mFragment = RegisterFragment.instantiate(
+					getApplicationContext(),
+					RegisterFragment.class.getName());
 			break;
 		default:
 			mFragment = HomeFragment.instantiate(getApplicationContext(),

@@ -133,7 +133,7 @@ public class ShoppingCartFragment extends BaseFragment implements
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.itemCartCheckOutBtn:
-			
+			getHomeActivity().onNavigationDrawerItemSelected(-13);
 			break;
 
 		default:

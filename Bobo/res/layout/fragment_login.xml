@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    android:orientation="vertical"
+    android:padding="7dp" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/item_corner_background"
+        android:orientation="vertical"
+        android:padding="5dp" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp" >
+
+            <TextView
+                style="@style/RegisterTextStyle"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/user_name_label" />
+
+            <EditText
+                android:id="@+id/firstNameRegister"
+                style="@style/RegisterEdittextStyle"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:hint="@string/user_name_hint"
+                android:maxLines="1"
+                android:minLines="1"
+                android:paddingLeft="5dp"
+                android:paddingRight="3dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp" >
+
+            <TextView
+                style="@style/RegisterTextStyle"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/password_login_label" />
+
+            <EditText
+                android:id="@+id/lastNameRegister"
+                style="@style/RegisterEdittextStyle"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:hint="@string/password_login_hint"
+                android:maxLines="1"
+                android:minLines="1"
+                android:paddingLeft="5dp"
+                android:paddingRight="3dp"
+                android:inputType="textPassword" />
+        </LinearLayout>
+
+        <Button
+            style="@style/ButtonPinkStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_pink"
+            android:text="@string/login_btn_label" />
+    </LinearLayout>
+
+</LinearLayout>

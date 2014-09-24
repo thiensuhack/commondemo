@@ -20,35 +20,35 @@ import com.google.gson.reflect.TypeToken;
 import com.orange.studio.bobo.OrangeApplicationContext;
 import com.orange.studio.bobo.configs.OrangeConfig;
 import com.orange.studio.bobo.configs.OrangeConfig.Cache;
-import com.orange.studio.bobo.interfaces.CategoryIF;
+import com.orange.studio.bobo.interfaces.CommonIF;
 import com.orange.studio.bobo.objects.MenuItemDTO;
 import com.orange.studio.bobo.objects.RequestDTO;
 import com.orange.studio.bobo.utils.OrangeUtils;
 import com.orange.studio.bobo.xml.XMLHandlerCategory;
 import com.zuzu.db.store.SimpleStoreIF;
 
-public class CategoryModel implements CategoryIF{
+public class CommonModel implements CommonIF{
 
-	private static CategoryIF _instance;
+	private static CommonIF _instance;
 	private static final Lock createLock = new ReentrantLock();
 	private static final int STORE_EXPIRE = 1*60; //3 minutes
 		
-	public CategoryModel() {
+	public CommonModel() {
 	}
 
-	public static CategoryIF getInstance() {
+	public static CommonIF getInstance() {
 		if (_instance == null) {
 			createLock.lock();
 			if (_instance == null) {
-				_instance = new CategoryModel();
+				_instance = new CommonModel();
 			}
 			createLock.unlock();
 		}
 		return _instance;
 	}
 	private SimpleStoreIF getStoreAdapter() {
-		return OrangeUtils.getStoreAdapter(Cache.LIST_CATEGORY_CACHE_KEY,
-				OrangeApplicationContext.getContext(), Cache.LIST_CATEGORY_CACHE_NUMBER);
+		return OrangeUtils.getStoreAdapter(Cache.LIST_COMMON_CACHE_KEY,
+				OrangeApplicationContext.getContext(), Cache.LIST_COMMON_CACHE_NUMBER);
 	}
 	public void setStore(String key, String value) {
 		try {

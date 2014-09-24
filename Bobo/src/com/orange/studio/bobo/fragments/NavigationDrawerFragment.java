@@ -26,7 +26,7 @@ import android.widget.ListView;
 import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.adapters.MenuDrawerAdapter;
 import com.orange.studio.bobo.configs.OrangeConfig.UrlRequest;
-import com.orange.studio.bobo.models.CategoryModel;
+import com.orange.studio.bobo.models.CommonModel;
 import com.orange.studio.bobo.objects.MenuItemDTO;
 import com.orange.studio.bobo.utils.OrangeUtils;
 
@@ -423,7 +423,7 @@ public class NavigationDrawerFragment extends Fragment implements
 			String fields="[id,name]";
 			Bundle mParams = OrangeUtils
 					.createRequestBundle(null,fields);
-			return CategoryModel.getInstance().getListMenuCategory(UrlRequest.CATEGORY_MENU, null, mParams);
+			return CommonModel.getInstance().getListMenuCategory(UrlRequest.CATEGORY_MENU, null, mParams);
 		}
 		@Override
 		protected void onPostExecute(List<MenuItemDTO> result) {

@@ -61,7 +61,7 @@ public class RegisterFragment extends BaseFragment implements OnClickListener {
 		mRegisterInfo.confirmPassword = mConfirmPassword.getText().toString()
 				.trim();
 		if (mRegisterInfo.firstName.length() < 1) {
-			getHomeActivity().showToast(getActivity().getString(R.string.empty_field));
+			getHomeActivity().showToast(getActivity().getString(R.string.empty_field));			
 			mFirstName.setFocusable(true);
 			return false;
 		}

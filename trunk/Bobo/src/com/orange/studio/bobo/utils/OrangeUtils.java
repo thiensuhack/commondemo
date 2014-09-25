@@ -1,5 +1,8 @@
 package com.orange.studio.bobo.utils;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import android.content.Context;
 import android.os.Bundle;
 
@@ -10,6 +13,16 @@ import com.zuzu.db.store.SimpleStoreIF;
 
 public class OrangeUtils {
 	
+	public static boolean validateEmail(String email) {
+		Pattern pattern;
+		Matcher matcher;
+		String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+				+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+		pattern = Pattern.compile(EMAIL_PATTERN);
+		matcher = pattern.matcher(email);
+		return matcher.matches();
+
+	}
 	public static SimpleStoreIF getStoreAdapter(String name, Context mContext,
 			int items) {
 		return SQLiteStore.getInstance(name, mContext, OrangeConfig.DBVERSION,

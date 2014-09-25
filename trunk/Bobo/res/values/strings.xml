@@ -20,6 +20,9 @@
     <string name="password_label">Password:</string>
     <string name="confirm_password_label">Re-Password:</string>
     <string name="email_label">Email:</string>
+    <string name="empty_field">Error! Empty field</string>
+    <string name="password_not_matched">Password not matched!</string>
+    <string name="email_not_correct">Email not correct!</string>
     
     <string name="first_name_hint">Your first name</string>
     <string name="last_name_hint">Your last name</string>

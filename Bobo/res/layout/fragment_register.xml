@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="7dp"
+    android:padding="10dp"
     android:background="@color/gray" >
 
     <LinearLayout
@@ -145,7 +145,7 @@
                 android:inputType="textPassword" />
         </LinearLayout>
 
-        <Button
+        <Button android:id="@+id/registerBtn"
             style="@style/RegisterButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="30dp"

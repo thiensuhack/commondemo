@@ -352,7 +352,9 @@ public class HomeActivity extends ActionBarActivity implements
 		result = result /100;
 		return result;
 	}
-
+	public void showToast(String message){
+		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+	}
 	@Override
 	protected void onResume() {
 		super.onResume();

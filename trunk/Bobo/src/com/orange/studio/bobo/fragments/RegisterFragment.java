@@ -103,7 +103,7 @@ public class RegisterFragment extends BaseFragment implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.registerBtn:
-
+			validateInfoSubmit();
 			break;
 
 		default:

@@ -476,7 +476,7 @@ public class NavigationDrawerFragment extends Fragment implements
 				item2.resId = R.drawable.ic_menu_product;
 				item2.name = getMenuName(R.string.menu_drawer_product);
 				item2.tag="product";
-				item1.isHaveResId=true;
+				item2.isHaveResId=true;
 				
 				index++;
 				MenuItemDTO item3 = new MenuItemDTO();
@@ -484,7 +484,7 @@ public class NavigationDrawerFragment extends Fragment implements
 				item3.resId = R.drawable.ic_menu_best_seller;
 				item3.name = getMenuName(R.string.menu_drawer_best_seller);
 				item3.tag="bestseller";
-				item1.isHaveResId=true;
+				item3.isHaveResId=true;
 				
 				index++;
 				MenuItemDTO item10 = new MenuItemDTO();
@@ -492,7 +492,7 @@ public class NavigationDrawerFragment extends Fragment implements
 				item10.resId = R.drawable.ic_menu_about_us;
 				item10.name = getMenuName(R.string.menu_drawer_about_us);
 				item10.tag="about";
-				item1.isHaveResId=true;
+				item10.isHaveResId=true;
 				
 				index++;
 				MenuItemDTO item11 = new MenuItemDTO();
@@ -500,7 +500,7 @@ public class NavigationDrawerFragment extends Fragment implements
 				item11.resId = R.drawable.ic_menu_contact_us;
 				item11.name = getMenuName(R.string.menu_drawer_contact_us);
 				item11.tag="contactus";
-				item1.isHaveResId=true;
+				item11.isHaveResId=true;
 				
 				result.add(0,item3);
 				result.add(0,item2);

@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
@@ -18,7 +17,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -48,15 +46,10 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 	private ExpandableHeightGridView mGridView = null;
 	private GridProductAdapter mProductAdapter = null;
 	private LoadProductsTask mLoadProductsTask = null;
-	private HorizontalScrollView mMenuHomeScrollView = null;
 
 	private View mMenuAll = null;
 	private View mMenuBestSeller = null;
-	private View mMenuFeaturedProducts = null;
-	private View mMenuFeaturedPopular = null;
-//	private View mMenuFeaturedProducts3 = null;
-	private View mPreviousBtn = null;
-	private View mNextBtn = null;
+	private View mMenuPopular = null;
 
 	private int mCurrentTab = 1;
 
@@ -95,27 +88,15 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 		mMenuAll = (TextView) mView.findViewById(R.id.fragmentHomeMenuAll);
 		mMenuBestSeller = (TextView) mView
 				.findViewById(R.id.fragmentHomeMenuBestSeller);
-		mMenuFeaturedProducts = (TextView) mView
-				.findViewById(R.id.fragmentHomeMenuFeaturedProducts);
-		mMenuFeaturedPopular = (TextView) mView
-				.findViewById(R.id.fragmentHomeMenuFeaturedPopular);		
-		mPreviousBtn = (ImageView) mView
-				.findViewById(R.id.fragmentHomeMenuPrevious);
-		mNextBtn = (ImageView) mView.findViewById(R.id.fragmentHomeMenuNext);
-
-		mMenuHomeScrollView = (HorizontalScrollView) mView
-				.findViewById(R.id.menuHomeScrollView);
-		mMenuHomeScrollView.setHorizontalScrollBarEnabled(false);
+		mMenuPopular = (TextView) mView
+				.findViewById(R.id.fragmentHomeMenuPopular);
 	}
 
 	private void initListener() {
 		mGridView.setOnItemClickListener(this);
 		mMenuAll.setOnClickListener(this);
 		mMenuBestSeller.setOnClickListener(this);
-		mMenuFeaturedProducts.setOnClickListener(this);
-		mMenuFeaturedPopular.setOnClickListener(this);
-		mNextBtn.setOnClickListener(this);
-		mPreviousBtn.setOnClickListener(this);
+		mMenuPopular.setOnClickListener(this);
 	}
 
 	private void loadHomeSliderData() {
@@ -275,38 +256,11 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 			switchMenuTabByViewId(R.id.fragmentHomeMenuBestSeller);
 			loadProductData();
 			break;
-		case R.id.fragmentHomeMenuFeaturedProducts:
+		case R.id.fragmentHomeMenuPopular:
 			mCurrentTab=3;
-			switchMenuTabByViewId(R.id.fragmentHomeMenuFeaturedProducts);
+			switchMenuTabByViewId(R.id.fragmentHomeMenuPopular);
 			loadProductData();
-			break;
-		case R.id.fragmentHomeMenuFeaturedPopular:
-			mCurrentTab=4;
-			switchMenuTabByViewId(R.id.fragmentHomeMenuFeaturedPopular);
-			loadProductData();
-			break;
-		case R.id.fragmentHomeMenuNext:
-			if(mCurrentTab==4){
-				return;
-			}
-			mCurrentTab++;
-			if (mCurrentTab > 4) {
-				mCurrentTab = 4;
-			}
-			switchMenuTabByIndex(mCurrentTab, true);
-			loadProductData();
-			break;
-		case R.id.fragmentHomeMenuPrevious:
-			if(mCurrentTab==1){
-				return;
-			}
-			mCurrentTab--;
-			if (mCurrentTab < 1) {
-				mCurrentTab = 1;
-			}
-			switchMenuTabByIndex(mCurrentTab, false);
-			loadProductData();
-			break;
+			break;		
 		default:
 			break;
 		}
@@ -317,74 +271,25 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 			mMenuAll.setBackgroundResource(R.drawable.item_menu_home_fragment_active);
 			mMenuBestSeller
 					.setBackgroundResource(R.drawable.item_menu_home_fragment_normal);
-			mMenuFeaturedProducts
-					.setBackgroundResource(R.drawable.item_menu_home_fragment_normal);
-			mMenuFeaturedPopular
+			mMenuPopular
 					.setBackgroundResource(R.drawable.item_menu_home_fragment_normal);
 			break;
 		case R.id.fragmentHomeMenuBestSeller:
 			mMenuAll.setBackgroundResource(R.drawable.item_menu_home_fragment_normal);
 			mMenuBestSeller
 					.setBackgroundResource(R.drawable.item_menu_home_fragment_active);
-			mMenuFeaturedProducts
-					.setBackgroundResource(R.drawable.item_menu_home_fragment_normal);
-			mMenuFeaturedPopular
+			mMenuPopular
 					.setBackgroundResource(R.drawable.item_menu_home_fragment_normal);
 			break;
-		case R.id.fragmentHomeMenuFeaturedProducts:
+		case R.id.fragmentHomeMenuPopular:
 			mMenuAll.setBackgroundResource(R.drawable.item_menu_home_fragment_normal);
 			mMenuBestSeller
 					.setBackgroundResource(R.drawable.item_menu_home_fragment_normal);
-			mMenuFeaturedProducts
+			mMenuPopular
 					.setBackgroundResource(R.drawable.item_menu_home_fragment_active);
-			mMenuFeaturedPopular
-					.setBackgroundResource(R.drawable.item_menu_home_fragment_normal);
-			break;
-		case R.id.fragmentHomeMenuFeaturedPopular:
-			mMenuAll.setBackgroundResource(R.drawable.item_menu_home_fragment_normal);
-			mMenuBestSeller
-					.setBackgroundResource(R.drawable.item_menu_home_fragment_normal);
-			mMenuFeaturedProducts
-					.setBackgroundResource(R.drawable.item_menu_home_fragment_normal);
-			mMenuFeaturedPopular
-					.setBackgroundResource(R.drawable.item_menu_home_fragment_active);
-			break;
+			break;		
 		default:
 			break;
 		}
-	}
-	private void switchMenuTabByIndex(int tabIndex, boolean isNext) {
-		int mVx = 0;
-		switch (tabIndex) {
-		case 1:
-			switchMenuTabByViewId(R.id.fragmentHomeMenuAll);
-			mVx = mMenuHomeScrollView.getScrollX();
-			break;
-		case 2:
-			switchMenuTabByViewId(R.id.fragmentHomeMenuBestSeller);
-			mVx = mMenuBestSeller.getWidth();
-			break;
-		case 3:
-			switchMenuTabByViewId(R.id.fragmentHomeMenuFeaturedProducts);
-			mVx = mMenuFeaturedProducts.getWidth();
-			break;
-		case 4:
-			switchMenuTabByViewId(R.id.fragmentHomeMenuFeaturedPopular);
-			mVx = mMenuFeaturedPopular.getWidth();
-			break;
-		default:
-			break;
-		}
-		if (!isNext) {
-			mVx = mVx * (-1);
-		}
-		final int tempVx = mVx;
-		new Handler().postDelayed(new Runnable() {
-			public void run() {
-				mMenuHomeScrollView.smoothScrollTo(
-						(int) mMenuHomeScrollView.getScrollX() + tempVx,
-						(int) mMenuHomeScrollView.getScrollY());
-			}
-		}, 100L);
-	}
+	}	
 }

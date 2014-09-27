@@ -19,6 +19,7 @@ public class XMLHandlerCategory extends DefaultHandler {
 	private boolean elementOn = false;
 
 	private boolean isCateNameTag = false;
+	private boolean isCateId=false;
 	
 	private String attrId="";
 	
@@ -74,7 +75,7 @@ public class XMLHandlerCategory extends DefaultHandler {
 			isCateNameTag = false;
 			return;
 		}		
-		if (localName.equalsIgnoreCase("category") && data.name!=null && data.name.trim().length()>0)
+		if (localName.equalsIgnoreCase("category") && data.name!=null && data.name.trim().length()>0 && !data.id.equals("1") && !data.id.equals("2"))
 		{
 			mListCategory.add(0,data);
 			return;

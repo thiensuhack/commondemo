@@ -148,13 +148,14 @@ public class HomeActivity extends ActionBarActivity implements
 	public void onNavigationDrawerItemSelected(int position) {
 		Fragment mFragment = null;
 		switch (position) {
-		case 0:
+		case 0:			
+		case 1:
 			mFragment = HomeFragment.instantiate(getApplicationContext(),
 					HomeFragment.class.getName());
 			break;
-		case 1:
-			break;
 		case 2:
+			break;
+		case 3:
 			break;
 		case 9:
 			mFragment = AboutFragment.instantiate(getApplicationContext(),

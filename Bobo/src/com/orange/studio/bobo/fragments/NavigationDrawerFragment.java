@@ -400,6 +400,18 @@ public class NavigationDrawerFragment extends Fragment implements
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {		
 		MenuItemDTO item=mMenuDrawerAdapter.getItem(position);
+		if(item.tag!=null && item.tag.equals("home")){
+			selectItem(1);
+			return;
+		}
+		if(item.tag!=null && item.tag.equals("product")){
+			selectItem(2);
+			return;
+		}
+		if(item.tag!=null && item.tag.equals("bestseller")){
+			selectItem(3);
+			return;
+		}
 		if(item.tag!=null && item.tag.equals("about")){
 			selectItem(9);
 			return;
@@ -432,10 +444,36 @@ public class NavigationDrawerFragment extends Fragment implements
 				int index=0;
 				
 				for (index = 0; index < result.size(); index++) {
-					result.get(index).resId=R.drawable.ic_menu_home;
+					result.get(index).resId=R.drawable.ic_shopping;
 					result.get(index).position=(index+1);
 				}
+				MenuItemDTO item1 = new MenuItemDTO();
+				item1.id = String.valueOf(index);
+				item1.position=index;
+				item1.resId = R.drawable.ic_menu_home;
+				item1.name = getMenuName(R.string.menu_drawer_home);
+				item1.total = 0;
+				item1.tag="home";
+
+				index++;
+				MenuItemDTO item2 = new MenuItemDTO();
+				item2.id = String.valueOf(index);
+				item2.position=index;
+				item2.resId = R.drawable.ic_menu_product;
+				item2.name = getMenuName(R.string.menu_drawer_product);
+				item2.total = 0;
+				item2.tag="product";
 				
+				index++;
+				MenuItemDTO item3 = new MenuItemDTO();
+				item3.id = String.valueOf(index);
+				item3.position=index;
+				item3.resId = R.drawable.ic_menu_best_seller;
+				item3.name = getMenuName(R.string.menu_drawer_best_seller);
+				item3.total = 0;
+				item3.tag="bestseller";
+				
+				index++;
 				MenuItemDTO item10 = new MenuItemDTO();
 				item10.id = String.valueOf(index);
 				item10.position=(index+1);
@@ -452,6 +490,10 @@ public class NavigationDrawerFragment extends Fragment implements
 				item11.name = getMenuName(R.string.menu_drawer_contact_us);
 				item11.total = 0;
 				item11.tag="contactus";
+				
+				result.add(0,item3);
+				result.add(0,item2);
+				result.add(0,item1);
 				result.add(item10);
 				result.add(item11);
 				

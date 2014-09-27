@@ -18,8 +18,12 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
@@ -31,7 +35,7 @@ import com.orange.studio.bobo.objects.MenuItemDTO;
 import com.orange.studio.bobo.utils.OrangeUtils;
 
 public class NavigationDrawerFragment extends Fragment implements
-		OnItemClickListener {
+		OnItemClickListener,OnClickListener {
 
 	/**
 	 * Remember the position of the selected item.
@@ -55,9 +59,12 @@ public class NavigationDrawerFragment extends Fragment implements
 	private ActionBarDrawerToggle mDrawerToggle;
 
 	private DrawerLayout mDrawerLayout;
+	
+	private View mView=null;	
 	private ListView mDrawerListView;
 	private View mFragmentContainerView;
-
+	private View mSearchBtn=null;
+	
 	private int mCurrentSelectedPosition = 0;
 	private boolean mFromSavedInstanceState;
 	private boolean mUserLearnedDrawer;
@@ -104,8 +111,9 @@ public class NavigationDrawerFragment extends Fragment implements
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		mDrawerListView = (ListView) inflater.inflate(
+		mView = (LinearLayout) inflater.inflate(
 				R.layout.fragment_navigation_drawer, container, false);
+		mDrawerListView=(ListView)mView.findViewById(R.id.menuDrawerListView);
 		mDrawerListView.setOnItemClickListener(this);
 
 		//createMenuDrawer();
@@ -113,7 +121,11 @@ public class NavigationDrawerFragment extends Fragment implements
 		//mMenuDrawerAdapter.updateDataList(mMenuList);
 		mDrawerListView.setAdapter(mMenuDrawerAdapter);
 		mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
-		return mDrawerListView;
+		
+		mSearchBtn=(ImageView)mView.findViewById(R.id.searchBtn);
+		mSearchBtn.setOnClickListener(this);
+		
+		return mView;
 	}
 
 	private String getMenuName(int resID) {
@@ -395,7 +407,16 @@ public class NavigationDrawerFragment extends Fragment implements
 		 */
 		void onNavigationDrawerItemSelected(int position);
 	}
-
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.searchBtn:
+			Toast.makeText(getActivity(), "Search Btn clicked", Toast.LENGTH_LONG).show();
+			break;
+		default:
+			break;
+		}
+	}
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {		
@@ -441,61 +462,59 @@ public class NavigationDrawerFragment extends Fragment implements
 		protected void onPostExecute(List<MenuItemDTO> result) {
 			super.onPostExecute(result);
 			if(result!=null && result.size()>0){
-				int index=0;
-				
-				for (index = 0; index < result.size(); index++) {
-					result.get(index).resId=R.drawable.ic_shopping;
-					result.get(index).position=(index+1);
-				}
+				int index=1;
 				MenuItemDTO item1 = new MenuItemDTO();
 				item1.id = String.valueOf(index);
-				item1.position=index;
 				item1.resId = R.drawable.ic_menu_home;
 				item1.name = getMenuName(R.string.menu_drawer_home);
-				item1.total = 0;
 				item1.tag="home";
+				item1.isHaveResId=true;
 
 				index++;
 				MenuItemDTO item2 = new MenuItemDTO();
 				item2.id = String.valueOf(index);
-				item2.position=index;
 				item2.resId = R.drawable.ic_menu_product;
 				item2.name = getMenuName(R.string.menu_drawer_product);
-				item2.total = 0;
 				item2.tag="product";
+				item1.isHaveResId=true;
 				
 				index++;
 				MenuItemDTO item3 = new MenuItemDTO();
 				item3.id = String.valueOf(index);
-				item3.position=index;
 				item3.resId = R.drawable.ic_menu_best_seller;
 				item3.name = getMenuName(R.string.menu_drawer_best_seller);
-				item3.total = 0;
 				item3.tag="bestseller";
+				item1.isHaveResId=true;
 				
 				index++;
 				MenuItemDTO item10 = new MenuItemDTO();
 				item10.id = String.valueOf(index);
-				item10.position=(index+1);
 				item10.resId = R.drawable.ic_menu_about_us;
 				item10.name = getMenuName(R.string.menu_drawer_about_us);
-				item10.total = 0;
 				item10.tag="about";
+				item1.isHaveResId=true;
 				
 				index++;
 				MenuItemDTO item11 = new MenuItemDTO();
 				item11.id = String.valueOf(index);
-				item11.position=(index+1);
 				item11.resId = R.drawable.ic_menu_contact_us;
 				item11.name = getMenuName(R.string.menu_drawer_contact_us);
-				item11.total = 0;
 				item11.tag="contactus";
+				item1.isHaveResId=true;
 				
 				result.add(0,item3);
 				result.add(0,item2);
 				result.add(0,item1);
 				result.add(item10);
 				result.add(item11);
+				
+				for (index = 0; index < result.size(); index++) {
+					if(!result.get(index).isHaveResId){
+						result.get(index).resId=R.drawable.ic_shopping;
+					}					
+					result.get(index).position=(index+1);
+				}
+				
 				
 				mMenuDrawerAdapter.updateDataList(result);
 			}

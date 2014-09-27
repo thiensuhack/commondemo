@@ -18,4 +18,6 @@
     
     <color name="orange">#FF6600</color>
     <color name="bright_orange">#FF9900</color>
+    
+    <color name="search_color_background">#A50062</color>
 </resources>

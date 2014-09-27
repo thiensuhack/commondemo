@@ -50,7 +50,8 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 	private View mMenuAll = null;
 	private View mMenuBestSeller = null;
 	private View mMenuPopular = null;
-
+	
+	
 	private int mCurrentTab = 1;
 
 	@Override

@@ -14,6 +14,9 @@
     <string name="btn_featured_products">FEATURED PRODUCTS</string>
     <string name="btn_add_to_cart_label">Add to card</string>
     <string name="msg_load_more">Loading...</string>
+    
+    <string name="search_text">Search</string>
+    <string name="search_text_hint">Bobo search...</string>
     <!-- Register -->
     <string name="first_name_label">First name:</string>
     <string name="last_name_label">Last name:</string>

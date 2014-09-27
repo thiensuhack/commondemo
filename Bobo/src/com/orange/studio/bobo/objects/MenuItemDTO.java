@@ -7,7 +7,8 @@ public class MenuItemDTO {
 	public int total;
 	public int position;
 	public String tag;
+	public boolean isHaveResId;
 	public MenuItemDTO(){
-		
+		isHaveResId=false;
 	}
 }

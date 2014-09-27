@@ -1,8 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-    
+    android:background="@color/pink"
+    android:orientation="horizontal" >
 
-</LinearLayout>
+    <EditText
+        android:id="@+id/searchTextBox"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/item_search_edittext_background"
+        android:hint="@string/search_text_hint"
+        android:paddingLeft="7dp"
+        android:paddingRight="55dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="15sp" />
+
+    <ImageView
+        android:id="@+id/searchBtn"
+        android:layout_width="55dp"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/selector_item_search_btn" />
+
+</RelativeLayout>

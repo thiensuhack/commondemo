@@ -219,15 +219,6 @@
             android:layout_gravity="center"
             android:text="@string/btn_add_to_cart_label" />
 
-        <TextView
-            android:id="@+id/proDetailActiveColor"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_gravity="center" >
-        </TextView>
-
         <com.orange.studio.bobo.customviews.ColorHorizontalView
             android:id="@+id/proDetailColorView"
             android:layout_width="match_parent"
@@ -236,6 +227,15 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp" >
         </com.orange.studio.bobo.customviews.ColorHorizontalView>
+
+        <TextView
+            android:id="@+id/proDetailActiveColor"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" >
+        </TextView>
     </LinearLayout>
 
     <include

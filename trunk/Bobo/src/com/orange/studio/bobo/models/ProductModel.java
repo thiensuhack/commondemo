@@ -134,5 +134,22 @@ public class ProductModel implements ProductIF{
 			return null;
 		}		
 	}
-
+	@Override
+	public List<ProductDTO> searchProduct(String url, RequestDTO request,
+			Bundle params,String key) {
+		try {
+			url+=OrangeUtils.createUrl(params);
+			url+="&'filter[name]=["+key+"]'";
+			SAXParserFactory saxPF = SAXParserFactory.newInstance();
+			SAXParser saxP = saxPF.newSAXParser();
+			XMLReader xmlR = saxP.getXMLReader();
+			URL mUrl = new URL(url); 
+			XMLHandlerProduct myXMLHandler = new XMLHandlerProduct(OrangeConfig.LANGUAGE_DEFAULT);
+			xmlR.setContentHandler(myXMLHandler);
+			xmlR.parse(new InputSource(mUrl.openStream()));			
+			return myXMLHandler.mListProducts;			
+		} catch (Exception e) {
+			return null;
+		} 
+	}
 }

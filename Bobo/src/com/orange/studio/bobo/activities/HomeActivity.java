@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.orange.studio.bobo.R;
-import com.orange.studio.bobo.configs.OrangeConfig.CartItemsRule;
+import com.orange.studio.bobo.configs.OrangeConfig.*;
 import com.orange.studio.bobo.dialogs.ExitDialog;
 import com.orange.studio.bobo.fragments.AboutFragment;
 import com.orange.studio.bobo.fragments.ContactUsFragment;
@@ -28,6 +28,7 @@ import com.orange.studio.bobo.fragments.HomeFragment;
 import com.orange.studio.bobo.fragments.NavigationDrawerFragment;
 import com.orange.studio.bobo.fragments.ProductDetailFragment;
 import com.orange.studio.bobo.fragments.RegisterFragment;
+import com.orange.studio.bobo.fragments.SearchResultFragment;
 import com.orange.studio.bobo.fragments.ShoppingCartFragment;
 import com.orange.studio.bobo.objects.ProductDTO;
 
@@ -167,20 +168,25 @@ public class HomeActivity extends ActionBarActivity implements
 			mFragment = ContactUsFragment.instantiate(getApplicationContext(),
 					ContactUsFragment.class.getName());
 			break;
-		case -11:
+		case MENU_NAME.PRODUCT_DETAIL_FRAGMENT:
 			mFragment = ProductDetailFragment.instantiate(
 					getApplicationContext(),
 					ProductDetailFragment.class.getName());
 			break;
-		case -12:
+		case MENU_NAME.SHOPING_CART_FRAGMENT:
 			mFragment = ShoppingCartFragment.instantiate(
 					getApplicationContext(),
 					ShoppingCartFragment.class.getName());
 			break;
-		case -13:
+		case MENU_NAME.REGISTER_FRAGMENT:
 			mFragment = RegisterFragment.instantiate(
 					getApplicationContext(),
 					RegisterFragment.class.getName());
+			break;
+		case MENU_NAME.SEARCH_RESULT_FRAGMENT:
+			mFragment = SearchResultFragment.instantiate(
+					getApplicationContext(),
+					SearchResultFragment.class.getName());
 			break;
 		default:
 			mFragment = HomeFragment.instantiate(getApplicationContext(),

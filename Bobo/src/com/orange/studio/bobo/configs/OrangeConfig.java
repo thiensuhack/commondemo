@@ -11,6 +11,12 @@ public final class OrangeConfig {
 	public static String ITEMS_PAGE="20";
 	public static String App_Key="LW6TL3P7Z7KRFM3UYKWHJ3N28GEZLRBT";
 	
+	public static class MENU_NAME{
+		public static final int PRODUCT_DETAIL_FRAGMENT=-11;
+		public static final int SHOPING_CART_FRAGMENT=-12;
+		public static final int REGISTER_FRAGMENT=-13;
+		public static final int SEARCH_RESULT_FRAGMENT=-14;
+	}
 	public static class CartItemsRule{
 		public static final int MAX_ITEMS_CART=11; //max type products cart is 11
 		public static final int MAX_PRODUCT_ITEMS_CART=5; // max products counter is 5

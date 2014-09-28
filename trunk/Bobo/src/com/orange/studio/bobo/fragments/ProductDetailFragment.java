@@ -1,10 +1,15 @@
 package com.orange.studio.bobo.fragments;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.test.MoreAsserts;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,7 +21,10 @@ import android.widget.TextView;
 import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.adapters.ProductDetailImageSlider;
 import com.orange.studio.bobo.configs.OrangeConfig.UrlRequest;
+import com.orange.studio.bobo.customviews.ColorHorizontalView;
+import com.orange.studio.bobo.customviews.ColorHorizontalView.OnTabReselectedListener;
 import com.orange.studio.bobo.models.ProductModel;
+import com.orange.studio.bobo.objects.ColorDTO;
 import com.orange.studio.bobo.objects.ProductDTO;
 import com.orange.studio.bobo.objects.RequestDTO;
 import com.orange.studio.bobo.utils.OrangeUtils;
@@ -38,8 +46,12 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 	private WebView mProShortDescription = null;
 	private WebView mProMoreInfo = null;
 	private Button mAddToCardBtn=null;
+	private TextView mProDetailActiveColor = null;
 	
 	private ProductDTO mProduct = null;
+	
+	private ColorHorizontalView mColorHorizontalView=null;
+	private OnTabReselectedListener mOnTabReselectedListener=null;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -76,7 +88,10 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 		
 		mProShortDescription=(WebView)mView.findViewById(R.id.productDetailDiscription);
 		mProMoreInfo=(WebView)mView.findViewById(R.id.productDetailMoreInfo);
-		mAddToCardBtn=(Button)mView.findViewById(R.id.addToCardBtn);			
+		mAddToCardBtn=(Button)mView.findViewById(R.id.addToCardBtn);
+		
+		mColorHorizontalView=(ColorHorizontalView)mView.findViewById(R.id.proDetailColorView);
+		mProDetailActiveColor=(TextView)mView.findViewById(R.id.proDetailActiveColor);
 	}
 
 	private void showDetail() {
@@ -86,6 +101,17 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 
 	private void initListener() {
 		mAddToCardBtn.setOnClickListener(this);
+		mOnTabReselectedListener=new OnTabReselectedListener() {
+			
+			@Override
+			public void onTabReselected(ColorDTO color) {
+				try {
+					mProDetailActiveColor.setBackgroundColor(Color.parseColor(color.color));
+				} catch (Exception e) {
+				}
+			}
+		};
+		mColorHorizontalView.setOnTabReselectedListener(mOnTabReselectedListener);
 	}
 
 	@Override
@@ -141,6 +167,26 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 					mViewPager.setAdapter(mSilderAdapter);
 					mCirclePageIndicator.setViewPager(mViewPager);
 				}	
+				List<ColorDTO> listColor=new ArrayList<ColorDTO>();
+				ColorDTO item1=new ColorDTO();
+				item1.color="#D2007D";
+				item1.id="1";
+				
+				ColorDTO item2=new ColorDTO();
+				item2.color="#FF6600";
+				item2.id="2";
+				ColorDTO item3=new ColorDTO();
+				item3.color="#74C219";
+				item3.id="3";
+				listColor.add(item3);
+				listColor.add(item2);
+				listColor.add(item1);
+				listColor.add(item3);
+				listColor.add(item2);
+				listColor.add(item1);
+
+				mColorHorizontalView.updateView(listColor);
+				
 				switchView(false,false);
 			}else{
 				switchView(true, false);

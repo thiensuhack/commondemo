@@ -18,6 +18,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.orange.studio.bobo.R;
+import com.orange.studio.bobo.activities.HomeActivity;
 import com.orange.studio.bobo.adapters.GridProductAdapter;
 import com.orange.studio.bobo.configs.OrangeConfig;
 import com.orange.studio.bobo.configs.OrangeConfig.MENU_NAME;
@@ -33,7 +34,7 @@ public class ProductCategoryFragment extends BaseFragment implements OnItemClick
 	private ExpandableHeightGridView mGridView = null;
 	private GridProductAdapter mProductAdapter = null;
 	private LoadProductsTask mLoadProductsTask = null;
-
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -82,8 +83,7 @@ public class ProductCategoryFragment extends BaseFragment implements OnItemClick
 	@Override
 	public void onResume() {
 		super.onResume();
-		loadProductData();
-		getHomeActivity().updateItemCartCounter();
+		loadProductData();		
 	}
 
 	

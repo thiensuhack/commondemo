@@ -210,8 +210,6 @@ public class HomeActivity extends ActionBarActivity implements
 					ProductCategoryFragment.class.getName());			
 			break;
 		default:
-			mFragment = HomeFragment.instantiate(getApplicationContext(),
-					HomeFragment.class.getName());
 			break;
 		}
 		mCurFragment=mFragment;
@@ -296,10 +294,14 @@ public class HomeActivity extends ActionBarActivity implements
 	}
 
 	public boolean isHasItemsCart() {
-		if (mListItemCart != null && mListItemCart.size() > 0) {
-			return true;
+		try {
+			if (mListItemCart != null && mListItemCart.size() > 0) {
+				return true;
+			}
+			return false;
+		} catch (Exception e) {
+			return false;
 		}
-		return false;
 	}
 
 	public void addToCart(ProductDTO proItem) {
@@ -360,12 +362,15 @@ public class HomeActivity extends ActionBarActivity implements
 	}
 
 	public void updateItemCartCounter() {
-		if (isHasItemsCart()) {
-			mTotalItemsCart.setText(String.valueOf(mListItemCart.size()));
-			mTotalItemsCart.setVisibility(View.VISIBLE);
-		} else {
-			mTotalItemsCart.setText("0");
-			mTotalItemsCart.setVisibility(View.GONE);
+		try {
+			if (isHasItemsCart()) {
+				mTotalItemsCart.setText(String.valueOf(mListItemCart.size()));
+				mTotalItemsCart.setVisibility(View.VISIBLE);
+			} else {
+				mTotalItemsCart.setText("0");
+				mTotalItemsCart.setVisibility(View.GONE);
+			}
+		} catch (Exception e) {
 		}
 	}
 

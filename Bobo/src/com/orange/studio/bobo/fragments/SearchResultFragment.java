@@ -103,6 +103,8 @@ public class SearchResultFragment extends BaseFragment implements
 		protected void onPreExecute() {
 			super.onPreExecute();
 			switchView(false, true);
+			getHomeActivity().hideSoftKeyBoard();
+			mAdapter.clearAllData();
 		}
 
 		@Override

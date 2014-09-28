@@ -3,6 +3,7 @@ package com.orange.studio.bobo.activities;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Service;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,6 +14,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -130,9 +132,7 @@ public class HomeActivity extends ActionBarActivity implements
 			return;
 		}
 		if (mFragmentName.equals(ProductDetailFragment.class.getName())) {
-			if (mCurrentProduct != null) {
-				setAppTitle(mCurrentProduct.name);
-			}
+			setAppTitle(getString(R.string.detail_title_label));
 			return;
 		}
 		if (mFragmentName.equals(ShoppingCartFragment.class.getName())) {
@@ -192,7 +192,6 @@ public class HomeActivity extends ActionBarActivity implements
 					RegisterFragment.class.getName());
 			break;
 		case MENU_NAME.SEARCH_RESULT_FRAGMENT:
-			mSearchKey=mNavigationDrawerFragment.getSearchKey();
 			if(mCurFragment!=null && mCurFragment.getClass().getName().equals(SearchResultFragment.class.getName())){
 				((SearchResultFragment)mCurFragment).onResume();
 				return;
@@ -387,6 +386,16 @@ public class HomeActivity extends ActionBarActivity implements
 		mSearchKey=searchKey;
 		if(mNavigationDrawerFragment!=null){
 			mNavigationDrawerFragment.setSearchKey(searchKey);
+		}
+	}
+	public void hideSoftKeyBoard(){
+		try {
+			InputMethodManager inputManager = (InputMethodManager)this.getSystemService(Service.INPUT_METHOD_SERVICE);
+			View view = this.getCurrentFocus();
+		    if (view != null) {
+		        inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+		    }
+		} catch (Exception e) {
 		}
 	}
 	public void showToast(String message){

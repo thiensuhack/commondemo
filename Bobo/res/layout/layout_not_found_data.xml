@@ -3,26 +3,36 @@
     android:id="@+id/notFoundDataContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white" >
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/notFoundIcon"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/ic_not_found" />
 
     <TextView
         android:id="@+id/notFoundTextMessage"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/notFoundIcon"
+        android:layout_centerInParent="true"
         android:gravity="center"
         android:text="@string/not_found_data_message"
         android:textColor="@color/black"
-        android:layout_centerInParent="true"/>
+        android:layout_marginTop="10dp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/btnRetry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/notFoundTextMessage"
         android:background="@drawable/item_product_selector"
         android:gravity="center"
         android:text="@string/txt_btn_retry"
-        android:visibility="gone"
-        android:layout_below="@+id/notFoundTextMessage" />
+        android:visibility="gone" />
 
 </RelativeLayout>

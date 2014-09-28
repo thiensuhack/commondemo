@@ -42,6 +42,18 @@ public class OrangeUtils {
 		}		
 		return result;
 	}
+	public static Bundle createRequestBundle2(String limit,String displayFields) {		
+		Bundle result = new Bundle();
+		result.putString(REQUEST_PARAMS_NAME.WS_KEY, OrangeConfig.App_Key);
+		if(displayFields!=null){
+			result.putString(REQUEST_PARAMS_NAME.DISPLAY, displayFields);
+		}	
+		result.putString(REQUEST_PARAMS_NAME.SORT, "id_DESC");
+		if(limit!=null){
+			result.putString(REQUEST_PARAMS_NAME.LITMIT, limit);
+		}		
+		return result;
+	}
 	public static String createUrl(Bundle mBundle){
 		if(mBundle==null){
 			return "";

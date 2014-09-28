@@ -33,7 +33,10 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 	private TextView mProName = null;
 	private TextView mProPrice = null;
 	private TextView mProPriceDiscount = null;
-	private WebView mProPriceDescription = null;
+	private TextView mProModel = null;
+	private TextView mProCondition = null;
+	private WebView mProShortDescription = null;
+	private WebView mProMoreInfo = null;
 	private Button mAddToCardBtn=null;
 	
 	private ProductDTO mProduct = null;
@@ -66,7 +69,13 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 		mProPrice = (TextView) mView.findViewById(R.id.productDetailPrice);
 		mProPriceDiscount = (TextView) mView
 				.findViewById(R.id.productDetailPriceDiscount);
-		mProPriceDescription=(WebView)mView.findViewById(R.id.productDetailDiscription);
+		mProModel = (TextView) mView
+				.findViewById(R.id.productDetailModel);
+		mProCondition = (TextView) mView
+				.findViewById(R.id.productDetailCondition);
+		
+		mProShortDescription=(WebView)mView.findViewById(R.id.productDetailDiscription);
+		mProMoreInfo=(WebView)mView.findViewById(R.id.productDetailMoreInfo);
 		mAddToCardBtn=(Button)mView.findViewById(R.id.addToCardBtn);			
 	}
 
@@ -121,9 +130,11 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 				mProName.setText(mProduct.name);
 				mProPrice.setText("$"+String.valueOf(mProduct.price));
 				mProPriceDiscount.setText("$"+String.valueOf(mProduct.wholesale_price));
+				String shortDescriptions="<body style='text-align: justify;font-size:17px'>"+mProduct.description_short+"</body>";
 				String descriptions="<body style='text-align: justify;font-size:17px'>"+mProduct.description+"</body>";
 				//mProPriceDescription.setText(Html.fromHtml(descriptions));
-				mProPriceDescription.loadData(descriptions,"text/html", "utf-8");
+				mProShortDescription.loadData(shortDescriptions,"text/html", "utf-8");
+				mProMoreInfo.loadData(descriptions,"text/html", "utf-8");
 				if(mProduct.associations.images.size()>0){
 					mSilderAdapter = new ProductDetailImageSlider(getActivity(),
 							mProduct.associations.images);

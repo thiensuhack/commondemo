@@ -74,6 +74,9 @@
     <style name="ButtonPinkStyle" parent="@style/ButtonBaseStyle">
         <item name="android:background">@drawable/button_pink</item>
     </style>
+    <style name="ButtonBlackStyle" parent="@style/ButtonBaseStyle">
+        <item name="android:background">@drawable/button_black</item>
+    </style>
     <!-- ListView Style -->
     <style name="ListViewStyle">
         <item name="android:dividerHeight">5dp</item>
@@ -99,5 +102,10 @@
     <style name="RegisterButtonStyle">
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">12sp</item>
+    </style>
+    <!-- Detail  -->
+    <style name="ProDetailStyle">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 </resources>

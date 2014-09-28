@@ -23,6 +23,7 @@ public class XMLHandlerProduct extends DefaultHandler {
 
 	private boolean isProNameTag = false;
 	private boolean isDescription=false;
+	private boolean isShortDescription=false;
 	private boolean isListImages=false;
 	private boolean isProId=false;
 	
@@ -51,6 +52,10 @@ public class XMLHandlerProduct extends DefaultHandler {
 		}
 		if (localName.equals("description")) {
 			isDescription = true;
+			return;
+		}
+		if (localName.equals("description_short")) {
+			isShortDescription = true;
 			return;
 		}
 		if(localName.equals("language")){
@@ -105,6 +110,10 @@ public class XMLHandlerProduct extends DefaultHandler {
 					data.description=elementValue;
 					return;
 				}
+				if(isShortDescription){
+					data.description_short=elementValue;
+					return;
+				}
 			}else{
 				attrId="";
 			}
@@ -115,6 +124,10 @@ public class XMLHandlerProduct extends DefaultHandler {
 		}
 		if (localName.equalsIgnoreCase("description")) {
 			isDescription = false;
+			return;
+		}
+		if (localName.equalsIgnoreCase("description_short")) {
+			isShortDescription = false;
 			return;
 		}
 		if (localName.equalsIgnoreCase("quantity")) {

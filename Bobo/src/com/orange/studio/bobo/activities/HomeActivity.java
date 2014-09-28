@@ -47,6 +47,8 @@ public class HomeActivity extends ActionBarActivity implements
 
 	public List<ProductDTO> mListItemCart = null;
 
+	public String mKeySearch=null;
+	
 	public interface MainHomeActivityHandler {
 		public void exitApplication();
 	}

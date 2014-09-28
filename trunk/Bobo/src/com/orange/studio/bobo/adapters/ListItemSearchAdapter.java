@@ -36,7 +36,10 @@ public class ListItemSearchAdapter extends OrangeBaseAdapter {
 		mInflater = (LayoutInflater) mActivity
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
-
+	public void clearAllData(){
+		mListData.clear();
+		notifyDataSetChanged();
+	}
 	public void updateDataList(List<ProductDTO> _mListData) {
 		mListData.clear();
 		mListData.addAll(_mListData);

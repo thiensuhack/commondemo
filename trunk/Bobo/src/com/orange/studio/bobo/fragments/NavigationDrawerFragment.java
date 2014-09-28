@@ -428,6 +428,7 @@ public class NavigationDrawerFragment extends Fragment implements
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.searchBtn:
+			getHomeActivity().mSearchKey=mSearchEditText.getText().toString().trim();
 			callFragmentReplace(MENU_NAME.SEARCH_RESULT_FRAGMENT);
 			break;
 		default:

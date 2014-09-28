@@ -139,7 +139,7 @@ public class ProductModel implements ProductIF{
 			Bundle params,String key) {
 		try {
 			url+=OrangeUtils.createUrl(params);
-			url+="&'filter[name]=["+key+"]'";
+			url+="&filter[name]=%25%5b"+key+"%5d%25";
 			SAXParserFactory saxPF = SAXParserFactory.newInstance();
 			SAXParser saxP = saxPF.newSAXParser();
 			XMLReader xmlR = saxP.getXMLReader();

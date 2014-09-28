@@ -73,6 +73,7 @@
     <string name="fragment_home_menu_featured_products">FEATURED PRODUCTS</string>
     <string name="fragment_home_menu_popular">POPULAR</string>
     <!-- Detail -->
+    <string name="detail_title_label">Infomation</string>
     <string name="detail_info_label">Info</string>
     <string name="detail_price_label">Price</string>
     <string name="detail_model_label">Model</string>

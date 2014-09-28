@@ -76,6 +76,7 @@
     </style>
     <style name="ButtonBlackStyle" parent="@style/ButtonBaseStyle">
         <item name="android:background">@drawable/button_black</item>
+        <item name="android:textSize">13sp</item>
     </style>
     <!-- ListView Style -->
     <style name="ListViewStyle">

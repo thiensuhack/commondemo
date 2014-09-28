@@ -8,7 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        android:padding="10dp" >
+        android:padding="10dp"
+        android:layout_marginBottom="20dp" >
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -19,25 +20,32 @@
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/activity_vertical_margin" >
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/viewPagerProductDetail"
-                android:layout_width="fill_parent"
-                android:layout_height="300dp" />
+            <RelativeLayout
+                android:id="@+id/proDetailSlider"
+                android:layout_width="match_parent"
+                android:layout_height="300dp" >
 
-            <com.viewpagerindicator.CirclePageIndicator
-                android:id="@+id/indicatorProductDetail"
-                style="@style/OrangeCustomCirclePageIndicator"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/viewPagerProductDetail"
-                android:padding="10dip" />
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewPagerProductDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <com.viewpagerindicator.CirclePageIndicator
+                    android:id="@+id/indicatorProductDetail"
+                    style="@style/OrangeCustomCirclePageIndicator"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:padding="5dip" />
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/indicatorProductDetail"
+                android:layout_below="@+id/proDetailSlider"
                 android:orientation="vertical"
-                android:paddingBottom="10dp" >
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp" >
 
                 <TextView
                     android:id="@+id/productDetailName"
@@ -153,6 +161,7 @@
                     android:id="@+id/productDetailDiscription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
@@ -172,10 +181,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
                     android:background="@color/gray" />
+
                 <WebView
                     android:id="@+id/productDetailMoreInfo"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <TextView
@@ -205,7 +215,7 @@
             android:id="@+id/addToCardBtn"
             style="@style/ButtonBlackStyle"
             android:layout_width="wrap_content"
-            android:layout_height="23dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/btn_add_to_cart_label" />
     </LinearLayout>

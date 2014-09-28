@@ -96,6 +96,9 @@ public class ProductCategoryFragment extends BaseFragment implements OnItemClick
 		protected void onPreExecute() {
 			super.onPreExecute();
 			switchView(false, true);
+			if(mProductAdapter!=null){
+				mProductAdapter.clearAllData();
+			}			
 		}
 
 		@Override

@@ -48,7 +48,12 @@ public class GridProductAdapter extends OrangeBaseAdapter {
 		mListData.addAll(_mListData);
 		notifyDataSetChanged();
 	}
-
+	public void clearAllData(){
+		if(mListData!=null){
+			mListData.clear();
+		}		
+		notifyDataSetChanged();
+	}
 	public void insertListData(List<ProductDTO> _mListData) {
 		mListData.addAll(_mListData);
 		notifyDataSetChanged();

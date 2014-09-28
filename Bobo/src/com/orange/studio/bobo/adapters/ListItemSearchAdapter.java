@@ -37,7 +37,9 @@ public class ListItemSearchAdapter extends OrangeBaseAdapter {
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
 	public void clearAllData(){
-		mListData.clear();
+		if(mListData!=null){
+			mListData.clear();
+		}		
 		notifyDataSetChanged();
 	}
 	public void updateDataList(List<ProductDTO> _mListData) {

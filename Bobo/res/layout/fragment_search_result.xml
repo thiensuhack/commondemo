@@ -11,6 +11,14 @@
         android:layout_height="wrap_content"
         layout="@layout/layout_search_bar" />
 
+    <ListView
+        android:id="@+id/mySearchListView"
+        style="@style/ListViewStyle"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/searchBarResultFragment"
+        android:layout_marginTop="5dp" />
+
     <include
         android:id="@+id/notFoundContainer"
         android:layout_width="match_parent"
@@ -19,12 +27,11 @@
         android:layout_marginTop="5dp"
         layout="@layout/layout_not_found_data" />
 
-    <ListView
-        android:id="@+id/mySearchListView"
-        style="@style/ListViewStyle"
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_below="@+id/searchBarResultFragment"
-        android:layout_marginTop="5dp" />
+    <include
+        android:id="@+id/loadingContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/layout_loading"
+        android:layout_below="@+id/searchBarResultFragment"/>
 
 </RelativeLayout>

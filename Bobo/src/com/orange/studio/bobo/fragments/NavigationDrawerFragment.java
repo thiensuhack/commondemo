@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -29,6 +30,7 @@ import android.widget.ListView;
 
 import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.adapters.MenuDrawerAdapter;
+import com.orange.studio.bobo.configs.OrangeConfig.MENU_NAME;
 import com.orange.studio.bobo.configs.OrangeConfig.UrlRequest;
 import com.orange.studio.bobo.models.CommonModel;
 import com.orange.studio.bobo.objects.MenuItemDTO;
@@ -64,6 +66,7 @@ public class NavigationDrawerFragment extends Fragment implements
 	private ListView mDrawerListView;
 	private View mFragmentContainerView;
 	private View mSearchBtn=null;
+	private EditText mSearchEditText=null;
 	
 	private int mCurrentSelectedPosition = 0;
 	private boolean mFromSavedInstanceState;
@@ -124,7 +127,7 @@ public class NavigationDrawerFragment extends Fragment implements
 		
 		mSearchBtn=(ImageView)mView.findViewById(R.id.searchBtn);
 		mSearchBtn.setOnClickListener(this);
-		
+		mSearchEditText=(EditText)mView.findViewById(R.id.searchTextBox);
 		return mView;
 	}
 
@@ -350,7 +353,14 @@ public class NavigationDrawerFragment extends Fragment implements
 			mCallbacks.onNavigationDrawerItemSelected(position);
 		}
 	}
-
+	private void callFragmentReplace(int position){
+		if (mDrawerLayout != null) {
+			mDrawerLayout.closeDrawer(mFragmentContainerView);
+		}
+		if (mCallbacks != null) {
+			mCallbacks.onNavigationDrawerItemSelected(position);
+		}
+	}
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
@@ -411,7 +421,7 @@ public class NavigationDrawerFragment extends Fragment implements
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.searchBtn:
-			Toast.makeText(getActivity(), "Search Btn clicked", Toast.LENGTH_LONG).show();
+			callFragmentReplace(MENU_NAME.SEARCH_RESULT_FRAGMENT);
 			break;
 		default:
 			break;

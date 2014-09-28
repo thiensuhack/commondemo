@@ -10,4 +10,5 @@ import com.orange.studio.bobo.objects.RequestDTO;
 public interface ProductIF {
 	public List<ProductDTO> getListProduct(String url,RequestDTO request,Bundle params);
 	public ProductDTO getProductDetail(String url,RequestDTO request,Bundle params);
+	public List<ProductDTO> searchProduct(String url,RequestDTO request,Bundle params,String key);
 }

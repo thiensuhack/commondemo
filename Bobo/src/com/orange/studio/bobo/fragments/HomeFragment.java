@@ -27,6 +27,7 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.adapters.GridProductAdapter;
 import com.orange.studio.bobo.configs.OrangeConfig;
+import com.orange.studio.bobo.configs.OrangeConfig.MENU_NAME;
 import com.orange.studio.bobo.configs.OrangeConfig.UrlRequest;
 import com.orange.studio.bobo.customviews.ExpandableHeightGridView;
 import com.orange.studio.bobo.models.ProductModel;
@@ -242,7 +243,7 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 		ProductDTO mProduct = mProductAdapter.getItem(position);
 		if (mProduct != null) {
 			getHomeActivity().setCurrentProduct(mProduct);
-			getHomeActivity().onNavigationDrawerItemSelected(-11);
+			getHomeActivity().onNavigationDrawerItemSelected(MENU_NAME.PRODUCT_DETAIL_FRAGMENT);
 		}
 	}
 

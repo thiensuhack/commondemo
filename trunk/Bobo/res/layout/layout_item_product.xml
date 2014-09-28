@@ -46,21 +46,24 @@
             android:lines="2"
             android:maxLines="2"
             android:text="Hydrogen SM041-Áo sơ mi (Xanh)"
-            android:layout_marginTop="5dp" />
+            android:layout_marginTop="5dp"
+            android:gravity="center" />
 
         <TextView
             android:id="@+id/proPrice"
             style="@style/ProPriceCurrentStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="$219.000" />
+            android:text="$219.000"
+            android:gravity="center" />
 
         <TextView
             android:id="@+id/proPriceDisCount"
             style="@style/ProPriceDisCountStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="$279.000" />
+            android:text="$279.000"
+            android:visibility="invisible" />
 
         <Button
             android:id="@+id/btnAddCartGrid"

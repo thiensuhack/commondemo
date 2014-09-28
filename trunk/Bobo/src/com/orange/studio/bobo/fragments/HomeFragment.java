@@ -47,9 +47,9 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 	private GridProductAdapter mProductAdapter = null;
 	private LoadProductsTask mLoadProductsTask = null;
 
-	private View mMenuAll = null;
-	private View mMenuBestSeller = null;
-	private View mMenuPopular = null;
+	private TextView mMenuAll = null;
+	private TextView mMenuBestSeller = null;
+	private TextView mMenuPopular = null;
 	
 	
 	private int mCurrentTab = 1;
@@ -91,6 +91,8 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 				.findViewById(R.id.fragmentHomeMenuBestSeller);
 		mMenuPopular = (TextView) mView
 				.findViewById(R.id.fragmentHomeMenuPopular);
+		mCurrentTab=1;
+		switchMenuTabByViewId(R.id.fragmentHomeMenuAll);
 	}
 
 	private void initListener() {
@@ -269,25 +271,34 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 	public void switchMenuTabByViewId(int viewId) {
 		switch (viewId) {
 		case R.id.fragmentHomeMenuAll:
-			mMenuAll.setBackgroundResource(R.drawable.item_menu_home_fragment_active);
-			mMenuBestSeller
-					.setBackgroundResource(R.drawable.item_menu_home_fragment_normal);
-			mMenuPopular
-					.setBackgroundResource(R.drawable.item_menu_home_fragment_normal);
+			mMenuAll.setTextColor(getActivity().getResources().getColor(R.color.black));
+			mMenuBestSeller.setTextColor(getActivity().getResources().getColor(R.color.gray));
+			mMenuPopular.setTextColor(getActivity().getResources().getColor(R.color.gray));
+//			mMenuAll.setBackgroundResource(R.drawable.item_menu_home_fragment_active);
+//			mMenuBestSeller
+//					.setBackgroundResource(R.drawable.item_menu_home_fragment_normal);
+//			mMenuPopular
+//					.setBackgroundResource(R.drawable.item_menu_home_fragment_normal);
 			break;
 		case R.id.fragmentHomeMenuBestSeller:
-			mMenuAll.setBackgroundResource(R.drawable.item_menu_home_fragment_normal);
-			mMenuBestSeller
-					.setBackgroundResource(R.drawable.item_menu_home_fragment_active);
-			mMenuPopular
-					.setBackgroundResource(R.drawable.item_menu_home_fragment_normal);
+			mMenuAll.setTextColor(getActivity().getResources().getColor(R.color.gray));
+			mMenuBestSeller.setTextColor(getActivity().getResources().getColor(R.color.black));
+			mMenuPopular.setTextColor(getActivity().getResources().getColor(R.color.gray));
+//			mMenuAll.setBackgroundResource(R.drawable.item_menu_home_fragment_normal);
+//			mMenuBestSeller
+//					.setBackgroundResource(R.drawable.item_menu_home_fragment_active);
+//			mMenuPopular
+//					.setBackgroundResource(R.drawable.item_menu_home_fragment_normal);
 			break;
 		case R.id.fragmentHomeMenuPopular:
-			mMenuAll.setBackgroundResource(R.drawable.item_menu_home_fragment_normal);
-			mMenuBestSeller
-					.setBackgroundResource(R.drawable.item_menu_home_fragment_normal);
-			mMenuPopular
-					.setBackgroundResource(R.drawable.item_menu_home_fragment_active);
+			mMenuAll.setTextColor(getActivity().getResources().getColor(R.color.gray));
+			mMenuBestSeller.setTextColor(getActivity().getResources().getColor(R.color.gray));
+			mMenuPopular.setTextColor(getActivity().getResources().getColor(R.color.black));
+//			mMenuAll.setBackgroundResource(R.drawable.item_menu_home_fragment_normal);
+//			mMenuBestSeller
+//					.setBackgroundResource(R.drawable.item_menu_home_fragment_normal);
+//			mMenuPopular
+//					.setBackgroundResource(R.drawable.item_menu_home_fragment_active);
 			break;		
 		default:
 			break;

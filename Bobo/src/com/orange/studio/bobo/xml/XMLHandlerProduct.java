@@ -24,6 +24,7 @@ public class XMLHandlerProduct extends DefaultHandler {
 	private boolean isProNameTag = false;
 	private boolean isDescription=false;
 	private boolean isListImages=false;
+	private boolean isProId=false;
 	
 	private String attrId="";
 	
@@ -77,8 +78,9 @@ public class XMLHandlerProduct extends DefaultHandler {
 
 		elementOn = false;
 		
-		if (localName.equalsIgnoreCase("id")) {
+		if (localName.equalsIgnoreCase("id") && !isProId) {
 			data.id = elementValue;
+			isProId=true;
 			return;
 		}		
 		//parser image list
@@ -138,6 +140,7 @@ public class XMLHandlerProduct extends DefaultHandler {
 		if (localName.equalsIgnoreCase("product"))
 		{
 			mListProducts.add(data);
+			isProId=false;
 			return;
 		}
 	}

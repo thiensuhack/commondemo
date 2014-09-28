@@ -1,96 +1,113 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-Auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:padding="10dp" >
+    android:layout_height="match_parent" >
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin" >
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:padding="10dp" >
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/viewPagerProductDetail"
-            android:layout_width="fill_parent"
-            android:layout_height="300dp" />
-
-        <com.viewpagerindicator.CirclePageIndicator
-            android:id="@+id/indicatorProductDetail"
-            style="@style/OrangeCustomCirclePageIndicator"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/viewPagerProductDetail"
-            android:padding="10dip" />
-
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/indicatorProductDetail"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="10dp" >
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin" >
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewPagerProductDetail"
+                android:layout_width="fill_parent"
+                android:layout_height="300dp" />
+
+            <com.viewpagerindicator.CirclePageIndicator
+                android:id="@+id/indicatorProductDetail"
+                style="@style/OrangeCustomCirclePageIndicator"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/viewPagerProductDetail"
+                android:padding="10dip" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/indicatorProductDetail"
+                android:orientation="vertical"
+                android:paddingBottom="10dp" >
+
+                <TextView
+                    android:id="@+id/productDetailName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Black Dress 1"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/productDetailPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="$9.00"
+                    android:textColor="@color/pink"
+                    android:textSize="15sp"
+                    android:textStyle="bold" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/productDetailPriceDiscount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="$1.00"
+                    android:textColor="@color/gray"
+                    android:textSize="15sp"
+                    android:textStyle="bold" >
+                </TextView>
+
+                <WebView
+                    android:id="@+id/productDetailDiscription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/addToCardBtn"
+                    style="@style/ButtonPinkStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    android:text="@string/btn_add_to_cart_label" />
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/productDetailName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Black Dress 1"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" >
+                android:id="@+id/proSaleOff"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/ic_sale_off"
+                android:gravity="center"
+                android:text="99%"
+                android:textColor="@color/white"
+                android:textSize="12sp" >
             </TextView>
+        </RelativeLayout>
+    </ScrollView>
 
-            <TextView
-                android:id="@+id/productDetailPrice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="$9.00"
-                android:textColor="@color/pink"
-                android:textSize="15sp"
-                android:textStyle="bold" >
-            </TextView>
+    <include
+        android:id="@+id/notFoundContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/layout_not_found_data" />
 
-            <TextView
-                android:id="@+id/productDetailPriceDiscount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="$1.00"
-                android:textColor="@color/gray"
-                android:textSize="15sp"
-                android:textStyle="bold" >
-            </TextView>
+    <include
+        android:id="@+id/loadingContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/layout_loading" />
 
-            <WebView
-                android:id="@+id/productDetailDiscription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <Button
-                android:id="@+id/addToCardBtn"
-                style="@style/ButtonPinkStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:layout_gravity="center"
-                android:text="@string/btn_add_to_cart_label" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/proSaleOff"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:background="@drawable/ic_sale_off"
-            android:gravity="center"
-            android:text="99%"
-            android:textColor="@color/white"
-            android:textSize="12sp" >
-        </TextView>
-    </RelativeLayout>
-
-</ScrollView>
+</RelativeLayout>

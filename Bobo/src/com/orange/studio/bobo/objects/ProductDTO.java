@@ -37,6 +37,7 @@ public class ProductDTO {
 	public String description_short;
 	public String available_now;
 	public String available_later;
+	public String reference;
 	public AssociationDTO associations;
 	
 
@@ -45,5 +46,7 @@ public class ProductDTO {
 	public ProductDTO(){
 		cartCounter=0;
 		associations=new AssociationDTO();
+		condition="";
+		reference="";
 	}
 }

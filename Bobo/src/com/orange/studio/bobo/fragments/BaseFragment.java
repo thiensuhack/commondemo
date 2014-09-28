@@ -1,13 +1,11 @@
 package com.orange.studio.bobo.fragments;
 
 import android.os.Bundle;
-import android.provider.ContactsContract.CommonDataKinds.Relation;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -22,6 +20,7 @@ public class BaseFragment extends Fragment{
 	protected View mNotFoundView=null;
 	protected View mLoadingView=null;
 	protected ProgressWheel mProgress=null;
+	protected HomeActivity mHomeActivity=null;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -29,7 +28,10 @@ public class BaseFragment extends Fragment{
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 	protected HomeActivity getHomeActivity(){
-		return (HomeActivity)getActivity();
+		if(mHomeActivity==null){
+			mHomeActivity=(HomeActivity)getActivity();
+		}
+		return mHomeActivity;
 	}
 	protected void initNotFoundView(){
 		if(mView!=null){

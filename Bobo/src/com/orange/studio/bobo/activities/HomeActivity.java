@@ -26,10 +26,12 @@ import com.orange.studio.bobo.fragments.AboutFragment;
 import com.orange.studio.bobo.fragments.ContactUsFragment;
 import com.orange.studio.bobo.fragments.HomeFragment;
 import com.orange.studio.bobo.fragments.NavigationDrawerFragment;
+import com.orange.studio.bobo.fragments.ProductCategoryFragment;
 import com.orange.studio.bobo.fragments.ProductDetailFragment;
 import com.orange.studio.bobo.fragments.RegisterFragment;
 import com.orange.studio.bobo.fragments.SearchResultFragment;
 import com.orange.studio.bobo.fragments.ShoppingCartFragment;
+import com.orange.studio.bobo.objects.MenuItemDTO;
 import com.orange.studio.bobo.objects.ProductDTO;
 
 public class HomeActivity extends ActionBarActivity implements
@@ -48,7 +50,8 @@ public class HomeActivity extends ActionBarActivity implements
 
 	public List<ProductDTO> mListItemCart = null;
 
-	public String mKeySearch=null;
+	public String mSearchKey=null;
+	public MenuItemDTO mCurCategory=new MenuItemDTO();
 	
 	public interface MainHomeActivityHandler {
 		public void exitApplication();
@@ -56,7 +59,8 @@ public class HomeActivity extends ActionBarActivity implements
 
 	private MainHomeActivityHandler mHandler = null;
 	private ExitDialog mExitDialog = null;
-
+	private Fragment mCurFragment=null;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -143,6 +147,10 @@ public class HomeActivity extends ActionBarActivity implements
 			setAppTitle(getString(R.string.menu_drawer_contact_us));
 			return;
 		}
+		if (mFragmentName.equals(ProductCategoryFragment.class.getName())) {
+			setAppTitle(mCurCategory.name);
+			return;
+		}
 		setAppTitle(getString(R.string.app_name));
 		return;
 	}
@@ -184,16 +192,30 @@ public class HomeActivity extends ActionBarActivity implements
 					RegisterFragment.class.getName());
 			break;
 		case MENU_NAME.SEARCH_RESULT_FRAGMENT:
+			mSearchKey=mNavigationDrawerFragment.getSearchKey();
+			if(mCurFragment!=null && mCurFragment.getClass().getName().equals(SearchResultFragment.class.getName())){
+				((SearchResultFragment)mCurFragment).onResume();
+				return;
+			}
 			mFragment = SearchResultFragment.instantiate(
 					getApplicationContext(),
 					SearchResultFragment.class.getName());
+			break;
+		case MENU_NAME.PRODUCT_CATEGORY_FRAGMENT:
+			if(mCurFragment!=null && mCurFragment.getClass().getName().equals(ProductCategoryFragment.class.getName())){
+				((ProductCategoryFragment)mCurFragment).onResume();
+				return;
+			}
+			mFragment = ProductCategoryFragment.instantiate(
+					getApplicationContext(),
+					ProductCategoryFragment.class.getName());			
 			break;
 		default:
 			mFragment = HomeFragment.instantiate(getApplicationContext(),
 					HomeFragment.class.getName());
 			break;
 		}
-
+		mCurFragment=mFragment;
 		replaceFragment(mFragment);
 	}
 
@@ -360,6 +382,12 @@ public class HomeActivity extends ActionBarActivity implements
 		result = Math.round(result);
 		result = result /100;
 		return result;
+	}
+	public void setSearchKey(String searchKey){
+		mSearchKey=searchKey;
+		if(mNavigationDrawerFragment!=null){
+			mNavigationDrawerFragment.setSearchKey(searchKey);
+		}
 	}
 	public void showToast(String message){
 		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();

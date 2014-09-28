@@ -19,7 +19,6 @@ public class XMLHandlerCategory extends DefaultHandler {
 	private boolean elementOn = false;
 
 	private boolean isCateNameTag = false;
-	private boolean isCateId=false;
 	
 	private String attrId="";
 	

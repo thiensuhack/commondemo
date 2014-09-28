@@ -21,14 +21,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.orange.studio.bobo.R;
+import com.orange.studio.bobo.activities.HomeActivity;
 import com.orange.studio.bobo.adapters.MenuDrawerAdapter;
 import com.orange.studio.bobo.configs.OrangeConfig.MENU_NAME;
 import com.orange.studio.bobo.configs.OrangeConfig.UrlRequest;
@@ -134,7 +134,14 @@ public class NavigationDrawerFragment extends Fragment implements
 	private String getMenuName(int resID) {
 		return getActivity().getString(resID);
 	}
-
+	public String getSearchKey(){
+		return mSearchEditText.getText().toString().trim();
+	}
+	public void setSearchKey(String searchKey){
+		if(mSearchEditText!=null){
+			mSearchEditText.setText(searchKey);
+		}
+	}
 	private void createMenuDrawer() {
 		int index = 1;
 		MenuItemDTO item1 = new MenuItemDTO();
@@ -432,26 +439,27 @@ public class NavigationDrawerFragment extends Fragment implements
 			long id) {		
 		MenuItemDTO item=mMenuDrawerAdapter.getItem(position);
 		if(item.tag!=null && item.tag.equals("home")){
-			selectItem(1);
+			callFragmentReplace(1);
 			return;
 		}
 		if(item.tag!=null && item.tag.equals("product")){
-			selectItem(2);
+			callFragmentReplace(2);
 			return;
 		}
 		if(item.tag!=null && item.tag.equals("bestseller")){
-			selectItem(3);
+			callFragmentReplace(3);
 			return;
 		}
 		if(item.tag!=null && item.tag.equals("about")){
-			selectItem(9);
+			callFragmentReplace(9);
 			return;
 		}
 		if(item.tag!=null && item.tag.equals("contactus")){
-			selectItem(10);
+			callFragmentReplace(10);
 			return;
 		}
-		selectItem(position);
+		getHomeActivity().mCurCategory=item;
+		callFragmentReplace(MENU_NAME.PRODUCT_CATEGORY_FRAGMENT);
 	}
 	private void getMenuCategory(){
 		if(mGetCategoryTask==null || mGetCategoryTask.getStatus()==Status.FINISHED){
@@ -534,5 +542,8 @@ public class NavigationDrawerFragment extends Fragment implements
 	public void onResume() {
 		super.onResume();
 		getMenuCategory();
+	}
+	public HomeActivity getHomeActivity(){
+		return (HomeActivity)getActivity();
 	}
 }

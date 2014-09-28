@@ -11,6 +11,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.orange.studio.bobo.R;
@@ -90,7 +91,7 @@ public class ShoppingCartFragment extends BaseFragment implements
 		mTotalPrice=(TextView)mView.findViewById(R.id.itemCartTotalPrice);
 		mCheckOutBtn=(Button)mView.findViewById(R.id.itemCartCheckOutBtn);
 		
-		mNotFoundContainer=(LinearLayout)mView.findViewById(R.id.notFoundContainer);
+		mNotFoundContainer=(RelativeLayout)mView.findViewById(R.id.notFoundContainer);
 		mNotFoundMessage=(TextView)mView.findViewById(R.id.notFoundTextMessage);
 		mNotFoundMessage.setText(getActivity().getString(R.string.msg_empty_items_cart));
 		

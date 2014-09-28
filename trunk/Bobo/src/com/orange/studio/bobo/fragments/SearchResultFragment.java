@@ -3,20 +3,19 @@ package com.orange.studio.bobo.fragments;
 import java.util.List;
 
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.os.AsyncTask.Status;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import com.google.android.gms.internal.fa;
 import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.adapters.ListItemSearchAdapter;
 import com.orange.studio.bobo.configs.OrangeConfig;
@@ -82,6 +81,8 @@ public class SearchResultFragment extends BaseFragment implements
 			if(mSearchKey.length()<1){
 				return;
 			}
+			getHomeActivity().setSearchKey(mSearchKey);
+			
 			searchProduct();
 			break;
 		
@@ -127,8 +128,13 @@ public class SearchResultFragment extends BaseFragment implements
 	@Override
 	public void onResume() {
 		super.onResume();
-		if(mAdapter==null){
-			mAdapter=new ListItemSearchAdapter(getActivity());
+		try {
+			mSearchKey=getHomeActivity().mSearchKey;
+			if(mSearchKey!=null && mSearchKey.trim().length()>0){
+				mSearchEditText.setText(mSearchKey.trim());
+				searchProduct();
+			}			
+		} catch (Exception e) {
 		}
 	}
 	

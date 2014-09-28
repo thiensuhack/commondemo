@@ -11,11 +11,14 @@ public final class OrangeConfig {
 	public static String ITEMS_PAGE="20";
 	public static String App_Key="LW6TL3P7Z7KRFM3UYKWHJ3N28GEZLRBT";
 	public static String App_Private_Key="CCXKyMUaJk20zROniIOMhJDiUCxxiKnMvN9xvF7WMGtzVzyu5an362rq";
+	public static String DISPLAY_FIELDS="full";
+	
 	public static class MENU_NAME{
 		public static final int PRODUCT_DETAIL_FRAGMENT=-11;
 		public static final int SHOPING_CART_FRAGMENT=-12;
 		public static final int REGISTER_FRAGMENT=-13;
 		public static final int SEARCH_RESULT_FRAGMENT=-14;
+		public static final int PRODUCT_CATEGORY_FRAGMENT=-15;
 	}
 	public static class CartItemsRule{
 		public static final int MAX_ITEMS_CART=11; //max type products cart is 11
@@ -26,6 +29,7 @@ public final class OrangeConfig {
 		public static String PRODUCT_HOME=domain+"/products";
 		public static String PRODUCT_DETAIL=domain+"/products/"; //products/{proId}/
 		public static String CATEGORY_MENU=domain+"/categories/";
+		public static String REGISTER=domain+"/customers?Create=Creating";
 	}
 	public static class REQUEST_PARAMS_NAME{
 		public static final String WS_KEY="ws_key";

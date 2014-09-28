@@ -389,14 +389,14 @@ public class HomeActivity extends ActionBarActivity implements
 		}
 	}
 	public void hideSoftKeyBoard(){
-		try {
-			InputMethodManager inputManager = (InputMethodManager)this.getSystemService(Service.INPUT_METHOD_SERVICE);
-			View view = this.getCurrentFocus();
-		    if (view != null) {
-		        inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-		    }
-		} catch (Exception e) {
-		}
+//		try {
+//			InputMethodManager inputManager = (InputMethodManager)this.getSystemService(Service.INPUT_METHOD_SERVICE);
+//			View view = this.getCurrentFocus();
+//		    if (view != null) {
+//		        inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+//		    }
+//		} catch (Exception e) {
+//		}
 	}
 	public void showToast(String message){
 		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();

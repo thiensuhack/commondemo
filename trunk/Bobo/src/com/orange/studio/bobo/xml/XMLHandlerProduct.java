@@ -150,6 +150,14 @@ public class XMLHandlerProduct extends DefaultHandler {
 			data.unit_price_ratio = convertStringToFloat(elementValue);
 			return;
 		}
+		if (localName.equalsIgnoreCase("condition")) {
+			data.condition=elementValue;
+			return;
+		}
+		if (localName.equalsIgnoreCase("reference")) {
+			data.reference=elementValue;
+			return;
+		}
 		if (localName.equalsIgnoreCase("product"))
 		{
 			mListProducts.add(data);

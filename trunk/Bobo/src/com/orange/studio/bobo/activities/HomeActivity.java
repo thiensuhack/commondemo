@@ -3,7 +3,6 @@ package com.orange.studio.bobo.activities;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Service;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,7 +13,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -22,7 +20,8 @@ import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.orange.studio.bobo.R;
-import com.orange.studio.bobo.configs.OrangeConfig.*;
+import com.orange.studio.bobo.configs.OrangeConfig.CartItemsRule;
+import com.orange.studio.bobo.configs.OrangeConfig.MENU_NAME;
 import com.orange.studio.bobo.dialogs.ExitDialog;
 import com.orange.studio.bobo.fragments.AboutFragment;
 import com.orange.studio.bobo.fragments.ContactUsFragment;
@@ -165,9 +164,9 @@ public class HomeActivity extends ActionBarActivity implements
 					HomeFragment.class.getName());
 			break;
 		case 2:
-			break;
+			return;
 		case 3:
-			break;
+			return;
 		case 9:
 			mFragment = AboutFragment.instantiate(getApplicationContext(),
 					AboutFragment.class.getName());

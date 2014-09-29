@@ -30,6 +30,7 @@ public final class OrangeConfig {
 		public static String PRODUCT_DETAIL=domain+"/products/"; //products/{proId}/
 		public static String CATEGORY_MENU=domain+"/categories/";
 		public static String REGISTER=domain+"/customers?Create=Creating";
+		public static String PRODUCT_OPTION_VALUES=domain+"/product_option_values/";
 	}
 	public static class REQUEST_PARAMS_NAME{
 		public static final String WS_KEY="ws_key";

@@ -1,5 +1,6 @@
 package com.orange.studio.bobo.models;
 
+import java.io.StringReader;
 import java.lang.reflect.Type;
 import java.net.URL;
 import java.util.ArrayList;
@@ -20,8 +21,11 @@ import com.google.gson.reflect.TypeToken;
 import com.orange.studio.bobo.OrangeApplicationContext;
 import com.orange.studio.bobo.configs.OrangeConfig;
 import com.orange.studio.bobo.configs.OrangeConfig.Cache;
+import com.orange.studio.bobo.configs.OrangeConfig.UrlRequest;
+import com.orange.studio.bobo.http.OrangeHttpRequest;
 import com.orange.studio.bobo.interfaces.ProductIF;
 import com.orange.studio.bobo.objects.ProductDTO;
+import com.orange.studio.bobo.objects.ProductOptionValueDTO;
 import com.orange.studio.bobo.objects.RequestDTO;
 import com.orange.studio.bobo.utils.OrangeUtils;
 import com.orange.studio.bobo.xml.XMLHandlerProduct;
@@ -97,18 +101,23 @@ public class ProductModel implements ProductIF{
 			SAXParserFactory saxPF = SAXParserFactory.newInstance();
 			SAXParser saxP = saxPF.newSAXParser();
 			XMLReader xmlR = saxP.getXMLReader();
-			URL mUrl = new URL(url); 
 			XMLHandlerProduct myXMLHandler = new XMLHandlerProduct(OrangeConfig.LANGUAGE_DEFAULT);
 			xmlR.setContentHandler(myXMLHandler);
-			xmlR.parse(new InputSource(mUrl.openStream()));
-			if(myXMLHandler.mListProducts!=null && myXMLHandler.mListProducts.size()>0){
-				Gson gs=new Gson();
-				String data=gs.toJson(myXMLHandler.mListProducts);
-				if(data!=null){
-					setStore(key, data,STORE_EXPIRE);
+			String strResult=OrangeHttpRequest.getInstance().getDataXMLFromServer(url,null);
+			if(strResult!=null && strResult.trim().length()>0){
+				InputSource is = new InputSource(new StringReader(strResult));
+				xmlR.parse(is);
+				if(myXMLHandler.mListProducts!=null && myXMLHandler.mListProducts.size()>0){
+					Gson gs=new Gson();
+					String data=gs.toJson(myXMLHandler.mListProducts);
+					if(data!=null){
+						setStore(key, data,STORE_EXPIRE);
+					}
 				}
+				return myXMLHandler.mListProducts;
 			}
-			return myXMLHandler.mListProducts;			
+			return null;
+						
 		} catch (Exception e) {
 			return null;
 		} 
@@ -122,13 +131,33 @@ public class ProductModel implements ProductIF{
 			SAXParserFactory saxPF = SAXParserFactory.newInstance();
 			SAXParser saxP = saxPF.newSAXParser();
 			XMLReader xmlR = saxP.getXMLReader();
-			URL mUrl = new URL(url); 
+			
 			XMLHandlerProduct myXMLHandler = new XMLHandlerProduct(OrangeConfig.LANGUAGE_DEFAULT);
 			xmlR.setContentHandler(myXMLHandler);
-			xmlR.parse(new InputSource(mUrl.openStream()));
-			if(myXMLHandler.mListProducts!=null && myXMLHandler.mListProducts.size()>0){
-				return myXMLHandler.mListProducts.get(0);
-			}
+			String result=OrangeHttpRequest.getInstance().getDataXMLFromServer(url,null);
+			if(result!=null && result.trim().length()>0){
+				InputSource is = new InputSource(new StringReader(result));
+				xmlR.parse(is);
+				if(myXMLHandler.mListProducts!=null && myXMLHandler.mListProducts.size()>0){
+					ProductDTO product=myXMLHandler.mListProducts.get(0);
+					if(product.productOptionValues!=null && product.productOptionValues.size()>0){
+						product.listProductOptionValues=new ArrayList<ProductOptionValueDTO>();
+						
+						String urlProductOptionValue=UrlRequest.PRODUCT_OPTION_VALUES+"?ws_key="+OrangeConfig.App_Key+"&display=full";
+						List<ProductOptionValueDTO> mListProductOptionValue=CommonModel.getInstance().getListProductOptionValue(urlProductOptionValue, null, null);
+						if(mListProductOptionValue!=null && mListProductOptionValue.size()>0){
+							for (String strItem : product.productOptionValues) {
+								for (ProductOptionValueDTO item : mListProductOptionValue) {
+									if(strItem.equals(item.id.trim())){
+										product.listProductOptionValues.add(item);
+									}
+								}
+							}
+						}
+					}					
+					return product;
+				}
+			}			
 			return null;
 		} catch (Exception e) {
 			return null;

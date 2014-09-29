@@ -1,5 +1,8 @@
 package com.orange.studio.bobo.objects;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ProductDTO {
 	public String id;
 	public String id_manufacturer;
@@ -38,8 +41,9 @@ public class ProductDTO {
 	public String available_now;
 	public String available_later;
 	public String reference;
+	public List<String> productOptionValues;
 	public AssociationDTO associations;
-	
+	public List<ProductOptionValueDTO> listProductOptionValues;
 
 	public int cartCounter;
 	
@@ -48,5 +52,7 @@ public class ProductDTO {
 		associations=new AssociationDTO();
 		condition="";
 		reference="";
+		productOptionValues=new ArrayList<String>();
+		listProductOptionValues=null;
 	}
 }

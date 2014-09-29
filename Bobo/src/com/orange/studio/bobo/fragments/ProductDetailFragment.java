@@ -26,6 +26,7 @@ import com.orange.studio.bobo.customviews.ColorHorizontalView.OnTabReselectedLis
 import com.orange.studio.bobo.models.ProductModel;
 import com.orange.studio.bobo.objects.ColorDTO;
 import com.orange.studio.bobo.objects.ProductDTO;
+import com.orange.studio.bobo.objects.ProductOptionValueDTO;
 import com.orange.studio.bobo.objects.RequestDTO;
 import com.orange.studio.bobo.utils.OrangeUtils;
 import com.viewpagerindicator.CirclePageIndicator;
@@ -172,26 +173,18 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 					mViewPager.setAdapter(mSilderAdapter);
 					mCirclePageIndicator.setViewPager(mViewPager);
 				}	
-				List<ColorDTO> listColor=new ArrayList<ColorDTO>();
-				ColorDTO item1=new ColorDTO();
-				item1.color="#D2007D";
-				item1.id="1";
 				
-				ColorDTO item2=new ColorDTO();
-				item2.color="#FF6600";
-				item2.id="2";
-				ColorDTO item3=new ColorDTO();
-				item3.color="#74C219";
-				item3.id="3";
-				listColor.add(item3);
-				listColor.add(item2);
-				listColor.add(item1);
-				listColor.add(item3);
-				listColor.add(item2);
-				listColor.add(item1);
-
-				mColorHorizontalView.updateView(listColor);
-				
+				if(result.listProductOptionValues!=null && result.listProductOptionValues.size()>0){
+					List<ColorDTO> listColor=new ArrayList<ColorDTO>();
+					ColorDTO color=null;
+					for (ProductOptionValueDTO item : result.listProductOptionValues) {
+						color=new ColorDTO();
+						color.color=item.color;
+						color.id=item.id;
+						listColor.add(color);
+					}
+					mColorHorizontalView.updateView(listColor);
+				}								
 				switchView(false,false);
 			}else{
 				switchView(true, false);

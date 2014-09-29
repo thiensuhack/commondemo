@@ -26,6 +26,7 @@ public class XMLHandlerProduct extends DefaultHandler {
 	private boolean isShortDescription=false;
 	private boolean isListImages=false;
 	private boolean isProId=false;
+	private boolean isProductOptionValueId=false;
 	
 	private String attrId="";
 	
@@ -75,6 +76,10 @@ public class XMLHandlerProduct extends DefaultHandler {
 			imagePro.url=attributes.getValue("xlink:href")+"?ws_key="+OrangeConfig.App_Key;			
 			return;
 		}
+		if(localName.equals("product_options_values")){
+			isProductOptionValueId=true;
+			return;
+		}
 	}
 
 	@Override
@@ -87,7 +92,16 @@ public class XMLHandlerProduct extends DefaultHandler {
 			data.id = elementValue;
 			isProId=true;
 			return;
-		}		
+		}
+		if (localName.equalsIgnoreCase("id") && isProductOptionValueId) {
+			data.productOptionValues.add(elementValue);
+			isProductOptionValueId=false;
+			return;
+		}
+		if(localName.equals("product_options_values")){
+			isProductOptionValueId=false;
+			return;
+		}
 		//parser image list
 		if(localName.equalsIgnoreCase("images")){
 			isListImages=false;

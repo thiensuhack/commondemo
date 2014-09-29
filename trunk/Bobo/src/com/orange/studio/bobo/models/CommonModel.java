@@ -2,7 +2,6 @@ package com.orange.studio.bobo.models;
 
 import java.io.StringReader;
 import java.lang.reflect.Type;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
@@ -30,7 +29,6 @@ import com.orange.studio.bobo.objects.RequestDTO;
 import com.orange.studio.bobo.utils.OrangeUtils;
 import com.orange.studio.bobo.xml.XMLHandlerCategory;
 import com.orange.studio.bobo.xml.XMLHandlerCustomer;
-import com.orange.studio.bobo.xml.XMLHandlerProduct;
 import com.orange.studio.bobo.xml.XMLHandlerProductOptionValue;
 import com.zuzu.db.store.SimpleStoreIF;
 
@@ -39,6 +37,7 @@ public class CommonModel implements CommonIF{
 	private static CommonIF _instance;
 	private static final Lock createLock = new ReentrantLock();
 	private static final int STORE_EXPIRE = 1*60; //3 minutes
+	private static final int STORE_EXPIRE_FIVE = 5*60; //3 minutes
 		
 	public CommonModel() {
 	}
@@ -105,18 +104,22 @@ public class CommonModel implements CommonIF{
 			SAXParserFactory saxPF = SAXParserFactory.newInstance();
 			SAXParser saxP = saxPF.newSAXParser();
 			XMLReader xmlR = saxP.getXMLReader();
-			URL mUrl = new URL(url); 
 			XMLHandlerCategory myXMLHandler = new XMLHandlerCategory(OrangeConfig.LANGUAGE_DEFAULT);
 			xmlR.setContentHandler(myXMLHandler);
-			xmlR.parse(new InputSource(mUrl.openStream()));
-			if(myXMLHandler.mListCategory!=null && myXMLHandler.mListCategory.size()>0){
-				Gson gs=new Gson();
-				String data=gs.toJson(myXMLHandler.mListCategory);
-				if(data!=null){
-					setStore(key, data,STORE_EXPIRE);
+			String strResult=OrangeHttpRequest.getInstance().getDataXMLFromServer(url,null);
+			if(strResult!=null && strResult.trim().length()>0){
+				InputSource is = new InputSource(new StringReader(strResult));
+				xmlR.parse(is);
+				if(myXMLHandler.mListCategory!=null && myXMLHandler.mListCategory.size()>0){
+					Gson gs=new Gson();
+					String data=gs.toJson(myXMLHandler.mListCategory);
+					if(data!=null){
+						setStore(key, data,STORE_EXPIRE);
+					}
 				}
+				return myXMLHandler.mListCategory;
 			}
-			return myXMLHandler.mListCategory;			
+			return null;			
 		} catch (Exception e) {
 			return null;
 		} 
@@ -156,18 +159,23 @@ public class CommonModel implements CommonIF{
 			SAXParserFactory saxPF = SAXParserFactory.newInstance();
 			SAXParser saxP = saxPF.newSAXParser();
 			XMLReader xmlR = saxP.getXMLReader();
-			URL mUrl = new URL(url); 
+			
 			XMLHandlerProductOptionValue myXMLHandler = new XMLHandlerProductOptionValue(OrangeConfig.LANGUAGE_DEFAULT);
 			xmlR.setContentHandler(myXMLHandler);
-			xmlR.parse(new InputSource(mUrl.openStream()));
-			if(myXMLHandler.mListProductOptionValue!=null && myXMLHandler.mListProductOptionValue.size()>0){
-				Gson gs=new Gson();
-				String data=gs.toJson(myXMLHandler.mListProductOptionValue);
-				if(data!=null){
-					setStore(key, data,STORE_EXPIRE);
+			String strResult=OrangeHttpRequest.getInstance().getDataXMLFromServer(url,null);
+			if(strResult!=null && strResult.trim().length()>0){
+				InputSource is = new InputSource(new StringReader(strResult));
+				xmlR.parse(is);
+				if(myXMLHandler.mListProductOptionValue!=null && myXMLHandler.mListProductOptionValue.size()>0){
+					Gson gs=new Gson();
+					String data=gs.toJson(myXMLHandler.mListProductOptionValue);
+					if(data!=null){
+						setStore(key, data,STORE_EXPIRE_FIVE);
+					}
 				}
+				return myXMLHandler.mListProductOptionValue;
 			}
-			return myXMLHandler.mListProductOptionValue;			
+			return null;
 		} catch (Exception e) {
 			return null;
 		}

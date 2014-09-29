@@ -1,5 +1,6 @@
 package com.orange.studio.bobo.models;
 
+import java.io.StringReader;
 import java.lang.reflect.Type;
 import java.net.URL;
 import java.util.ArrayList;
@@ -20,11 +21,14 @@ import com.google.gson.reflect.TypeToken;
 import com.orange.studio.bobo.OrangeApplicationContext;
 import com.orange.studio.bobo.configs.OrangeConfig;
 import com.orange.studio.bobo.configs.OrangeConfig.Cache;
+import com.orange.studio.bobo.http.OrangeHttpRequest;
 import com.orange.studio.bobo.interfaces.CommonIF;
+import com.orange.studio.bobo.objects.CustomerDTO;
 import com.orange.studio.bobo.objects.MenuItemDTO;
 import com.orange.studio.bobo.objects.RequestDTO;
 import com.orange.studio.bobo.utils.OrangeUtils;
 import com.orange.studio.bobo.xml.XMLHandlerCategory;
+import com.orange.studio.bobo.xml.XMLHandlerCustomer;
 import com.zuzu.db.store.SimpleStoreIF;
 
 public class CommonModel implements CommonIF{
@@ -114,5 +118,25 @@ public class CommonModel implements CommonIF{
 			return null;
 		} 
 	}
-
+	@Override
+	public CustomerDTO registerUser(String url, String data) {
+		try {			
+			SAXParserFactory saxPF = SAXParserFactory.newInstance();
+			SAXParser saxP = saxPF.newSAXParser();
+			XMLReader xmlR = saxP.getXMLReader();						
+			XMLHandlerCustomer myXMLHandler = new XMLHandlerCustomer(OrangeConfig.LANGUAGE_DEFAULT);
+			xmlR.setContentHandler(myXMLHandler);			
+			String result=OrangeHttpRequest.getInstance().postDataToServer(url, data,201);
+			if(result!=null && result.trim().length()>0){
+				InputSource is = new InputSource(new StringReader(result));
+				xmlR.parse(is);
+				if(myXMLHandler.mListCustomer!=null && myXMLHandler.mListCustomer.size()>0){
+					return myXMLHandler.mListCustomer.get(0);
+				}
+			}			
+			return null;			
+		} catch (Exception e) {
+			return null;
+		} 
+	}
 }

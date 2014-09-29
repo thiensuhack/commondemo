@@ -1,0 +1,37 @@
+/* Register Data */
+<?xml version="1.0" encoding="UTF-8"?>
+<prestashop xmlns:xlink="http://www.w3.org/1999/xlink">
+<customer>
+	<passwd>123456</passwd>
+	<lastname>Danh</lastname>	
+	<firstname>Vo</firstname>
+	<email>abc123@gmail.com</email>
+    <active>1</active>
+</customer>
+</prestashop>
+
+
+
+/*Add to cart*/
+
+<?xml version="1.0" encoding="UTF-8"?>
+<prestashop xmlns:xlink="http://www.w3.org/1999/xlink">
+<cart>
+	<id_currency>1</id_currency>
+	<id_customer></id_customer>
+	<id_guest></id_guest>
+	<id_lang>2</id_lang>
+	<id_shop_group>1</id_shop_group>
+	<id_shop>1</id_shop>
+	<associations>
+		<cart_rows>
+			<cart_rows>
+				<id_product>4</id_product>
+				<id_product_attribute>18</id_product_attribute>
+				<id_address_delivery>0</id_address_delivery>
+				<quantity>1</quantity>
+			</cart_rows>
+		</cart_rows>
+	</associations>
+</cart>
+</prestashop>

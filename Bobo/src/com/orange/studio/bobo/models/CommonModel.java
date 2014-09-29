@@ -25,10 +25,13 @@ import com.orange.studio.bobo.http.OrangeHttpRequest;
 import com.orange.studio.bobo.interfaces.CommonIF;
 import com.orange.studio.bobo.objects.CustomerDTO;
 import com.orange.studio.bobo.objects.MenuItemDTO;
+import com.orange.studio.bobo.objects.ProductOptionValueDTO;
 import com.orange.studio.bobo.objects.RequestDTO;
 import com.orange.studio.bobo.utils.OrangeUtils;
 import com.orange.studio.bobo.xml.XMLHandlerCategory;
 import com.orange.studio.bobo.xml.XMLHandlerCustomer;
+import com.orange.studio.bobo.xml.XMLHandlerProduct;
+import com.orange.studio.bobo.xml.XMLHandlerProductOptionValue;
 import com.zuzu.db.store.SimpleStoreIF;
 
 public class CommonModel implements CommonIF{
@@ -117,6 +120,57 @@ public class CommonModel implements CommonIF{
 		} catch (Exception e) {
 			return null;
 		} 
+	}
+	@SuppressWarnings("unchecked")
+	private List<ProductOptionValueDTO> deserializeListProductOptionValue(String json) {
+		List<ProductOptionValueDTO> result = null;
+		if (json == null || json.equals(""))
+			return result;
+		try {
+			result = new ArrayList<ProductOptionValueDTO>();
+			Gson gson = new Gson();
+			Type listType = new TypeToken<List<ProductOptionValueDTO>>() {
+			}.getType();
+			result = (List<ProductOptionValueDTO>) gson.fromJson(json, listType);
+		} catch (Exception e) {
+			return null;
+		}
+		return result;
+	}
+	@Override
+	public List<ProductOptionValueDTO> getListProductOptionValue(String url,RequestDTO request,Bundle params){
+		try {
+			List<ProductOptionValueDTO> result=null;
+			url+=OrangeUtils.createUrl(params);
+			String key=String.valueOf(url.hashCode());
+			String json=getStoreAdapter().get(key);
+			
+			if(json!=null){
+				
+				result=deserializeListProductOptionValue(json);
+			}
+			if(result!=null && result.size()>0){
+				
+				return result;
+			}
+			SAXParserFactory saxPF = SAXParserFactory.newInstance();
+			SAXParser saxP = saxPF.newSAXParser();
+			XMLReader xmlR = saxP.getXMLReader();
+			URL mUrl = new URL(url); 
+			XMLHandlerProductOptionValue myXMLHandler = new XMLHandlerProductOptionValue(OrangeConfig.LANGUAGE_DEFAULT);
+			xmlR.setContentHandler(myXMLHandler);
+			xmlR.parse(new InputSource(mUrl.openStream()));
+			if(myXMLHandler.mListProductOptionValue!=null && myXMLHandler.mListProductOptionValue.size()>0){
+				Gson gs=new Gson();
+				String data=gs.toJson(myXMLHandler.mListProductOptionValue);
+				if(data!=null){
+					setStore(key, data,STORE_EXPIRE);
+				}
+			}
+			return myXMLHandler.mListProductOptionValue;			
+		} catch (Exception e) {
+			return null;
+		}
 	}
 	@Override
 	public CustomerDTO registerUser(String url, String data) {

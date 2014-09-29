@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<prestashop 
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+    <customer>
+        <id>
+            <![CDATA[8]]>
+        </id>
+        <id_default_group></id_default_group>
+        <id_lang xlink:href="http://bobo.vdigi.vn/api/languages/1">
+            <![CDATA[1]]>
+        </id_lang>
+        <newsletter_date_add></newsletter_date_add>
+        <ip_registration_newsletter></ip_registration_newsletter>
+        <last_passwd_gen>
+            <![CDATA[2014-09-29 17:02:32]]>
+        </last_passwd_gen>
+        <secure_key>
+            <![CDATA[6526df5c13323b521fe5de344652979a]]>
+        </secure_key>
+        <deleted></deleted>
+        <passwd>
+            <![CDATA[e0e93b2128a6e0702ae13c109e75cac2]]>
+        </passwd>
+        <lastname>
+            <![CDATA[Danh]]>
+        </lastname>
+        <firstname>
+            <![CDATA[Vo]]>
+        </firstname>
+        <email>
+            <![CDATA[abc123@gmail.com]]>
+        </email>
+        <id_gender></id_gender>
+        <birthday></birthday>
+        <newsletter></newsletter>
+        <optin></optin>
+        <website></website>
+        <company></company>
+        <siret></siret>
+        <ape></ape>
+        <outstanding_allow_amount></outstanding_allow_amount>
+        <show_public_prices></show_public_prices>
+        <id_risk></id_risk>
+        <max_payment_days></max_payment_days>
+        <active>
+            <![CDATA[1]]>
+        </active>
+        <note></note>
+        <is_guest></is_guest>
+        <id_shop>
+            <![CDATA[1]]>
+        </id_shop>
+        <id_shop_group>
+            <![CDATA[1]]>
+        </id_shop_group>
+        <date_add>
+            <![CDATA[2014-09-29 23:02:32]]>
+        </date_add>
+        <date_upd>
+            <![CDATA[2014-09-29 23:02:32]]>
+        </date_upd>
+        <associations>
+            <groups node_type="group"/>
+        </associations>
+    </customer>
+</prestashop>

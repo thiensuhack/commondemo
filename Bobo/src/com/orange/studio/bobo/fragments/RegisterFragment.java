@@ -1,15 +1,23 @@
 package com.orange.studio.bobo.fragments;
 
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.AsyncTask.Status;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.orange.studio.bobo.R;
+import com.orange.studio.bobo.configs.OrangeConfig;
+import com.orange.studio.bobo.configs.OrangeConfig.UrlRequest;
+import com.orange.studio.bobo.models.CommonModel;
+import com.orange.studio.bobo.objects.CustomerDTO;
 import com.orange.studio.bobo.objects.RegisterDTO;
 import com.orange.studio.bobo.utils.OrangeUtils;
 
@@ -21,7 +29,9 @@ public class RegisterFragment extends BaseFragment implements OnClickListener {
 	private EditText mConfirmPassword = null;
 	private Button mRegisterBtn = null;
 	private RegisterDTO mRegisterInfo = null;
-
+	private ProgressDialog mProgressWaitting=null;
+	private RegisterTask mRegisterTask=null;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -47,6 +57,8 @@ public class RegisterFragment extends BaseFragment implements OnClickListener {
 		mRegisterBtn = (Button) mView.findViewById(R.id.registerBtn);
 
 		mRegisterInfo = new RegisterDTO();
+		mProgressWaitting=new ProgressDialog(getActivity());
+		mProgressWaitting.setMessage(getActivity().getString(R.string.waitting_register_message));
 	}
 
 	private void initListener() {
@@ -95,8 +107,33 @@ public class RegisterFragment extends BaseFragment implements OnClickListener {
 			mPassword.setFocusable(true);
 			return false;
 		}
-		getHomeActivity().showToast("PASSED");
+		//getHomeActivity().showToast("PASSED");
+		/*<?xml version="1.0" encoding="UTF-8"?>
+		<prestashop xmlns:xlink="http://www.w3.org/1999/xlink">
+		<customer>
+			<passwd>123456</passwd>
+			<lastname>Danh</lastname>	
+			<firstname>Vo</firstname>
+			<email>abc123@gmail.com</email>
+		    <active>1</active>
+		</customer>
+		</prestashop>
+		*/
+		String regisData="<?xml version=\"1.0\" encoding=\"UTF-8\"?><prestashop xmlns:xlink=\"http://www.w3.org/1999/xlink\"><customer>";
+		regisData+="<passwd>"+mRegisterInfo.password+"</passwd>";
+		regisData+="<lastname>"+mRegisterInfo.lastName+"</lastname>";	
+		regisData+="<firstname>"+mRegisterInfo.firstName+"</firstname>";
+		regisData+="<email>"+mRegisterInfo.email+"</email>";
+		regisData+="<active>1</active></customer></prestashop>";
+		registerNow(regisData);
 		return true;
+	}
+
+	private void registerNow(String regisData) {
+		if(mRegisterTask==null || mRegisterTask.getStatus()==Status.FINISHED){
+			mRegisterTask=new RegisterTask(regisData);
+			mRegisterTask.execute();
+		}
 	}
 
 	@Override
@@ -108,6 +145,34 @@ public class RegisterFragment extends BaseFragment implements OnClickListener {
 
 		default:
 			break;
+		}
+	}
+	class RegisterTask extends AsyncTask<Void, Void, CustomerDTO>{
+		String regisData="";
+		public RegisterTask(String _regisData){
+			regisData=_regisData;
+		}
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			mProgressWaitting.show();
+		}
+		@Override
+		protected CustomerDTO doInBackground(Void... arg0) {
+			String url=UrlRequest.REGISTER+"&ws_key="+OrangeConfig.App_Key;
+			return CommonModel.getInstance().registerUser(url, regisData);
+		}
+		@Override
+		protected void onPostExecute(CustomerDTO result) {
+			super.onPostExecute(result);
+			if(result!=null){
+				if(result.id!=null && result.id.trim().length()>0){
+					Toast.makeText(getActivity(), result.email, Toast.LENGTH_LONG).show();
+				}
+			}
+			if(mProgressWaitting.isShowing()){
+				mProgressWaitting.dismiss();
+			}
 		}
 	}
 }

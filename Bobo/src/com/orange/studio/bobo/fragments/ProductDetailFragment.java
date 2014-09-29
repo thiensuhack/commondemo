@@ -9,7 +9,6 @@ import android.os.AsyncTask.Status;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
-import android.test.MoreAsserts;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,6 +18,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.orange.studio.bobo.R;
+import com.orange.studio.bobo.activities.HomeActivity;
 import com.orange.studio.bobo.adapters.ProductDetailImageSlider;
 import com.orange.studio.bobo.configs.OrangeConfig.UrlRequest;
 import com.orange.studio.bobo.customviews.ColorHorizontalView;
@@ -52,6 +52,7 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 	
 	private ColorHorizontalView mColorHorizontalView=null;
 	private OnTabReselectedListener mOnTabReselectedListener=null;
+	private HomeActivity mHomeActivity=null;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -92,6 +93,8 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 		
 		mColorHorizontalView=(ColorHorizontalView)mView.findViewById(R.id.proDetailColorView);
 		mProDetailActiveColor=(TextView)mView.findViewById(R.id.proDetailActiveColor);
+		
+		mHomeActivity=getHomeActivity();
 	}
 
 	private void showDetail() {
@@ -164,7 +167,7 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 				mProShortDescription.loadData(shortDescriptions,"text/html", "utf-8");
 				mProMoreInfo.loadData(descriptions,"text/html", "utf-8");
 				if(mProduct.associations.images.size()>0){
-					mSilderAdapter = new ProductDetailImageSlider(getActivity(),
+					mSilderAdapter = new ProductDetailImageSlider(mHomeActivity,
 							mProduct.associations.images);
 					mViewPager.setAdapter(mSilderAdapter);
 					mCirclePageIndicator.setViewPager(mViewPager);

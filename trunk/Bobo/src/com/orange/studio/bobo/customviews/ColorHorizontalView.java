@@ -49,7 +49,7 @@ public class ColorHorizontalView extends HorizontalScrollView {
 	}
 	private int oldTabSelected=0;
 	private Runnable mTabSelector;
-	private int textSize=40;//40dp
+	private int textViewWidth=40;//40dp
 	private final OnClickListener mTabClickListener = new OnClickListener() {
 		public void onClick(View view) {
 			TabView tabView = (TabView) view;
@@ -159,8 +159,8 @@ public class ColorHorizontalView extends HorizontalScrollView {
 		tabView.setText(text);
 		tabView.mColor=color;
 		tabView.setBackgroundColor(Color.parseColor(color.color));
-		tabView.setWidth((int)OrangeUtils.convertDpToPixel(textSize));
-		tabView.setHeight((int)OrangeUtils.convertDpToPixel(textSize));
+		tabView.setWidth((int)OrangeUtils.convertDpToPixel(textViewWidth));
+		tabView.setHeight((int)OrangeUtils.convertDpToPixel(textViewWidth));
 		tabView.setGravity(Gravity.CENTER);
 //		if(index==activeTabIndex){
 //			tabView.isActive=true;
@@ -169,8 +169,9 @@ public class ColorHorizontalView extends HorizontalScrollView {
 			tabView.setCompoundDrawablesWithIntrinsicBounds(iconResId, 0, 0, 0);
 		}
 
-		mTabLayout.addView(tabView, new LinearLayout.LayoutParams(0,
-				MATCH_PARENT, 1));
+		mTabLayout.addView(tabView, new LinearLayout.LayoutParams(WRAP_CONTENT,
+				WRAP_CONTENT, 0));
+		
 	}
 
 	

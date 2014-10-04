@@ -11,10 +11,12 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.activities.HomeActivity;
 import com.orange.studio.bobo.configs.OrangeConfig;
+import com.orange.studio.bobo.configs.OrangeConfig.MENU_NAME;
 import com.orange.studio.bobo.configs.OrangeConfig.UrlRequest;
 import com.orange.studio.bobo.models.CommonModel;
 import com.orange.studio.bobo.objects.CustomerDTO;
@@ -24,6 +26,8 @@ public class LoginFragment extends BaseFragment implements OnClickListener{
 	private EditText mEmail = null;
 	private EditText mPassword = null;
 	private Button mLoginBtn = null;
+	private TextView mRegisterBtn=null;
+	
 	private ProgressDialog mProgress=null;
 	private LoginTask mLoginTask=null;
 	private String strEmail=null;
@@ -51,9 +55,11 @@ public class LoginFragment extends BaseFragment implements OnClickListener{
 		mLoginBtn=(Button)mView.findViewById(R.id.loginBtn);
 		mProgress=new ProgressDialog(getActivity());
 		mProgress.setMessage(getActivity().getString(R.string.waitting_login_message));
+		mRegisterBtn=(TextView)mView.findViewById(R.id.registerLoginBtn);
 	}
 	private void initListener(){
 		mLoginBtn.setOnClickListener(this);
+		mRegisterBtn.setOnClickListener(this);
 	}
 	@Override
 	public void onClick(View v) {
@@ -70,6 +76,9 @@ public class LoginFragment extends BaseFragment implements OnClickListener{
 				return;
 			}
 			login();
+			break;
+		case R.id.registerLoginBtn:
+			mHomeActivity.onNavigationDrawerItemSelected(MENU_NAME.REGISTER_FRAGMENT);
 			break;
 		default:
 			break;
@@ -109,6 +118,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener{
 			super.onPostExecute(result);
 			if(result!=null && result.id!=null && result.id.trim().length()>0){
 				mHomeActivity.showToast("DONE");
+				mHomeActivity.onBackPressed();
 			}
 			if(mProgress.isShowing()){
 				mProgress.dismiss();

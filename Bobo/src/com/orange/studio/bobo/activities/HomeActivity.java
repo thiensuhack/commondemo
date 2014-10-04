@@ -26,6 +26,7 @@ import com.orange.studio.bobo.dialogs.ExitDialog;
 import com.orange.studio.bobo.fragments.AboutFragment;
 import com.orange.studio.bobo.fragments.ContactUsFragment;
 import com.orange.studio.bobo.fragments.HomeFragment;
+import com.orange.studio.bobo.fragments.LoginFragment;
 import com.orange.studio.bobo.fragments.NavigationDrawerFragment;
 import com.orange.studio.bobo.fragments.ProductCategoryFragment;
 import com.orange.studio.bobo.fragments.ProductDetailFragment;
@@ -207,6 +208,11 @@ public class HomeActivity extends ActionBarActivity implements
 			mFragment = ProductCategoryFragment.instantiate(
 					getApplicationContext(),
 					ProductCategoryFragment.class.getName());			
+			break;
+		case MENU_NAME.LOGIN_FRAGMENT:
+			mFragment = LoginFragment.instantiate(
+					getApplicationContext(),
+					LoginFragment.class.getName());
 			break;
 		default:
 			break;

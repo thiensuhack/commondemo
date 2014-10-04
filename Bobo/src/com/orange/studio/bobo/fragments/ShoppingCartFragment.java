@@ -9,13 +9,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.orange.studio.bobo.R;
+import com.orange.studio.bobo.activities.HomeActivity;
 import com.orange.studio.bobo.adapters.ListItemsCartAdapter;
+import com.orange.studio.bobo.configs.OrangeConfig.MENU_NAME;
 import com.orange.studio.bobo.objects.ProductDTO;
 
 public class ShoppingCartFragment extends BaseFragment implements
@@ -27,6 +28,7 @@ public class ShoppingCartFragment extends BaseFragment implements
 	private View mNotFoundContainer=null;
 	private TextView mTotalPrice=null;
 	private Button mCheckOutBtn=null;
+	private HomeActivity mHomeActivity=null;
 	
 	public interface ShoppingCartHandler{
 		public void removeItemCart(String proId);
@@ -50,13 +52,13 @@ public class ShoppingCartFragment extends BaseFragment implements
 	}
 
 	private void initView() {
-		
+		mHomeActivity=getHomeActivity();
 		mHandler=new ShoppingCartHandler() {			
 			@Override
 			public void removeItemCart(String proId) {
 				try {
-					getHomeActivity().removeCartItem(proId);
-					mAdapter.updateDataList(getHomeActivity().mListItemCart);
+					mHomeActivity.removeCartItem(proId);
+					mAdapter.updateDataList(mHomeActivity.mListItemCart);
 					checkItemsCart();
 					updateTotalPrice();
 				} catch (Exception e) {
@@ -67,8 +69,8 @@ public class ShoppingCartFragment extends BaseFragment implements
 			@Override
 			public void increaseItemCart(ProductDTO item) {
 				try {
-					getHomeActivity().addToCart(item);
-					mAdapter.updateDataList(getHomeActivity().mListItemCart);
+					mHomeActivity.addToCart(item);
+					mAdapter.updateDataList(mHomeActivity.mListItemCart);
 					checkItemsCart();
 					updateTotalPrice();
 				} catch (Exception e) {
@@ -79,8 +81,8 @@ public class ShoppingCartFragment extends BaseFragment implements
 			@Override
 			public void decreaseItemCart(ProductDTO item) {
 				try {
-					getHomeActivity().decreaseCartItem(item.id);
-					mAdapter.updateDataList(getHomeActivity().mListItemCart);
+					mHomeActivity.decreaseCartItem(item.id);
+					mAdapter.updateDataList(mHomeActivity.mListItemCart);
 					checkItemsCart();
 					updateTotalPrice();
 				} catch (Exception e) {
@@ -98,8 +100,8 @@ public class ShoppingCartFragment extends BaseFragment implements
 		mListView = (ListView) mView.findViewById(R.id.myListView);
 		mAdapter = new ListItemsCartAdapter(getActivity(),mHandler);
 		mListView.setAdapter(mAdapter);
-		if (getHomeActivity().isHasItemsCart()) {
-			mAdapter.updateDataList(getHomeActivity().mListItemCart);
+		if (mHomeActivity.isHasItemsCart()) {
+			mAdapter.updateDataList(mHomeActivity.mListItemCart);
 		}
 		
 	}
@@ -108,7 +110,7 @@ public class ShoppingCartFragment extends BaseFragment implements
 		mListView.setOnItemClickListener(this);
 	}
 	private void updateTotalPrice(){
-		double total=getHomeActivity().getTotalPriceItemsCart();
+		double total=mHomeActivity.getTotalPriceItemsCart();
 		mTotalPrice.setText("$"+String.valueOf(total));
 	}
 	private void checkItemsCart(){
@@ -125,8 +127,8 @@ public class ShoppingCartFragment extends BaseFragment implements
 			long id) {
 		ProductDTO mProduct = mAdapter.getItem(position);
 		if (mProduct != null) {
-			getHomeActivity().setCurrentProduct(mProduct);
-			getHomeActivity().onNavigationDrawerItemSelected(-11);
+			mHomeActivity.setCurrentProduct(mProduct);
+			mHomeActivity.onNavigationDrawerItemSelected(-11);
 		}
 		return;
 	}
@@ -134,7 +136,7 @@ public class ShoppingCartFragment extends BaseFragment implements
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.itemCartCheckOutBtn:
-			getHomeActivity().onNavigationDrawerItemSelected(-13);
+			mHomeActivity.onNavigationDrawerItemSelected(MENU_NAME.LOGIN_FRAGMENT);
 			break;
 
 		default:

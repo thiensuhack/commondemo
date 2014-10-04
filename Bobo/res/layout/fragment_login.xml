@@ -36,7 +36,8 @@
                 android:maxLines="1"
                 android:minLines="1"
                 android:paddingLeft="5dp"
-                android:paddingRight="3dp" />
+                android:paddingRight="3dp"
+                android:inputType="textEmailAddress" />
         </LinearLayout>
 
         <LinearLayout
@@ -75,6 +76,14 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/button_pink"
             android:text="@string/login_btn_label" />
+
+        <TextView
+            android:id="@+id/registerLoginBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="@string/register_login_label"
+            android:textColor="@color/dark_gray" />
     </LinearLayout>
 
 </LinearLayout>

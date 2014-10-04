@@ -42,8 +42,8 @@
     <!-- Buttons -->
     <string name="register_btn_label">Register</string>
     <string name="login_btn_label">Login</string>
-
-    <!-- Cart Items -->
+    <string name="register_login_label">Register Now</string>
+        <!-- Cart Items -->
     <string name="items_cart_total_price">Total Price:</string>
     <string name="items_cart_check_out">Check Out</string>
 

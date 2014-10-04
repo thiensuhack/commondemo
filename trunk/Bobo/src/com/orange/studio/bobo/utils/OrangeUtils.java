@@ -1,5 +1,7 @@
 package com.orange.studio.bobo.utils;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,6 +17,24 @@ import com.zuzu.db.store.SQLiteStore;
 import com.zuzu.db.store.SimpleStoreIF;
 
 public class OrangeUtils {
+	public static String md5(String s) {
+	    try {
+	        // Create MD5 Hash
+	        MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
+	        digest.update(s.getBytes());
+	        byte messageDigest[] = digest.digest();
+	        
+	        // Create Hex String
+	        StringBuffer hexString = new StringBuffer();
+	        for (int i=0; i<messageDigest.length; i++)
+	            hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
+	        return hexString.toString();
+	        
+	    } catch (NoSuchAlgorithmException e) {
+	        e.printStackTrace();
+	    }
+	    return "";
+	}
 	public static float convertDpToPixel(float dp){
 	    Resources resources = OrangeApplicationContext.getContext().getResources();
 	    DisplayMetrics metrics = resources.getDisplayMetrics();

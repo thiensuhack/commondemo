@@ -103,7 +103,7 @@ public class ProductModel implements ProductIF{
 			XMLReader xmlR = saxP.getXMLReader();
 			XMLHandlerProduct myXMLHandler = new XMLHandlerProduct(OrangeConfig.LANGUAGE_DEFAULT);
 			xmlR.setContentHandler(myXMLHandler);
-			String strResult=OrangeHttpRequest.getInstance().getDataXMLFromServer(url,null);
+			String strResult=OrangeHttpRequest.getInstance().getStringFromServer(url,null);
 			if(strResult!=null && strResult.trim().length()>0){
 				InputSource is = new InputSource(new StringReader(strResult));
 				xmlR.parse(is);
@@ -134,7 +134,7 @@ public class ProductModel implements ProductIF{
 			
 			XMLHandlerProduct myXMLHandler = new XMLHandlerProduct(OrangeConfig.LANGUAGE_DEFAULT);
 			xmlR.setContentHandler(myXMLHandler);
-			String result=OrangeHttpRequest.getInstance().getDataXMLFromServer(url,null);
+			String result=OrangeHttpRequest.getInstance().getStringFromServer(url,null);
 			if(result!=null && result.trim().length()>0){
 				InputSource is = new InputSource(new StringReader(result));
 				xmlR.parse(is);

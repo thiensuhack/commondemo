@@ -46,7 +46,7 @@ public class OrangeHttpRequest implements HttpIF {
 	}
 
 	@Override
-	public String getDataXMLFromServer(String url, Bundle params) {
+	public String getStringFromServer(String url, Bundle params) {
 		StringBuilder builder = new StringBuilder();
 		HttpClient client = new DefaultHttpClient();
 

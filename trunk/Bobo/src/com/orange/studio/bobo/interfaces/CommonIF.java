@@ -13,4 +13,5 @@ public interface CommonIF {
 	public List<MenuItemDTO> getListMenuCategory(String url,RequestDTO request,Bundle params);
 	public List<ProductOptionValueDTO> getListProductOptionValue(String url,RequestDTO request,Bundle params);
 	public CustomerDTO registerUser(String url,String data);
+	public CustomerDTO loginUser(String url);
 }

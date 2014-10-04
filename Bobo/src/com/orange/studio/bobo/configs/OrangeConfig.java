@@ -1,7 +1,6 @@
 
 package com.orange.studio.bobo.configs;
 
-import com.orange.studio.bobo.R;
 
 
 public final class OrangeConfig {
@@ -9,8 +8,8 @@ public final class OrangeConfig {
 	public static int DBVERSION=1;
 	public static String LANGUAGE_DEFAULT = "1";
 	public static String ITEMS_PAGE="20";
-	public static String App_Key="LW6TL3P7Z7KRFM3UYKWHJ3N28GEZLRBT";
-	public static String App_Private_Key="CCXKyMUaJk20zROniIOMhJDiUCxxiKnMvN9xvF7WMGtzVzyu5an362rq";
+	public static final String App_Key="LW6TL3P7Z7KRFM3UYKWHJ3N28GEZLRBT";
+	public static final String App_Private_Key="CCXKyMUaJk20zROniIOMhJDiUCxxiKnMvN9xvF7WMGtzVzyu5an362rq";
 	public static String DISPLAY_FIELDS="full";
 	
 	public static class MENU_NAME{

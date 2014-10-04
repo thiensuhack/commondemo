@@ -1,6 +1,5 @@
 package com.orange.studio.bobo.adapters;
 
-import java.lang.Character.UnicodeBlock;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,10 +100,10 @@ public class GridProductAdapter extends OrangeBaseAdapter {
 		}
 		final ProductDTO mData = mListData.get(position);
 		viewHolder.proName.setText(mData.name);
-		viewHolder.proPrice.setText("$"+String.valueOf(mData.price));
+		viewHolder.proPrice.setText("$"+String.format("%,.2f", mData.price));
 		
-		viewHolder.proPriceDiscount.setText("$"+String
-				.valueOf(mData.wholesale_price));
+		viewHolder.proPriceDiscount.setText("$"+String.format("%,.2f", mData.wholesale_price));
+		
 		if(mData.wholesale_price>0){
 			viewHolder.proPriceDiscount.setVisibility(View.VISIBLE);
 		}else{

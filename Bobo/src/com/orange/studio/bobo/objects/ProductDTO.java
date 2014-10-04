@@ -43,6 +43,7 @@ public class ProductDTO {
 	public String reference;
 	
 	public String stock_available;
+	public String id_product_attribute;
 	
 	public List<String> productOptionValues;
 	public AssociationDTO associations;

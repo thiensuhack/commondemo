@@ -182,6 +182,10 @@ public class XMLHandlerProduct extends DefaultHandler {
 			data.stock_available=stock_available_url;
 			return;
 		}
+		if (localName.equalsIgnoreCase("id_product_attribute")) {
+			data.id_product_attribute=elementValue;
+			return;
+		}
 		if (localName.equalsIgnoreCase("product"))
 		{
 			mListProducts.add(data);

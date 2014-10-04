@@ -23,6 +23,7 @@ import com.orange.studio.bobo.configs.OrangeConfig.Cache;
 import com.orange.studio.bobo.http.OrangeHttpRequest;
 import com.orange.studio.bobo.interfaces.CommonIF;
 import com.orange.studio.bobo.objects.CustomerDTO;
+import com.orange.studio.bobo.objects.ItemCartDTO;
 import com.orange.studio.bobo.objects.MenuItemDTO;
 import com.orange.studio.bobo.objects.ProductOptionValueDTO;
 import com.orange.studio.bobo.objects.RequestDTO;
@@ -30,6 +31,7 @@ import com.orange.studio.bobo.objects.StockDTO;
 import com.orange.studio.bobo.utils.OrangeUtils;
 import com.orange.studio.bobo.xml.XMLHandlerCategory;
 import com.orange.studio.bobo.xml.XMLHandlerCustomer;
+import com.orange.studio.bobo.xml.XMLHandlerItemCart;
 import com.orange.studio.bobo.xml.XMLHandlerProductOptionValue;
 import com.orange.studio.bobo.xml.XMLHandlerStock;
 import com.zuzu.db.store.SimpleStoreIF;
@@ -196,6 +198,27 @@ public class CommonModel implements CommonIF{
 				xmlR.parse(is);
 				if(myXMLHandler.mListCustomer!=null && myXMLHandler.mListCustomer.size()>0){
 					return myXMLHandler.mListCustomer.get(0);
+				}
+			}			
+			return null;			
+		} catch (Exception e) {
+			return null;
+		} 
+	}
+	@Override
+	public ItemCartDTO addToCart(String url, String data) {
+		try {			
+			SAXParserFactory saxPF = SAXParserFactory.newInstance();
+			SAXParser saxP = saxPF.newSAXParser();
+			XMLReader xmlR = saxP.getXMLReader();						
+			XMLHandlerItemCart myXMLHandler = new XMLHandlerItemCart(OrangeConfig.LANGUAGE_DEFAULT);
+			xmlR.setContentHandler(myXMLHandler);			
+			String result=OrangeHttpRequest.getInstance().postDataToServer(url, data,201);
+			if(result!=null && result.trim().length()>0){
+				InputSource is = new InputSource(new StringReader(result));
+				xmlR.parse(is);
+				if(myXMLHandler.mListItemCart!=null && myXMLHandler.mListItemCart.size()>0){
+					return myXMLHandler.mListItemCart.get(0);
 				}
 			}			
 			return null;			

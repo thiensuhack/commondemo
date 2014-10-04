@@ -106,7 +106,7 @@ public class CommonModel implements CommonIF{
 			XMLReader xmlR = saxP.getXMLReader();
 			XMLHandlerCategory myXMLHandler = new XMLHandlerCategory(OrangeConfig.LANGUAGE_DEFAULT);
 			xmlR.setContentHandler(myXMLHandler);
-			String strResult=OrangeHttpRequest.getInstance().getDataXMLFromServer(url,null);
+			String strResult=OrangeHttpRequest.getInstance().getStringFromServer(url,null);
 			if(strResult!=null && strResult.trim().length()>0){
 				InputSource is = new InputSource(new StringReader(strResult));
 				xmlR.parse(is);
@@ -162,7 +162,7 @@ public class CommonModel implements CommonIF{
 			
 			XMLHandlerProductOptionValue myXMLHandler = new XMLHandlerProductOptionValue(OrangeConfig.LANGUAGE_DEFAULT);
 			xmlR.setContentHandler(myXMLHandler);
-			String strResult=OrangeHttpRequest.getInstance().getDataXMLFromServer(url,null);
+			String strResult=OrangeHttpRequest.getInstance().getStringFromServer(url,null);
 			if(strResult!=null && strResult.trim().length()>0){
 				InputSource is = new InputSource(new StringReader(strResult));
 				xmlR.parse(is);
@@ -200,5 +200,26 @@ public class CommonModel implements CommonIF{
 		} catch (Exception e) {
 			return null;
 		} 
+	}
+	@Override
+	public CustomerDTO loginUser(String url){
+		try {
+			SAXParserFactory saxPF = SAXParserFactory.newInstance();
+			SAXParser saxP = saxPF.newSAXParser();
+			XMLReader xmlR = saxP.getXMLReader();						
+			XMLHandlerCustomer myXMLHandler = new XMLHandlerCustomer(OrangeConfig.LANGUAGE_DEFAULT);
+			xmlR.setContentHandler(myXMLHandler);			
+			String result=OrangeHttpRequest.getInstance().getStringFromServer(url, null);
+			if(result!=null && result.trim().length()>0){
+				InputSource is = new InputSource(new StringReader(result));
+				xmlR.parse(is);
+				if(myXMLHandler.mListCustomer!=null && myXMLHandler.mListCustomer.size()>0){
+					return myXMLHandler.mListCustomer.get(0);
+				}
+			}			
+			return null;
+		} catch (Exception e) {
+		}
+		return null;
 	}
 }

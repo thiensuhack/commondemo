@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.orange.studio.bobo.R;
+import com.orange.studio.bobo.activities.HomeActivity;
 import com.orange.studio.bobo.configs.OrangeConfig;
 import com.orange.studio.bobo.configs.OrangeConfig.UrlRequest;
 import com.orange.studio.bobo.models.CommonModel;
@@ -31,7 +32,7 @@ public class RegisterFragment extends BaseFragment implements OnClickListener {
 	private RegisterDTO mRegisterInfo = null;
 	private ProgressDialog mProgressWaitting=null;
 	private RegisterTask mRegisterTask=null;
-	
+	private HomeActivity mHomeActivity=null;
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -59,6 +60,7 @@ public class RegisterFragment extends BaseFragment implements OnClickListener {
 		mRegisterInfo = new RegisterDTO();
 		mProgressWaitting=new ProgressDialog(getActivity());
 		mProgressWaitting.setMessage(getActivity().getString(R.string.waitting_register_message));
+		mHomeActivity=getHomeActivity();
 	}
 
 	private void initListener() {
@@ -73,41 +75,41 @@ public class RegisterFragment extends BaseFragment implements OnClickListener {
 		mRegisterInfo.confirmPassword = mConfirmPassword.getText().toString()
 				.trim();
 		if (mRegisterInfo.firstName.length() < 1) {
-			getHomeActivity().showToast(getActivity().getString(R.string.empty_field));			
+			mHomeActivity.showToast(getActivity().getString(R.string.empty_field));			
 			mFirstName.setFocusable(true);
 			return false;
 		}
 		if (mRegisterInfo.lastName.length() < 1) {
-			getHomeActivity().showToast(getActivity().getString(R.string.empty_field));
+			mHomeActivity.showToast(getActivity().getString(R.string.empty_field));
 			mLastName.setFocusable(true);
 			return false;
 		}
 		if (mRegisterInfo.email.length() < 1) {
-			getHomeActivity().showToast(getActivity().getString(R.string.empty_field));
+			mHomeActivity.showToast(getActivity().getString(R.string.empty_field));
 			mEmail.setFocusable(true);
 			return false;
 		}
 		if(!OrangeUtils.validateEmail(mRegisterInfo.email)){
-			getHomeActivity().showToast(getActivity().getString(R.string.email_not_correct));
+			mHomeActivity.showToast(getActivity().getString(R.string.email_not_correct));
 			mEmail.setFocusable(true);
 			return false;
 		}
 		if (mRegisterInfo.password.length() < 1) {
-			getHomeActivity().showToast(getActivity().getString(R.string.empty_field));
+			mHomeActivity.showToast(getActivity().getString(R.string.empty_field));
 			mPassword.setFocusable(true);
 			return false;
 		}
 		if (mRegisterInfo.confirmPassword.length() < 1) {
-			getHomeActivity().showToast(getActivity().getString(R.string.empty_field));
+			mHomeActivity.showToast(getActivity().getString(R.string.empty_field));
 			mConfirmPassword.setFocusable(true);
 			return false;
 		}
 		if (!mRegisterInfo.password.equals(mRegisterInfo.confirmPassword)) {
-			getHomeActivity().showToast(getActivity().getString(R.string.password_not_matched));
+			mHomeActivity.showToast(getActivity().getString(R.string.password_not_matched));
 			mPassword.setFocusable(true);
 			return false;
 		}
-		//getHomeActivity().showToast("PASSED");
+		//mHomeActivity.showToast("PASSED");
 		/*<?xml version="1.0" encoding="UTF-8"?>
 		<prestashop xmlns:xlink="http://www.w3.org/1999/xlink">
 		<customer>

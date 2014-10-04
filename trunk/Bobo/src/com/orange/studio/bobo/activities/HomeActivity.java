@@ -33,6 +33,7 @@ import com.orange.studio.bobo.fragments.ProductDetailFragment;
 import com.orange.studio.bobo.fragments.RegisterFragment;
 import com.orange.studio.bobo.fragments.SearchResultFragment;
 import com.orange.studio.bobo.fragments.ShoppingCartFragment;
+import com.orange.studio.bobo.fragments.SpinToWinFragment;
 import com.orange.studio.bobo.objects.MenuItemDTO;
 import com.orange.studio.bobo.objects.ProductDTO;
 
@@ -163,6 +164,8 @@ public class HomeActivity extends ActionBarActivity implements
 		case 1:
 			mFragment = HomeFragment.instantiate(getApplicationContext(),
 					HomeFragment.class.getName());
+//			mFragment = SpinToWinFragment.instantiate(getApplicationContext(),
+//					SpinToWinFragment.class.getName());
 			break;
 		case 2:
 			return;
@@ -213,6 +216,11 @@ public class HomeActivity extends ActionBarActivity implements
 			mFragment = LoginFragment.instantiate(
 					getApplicationContext(),
 					LoginFragment.class.getName());
+			break;
+		case MENU_NAME.SPIN_TO_WIN_FRAGMENT:
+			mFragment = SpinToWinFragment.instantiate(
+					getApplicationContext(),
+					SpinToWinFragment.class.getName());
 			break;
 		default:
 			break;

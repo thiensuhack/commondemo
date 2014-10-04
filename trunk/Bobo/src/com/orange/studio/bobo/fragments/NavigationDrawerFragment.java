@@ -17,6 +17,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -459,6 +460,10 @@ public class NavigationDrawerFragment extends Fragment implements
 			callFragmentReplace(10);
 			return;
 		}
+		if(item.tag!=null && item.tag.equals("spintowin")){
+			callFragmentReplace(MENU_NAME.SPIN_TO_WIN_FRAGMENT);
+			return;
+		}
 		getHomeActivity().mCurCategory=item;
 		callFragmentReplace(MENU_NAME.PRODUCT_CATEGORY_FRAGMENT);
 	}
@@ -506,6 +511,15 @@ public class NavigationDrawerFragment extends Fragment implements
 				item3.isHaveResId=true;
 				
 				index++;
+				MenuItemDTO item9 = new MenuItemDTO();
+				item9.id = String.valueOf(index);
+				item9.position=index;
+				item9.resId = R.drawable.ic_menu_event_spin_to_win;
+				item9.name = getMenuName(R.string.menu_drawer_event_spin_to_win);
+				item9.tag="spintowin";
+				item9.total = 0;
+				
+				index++;
 				MenuItemDTO item10 = new MenuItemDTO();
 				item10.id = String.valueOf(index);
 				item10.resId = R.drawable.ic_menu_about_us;
@@ -524,6 +538,7 @@ public class NavigationDrawerFragment extends Fragment implements
 				result.add(0,item3);
 				result.add(0,item2);
 				result.add(0,item1);
+				result.add(item9);
 				result.add(item10);
 				result.add(item11);
 				

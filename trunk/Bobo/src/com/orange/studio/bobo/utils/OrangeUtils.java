@@ -16,10 +16,32 @@ import android.util.DisplayMetrics;
 import com.orange.studio.bobo.OrangeApplicationContext;
 import com.orange.studio.bobo.configs.OrangeConfig;
 import com.orange.studio.bobo.configs.OrangeConfig.REQUEST_PARAMS_NAME;
+import com.orange.studio.bobo.objects.ProductDTO;
 import com.zuzu.db.store.SQLiteStore;
 import com.zuzu.db.store.SimpleStoreIF;
 
 public class OrangeUtils {
+	public static String createCartData(ProductDTO product){
+		String result="";
+		try {
+			result+="<?xml version=\"1.0\" encoding=\"UTF-8\"?><prestashop xmlns:xlink=\"http://www.w3.org/1999/xlink\">";
+			result+="<cart><id_currency>1</id_currency>";
+			result+="<id_customer></id_customer>";
+			result+="<id_guest></id_guest>";
+			result+="<id_lang>2</id_lang>";
+			result+="<id_shop_group>"+product.stock.id_shop_group+"</id_shop_group>";
+			result+="<id_shop>"+product.stock.id_shop+"</id_shop>";
+			result+="<associations><cart_rows><cart_rows>";
+			result+="<id_product>"+product.stock.id+"</id_product>";
+			result+="<id_product_attribute>"+product.stock.id_product_attribute+"</id_product_attribute>";
+			result+="<id_address_delivery>0</id_address_delivery>";
+			result+="</cart_rows></cart_rows></associations>";
+			result+="</cart></prestashop>";
+		} catch (Exception e) {
+			
+		}		
+		return result;
+	}
 	public static String md5(String str) {
 	    String result="";
 		MessageDigest md5 = null;

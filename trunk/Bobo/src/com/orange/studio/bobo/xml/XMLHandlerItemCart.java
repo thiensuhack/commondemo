@@ -7,31 +7,31 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import com.orange.studio.bobo.objects.StockDTO;
+import com.orange.studio.bobo.objects.ItemCartDTO;
 
-public class XMLHandlerStock extends DefaultHandler {
+public class XMLHandlerItemCart extends DefaultHandler {
 
-	public List<StockDTO> mListStock = null;
+	public List<ItemCartDTO> mListItemCart = null;
 
-	public StockDTO data = null;
+	public ItemCartDTO data = null;
 	
 	private String elementValue = null;
 	private boolean elementOn = false;
 
 	
 	private String mCurrentLanguage="1";
-	public XMLHandlerStock(String language) {
+	public XMLHandlerItemCart(String language) {
 		super();
 		mCurrentLanguage=language;
-		mListStock = new ArrayList<StockDTO>();
+		mListItemCart = new ArrayList<ItemCartDTO>();
 	}
 
 	@Override
 	public void startElement(String uri, String localName, String qName,
 			Attributes attributes) throws SAXException {
 		elementOn = true;
-		if (localName.equals("stock_available")) {
-			data = new StockDTO();
+		if (localName.equals("cart")) {
+			data = new ItemCartDTO();
 			return;
 		}
 	}
@@ -45,38 +45,50 @@ public class XMLHandlerStock extends DefaultHandler {
 			data.id = elementValue;
 			return;
 		}
-		if (localName.equalsIgnoreCase("id_product_attribute")) {
-			data.id_product_attribute = elementValue;
+		if (localName.equalsIgnoreCase("id_customer")) {
+			data.id_customer = elementValue;
 			return;
 		}
-		if (localName.equalsIgnoreCase("id_shop")) {
-			data.id_shop = elementValue;
+		if (localName.equalsIgnoreCase("id_guest")) {
+			data.id_guest = elementValue;
 			return;
 		}
-		if (localName.equalsIgnoreCase("id_shop_group")) {
-			data.id_shop_group = elementValue;
-			return;
-		}
-		if (localName.equalsIgnoreCase("quantity")) {
-			data.quantity = convertStringToInt(elementValue);
+		if (localName.equalsIgnoreCase("id_product")) {
+			data.id_product = elementValue;
 			return;
 		}
 		if (localName.equalsIgnoreCase("quantity")) {
 			data.quantity = convertStringToInt(elementValue);
 			return;
-		}		
+		}
+		if (localName.equalsIgnoreCase("date_add")) {
+			data.date_add = elementValue;
+			return;
+		}
+		if (localName.equalsIgnoreCase("date_upd")) {
+			data.date_upd = elementValue;
+			return;
+		}
+		if (localName.equalsIgnoreCase("delivery_option")) {
+			data.delivery_option = elementValue;
+			return;
+		}
+		if (localName.equalsIgnoreCase("gift")) {
+			data.gift = elementValue;
+			return;
+		}
+		if (localName.equalsIgnoreCase("gift_message")) {
+			data.gift_message = elementValue;
+			return;
+		}
+		if (localName.equalsIgnoreCase("secure_key")) {
+			data.secure_key = elementValue;
+			return;
+		}
 		
-		if (localName.equalsIgnoreCase("depends_on_stock")) {
-			data.depends_on_stock = convertStringToInt(elementValue);
-			return;
-		}
-		if (localName.equalsIgnoreCase("out_of_stock")) {
-			data.out_of_stock = convertStringToInt(elementValue);
-			return;
-		}
-		if (localName.equalsIgnoreCase("stock_available"))
+		if (localName.equalsIgnoreCase("cart"))
 		{
-			mListStock.add(0,data);
+			mListItemCart.add(0,data);
 			return;
 		}
 	}

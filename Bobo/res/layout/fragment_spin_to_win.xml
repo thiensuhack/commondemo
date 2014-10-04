@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="7dp" >
+
+        <ImageView
+            android:id="@+id/cartItemFirst"
+            android:layout_width="90dp"
+            android:layout_height="150dp"
+            android:background="@drawable/ic_bobo_app" />
+
+        <ImageView
+            android:id="@+id/cartItemSecond"
+            android:layout_width="90dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="7dp"
+            android:background="@drawable/ic_bobo_app" />
+
+        <ImageView
+            android:id="@+id/cartItemThird"
+            android:layout_width="90dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="7dp"
+            android:background="@drawable/ic_bobo_app" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/spinToWinBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_add_cart_grid"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="@string/spin_to_win_label"
+        android:textColor="@color/white"
+        android:textSize="13sp" />
+
+</LinearLayout>

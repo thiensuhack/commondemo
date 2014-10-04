@@ -156,7 +156,8 @@ public class ProductModel implements ProductIF{
 							}
 						}
 					}		
-					StockDTO stock=CommonModel.getInstance().getStock(product.stock_available);
+					String stockUrl=product.stock_available+"?ws_key="+OrangeConfig.App_Key;
+					StockDTO stock=CommonModel.getInstance().getStock(stockUrl);
 					product.stock=stock;
 					return product;
 				}

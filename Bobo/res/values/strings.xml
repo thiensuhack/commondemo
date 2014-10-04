@@ -81,5 +81,6 @@
     <string name="detail_model_label">Model</string>
     <string name="detail_condition_label">Condition</string>
     <string name="detail_more_info_label">More Info</string>
+    <string name="detail_stock_label">Items</string>
 
 </resources>

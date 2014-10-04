@@ -146,6 +146,29 @@
                     </TextView>
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        style="@style/ProDetailStyle"
+                        android:layout_width="88dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/detail_stock_label"
+                        android:textColor="@color/black" >
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/stockItems"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/gray"
+                        android:textSize="15sp" >
+                    </TextView>
+                </LinearLayout>
+
                 <TextView
                     android:id="@+id/productDetailPriceDiscount"
                     android:layout_width="match_parent"
@@ -225,10 +248,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="1"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp" >
+            android:layout_marginRight="20dp"
+            android:layout_weight="1" >
         </com.orange.studio.bobo.customviews.ColorHorizontalView>
+
         <TextView
             android:id="@+id/proDetailActiveColor"
             android:layout_width="40dp"

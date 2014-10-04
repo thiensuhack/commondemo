@@ -191,7 +191,7 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 		@Override
 		protected List<HomeSliderDTO> doInBackground(Void... arg0) {
 			List<HomeSliderDTO> result = new ArrayList<HomeSliderDTO>();
-			for (int i = 0; i < 10; i++) {
+			for (int i = 0; i < OrangeConfig.IMAGES.length; i++) {
 				HomeSliderDTO item = new HomeSliderDTO();
 				item.imageURL = OrangeConfig.IMAGES[i];
 				result.add(item);

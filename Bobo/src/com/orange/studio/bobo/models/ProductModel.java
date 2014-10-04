@@ -27,6 +27,7 @@ import com.orange.studio.bobo.interfaces.ProductIF;
 import com.orange.studio.bobo.objects.ProductDTO;
 import com.orange.studio.bobo.objects.ProductOptionValueDTO;
 import com.orange.studio.bobo.objects.RequestDTO;
+import com.orange.studio.bobo.objects.StockDTO;
 import com.orange.studio.bobo.utils.OrangeUtils;
 import com.orange.studio.bobo.xml.XMLHandlerProduct;
 import com.zuzu.db.store.SimpleStoreIF;
@@ -154,7 +155,9 @@ public class ProductModel implements ProductIF{
 								}
 							}
 						}
-					}					
+					}		
+					StockDTO stock=CommonModel.getInstance().getStock(product.stock_available);
+					product.stock=stock;
 					return product;
 				}
 			}			

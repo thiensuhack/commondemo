@@ -29,7 +29,7 @@ public class XMLHandlerProduct extends DefaultHandler {
 	private boolean isProductOptionValueId=false;
 	
 	private String attrId="";
-	
+	private String stock_available_url="";
 	
 	private String mCurrentLanguage="1";
 	public XMLHandlerProduct(String language) {
@@ -45,6 +45,8 @@ public class XMLHandlerProduct extends DefaultHandler {
 
 		if (localName.equals("product")) {
 			data = new ProductDTO();
+			stock_available_url="";
+			attrId="";
 			return;
 		}
 		if (localName.equals("name")) {
@@ -78,6 +80,10 @@ public class XMLHandlerProduct extends DefaultHandler {
 		}
 		if(localName.equals("product_options_values")){
 			isProductOptionValueId=true;
+			return;
+		}
+		if(localName.equals("stock_available")){
+			stock_available_url=attributes.getValue("xlink:href");
 			return;
 		}
 	}
@@ -170,6 +176,10 @@ public class XMLHandlerProduct extends DefaultHandler {
 		}
 		if (localName.equalsIgnoreCase("reference")) {
 			data.reference=elementValue;
+			return;
+		}
+		if (localName.equalsIgnoreCase("stock_available")) {
+			data.stock_available=stock_available_url;
 			return;
 		}
 		if (localName.equalsIgnoreCase("product"))

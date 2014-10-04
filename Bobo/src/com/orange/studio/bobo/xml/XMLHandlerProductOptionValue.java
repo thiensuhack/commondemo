@@ -8,7 +8,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import com.orange.studio.bobo.objects.ProductOptionValueDTO;
-import com.orange.studio.bobo.objects.ProductOptionValueDTO;
 
 public class XMLHandlerProductOptionValue extends DefaultHandler {
 

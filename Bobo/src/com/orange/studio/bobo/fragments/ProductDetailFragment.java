@@ -49,6 +49,7 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 	private Button mAddToCardBtn=null;
 	private TextView mProDetailActiveColor = null;
 	private TextView mSaleOffIcon=null;
+	private TextView mStockItem=null;
 	
 	private ProductDTO mProduct = null;
 	
@@ -97,6 +98,8 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 		mProDetailActiveColor=(TextView)mView.findViewById(R.id.proDetailActiveColor);
 		
 		mSaleOffIcon=(TextView)mView.findViewById(R.id.proSaleOff);
+		mStockItem=(TextView)mView.findViewById(R.id.stockItems);
+		
 		mHomeActivity=getHomeActivity();
 	}
 
@@ -170,7 +173,12 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 				mProShortDescription.loadData(shortDescriptions,"text/html", "utf-8");
 				mProMoreInfo.loadData(descriptions,"text/html", "utf-8");
 				mSaleOffIcon.setText(String.valueOf(result.wholesale_price));
-				
+				if(result.stock!=null){
+					mStockItem.setText(String.valueOf(result.stock.quantity));
+					mStockItem.setVisibility(View.VISIBLE);
+				}else{
+					mStockItem.setVisibility(View.GONE);
+				}
 				if(result.wholesale_price>0){					
 					mSaleOffIcon.setVisibility(View.VISIBLE);
 				}else{

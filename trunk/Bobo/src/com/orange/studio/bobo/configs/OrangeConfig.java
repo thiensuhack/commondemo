@@ -19,6 +19,7 @@ public final class OrangeConfig {
 		public static final int REGISTER_FRAGMENT=-13;
 		public static final int SEARCH_RESULT_FRAGMENT=-14;
 		public static final int PRODUCT_CATEGORY_FRAGMENT=-15;
+		public static final int LOGIN_FRAGMENT=-16;
 	}
 	public static class CartItemsRule{
 		public static final int MAX_ITEMS_CART=11; //max type products cart is 11

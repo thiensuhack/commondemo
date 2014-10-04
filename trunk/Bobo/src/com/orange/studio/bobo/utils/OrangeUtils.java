@@ -1,9 +1,12 @@
 package com.orange.studio.bobo.utils;
 
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.commons.codec.binary.Hex;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -17,23 +20,27 @@ import com.zuzu.db.store.SQLiteStore;
 import com.zuzu.db.store.SimpleStoreIF;
 
 public class OrangeUtils {
-	public static String md5(String s) {
-	    try {
-	        // Create MD5 Hash
-	        MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
-	        digest.update(s.getBytes());
-	        byte messageDigest[] = digest.digest();
-	        
-	        // Create Hex String
-	        StringBuffer hexString = new StringBuffer();
-	        for (int i=0; i<messageDigest.length; i++)
-	            hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
-	        return hexString.toString();
-	        
-	    } catch (NoSuchAlgorithmException e) {
-	        e.printStackTrace();
-	    }
-	    return "";
+	public static String md5(String str) {
+	    String result="";
+		MessageDigest md5 = null;
+		try {
+			md5 = MessageDigest.getInstance("MD5");
+		} catch (NoSuchAlgorithmException e) {
+			return result;
+		}
+
+		byte[] b = null;
+		try {
+			b = str.getBytes("UTF-8");
+			md5.update(b);
+		} catch (UnsupportedEncodingException e1) {
+		}
+
+		byte hash[] = md5.digest();
+		if (hash.length > 0) {
+			result = new String(Hex.encodeHex(hash));
+		}
+		return result;
 	}
 	public static float convertDpToPixel(float dp){
 	    Resources resources = OrangeApplicationContext.getContext().getResources();

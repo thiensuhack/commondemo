@@ -48,6 +48,7 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 	private WebView mProMoreInfo = null;
 	private Button mAddToCardBtn=null;
 	private TextView mProDetailActiveColor = null;
+	private TextView mSaleOffIcon=null;
 	
 	private ProductDTO mProduct = null;
 	
@@ -95,6 +96,7 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 		mColorHorizontalView=(ColorHorizontalView)mView.findViewById(R.id.proDetailColorView);
 		mProDetailActiveColor=(TextView)mView.findViewById(R.id.proDetailActiveColor);
 		
+		mSaleOffIcon=(TextView)mView.findViewById(R.id.proSaleOff);
 		mHomeActivity=getHomeActivity();
 	}
 
@@ -167,6 +169,13 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 				//mProPriceDescription.setText(Html.fromHtml(descriptions));
 				mProShortDescription.loadData(shortDescriptions,"text/html", "utf-8");
 				mProMoreInfo.loadData(descriptions,"text/html", "utf-8");
+				mSaleOffIcon.setText(String.valueOf(result.wholesale_price));
+				
+				if(result.wholesale_price>0){					
+					mSaleOffIcon.setVisibility(View.VISIBLE);
+				}else{
+					mSaleOffIcon.setVisibility(View.GONE);
+				}
 				if(mProduct.associations.images.size()>0){
 					mSilderAdapter = new ProductDetailImageSlider(mHomeActivity,
 							mProduct.associations.images);

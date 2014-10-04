@@ -26,10 +26,12 @@ import com.orange.studio.bobo.objects.CustomerDTO;
 import com.orange.studio.bobo.objects.MenuItemDTO;
 import com.orange.studio.bobo.objects.ProductOptionValueDTO;
 import com.orange.studio.bobo.objects.RequestDTO;
+import com.orange.studio.bobo.objects.StockDTO;
 import com.orange.studio.bobo.utils.OrangeUtils;
 import com.orange.studio.bobo.xml.XMLHandlerCategory;
 import com.orange.studio.bobo.xml.XMLHandlerCustomer;
 import com.orange.studio.bobo.xml.XMLHandlerProductOptionValue;
+import com.orange.studio.bobo.xml.XMLHandlerStock;
 import com.zuzu.db.store.SimpleStoreIF;
 
 public class CommonModel implements CommonIF{
@@ -215,6 +217,27 @@ public class CommonModel implements CommonIF{
 				xmlR.parse(is);
 				if(myXMLHandler.mListCustomer!=null && myXMLHandler.mListCustomer.size()>0){
 					return myXMLHandler.mListCustomer.get(0);
+				}
+			}			
+			return null;
+		} catch (Exception e) {
+		}
+		return null;
+	}
+	@Override
+	public StockDTO getStock(String url) {
+		try {
+			SAXParserFactory saxPF = SAXParserFactory.newInstance();
+			SAXParser saxP = saxPF.newSAXParser();
+			XMLReader xmlR = saxP.getXMLReader();						
+			XMLHandlerStock myXMLHandler = new XMLHandlerStock(OrangeConfig.LANGUAGE_DEFAULT);
+			xmlR.setContentHandler(myXMLHandler);			
+			String result=OrangeHttpRequest.getInstance().getStringFromServer(url, null);
+			if(result!=null && result.trim().length()>0){
+				InputSource is = new InputSource(new StringReader(result));
+				xmlR.parse(is);
+				if(myXMLHandler.mListStock!=null && myXMLHandler.mListStock.size()>0){
+					return myXMLHandler.mListStock.get(0);
 				}
 			}			
 			return null;

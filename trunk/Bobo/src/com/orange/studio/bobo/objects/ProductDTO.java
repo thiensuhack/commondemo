@@ -41,10 +41,13 @@ public class ProductDTO {
 	public String available_now;
 	public String available_later;
 	public String reference;
+	
+	public String stock_available;
+	
 	public List<String> productOptionValues;
 	public AssociationDTO associations;
 	public List<ProductOptionValueDTO> listProductOptionValues;
-
+	public StockDTO stock;
 	public int cartCounter;
 	
 	public ProductDTO(){
@@ -54,5 +57,6 @@ public class ProductDTO {
 		reference="";
 		productOptionValues=new ArrayList<String>();
 		listProductOptionValues=null;
+		stock=new StockDTO();
 	}
 }

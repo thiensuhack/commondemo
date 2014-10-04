@@ -89,7 +89,7 @@ public class NavigationDrawerFragment extends Fragment implements
 		// drawer. See PREF_USER_LEARNED_DRAWER for details.
 		SharedPreferences sp = PreferenceManager
 				.getDefaultSharedPreferences(getActivity());
-		mUserLearnedDrawer = sp.getBoolean(PREF_USER_LEARNED_DRAWER, false);
+		mUserLearnedDrawer = sp.getBoolean(PREF_USER_LEARNED_DRAWER, true);
 
 		if (savedInstanceState != null) {
 			mCurrentSelectedPosition = savedInstanceState

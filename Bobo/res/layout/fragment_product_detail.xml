@@ -198,7 +198,8 @@
                 android:gravity="center"
                 android:text="99%"
                 android:textColor="@color/white"
-                android:textSize="12sp" >
+                android:textSize="12sp"
+                android:visibility="gone" >
             </TextView>
         </RelativeLayout>
     </ScrollView>

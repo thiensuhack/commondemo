@@ -7,6 +7,8 @@ import android.os.Bundle;
 import com.orange.studio.bobo.objects.CustomerDTO;
 import com.orange.studio.bobo.objects.ItemCartDTO;
 import com.orange.studio.bobo.objects.MenuItemDTO;
+import com.orange.studio.bobo.objects.ProductFeatureDTO;
+import com.orange.studio.bobo.objects.ProductFeatureValueDTO;
 import com.orange.studio.bobo.objects.ProductOptionValueDTO;
 import com.orange.studio.bobo.objects.RequestDTO;
 import com.orange.studio.bobo.objects.StockDTO;
@@ -18,4 +20,6 @@ public interface CommonIF {
 	public CustomerDTO loginUser(String url);
 	public StockDTO getStock(String url);
 	public ItemCartDTO addToCart(String url,String data);
+	public List<ProductFeatureDTO> getListProductFeatures(String url);
+	public List<ProductFeatureValueDTO> getListProductFeatureValues(String url);
 }

@@ -11,7 +11,7 @@ import com.orange.studio.bobo.objects.ProductFeatureValueDTO;
 
 public class XMLHandlerProductFeatureValues extends DefaultHandler {
 
-	public List<ProductFeatureValueDTO> mListCategory = null;
+	public List<ProductFeatureValueDTO> mListProductFeatureValues = null;
 
 	public ProductFeatureValueDTO data = null;
 	
@@ -27,7 +27,7 @@ public class XMLHandlerProductFeatureValues extends DefaultHandler {
 	public XMLHandlerProductFeatureValues(String language) {
 		super();
 		mCurrentLanguage=language;
-		mListCategory = new ArrayList<ProductFeatureValueDTO>();
+		mListProductFeatureValues = new ArrayList<ProductFeatureValueDTO>();
 	}
 
 	@Override
@@ -84,7 +84,7 @@ public class XMLHandlerProductFeatureValues extends DefaultHandler {
 		}		
 		if (localName.equalsIgnoreCase("product_feature_value") && data.value!=null && data.value.trim().length()>0)
 		{
-			mListCategory.add(0,data);
+			mListProductFeatureValues.add(0,data);
 			return;
 		}
 	}

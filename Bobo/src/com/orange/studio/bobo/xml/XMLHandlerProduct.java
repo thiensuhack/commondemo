@@ -9,14 +9,16 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import com.orange.studio.bobo.configs.OrangeConfig;
 import com.orange.studio.bobo.objects.ProductDTO;
+import com.orange.studio.bobo.objects.ProductFeatureAndValueDTO;
 import com.orange.studio.bobo.objects.ProductImageDTO;
 
 public class XMLHandlerProduct extends DefaultHandler {
 
 	public List<ProductDTO> mListProducts = null;
-
+	
 	public ProductDTO data = null;
 	public ProductImageDTO imagePro=null;
+	public ProductFeatureAndValueDTO productFeatureAndValue=null;
 	
 	private String elementValue = null;
 	private boolean elementOn = false;
@@ -27,6 +29,7 @@ public class XMLHandlerProduct extends DefaultHandler {
 	private boolean isListImages=false;
 	private boolean isProId=false;
 	private boolean isProductOptionValueId=false;
+	private boolean isProductFeatureAndValueId=false;
 	
 	private String attrId="";
 	private String stock_available_url="";
@@ -86,6 +89,11 @@ public class XMLHandlerProduct extends DefaultHandler {
 			stock_available_url=attributes.getValue("xlink:href");
 			return;
 		}
+		if(localName.equals("product_feature")){
+			productFeatureAndValue=new ProductFeatureAndValueDTO();
+			isProductFeatureAndValueId=true;
+			return;
+		}
 	}
 
 	@Override
@@ -97,6 +105,20 @@ public class XMLHandlerProduct extends DefaultHandler {
 		if (localName.equalsIgnoreCase("id") && !isProId) {
 			data.id = elementValue;
 			isProId=true;
+			return;
+		}
+		if (localName.equalsIgnoreCase("id") && !isProductFeatureAndValueId) {
+			productFeatureAndValue.id = elementValue;
+			isProductFeatureAndValueId=true;
+			return;
+		}
+		if (localName.equalsIgnoreCase("id_feature_value")) {
+			productFeatureAndValue.id_feature_value = elementValue;
+			return;
+		}
+		if (localName.equalsIgnoreCase("product_feature") && productFeatureAndValue.id!=null && productFeatureAndValue.id.trim().length()>0) {
+			isProductFeatureAndValueId=false;
+			data.listProductFeatures.add(productFeatureAndValue);
 			return;
 		}
 		if (localName.equalsIgnoreCase("id") && isProductOptionValueId) {

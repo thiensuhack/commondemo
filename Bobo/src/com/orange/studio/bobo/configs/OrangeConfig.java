@@ -33,6 +33,8 @@ public final class OrangeConfig {
 		public static String REGISTER=domain+"/customers?Create=Creating";
 		public static String PRODUCT_OPTION_VALUES=domain+"/product_option_values/";
 		public static String LOGN_URL=domain+"/customers";
+		public static String PRODUCT_FEATURE_URL=domain+"/product_features?"+App_Key;
+		public static String PRODUCT_FEATURE_VALUE_URL=domain+"/product_feature_values?"+App_Key;
 	}
 	public static class REQUEST_PARAMS_NAME{
 		public static final String WS_KEY="ws_key";

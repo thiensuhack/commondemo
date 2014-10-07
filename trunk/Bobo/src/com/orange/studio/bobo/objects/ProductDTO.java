@@ -48,6 +48,7 @@ public class ProductDTO {
 	public List<String> productOptionValues;
 	public AssociationDTO associations;
 	public List<ProductOptionValueDTO> listProductOptionValues;
+	public List<ProductFeatureAndValueDTO> listProductFeatures;
 	public StockDTO stock;
 	public int cartCounter;
 	
@@ -59,5 +60,6 @@ public class ProductDTO {
 		productOptionValues=new ArrayList<String>();
 		listProductOptionValues=null;
 		stock=new StockDTO();
+		listProductFeatures=new ArrayList<ProductFeatureAndValueDTO>();
 	}
 }

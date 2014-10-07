@@ -28,7 +28,7 @@ public class OrangeUtils {
 			result+="<cart><id_currency>1</id_currency>";
 			result+="<id_customer></id_customer>";
 			result+="<id_guest></id_guest>";
-			result+="<id_lang>2</id_lang>";
+			result+="<id_lang>"+OrangeConfig.LANGUAGE_DEFAULT+"</id_lang>";
 			result+="<id_shop_group>"+product.stock.id_shop_group+"</id_shop_group>";
 			result+="<id_shop>"+product.stock.id_shop+"</id_shop>";
 			result+="<associations><cart_rows><cart_rows>";

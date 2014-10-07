@@ -107,16 +107,16 @@ public class XMLHandlerProduct extends DefaultHandler {
 			isProId=true;
 			return;
 		}
-		if (localName.equalsIgnoreCase("id") && !isProductFeatureAndValueId) {
+		if (localName.equalsIgnoreCase("id") && isProductFeatureAndValueId) {
 			productFeatureAndValue.id = elementValue;
-			isProductFeatureAndValueId=true;
+			isProductFeatureAndValueId=false;
 			return;
 		}
 		if (localName.equalsIgnoreCase("id_feature_value")) {
 			productFeatureAndValue.id_feature_value = elementValue;
 			return;
 		}
-		if (localName.equalsIgnoreCase("product_feature") && productFeatureAndValue.id!=null && productFeatureAndValue.id.trim().length()>0) {
+		if (localName.equalsIgnoreCase("product_feature") && productFeatureAndValue!=null && productFeatureAndValue.id!=null && productFeatureAndValue.id.trim().length()>0) {
 			isProductFeatureAndValueId=false;
 			data.listProductFeatures.add(productFeatureAndValue);
 			return;

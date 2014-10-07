@@ -52,7 +52,6 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 	private TextView mMenuBestSeller = null;
 	private TextView mMenuPopular = null;
 	
-	
 	private int mCurrentTab = 1;
 
 	@Override
@@ -70,6 +69,7 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 	}
 
 	private void initView() {
+		mHomeActivity=getHomeActivity();
 		options = new DisplayImageOptions.Builder()
 				.showImageForEmptyUri(R.drawable.ic_bobo_app)
 				.showImageOnFail(R.drawable.ic_bobo_app)
@@ -127,7 +127,7 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 		// loadProductData();
 		// }
 		loadProductData();
-		getHomeActivity().updateItemCartCounter();
+		mHomeActivity.updateItemCartCounter();
 	}
 
 	private class ImageHomeSlider extends PagerAdapter {
@@ -216,7 +216,7 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-
+			
 		}
 
 		@Override
@@ -231,7 +231,7 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 		protected void onPostExecute(List<ProductDTO> result) {
 			super.onPostExecute(result);
 			if (result != null && result.size() > 0) {
-				// getHomeActivity().mListItemCart = result;
+				// mHomeActivity.mListItemCart = result;
 				mProductAdapter.updateDataList(result);
 			}
 		}
@@ -242,8 +242,8 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 			long id) {
 		ProductDTO mProduct = mProductAdapter.getItem(position);
 		if (mProduct != null) {
-			getHomeActivity().setCurrentProduct(mProduct);
-			getHomeActivity().onNavigationDrawerItemSelected(MENU_NAME.PRODUCT_DETAIL_FRAGMENT);
+			mHomeActivity.setCurrentProduct(mProduct);
+			mHomeActivity.onNavigationDrawerItemSelected(MENU_NAME.PRODUCT_DETAIL_FRAGMENT);
 		}
 	}
 

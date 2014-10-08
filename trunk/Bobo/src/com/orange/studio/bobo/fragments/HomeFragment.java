@@ -94,6 +94,9 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 				.findViewById(R.id.fragmentHomeMenuPopular);
 		mCurrentTab=1;
 		switchMenuTabByViewId(R.id.fragmentHomeMenuAll);
+		initLoadingView();
+		initNotFoundView();
+		switchView(false, false);
 	}
 
 	private void initListener() {
@@ -216,7 +219,7 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			
+			switchView(false, true);
 		}
 
 		@Override
@@ -233,6 +236,9 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 			if (result != null && result.size() > 0) {
 				// mHomeActivity.mListItemCart = result;
 				mProductAdapter.updateDataList(result);
+				switchView(false, false);
+			}else{
+				switchView(true, false);
 			}
 		}
 	}

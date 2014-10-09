@@ -26,6 +26,7 @@ import com.orange.studio.bobo.customviews.ColorHorizontalView.OnTabReselectedLis
 import com.orange.studio.bobo.models.ProductModel;
 import com.orange.studio.bobo.objects.ColorDTO;
 import com.orange.studio.bobo.objects.ProductDTO;
+import com.orange.studio.bobo.objects.ProductFeatureAndValueDTO;
 import com.orange.studio.bobo.objects.ProductOptionValueDTO;
 import com.orange.studio.bobo.objects.RequestDTO;
 import com.orange.studio.bobo.utils.OrangeUtils;
@@ -46,6 +47,7 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 	private TextView mProCondition = null;
 	private WebView mProShortDescription = null;
 	private WebView mProMoreInfo = null;
+	private WebView mDataSheet = null;
 	private Button mAddToCardBtn=null;
 	private TextView mProDetailActiveColor = null;
 	private TextView mSaleOffIcon=null;
@@ -92,6 +94,7 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 		
 		mProShortDescription=(WebView)mView.findViewById(R.id.productDetailDiscription);
 		mProMoreInfo=(WebView)mView.findViewById(R.id.productDetailMoreInfo);
+		mDataSheet=(WebView)mView.findViewById(R.id.dataSheet);
 		mAddToCardBtn=(Button)mView.findViewById(R.id.addToCardBtn);
 		
 		mColorHorizontalView=(ColorHorizontalView)mView.findViewById(R.id.proDetailColorView);
@@ -167,6 +170,14 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 				mProPriceDiscount.setText("$"+String.format("%,.2f", mProduct.wholesale_price));
 				mProCondition.setText(mProduct.condition);
 				mProModel.setText(mProduct.reference);
+				if(mProduct.listProductFeatures!=null && mProduct.listProductFeatures.size()>0){
+					String dataSheet="<body><table style=\"border-bottom: 1px solid #d6d4d4;width: 100%;background: white;\">";
+					for (ProductFeatureAndValueDTO item : mProduct.listProductFeatures) {
+						dataSheet+="<tr style=\"border-top: 1px solid #d6d4d4;\"><td style=\"border-right: 1px solid #d6d4d4;width: 30%;font-weight: 900;color: #333333;\">"+item.feature_title+"</td><td style=\"text-align: left;font-weight: normal;vertical-align: middle;\">"+item.feature_value+"</td></tr>";
+					}
+					dataSheet+="</table></body>";
+					mDataSheet.loadData(dataSheet,"text/html", "utf-8");
+				}
 				String shortDescriptions="<body style='text-align: justify;font-size:17px'>"+mProduct.description_short+"</body>";
 				String descriptions="<body style='text-align: justify;font-size:17px'>"+mProduct.description+"</body>";
 				//mProPriceDescription.setText(Html.fromHtml(descriptions));

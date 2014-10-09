@@ -25,6 +25,9 @@ import com.orange.studio.bobo.configs.OrangeConfig.UrlRequest;
 import com.orange.studio.bobo.http.OrangeHttpRequest;
 import com.orange.studio.bobo.interfaces.ProductIF;
 import com.orange.studio.bobo.objects.ProductDTO;
+import com.orange.studio.bobo.objects.ProductFeatureAndValueDTO;
+import com.orange.studio.bobo.objects.ProductFeatureDTO;
+import com.orange.studio.bobo.objects.ProductFeatureValueDTO;
 import com.orange.studio.bobo.objects.ProductOptionValueDTO;
 import com.orange.studio.bobo.objects.RequestDTO;
 import com.orange.studio.bobo.objects.StockDTO;
@@ -159,6 +162,28 @@ public class ProductModel implements ProductIF{
 					String stockUrl=product.stock_available+"?ws_key="+OrangeConfig.App_Key;
 					StockDTO stock=CommonModel.getInstance().getStock(stockUrl);
 					product.stock=stock;
+					if(OrangeConfig.mListProductFeatures==null){
+						OrangeConfig.mListProductFeatures = CommonModel.getInstance().getListProductFeatures(UrlRequest.PRODUCT_FEATURE_URL);
+					}
+					if(OrangeConfig.mListProductFeatureValues==null){
+						OrangeConfig.mListProductFeatureValues = CommonModel.getInstance().getListProductFeatureValues(UrlRequest.PRODUCT_FEATURE_VALUE_URL);
+					}
+					if(product.listProductFeatures!=null && product.listProductFeatures.size()>0 && OrangeConfig.mListProductFeatures!=null && OrangeConfig.mListProductFeatures.size()>0 && OrangeConfig.mListProductFeatureValues!=null && OrangeConfig.mListProductFeatureValues.size()>0){
+						for (ProductFeatureAndValueDTO pro : product.listProductFeatures) {
+							for (ProductFeatureDTO item : OrangeConfig.mListProductFeatures) {
+								if(pro.id.equals(item.id)){
+									pro.feature_title=item.name;
+									break;
+								}
+							}
+							for (ProductFeatureValueDTO item2 : OrangeConfig.mListProductFeatureValues) {
+								if(pro.id_feature_value.equals(item2.id)){
+									pro.feature_value=item2.value;
+									break;
+								}
+							}
+						}						
+					}
 					return product;
 				}
 			}			

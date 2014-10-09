@@ -148,6 +148,38 @@ public class CommonModel implements CommonIF{
 		}
 		return result;
 	}
+	@SuppressWarnings("unchecked")
+	private List<ProductFeatureDTO> deserializeListProductFeatures(String json) {
+		List<ProductFeatureDTO> result = null;
+		if (json == null || json.equals(""))
+			return result;
+		try {
+			result = new ArrayList<ProductFeatureDTO>();
+			Gson gson = new Gson();
+			Type listType = new TypeToken<List<ProductFeatureDTO>>() {
+			}.getType();
+			result = (List<ProductFeatureDTO>) gson.fromJson(json, listType);
+		} catch (Exception e) {
+			return null;
+		}
+		return result;
+	}
+	@SuppressWarnings("unchecked")
+	private List<ProductFeatureValueDTO> deserializeListProductFeatureValues(String json) {
+		List<ProductFeatureValueDTO> result = null;
+		if (json == null || json.equals(""))
+			return result;
+		try {
+			result = new ArrayList<ProductFeatureValueDTO>();
+			Gson gson = new Gson();
+			Type listType = new TypeToken<List<ProductFeatureValueDTO>>() {
+			}.getType();
+			result = (List<ProductFeatureValueDTO>) gson.fromJson(json, listType);
+		} catch (Exception e) {
+			return null;
+		}
+		return result;
+	}
 	@Override
 	public List<ProductOptionValueDTO> getListProductOptionValue(String url,RequestDTO request,Bundle params){
 		try {
@@ -275,6 +307,19 @@ public class CommonModel implements CommonIF{
 	@Override
 	public List<ProductFeatureDTO> getListProductFeatures(String url) {
 		try {
+			List<ProductFeatureDTO> resultProductFeatures=null;
+			String key=String.valueOf(url.hashCode());
+			String json=getStoreAdapter().get(key);
+			
+			if(json!=null){
+				
+				resultProductFeatures=deserializeListProductFeatures(json);
+			}
+			if(resultProductFeatures!=null && resultProductFeatures.size()>0){
+				
+				return resultProductFeatures;
+			}
+			
 			SAXParserFactory saxPF = SAXParserFactory.newInstance();
 			SAXParser saxP = saxPF.newSAXParser();
 			XMLReader xmlR = saxP.getXMLReader();						
@@ -284,6 +329,13 @@ public class CommonModel implements CommonIF{
 			if(result!=null && result.trim().length()>0){
 				InputSource is = new InputSource(new StringReader(result));
 				xmlR.parse(is);
+				if(myXMLHandler.mListProductFeatures!=null && myXMLHandler.mListProductFeatures.size()>0){
+					Gson gs=new Gson();
+					String data=gs.toJson(myXMLHandler.mListProductFeatures);
+					if(data!=null){
+						setStore(key, data,STORE_EXPIRE_FIVE);
+					}
+				}
 				return myXMLHandler.mListProductFeatures;
 			}			
 			return null;
@@ -294,6 +346,17 @@ public class CommonModel implements CommonIF{
 	@Override
 	public List<ProductFeatureValueDTO> getListProductFeatureValues(String url) {
 		try {
+			List<ProductFeatureValueDTO> resultProductFeatureValues=null;
+			String key=String.valueOf(url.hashCode());
+			String json=getStoreAdapter().get(key);
+						if(json!=null){
+				
+				resultProductFeatureValues=deserializeListProductFeatureValues(json);
+			}
+			if(resultProductFeatureValues!=null && resultProductFeatureValues.size()>0){
+				
+				return resultProductFeatureValues;
+			}
 			SAXParserFactory saxPF = SAXParserFactory.newInstance();
 			SAXParser saxP = saxPF.newSAXParser();
 			XMLReader xmlR = saxP.getXMLReader();						
@@ -303,6 +366,13 @@ public class CommonModel implements CommonIF{
 			if(result!=null && result.trim().length()>0){
 				InputSource is = new InputSource(new StringReader(result));
 				xmlR.parse(is);
+				if(myXMLHandler.mListProductFeatureValues!=null && myXMLHandler.mListProductFeatureValues.size()>0){
+					Gson gs=new Gson();
+					String data=gs.toJson(myXMLHandler.mListProductFeatureValues);
+					if(data!=null){
+						setStore(key, data,STORE_EXPIRE_FIVE);
+					}
+				}
 				return myXMLHandler.mListProductFeatureValues;
 			}			
 			return null;

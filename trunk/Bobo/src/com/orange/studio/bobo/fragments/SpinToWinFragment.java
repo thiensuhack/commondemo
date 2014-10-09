@@ -19,7 +19,9 @@ public class SpinToWinFragment extends BaseFragment implements OnClickListener {
 	private ImageView mSecondCard;
 	private ImageView mThirdCard;
 	private Button mSpinBtn;
-
+	private boolean isSpining=false;
+	private Handler handler=null;
+	private Runnable runnable=null;
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -58,7 +60,16 @@ public class SpinToWinFragment extends BaseFragment implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.spinToWinBtn:
-			spinToWind();
+			if(!isSpining){
+				isSpining=true;
+				mSpinBtn.setText(getActivity().getString(R.string.stop_spin_to_win_label));
+				spinToWind();
+			}else{
+				isSpining=false;
+				mSpinBtn.setText(getActivity().getString(R.string.spin_to_win_label));
+				handler.removeCallbacks(runnable);
+			}
+			
 			break;
 
 		default:
@@ -70,8 +81,8 @@ public class SpinToWinFragment extends BaseFragment implements OnClickListener {
 		final int[] imageArray = { R.drawable.ic_btn_close_active,
 				R.drawable.ic_btn_close_normal, R.drawable.ic_launcher };
 		final Random rand=new Random();
-		final Handler handler = new Handler();
-		Runnable runnable = new Runnable() {
+		handler = new Handler();
+		runnable = new Runnable() {
 			int i = 0;
 			public void run() {
 				i = rand.nextInt(3);
@@ -86,11 +97,12 @@ public class SpinToWinFragment extends BaseFragment implements OnClickListener {
 //				if (i > imageArray.length - 1) {
 //					i = 0;
 //				}
-				handler.postDelayed(this, 100); // for interval...
+				handler.postDelayed(this, 50); // for interval...			
 			}
 		};
 		
-		handler.postDelayed(runnable, 500); // for initial delay..
+		handler.postDelayed(runnable, 50); // for initial delay..
+		
 	}
 
 }

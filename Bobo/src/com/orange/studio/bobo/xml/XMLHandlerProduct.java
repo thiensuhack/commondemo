@@ -200,6 +200,10 @@ public class XMLHandlerProduct extends DefaultHandler {
 			data.reference=elementValue;
 			return;
 		}
+		if (localName.equalsIgnoreCase("available_now")) {
+			data.available_now=elementValue;
+			return;
+		}
 		if (localName.equalsIgnoreCase("stock_available")) {
 			data.stock_available=stock_available_url;
 			return;

@@ -171,29 +171,33 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 				mProCondition.setText(mProduct.condition);
 				mProModel.setText(mProduct.reference);
 				if(mProduct.listProductFeatures!=null && mProduct.listProductFeatures.size()>0){
-					String dataSheet="<body><table style=\"border-bottom: 1px solid #d6d4d4;width: 100%;background: white;\">";
+					//String dataSheet="<body><table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" style=\"border-bottom: 1px solid #d6d4d4;width: 100%;background: white;\"><tbody>";
+					String dataSheet="<body><table style=\"background: white;\"><tbody>";
 					for (ProductFeatureAndValueDTO item : mProduct.listProductFeatures) {
-						dataSheet+="<tr style=\"border-top: 1px solid #d6d4d4;\"><td style=\"border-right: 1px solid #d6d4d4;width: 30%;font-weight: 900;color: #333333;\">"+item.feature_title+"</td><td style=\"text-align: left;font-weight: normal;vertical-align: middle;\">"+item.feature_value+"</td></tr>";
+						dataSheet+="<tr style=\"border-top: 1px solid #d6d4d4; padding:0px;\"><td style=\"padding: 5px 20px 5px 0px;border-right: 1px solid #d6d4d4;width: 30%;font-weight: 900;color: #333333;\">"+item.feature_title+"</td><td style=\"text-align: left;font-weight: normal;vertical-align: middle;padding: 5px 20px 5px 20px;\">"+item.feature_value+"</td></tr>";
 					}
-					dataSheet+="</table></body>";
+					dataSheet+="</tbody></table></body>";
 					mDataSheet.loadData(dataSheet,"text/html", "utf-8");
+				}else{
+					mView.findViewById(R.id.dataSheetLabel).setVisibility(View.GONE);
+					mDataSheet.setVisibility(View.GONE);
 				}
-				String shortDescriptions="<body style='text-align: justify;font-size:17px'>"+mProduct.description_short+"</body>";
-				String descriptions="<body style='text-align: justify;font-size:17px'>"+mProduct.description+"</body>";
+				String shortDescriptions="<body style='text-align: justify;font-size:17px;padding:0px;'>"+mProduct.description_short+"</body>";
+				String descriptions="<body style='text-align: justify;font-size:17px;padding:0px;'>"+mProduct.description+"</body>";
 				//mProPriceDescription.setText(Html.fromHtml(descriptions));
 				mProShortDescription.loadData(shortDescriptions,"text/html", "utf-8");
 				mProMoreInfo.loadData(descriptions,"text/html", "utf-8");
 				mSaleOffIcon.setText(String.valueOf(result.wholesale_price));
-				if(result.stock!=null){
+				if(result.stock!=null && result.stock.quantity>0){
 					mStockItem.setText(String.valueOf(result.stock.quantity));
 					mStockItem.setVisibility(View.VISIBLE);
 				}else{
-					mStockItem.setVisibility(View.GONE);
+					mStockItem.setVisibility(View.INVISIBLE);
 				}
 				if(result.wholesale_price>0){					
 					mSaleOffIcon.setVisibility(View.VISIBLE);
 				}else{
-					mSaleOffIcon.setVisibility(View.GONE);
+					mSaleOffIcon.setVisibility(View.INVISIBLE);
 				}
 				if(mProduct.associations.images.size()>0){
 					mSilderAdapter = new ProductDetailImageSlider(mHomeActivity,

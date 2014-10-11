@@ -188,12 +188,21 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 //				mHomeActivity.showToast(result);
 				if(mStock!=null && mStock.quantity>0){
 					mStockItem.setText(String.valueOf(mStock.quantity));
+					//mAddToCardBtn.setVisibility(View.VISIBLE);
+					mAddToCardBtn.setBackgroundResource(R.drawable.button_black);
+					mAddToCardBtn.setEnabled(true);
 					mStockItem.setVisibility(View.VISIBLE);
-				}else{
+				}else{					
 					mStockItem.setVisibility(View.INVISIBLE);
+//					mAddToCardBtn.setVisibility(View.INVISIBLE);
+					mAddToCardBtn.setBackgroundResource(R.drawable.button_gray);
+					mAddToCardBtn.setEnabled(false);
 				}
 			}else{
 				mStockItem.setVisibility(View.INVISIBLE);
+//				mAddToCardBtn.setVisibility(View.INVISIBLE);
+				mAddToCardBtn.setBackgroundResource(R.drawable.button_gray);
+				mAddToCardBtn.setEnabled(false);
 			}
 			if(mProgressDialog.isShowing()){
 				mProgressDialog.dismiss();

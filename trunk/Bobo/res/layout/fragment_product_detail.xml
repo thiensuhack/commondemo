@@ -267,7 +267,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/btn_add_to_cart_label" />
+            android:text="@string/btn_add_to_cart_label" 
+            android:background="@drawable/button_gray"
+            android:enabled="false"/>
 
         <com.orange.studio.bobo.customviews.ColorHorizontalView
             android:id="@+id/proDetailColorView"

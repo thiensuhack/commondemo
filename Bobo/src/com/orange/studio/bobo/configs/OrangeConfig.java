@@ -47,7 +47,7 @@ public final class OrangeConfig {
 				+ "/product_features?ws_key=" + App_Key + "&display=full";
 		public static String PRODUCT_FEATURE_VALUE_URL = domain
 				+ "/product_feature_values?ws_key=" + App_Key + "&display=full";
-		public static String PRODUCT_COLOR_ITEM_STOCK = "http://www.bobo-u.com/modules/paypal/express_checkout/ajax.php?get_qty=1&id_product=%d&id_product_attribute=%d";
+		public static String PRODUCT_COLOR_ITEM_STOCK = "http://www.bobo-u.com/modules/paypal/express_checkout/ajax.php?get_qty=1&id_product=%s&id_product_attribute=%s";
 	}
 
 	public static class REQUEST_PARAMS_NAME {

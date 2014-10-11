@@ -380,4 +380,12 @@ public class CommonModel implements CommonIF{
 		}
 		return null;
 	}
+	@Override
+	public String getColorStockAvailable(String url) {
+		try {
+			return OrangeHttpRequest.getInstance().getStringFromServer(url, null);
+		} catch (Exception e) {
+		}
+		return null;
+	}
 }

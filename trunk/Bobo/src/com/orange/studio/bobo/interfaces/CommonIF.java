@@ -22,4 +22,5 @@ public interface CommonIF {
 	public ItemCartDTO addToCart(String url,String data);
 	public List<ProductFeatureDTO> getListProductFeatures(String url);
 	public List<ProductFeatureValueDTO> getListProductFeatureValues(String url);
+	public String getColorStockAvailable(String url);
 }

@@ -20,15 +20,18 @@ import android.widget.TextView;
 import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.activities.HomeActivity;
 import com.orange.studio.bobo.adapters.ProductDetailImageSlider;
+import com.orange.studio.bobo.configs.OrangeConfig;
 import com.orange.studio.bobo.configs.OrangeConfig.UrlRequest;
 import com.orange.studio.bobo.customviews.ColorHorizontalView;
 import com.orange.studio.bobo.customviews.ColorHorizontalView.OnTabReselectedListener;
+import com.orange.studio.bobo.models.CommonModel;
 import com.orange.studio.bobo.models.ProductModel;
 import com.orange.studio.bobo.objects.ColorDTO;
 import com.orange.studio.bobo.objects.ProductDTO;
 import com.orange.studio.bobo.objects.ProductFeatureAndValueDTO;
 import com.orange.studio.bobo.objects.ProductOptionValueDTO;
 import com.orange.studio.bobo.objects.RequestDTO;
+import com.orange.studio.bobo.objects.StockDTO;
 import com.orange.studio.bobo.utils.OrangeUtils;
 import com.viewpagerindicator.CirclePageIndicator;
 
@@ -58,6 +61,7 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 	private ColorHorizontalView mColorHorizontalView=null;
 	private OnTabReselectedListener mOnTabReselectedListener=null;
 	private HomeActivity mHomeActivity=null;
+	private CheckColorStockAvailableTask mCheckColorStockAvailableTask=null;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -119,13 +123,19 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 			public void onTabReselected(ColorDTO color) {
 				try {
 					mProDetailActiveColor.setBackgroundColor(Color.parseColor(color.color));
+					checkColorAvailable(color);
 				} catch (Exception e) {
 				}
 			}
 		};
 		mColorHorizontalView.setOnTabReselectedListener(mOnTabReselectedListener);
 	}
-
+	private void checkColorAvailable(ColorDTO color){
+		if(mCheckColorStockAvailableTask==null || mCheckColorStockAvailableTask.getStatus()==Status.FINISHED){
+			mCheckColorStockAvailableTask=new CheckColorStockAvailableTask(color);
+			mCheckColorStockAvailableTask.execute();
+		}
+	}
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -141,6 +151,36 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 		}
 	}
 
+	private class CheckColorStockAvailableTask extends AsyncTask<Void, Void, String>{
+		
+		private ColorDTO mColor;
+		public CheckColorStockAvailableTask(ColorDTO color){
+			mColor=color;
+		}
+		@Override
+		protected void onPreExecute() {			
+			super.onPreExecute();
+		}
+		@Override
+		protected String doInBackground(Void... params) {
+			try {
+				StockDTO temp = mProduct.mListStock.get(mColor.index+1);
+				//StockDTO mStock=CommonModel.getInstance().getStock(temp.linkHref+"?ws_key="+OrangeConfig.App_Key);
+				return CommonModel.getInstance().getColorStockAvailable(String.format(UrlRequest.PRODUCT_COLOR_ITEM_STOCK, mProduct.id,temp.id_product_attribute));
+			} catch (Exception e) {
+				
+			}
+			return null;
+		}
+		@Override
+		protected void onPostExecute(String result) {
+			super.onPostExecute(result);
+			if(result!=null){
+				mHomeActivity.showToast(result);
+			}
+		}
+	}
+	
 	private class LoadProductDetailTask extends
 			AsyncTask<Void, Void, ProductDTO> {
 
@@ -209,11 +249,14 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 				if(result.listProductOptionValues!=null && result.listProductOptionValues.size()>0){
 					List<ColorDTO> listColor=new ArrayList<ColorDTO>();
 					ColorDTO color=null;
-					for (ProductOptionValueDTO item : result.listProductOptionValues) {
+					int index=0;
+					for (ProductOptionValueDTO item : result.listProductOptionValues) {						
 						color=new ColorDTO();
+						color.index=index;
 						color.color=item.color;
 						color.id=item.id;
 						listColor.add(color);
+						index++;
 					}
 					mColorHorizontalView.updateView(listColor);
 				}								

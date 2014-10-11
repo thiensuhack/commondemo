@@ -42,14 +42,16 @@ public class ProductDTO {
 	public String available_later;
 	public String reference;
 	
-	public String stock_available;
+//	public String stock_available;
 	public String id_product_attribute;
 	
 	public List<String> productOptionValues;
 	public AssociationDTO associations;
 	public List<ProductOptionValueDTO> listProductOptionValues;
 	public List<ProductFeatureAndValueDTO> listProductFeatures;
+	public List<StockDTO> mListStock;
 	public StockDTO stock;
+	
 	public int cartCounter;
 	
 	public ProductDTO(){
@@ -61,5 +63,6 @@ public class ProductDTO {
 		listProductOptionValues=null;
 		stock=new StockDTO();
 		listProductFeatures=new ArrayList<ProductFeatureAndValueDTO>();
+		mListStock=new ArrayList<StockDTO>();
 	}
 }

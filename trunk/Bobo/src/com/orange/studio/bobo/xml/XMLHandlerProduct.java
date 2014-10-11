@@ -11,6 +11,7 @@ import com.orange.studio.bobo.configs.OrangeConfig;
 import com.orange.studio.bobo.objects.ProductDTO;
 import com.orange.studio.bobo.objects.ProductFeatureAndValueDTO;
 import com.orange.studio.bobo.objects.ProductImageDTO;
+import com.orange.studio.bobo.objects.StockDTO;
 
 public class XMLHandlerProduct extends DefaultHandler {
 
@@ -19,6 +20,7 @@ public class XMLHandlerProduct extends DefaultHandler {
 	public ProductDTO data = null;
 	public ProductImageDTO imagePro=null;
 	public ProductFeatureAndValueDTO productFeatureAndValue=null;
+	public StockDTO stockData=null;
 	
 	private String elementValue = null;
 	private boolean elementOn = false;
@@ -30,9 +32,10 @@ public class XMLHandlerProduct extends DefaultHandler {
 	private boolean isProId=false;
 	private boolean isProductOptionValueId=false;
 	private boolean isProductFeatureAndValueId=false;
+	private boolean isStockId=false;
 	
 	private String attrId="";
-	private String stock_available_url="";
+//	private String stock_available_url="";
 	
 	private String mCurrentLanguage="1";
 	public XMLHandlerProduct(String language) {
@@ -48,8 +51,14 @@ public class XMLHandlerProduct extends DefaultHandler {
 
 		if (localName.equals("product")) {
 			data = new ProductDTO();
-			stock_available_url="";
+//			stock_available_url="";
 			attrId="";
+			return;
+		}
+		if (localName.equals("stock_available")) {			
+			stockData=new StockDTO();			
+			isStockId=true;
+			stockData.linkHref=attributes.getValue("xlink:href");
 			return;
 		}
 		if (localName.equals("name")) {
@@ -85,10 +94,10 @@ public class XMLHandlerProduct extends DefaultHandler {
 			isProductOptionValueId=true;
 			return;
 		}
-		if(localName.equals("stock_available")){
-			stock_available_url=attributes.getValue("xlink:href");
-			return;
-		}
+//		if(localName.equals("stock_available")){
+//			stock_available_url=attributes.getValue("xlink:href");
+//			return;
+//		}
 		if(localName.equals("product_feature")){
 			productFeatureAndValue=new ProductFeatureAndValueDTO();
 			isProductFeatureAndValueId=true;
@@ -110,6 +119,20 @@ public class XMLHandlerProduct extends DefaultHandler {
 		if (localName.equalsIgnoreCase("id") && isProductFeatureAndValueId) {
 			productFeatureAndValue.id = elementValue;
 			isProductFeatureAndValueId=false;
+			return;
+		}
+		if (localName.equalsIgnoreCase("id") && isStockId) {
+			stockData.id = elementValue;
+			isStockId=false;
+			return;
+		}
+		if (localName.equalsIgnoreCase("id_product_attribute")) {
+			stockData.id_product_attribute = elementValue;
+			return;
+		}
+		if (localName.equalsIgnoreCase("stock_available") && stockData.id!=null && stockData.id.trim().length()>0) {
+			data.mListStock.add(stockData);
+			isStockId=false;
 			return;
 		}
 		if (localName.equalsIgnoreCase("id_feature_value")) {
@@ -204,10 +227,10 @@ public class XMLHandlerProduct extends DefaultHandler {
 			data.available_now=elementValue;
 			return;
 		}
-		if (localName.equalsIgnoreCase("stock_available")) {
-			data.stock_available=stock_available_url;
-			return;
-		}
+//		if (localName.equalsIgnoreCase("stock_available")) {
+//			data.stock_available=stock_available_url;
+//			return;
+//		}
 		if (localName.equalsIgnoreCase("id_product_attribute")) {
 			data.id_product_attribute=elementValue;
 			return;

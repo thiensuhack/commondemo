@@ -61,7 +61,6 @@
         android:id="@+id/notFoundContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="5dp"
         layout="@layout/layout_not_found_data"
         android:clickable="true" />
 

@@ -64,7 +64,7 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 	private HomeActivity mHomeActivity=null;
 	private CheckColorStockAvailableTask mCheckColorStockAvailableTask=null;
 	private ProgressDialog mProgressDialog=null;
-	
+	private StockDTO mStock=null;
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -183,10 +183,11 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 		@Override
 		protected void onPostExecute(StockDTO result) {
 			super.onPostExecute(result);
-			if(result!=null){
+			mStock=result;
+			if(mStock!=null){
 //				mHomeActivity.showToast(result);
-				if(result!=null && result.quantity>0){
-					mStockItem.setText(String.valueOf(result.quantity));
+				if(mStock!=null && mStock.quantity>0){
+					mStockItem.setText(String.valueOf(mStock.quantity));
 					mStockItem.setVisibility(View.VISIBLE);
 				}else{
 					mStockItem.setVisibility(View.INVISIBLE);

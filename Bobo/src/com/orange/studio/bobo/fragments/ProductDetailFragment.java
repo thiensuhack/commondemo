@@ -3,6 +3,7 @@ package com.orange.studio.bobo.fragments;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
@@ -62,6 +63,7 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 	private OnTabReselectedListener mOnTabReselectedListener=null;
 	private HomeActivity mHomeActivity=null;
 	private CheckColorStockAvailableTask mCheckColorStockAvailableTask=null;
+	private ProgressDialog mProgressDialog=null;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -108,6 +110,8 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 		mStockItem=(TextView)mView.findViewById(R.id.stockItems);
 		
 		mHomeActivity=getHomeActivity();
+		mProgressDialog=new ProgressDialog(mHomeActivity);
+		mProgressDialog.setMessage(mHomeActivity.getString(R.string.detail_checking_color_stock));
 	}
 
 	private void showDetail() {
@@ -151,7 +155,7 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 		}
 	}
 
-	private class CheckColorStockAvailableTask extends AsyncTask<Void, Void, String>{
+	private class CheckColorStockAvailableTask extends AsyncTask<Void, Void, StockDTO>{
 		
 		private ColorDTO mColor;
 		public CheckColorStockAvailableTask(ColorDTO color){
@@ -160,23 +164,38 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 		@Override
 		protected void onPreExecute() {			
 			super.onPreExecute();
+			if(!mProgressDialog.isShowing()){
+				mProgressDialog.show();
+			}
 		}
 		@Override
-		protected String doInBackground(Void... params) {
+		protected StockDTO doInBackground(Void... params) {
 			try {
 				StockDTO temp = mProduct.mListStock.get(mColor.index+1);
-				//StockDTO mStock=CommonModel.getInstance().getStock(temp.linkHref+"?ws_key="+OrangeConfig.App_Key);
-				return CommonModel.getInstance().getColorStockAvailable(String.format(UrlRequest.PRODUCT_COLOR_ITEM_STOCK, mProduct.id,temp.id_product_attribute));
+				return CommonModel.getInstance().getStock(temp.linkHref+"?ws_key="+OrangeConfig.App_Key);
+//				if(mStock=null)
+//				return CommonModel.getInstance().getColorStockAvailable(String.format(UrlRequest.PRODUCT_COLOR_ITEM_STOCK, mProduct.id,temp.id_product_attribute));
 			} catch (Exception e) {
 				
 			}
 			return null;
 		}
 		@Override
-		protected void onPostExecute(String result) {
+		protected void onPostExecute(StockDTO result) {
 			super.onPostExecute(result);
 			if(result!=null){
-				mHomeActivity.showToast(result);
+//				mHomeActivity.showToast(result);
+				if(result!=null && result.quantity>0){
+					mStockItem.setText(String.valueOf(result.quantity));
+					mStockItem.setVisibility(View.VISIBLE);
+				}else{
+					mStockItem.setVisibility(View.INVISIBLE);
+				}
+			}else{
+				mStockItem.setVisibility(View.INVISIBLE);
+			}
+			if(mProgressDialog.isShowing()){
+				mProgressDialog.dismiss();
 			}
 		}
 	}
@@ -228,12 +247,12 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 				mProShortDescription.loadData(shortDescriptions,"text/html", "utf-8");
 				mProMoreInfo.loadData(descriptions,"text/html", "utf-8");
 				mSaleOffIcon.setText(String.valueOf(result.wholesale_price));
-				if(result.stock!=null && result.stock.quantity>0){
-					mStockItem.setText(String.valueOf(result.stock.quantity));
-					mStockItem.setVisibility(View.VISIBLE);
-				}else{
-					mStockItem.setVisibility(View.INVISIBLE);
-				}
+//				if(result.stock!=null && result.stock.quantity>0){
+//					mStockItem.setText(String.valueOf(result.stock.quantity));
+//					mStockItem.setVisibility(View.VISIBLE);
+//				}else{
+//					mStockItem.setVisibility(View.INVISIBLE);
+//				}
 				if(result.wholesale_price>0){					
 					mSaleOffIcon.setVisibility(View.VISIBLE);
 				}else{

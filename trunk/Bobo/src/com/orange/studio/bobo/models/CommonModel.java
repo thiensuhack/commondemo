@@ -22,6 +22,7 @@ import com.orange.studio.bobo.configs.OrangeConfig;
 import com.orange.studio.bobo.configs.OrangeConfig.Cache;
 import com.orange.studio.bobo.http.OrangeHttpRequest;
 import com.orange.studio.bobo.interfaces.CommonIF;
+import com.orange.studio.bobo.objects.AboutUsDTO;
 import com.orange.studio.bobo.objects.CustomerDTO;
 import com.orange.studio.bobo.objects.ItemCartDTO;
 import com.orange.studio.bobo.objects.MenuItemDTO;
@@ -31,6 +32,7 @@ import com.orange.studio.bobo.objects.ProductOptionValueDTO;
 import com.orange.studio.bobo.objects.RequestDTO;
 import com.orange.studio.bobo.objects.StockDTO;
 import com.orange.studio.bobo.utils.OrangeUtils;
+import com.orange.studio.bobo.xml.XMLHandlerAboutUs;
 import com.orange.studio.bobo.xml.XMLHandlerCategory;
 import com.orange.studio.bobo.xml.XMLHandlerCustomer;
 import com.orange.studio.bobo.xml.XMLHandlerItemCart;
@@ -384,6 +386,27 @@ public class CommonModel implements CommonIF{
 	public String getColorStockAvailable(String url) {
 		try {
 			return OrangeHttpRequest.getInstance().getStringFromServer(url, null);
+		} catch (Exception e) {
+		}
+		return null;
+	}
+	@Override
+	public AboutUsDTO getAboutUs(String url) {
+		try {
+			SAXParserFactory saxPF = SAXParserFactory.newInstance();
+			SAXParser saxP = saxPF.newSAXParser();
+			XMLReader xmlR = saxP.getXMLReader();						
+			XMLHandlerAboutUs myXMLHandler = new XMLHandlerAboutUs(OrangeConfig.LANGUAGE_DEFAULT);
+			xmlR.setContentHandler(myXMLHandler);			
+			String result=OrangeHttpRequest.getInstance().getStringFromServer(url, null);
+			if(result!=null && result.trim().length()>0){
+				InputSource is = new InputSource(new StringReader(result));
+				xmlR.parse(is);
+				if(myXMLHandler.mListAboutUs!=null && myXMLHandler.mListAboutUs.size()>0){
+					return myXMLHandler.mListAboutUs.get(0);
+				}
+			}			
+			return null;
 		} catch (Exception e) {
 		}
 		return null;

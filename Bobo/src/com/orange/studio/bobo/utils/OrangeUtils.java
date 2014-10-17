@@ -21,6 +21,13 @@ import com.zuzu.db.store.SQLiteStore;
 import com.zuzu.db.store.SimpleStoreIF;
 
 public class OrangeUtils {
+	public static double convertStringToFloat(String value){
+		try {
+			return Double.valueOf(value);
+		} catch (Exception e) {
+			return 0;
+		}
+	}
 	public static String createCartData(ProductDTO product){
 		String result="";
 		try {

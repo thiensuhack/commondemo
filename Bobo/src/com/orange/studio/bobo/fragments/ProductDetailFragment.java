@@ -81,6 +81,7 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 	}
 
 	private void initView() {
+		mHomeActivity=getHomeActivity();
 		initLoadingView();
 		initNotFoundView();
 		switchView(false,true);
@@ -109,13 +110,12 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 		mSaleOffIcon=(TextView)mView.findViewById(R.id.proSaleOff);
 		mStockItem=(TextView)mView.findViewById(R.id.stockItems);
 		
-		mHomeActivity=getHomeActivity();
 		mProgressDialog=new ProgressDialog(mHomeActivity);
 		mProgressDialog.setMessage(mHomeActivity.getString(R.string.detail_checking_color_stock));
 	}
 
 	private void showDetail() {
-		mProduct = getHomeActivity().getCurrentProduct();
+		mProduct = mHomeActivity.getCurrentProduct();
 		loadProductDetailData();
 	}
 
@@ -143,7 +143,7 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 	@Override
 	public void onResume() {
 		super.onResume();
-		getHomeActivity().updateItemCartCounter();
+		mHomeActivity.updateItemCartCounter();
 		showDetail();
 	}
 
@@ -299,7 +299,7 @@ public class ProductDetailFragment extends BaseFragment implements OnClickListen
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.addToCardBtn:
-			getHomeActivity().addToCart(mProduct);
+			mHomeActivity.addToCart(mProduct);
 			break;
 
 		default:

@@ -12,6 +12,7 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
@@ -132,7 +133,7 @@ public class ProductModel implements ProductIF{
 			RequestDTO request, Bundle params) {
 		try {
 			List<ProductDTO> result=null;
-			url+=OrangeUtils.createUrl(params);
+			//url+=OrangeUtils.createUrl(params);
 			String key=String.valueOf(url.hashCode());
 			String json=getStoreAdapter().get(key);
 			
@@ -146,10 +147,15 @@ public class ProductModel implements ProductIF{
 			}
 			String data=OrangeHttpRequest.getInstance().getStringFromServer(url, null);
 			if(data!=null && data.trim().length()>0){
-				return parserListProductFromJson(data);
+				result = parserListProductFromJson(data);
+				if(result!=null && result.size()>0){
+					Gson gs=new Gson();
+					String strData=gs.toJson(result);
+					setStore(key, strData,STORE_EXPIRE);
+				}
+				return result;
 			}
-			return null;
-						
+			return null;					
 		} catch (Exception e) {
 			return null;
 		} 
@@ -162,8 +168,16 @@ public class ProductModel implements ProductIF{
 			if(jArr!=null && jArr.length()>0){
 				ProductDTO item=new ProductDTO();
 				for (int i = 0; i < jArr.length(); i++) {
-					
+					JSONObject jObject=jArr.getJSONObject(i);
+					item.id=jObject.optString("");
+					item.name=jObject.optString("");
+					item.price=OrangeUtils.convertStringToFloat(jObject.optString("price"));
+					item.wholesale_price=OrangeUtils.convertStringToFloat(jObject.optString("wholesale_price"));
+					item.unit_price_ratio=OrangeUtils.convertStringToFloat(jObject.optString("unit_price_ratio"));
+					item.id_default_image=jObject.optString("id_default_image");
+					result.add(item);
 				}
+				return result;
 			}
 		} catch (Exception e) {
 		}

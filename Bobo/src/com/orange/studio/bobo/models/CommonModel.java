@@ -23,6 +23,7 @@ import com.orange.studio.bobo.configs.OrangeConfig.Cache;
 import com.orange.studio.bobo.http.OrangeHttpRequest;
 import com.orange.studio.bobo.interfaces.CommonIF;
 import com.orange.studio.bobo.objects.AboutUsDTO;
+import com.orange.studio.bobo.objects.ContactUsDTO;
 import com.orange.studio.bobo.objects.CustomerDTO;
 import com.orange.studio.bobo.objects.ItemCartDTO;
 import com.orange.studio.bobo.objects.MenuItemDTO;
@@ -410,5 +411,9 @@ public class CommonModel implements CommonIF{
 		} catch (Exception e) {
 		}
 		return null;
+	}
+	@Override
+	public boolean sendContactUs(String url, ContactUsDTO contact) {
+		return false;
 	}
 }

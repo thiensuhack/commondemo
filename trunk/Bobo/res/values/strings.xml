@@ -33,6 +33,14 @@
     <string name="confirm_password_hint">Confirm Password</string>
     <string name="email_hint">Your email</string>
 
+    <!-- Contact -->
+    <string name="contact_send_btn_label">Send</string>
+    <string name="contact_name_label">Name:</string>
+    <string name="contact_name_hint">Your name</string>
+    <string name="contact_from_label">From:</string>
+    <string name="contact_from_hint">Your address</string>
+    <string name="contact_message_label">Message:</string>
+    <string name="contact_message_hint">Your message</string>
     <!-- Login -->
     <string name="user_name_label">User name:</string>
     <string name="password_login_label">Password:</string>

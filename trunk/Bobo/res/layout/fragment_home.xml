@@ -39,36 +39,44 @@
                 android:layout_height="wrap_content"
                 layout="@layout/layout_fragment_home_menu" />
 
-            <com.orange.studio.bobo.customviews.ExpandableHeightGridView
-                android:id="@+id/homeGridView"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="@color/white"
-                android:horizontalSpacing="0dp"
-                android:isScrollContainer="false"
-                android:numColumns="2"
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="10dp"
-                android:stretchMode="columnWidth"
-                android:verticalSpacing="0dp" />
+                android:minHeight="400dp" >
+
+                <com.orange.studio.bobo.customviews.ExpandableHeightGridView
+                    android:id="@+id/homeGridView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:horizontalSpacing="0dp"
+                    android:isScrollContainer="false"
+                    android:numColumns="2"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp"
+                    android:stretchMode="columnWidth"
+                    android:verticalSpacing="0dp" />
+
+                <include
+                    android:id="@+id/notFoundContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    layout="@layout/layout_not_found_data"
+                    android:clickable="true"
+                    android:minHeight="300dp" />
+
+                <include
+                    android:id="@+id/loadingContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    layout="@layout/layout_loading"
+                    android:clickable="true"
+                    android:minHeight="300dp"/>
+            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
-
-    <include
-        android:id="@+id/notFoundContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        layout="@layout/layout_not_found_data"
-        android:clickable="true" />
-
-    <include
-        android:id="@+id/loadingContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        layout="@layout/layout_loading" 
-        android:clickable="true"/>
 
 </RelativeLayout>

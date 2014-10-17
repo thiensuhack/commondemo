@@ -25,6 +25,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.orange.studio.bobo.R;
+import com.orange.studio.bobo.activities.HomeActivity.HOME_TABS;
 import com.orange.studio.bobo.adapters.GridProductAdapter;
 import com.orange.studio.bobo.configs.OrangeConfig;
 import com.orange.studio.bobo.configs.OrangeConfig.MENU_NAME;
@@ -52,8 +53,7 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 	private TextView mMenuBestSeller = null;
 	private TextView mMenuPopular = null;
 	
-	private int mCurrentTab = 1;
-
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -91,8 +91,7 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 		mMenuBestSeller = (TextView) mView
 				.findViewById(R.id.fragmentHomeMenuBestSeller);
 		mMenuPopular = (TextView) mView
-				.findViewById(R.id.fragmentHomeMenuPopular);
-		mCurrentTab=1;
+				.findViewById(R.id.fragmentHomeMenuPopular);		
 		switchMenuTabByViewId(R.id.fragmentHomeMenuAll);
 		initLoadingView();
 		initNotFoundView();
@@ -218,16 +217,27 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 
 		@Override
 		protected void onPreExecute() {
-			super.onPreExecute();
+			super.onPreExecute();			
+			mGridView.setVisibility(View.INVISIBLE);
 			switchView(false, true);
+			mProductAdapter.clearAllData();
 		}
 
 		@Override
 		protected List<ProductDTO> doInBackground(Void... arg0) {
-			Bundle mParams = OrangeUtils
-					.createRequestBundle(OrangeConfig.ITEMS_PAGE,null);
-			return ProductModel.getInstance().getListProduct(
-					UrlRequest.PRODUCT_HOME, null, mParams);
+			if(mHomeActivity.mCurrentTab==HOME_TABS.ALL){
+				Bundle mParams = OrangeUtils
+						.createRequestBundle(OrangeConfig.ITEMS_PAGE,null);
+				return ProductModel.getInstance().getListProduct(
+						UrlRequest.PRODUCT_HOME, null, mParams);
+			}
+			if(mHomeActivity.mCurrentTab==HOME_TABS.BEST_SELLER){
+				return ProductModel.getInstance().getListProductFeatures(UrlRequest.HOME_BEST_SELLER_PRODUCT+OrangeConfig.ITEMS_PAGE, null, null);
+			}
+			if(mHomeActivity.mCurrentTab==HOME_TABS.POPULAR){
+				return ProductModel.getInstance().getListProductFeatures(UrlRequest.HOME_POPULAR_PRODUCT+OrangeConfig.ITEMS_PAGE, null, null);
+			}
+			return null;			
 		}
 
 		@Override
@@ -235,10 +245,12 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 			super.onPostExecute(result);
 			if (result != null && result.size() > 0) {
 				// mHomeActivity.mListItemCart = result;
+				mGridView.setVisibility(View.VISIBLE);
 				mProductAdapter.updateDataList(result);
 				switchView(false, false);
 			}else{
 				switchView(true, false);
+				mGridView.setVisibility(View.INVISIBLE);
 			}
 		}
 	}
@@ -257,17 +269,17 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.fragmentHomeMenuAll:
-			mCurrentTab=1;
+			mHomeActivity.mCurrentTab=HOME_TABS.ALL;
 			switchMenuTabByViewId(R.id.fragmentHomeMenuAll);
 			loadProductData();
 			break;
 		case R.id.fragmentHomeMenuBestSeller:
-			mCurrentTab=2;
+			mHomeActivity.mCurrentTab=HOME_TABS.BEST_SELLER;
 			switchMenuTabByViewId(R.id.fragmentHomeMenuBestSeller);
 			loadProductData();
 			break;
 		case R.id.fragmentHomeMenuPopular:
-			mCurrentTab=3;
+			mHomeActivity.mCurrentTab=HOME_TABS.POPULAR;
 			switchMenuTabByViewId(R.id.fragmentHomeMenuPopular);
 			loadProductData();
 			break;		

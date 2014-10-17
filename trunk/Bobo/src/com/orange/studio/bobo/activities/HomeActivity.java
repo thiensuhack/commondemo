@@ -64,6 +64,10 @@ public class HomeActivity extends ActionBarActivity implements
 	private ExitDialog mExitDialog = null;
 	private Fragment mCurFragment=null;
 	
+	public HOME_TABS mCurrentTab = HOME_TABS.ALL;
+	public enum HOME_TABS{
+		ALL,BEST_SELLER,POPULAR
+	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -162,15 +166,34 @@ public class HomeActivity extends ActionBarActivity implements
 		switch (position) {
 		case 0:			
 		case 1:
+			mCurrentTab=HOME_TABS.ALL;
+			if(mCurFragment!=null && mCurFragment.getClass().getName().equals(HomeFragment.class.getName())){
+				((HomeFragment)mCurFragment).onResume();
+				return;
+			}
 			mFragment = HomeFragment.instantiate(getApplicationContext(),
 					HomeFragment.class.getName());
 //			mFragment = SpinToWinFragment.instantiate(getApplicationContext(),
 //					SpinToWinFragment.class.getName());
 			break;
 		case 2:
-			return;
+			mCurrentTab=HOME_TABS.POPULAR;
+			if(mCurFragment!=null && mCurFragment.getClass().getName().equals(HomeFragment.class.getName())){
+				((HomeFragment)mCurFragment).onResume();
+				return;
+			}
+			mFragment = HomeFragment.instantiate(getApplicationContext(),
+					HomeFragment.class.getName());
+			break;
 		case 3:
-			return;
+			mCurrentTab=HOME_TABS.BEST_SELLER;
+			if(mCurFragment!=null && mCurFragment.getClass().getName().equals(HomeFragment.class.getName())){
+				((HomeFragment)mCurFragment).onResume();
+				return;
+			}
+			mFragment = HomeFragment.instantiate(getApplicationContext(),
+					HomeFragment.class.getName());
+			break;
 		case 9:
 			mFragment = AboutFragment.instantiate(getApplicationContext(),
 					AboutFragment.class.getName());

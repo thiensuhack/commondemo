@@ -91,8 +91,7 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 		mMenuBestSeller = (TextView) mView
 				.findViewById(R.id.fragmentHomeMenuBestSeller);
 		mMenuPopular = (TextView) mView
-				.findViewById(R.id.fragmentHomeMenuPopular);		
-		switchMenuTabByViewId(R.id.fragmentHomeMenuAll);
+				.findViewById(R.id.fragmentHomeMenuPopular);				
 		initLoadingView();
 		initNotFoundView();
 		switchView(false, false);
@@ -123,12 +122,15 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 
 	@Override
 	public void onResume() {
-		super.onResume();
-		loadHomeSliderData();
-		// if(mProductAdapter==null || mProductAdapter.getCount()<1){
-		// loadProductData();
-		// }
-		loadProductData();
+		super.onResume();		
+		loadHomeSliderData();		
+		if(mHomeActivity==null){
+			mHomeActivity=getHomeActivity();			
+		}
+		if(mHomeActivity.mCurrentTab==null){
+			mHomeActivity.mCurrentTab=HOME_TABS.ALL;
+		}
+		switchTabViewsCurrentTabs(mHomeActivity.mCurrentTab);
 		mHomeActivity.updateItemCartCounter();
 	}
 
@@ -267,7 +269,11 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 
 	@Override
 	public void onClick(View v) {
-		switch (v.getId()) {
+		switchTabViews(v.getId());
+	}
+
+	private void switchTabViews(int resId) {
+		switch (resId) {
 		case R.id.fragmentHomeMenuAll:
 			mHomeActivity.mCurrentTab=HOME_TABS.ALL;
 			switchMenuTabByViewId(R.id.fragmentHomeMenuAll);
@@ -286,6 +292,29 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 		default:
 			break;
 		}
+	}
+	private void switchTabViewsCurrentTabs(HOME_TABS tabIndex) {
+		if(tabIndex==HOME_TABS.ALL)
+		{
+			mHomeActivity.mCurrentTab=HOME_TABS.ALL;
+			switchMenuTabByViewId(R.id.fragmentHomeMenuAll);
+			loadProductData();
+			return;
+		}
+		if(tabIndex==HOME_TABS.BEST_SELLER)
+		{
+			mHomeActivity.mCurrentTab=HOME_TABS.BEST_SELLER;
+			switchMenuTabByViewId(R.id.fragmentHomeMenuBestSeller);
+			loadProductData();
+			return;
+		}
+		if(tabIndex==HOME_TABS.POPULAR)
+		{
+			mHomeActivity.mCurrentTab=HOME_TABS.POPULAR;
+			switchMenuTabByViewId(R.id.fragmentHomeMenuPopular);
+			loadProductData();
+			return;
+		}		
 	}
 	public void switchMenuTabByViewId(int viewId) {
 		switch (viewId) {

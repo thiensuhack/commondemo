@@ -11,6 +11,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.json.JSONArray;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
@@ -125,6 +126,48 @@ public class ProductModel implements ProductIF{
 		} catch (Exception e) {
 			return null;
 		} 
+	}
+	@Override
+	public List<ProductDTO> getListProductFeatures(String url,
+			RequestDTO request, Bundle params) {
+		try {
+			List<ProductDTO> result=null;
+			url+=OrangeUtils.createUrl(params);
+			String key=String.valueOf(url.hashCode());
+			String json=getStoreAdapter().get(key);
+			
+			if(json!=null){
+				
+				result=deserializeListData(json);
+			}
+			if(result!=null && result.size()>0){
+				
+				return result;
+			}
+			String data=OrangeHttpRequest.getInstance().getStringFromServer(url, null);
+			if(data!=null && data.trim().length()>0){
+				return parserListProductFromJson(data);
+			}
+			return null;
+						
+		} catch (Exception e) {
+			return null;
+		} 
+	}
+	
+	private List<ProductDTO> parserListProductFromJson(String json){
+		try {		
+			List<ProductDTO> result=new ArrayList<ProductDTO>();
+			JSONArray jArr=new JSONArray(json);			
+			if(jArr!=null && jArr.length()>0){
+				ProductDTO item=new ProductDTO();
+				for (int i = 0; i < jArr.length(); i++) {
+					
+				}
+			}
+		} catch (Exception e) {
+		}
+		return null;
 	}
 
 	@Override

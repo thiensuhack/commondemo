@@ -11,4 +11,5 @@ public interface ProductIF {
 	public List<ProductDTO> getListProduct(String url,RequestDTO request,Bundle params);
 	public ProductDTO getProductDetail(String url,RequestDTO request,Bundle params);
 	public List<ProductDTO> searchProduct(String url,RequestDTO request,Bundle params,String key);
+	public List<ProductDTO> getListProductFeatures(String url,RequestDTO request,Bundle params);
 }

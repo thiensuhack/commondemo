@@ -138,6 +138,14 @@ public class HomeActivity extends ActionBarActivity implements
 			setAppTitle(getString(R.string.app_name));
 			return;
 		}
+		if (mFragmentName.equals(PopularProductFragment.class.getName())) {
+			setAppTitle(getString(R.string.menu_drawer_product));
+			return;
+		}
+		if (mFragmentName.equals(BestSellerProductFragment.class.getName())) {
+			setAppTitle(getString(R.string.menu_drawer_best_seller));
+			return;
+		}
 		if (mFragmentName.equals(ProductDetailFragment.class.getName())) {
 			setAppTitle(getString(R.string.detail_title_label));
 			return;

@@ -59,4 +59,7 @@ public class BaseFragment extends Fragment{
 			}
 		}
 	}
+	public void setHomeActivity(HomeActivity _mHomeActivity){
+		mHomeActivity=_mHomeActivity;
+	}
 }

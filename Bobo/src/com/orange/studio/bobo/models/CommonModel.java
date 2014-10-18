@@ -10,6 +10,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.json.JSONObject;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
@@ -20,6 +21,7 @@ import com.google.gson.reflect.TypeToken;
 import com.orange.studio.bobo.OrangeApplicationContext;
 import com.orange.studio.bobo.configs.OrangeConfig;
 import com.orange.studio.bobo.configs.OrangeConfig.Cache;
+import com.orange.studio.bobo.configs.OrangeConfig.UrlRequest;
 import com.orange.studio.bobo.http.OrangeHttpRequest;
 import com.orange.studio.bobo.interfaces.CommonIF;
 import com.orange.studio.bobo.objects.AboutUsDTO;
@@ -413,7 +415,24 @@ public class CommonModel implements CommonIF{
 		return null;
 	}
 	@Override
-	public boolean sendContactUs(String url, ContactUsDTO contact) {
-		return false;
+	public String sendContactUs(String url, ContactUsDTO contact) {
+		try {
+			Bundle mParams=new Bundle();
+			mParams.putString("from", contact.from);
+			mParams.putString("name", contact.name);
+			mParams.putString("id_contact", contact.id_contact);
+			mParams.putString("message", contact.message);
+			String result=OrangeHttpRequest.getInstance().postDataToServer(UrlRequest.CONTACT_US_URL, mParams);
+			JSONObject jb=new JSONObject(result);
+			int status=jb.optInt("status");
+			if(status==1){
+				return "success";
+			}else{
+				return jb.optString("msg");
+			}
+			
+		} catch (Exception e) {
+		}
+		return null;
 	}
 }

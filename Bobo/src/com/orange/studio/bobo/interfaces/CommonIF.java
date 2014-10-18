@@ -26,5 +26,5 @@ public interface CommonIF {
 	public List<ProductFeatureValueDTO> getListProductFeatureValues(String url);
 	public String getColorStockAvailable(String url);
 	public AboutUsDTO getAboutUs(String url);
-	public boolean sendContactUs(String url,ContactUsDTO contact);
+	public String sendContactUs(String url,ContactUsDTO contact);
 }

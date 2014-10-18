@@ -52,7 +52,7 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 	private TextView mMenuAll = null;
 	private TextView mMenuBestSeller = null;
 	private TextView mMenuPopular = null;
-	
+	public HOME_TABS mCurrentTab = HOME_TABS.ALL;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -61,7 +61,6 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 			mView = inflater.inflate(R.layout.fragment_home, container, false);
 			initView();
 			initListener();
-
 		} else {
 			((ViewGroup) mView.getParent()).removeView(mView);
 		}
@@ -122,16 +121,18 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 
 	@Override
 	public void onResume() {
-		super.onResume();		
-		loadHomeSliderData();		
+		super.onResume();						
 		if(mHomeActivity==null){
 			mHomeActivity=getHomeActivity();			
 		}
-		if(mHomeActivity.mCurrentTab==null){
-			mHomeActivity.mCurrentTab=HOME_TABS.ALL;
-		}
-		switchTabViewsCurrentTabs(mHomeActivity.mCurrentTab);
-		mHomeActivity.updateItemCartCounter();
+		loadData();
+	}
+	public void setCurrentTab(HOME_TABS mTab){
+		mCurrentTab=mTab;
+	}
+	public void loadData() {
+		loadHomeSliderData();
+		switchTabViewsCurrentTabs(mCurrentTab);		
 	}
 
 	private class ImageHomeSlider extends PagerAdapter {
@@ -227,16 +228,16 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 
 		@Override
 		protected List<ProductDTO> doInBackground(Void... arg0) {
-			if(mHomeActivity.mCurrentTab==HOME_TABS.ALL){
+			if(mCurrentTab==HOME_TABS.ALL){
 				Bundle mParams = OrangeUtils
 						.createRequestBundle(OrangeConfig.ITEMS_PAGE,null);
 				return ProductModel.getInstance().getListProduct(
 						UrlRequest.PRODUCT_HOME, null, mParams);
 			}
-			if(mHomeActivity.mCurrentTab==HOME_TABS.BEST_SELLER){
+			if(mCurrentTab==HOME_TABS.BEST_SELLER){
 				return ProductModel.getInstance().getListProductFeatures(UrlRequest.HOME_BEST_SELLER_PRODUCT+OrangeConfig.ITEMS_PAGE, null, null);
 			}
-			if(mHomeActivity.mCurrentTab==HOME_TABS.POPULAR){
+			if(mCurrentTab==HOME_TABS.POPULAR){
 				return ProductModel.getInstance().getListProductFeatures(UrlRequest.HOME_POPULAR_PRODUCT+OrangeConfig.ITEMS_PAGE, null, null);
 			}
 			return null;			
@@ -275,17 +276,17 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 	private void switchTabViews(int resId) {
 		switch (resId) {
 		case R.id.fragmentHomeMenuAll:
-			mHomeActivity.mCurrentTab=HOME_TABS.ALL;
+			mCurrentTab=HOME_TABS.ALL;
 			switchMenuTabByViewId(R.id.fragmentHomeMenuAll);
 			loadProductData();
 			break;
 		case R.id.fragmentHomeMenuBestSeller:
-			mHomeActivity.mCurrentTab=HOME_TABS.BEST_SELLER;
+			mCurrentTab=HOME_TABS.BEST_SELLER;
 			switchMenuTabByViewId(R.id.fragmentHomeMenuBestSeller);
 			loadProductData();
 			break;
 		case R.id.fragmentHomeMenuPopular:
-			mHomeActivity.mCurrentTab=HOME_TABS.POPULAR;
+			mCurrentTab=HOME_TABS.POPULAR;
 			switchMenuTabByViewId(R.id.fragmentHomeMenuPopular);
 			loadProductData();
 			break;		
@@ -296,21 +297,21 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 	private void switchTabViewsCurrentTabs(HOME_TABS tabIndex) {
 		if(tabIndex==HOME_TABS.ALL)
 		{
-			mHomeActivity.mCurrentTab=HOME_TABS.ALL;
+			mCurrentTab=HOME_TABS.ALL;
 			switchMenuTabByViewId(R.id.fragmentHomeMenuAll);
 			loadProductData();
 			return;
 		}
 		if(tabIndex==HOME_TABS.BEST_SELLER)
 		{
-			mHomeActivity.mCurrentTab=HOME_TABS.BEST_SELLER;
+			mCurrentTab=HOME_TABS.BEST_SELLER;
 			switchMenuTabByViewId(R.id.fragmentHomeMenuBestSeller);
 			loadProductData();
 			return;
 		}
 		if(tabIndex==HOME_TABS.POPULAR)
 		{
-			mHomeActivity.mCurrentTab=HOME_TABS.POPULAR;
+			mCurrentTab=HOME_TABS.POPULAR;
 			switchMenuTabByViewId(R.id.fragmentHomeMenuPopular);
 			loadProductData();
 			return;
@@ -352,4 +353,5 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 			break;
 		}
 	}	
+	
 }

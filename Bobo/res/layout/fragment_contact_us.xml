@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+<!-- <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" -->
+<!--     android:layout_width="match_parent" -->
+<!--     android:layout_height="match_parent" > -->
 
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:padding="10dp" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:padding="5dp" >
 
             <TextView
@@ -23,10 +24,8 @@
             <EditText
                 android:id="@+id/nameContact"
                 style="@style/RegisterEdittextStyle"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:layout_marginLeft="5dp"
-                android:layout_weight="1"
                 android:hint="@string/contact_name_hint"
                 android:maxLines="1"
                 android:minLines="1"
@@ -36,7 +35,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:padding="5dp" >
 
             <TextView
@@ -48,10 +47,8 @@
             <EditText
                 android:id="@+id/fromContact"
                 style="@style/RegisterEdittextStyle"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:layout_marginLeft="5dp"
-                android:layout_weight="1"
                 android:hint="@string/contact_from_hint"
                 android:maxLines="1"
                 android:minLines="1"
@@ -61,7 +58,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:padding="5dp" >
 
             <TextView
@@ -73,13 +70,12 @@
             <EditText
                 android:id="@+id/messageContact"
                 style="@style/RegisterEdittextStyle"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="5dp"
-                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:hint="@string/contact_message_hint"
                 android:maxLines="7"
                 android:minLines="7"
+                android:lines="7"
                 android:paddingLeft="5dp"
                 android:paddingRight="3dp"
                 android:gravity="top" />
@@ -94,18 +90,18 @@
             android:text="@string/contact_send_btn_label" />
     </LinearLayout>
 
-    <include
-        android:id="@+id/notFoundContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        layout="@layout/layout_not_found_data"
-        android:clickable="true" />
+<!--     <include -->
+<!--         android:id="@+id/notFoundContainer" -->
+<!--         android:layout_width="match_parent" -->
+<!--         android:layout_height="match_parent" -->
+<!--         layout="@layout/layout_not_found_data" -->
+<!--         android:clickable="true" /> -->
 
-    <include
-        android:id="@+id/loadingContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        layout="@layout/layout_loading"
-        android:clickable="true" />
+<!--     <include -->
+<!--         android:id="@+id/loadingContainer" -->
+<!--         android:layout_width="match_parent" -->
+<!--         android:layout_height="match_parent" -->
+<!--         layout="@layout/layout_loading" -->
+<!--         android:clickable="true" /> -->
 
-</RelativeLayout>
+<!-- </RelativeLayout> -->

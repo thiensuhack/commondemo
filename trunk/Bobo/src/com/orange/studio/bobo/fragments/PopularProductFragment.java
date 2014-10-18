@@ -18,6 +18,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.orange.studio.bobo.R;
+import com.orange.studio.bobo.activities.HomeActivity.HOME_TABS;
 import com.orange.studio.bobo.adapters.GridProductAdapter;
 import com.orange.studio.bobo.configs.OrangeConfig;
 import com.orange.studio.bobo.configs.OrangeConfig.MENU_NAME;
@@ -26,13 +27,14 @@ import com.orange.studio.bobo.customviews.ExpandableHeightGridView;
 import com.orange.studio.bobo.models.ProductModel;
 import com.orange.studio.bobo.objects.ProductDTO;
 
-public class ProductCategoryFragment extends BaseFragment implements OnItemClickListener,
+public class PopularProductFragment extends BaseFragment implements OnItemClickListener,
 		OnClickListener {
 
 
 	private ExpandableHeightGridView mGridView = null;
 	private GridProductAdapter mProductAdapter = null;
 	private LoadProductsTask mLoadProductsTask = null;
+	public HOME_TABS mCurrentTab = HOME_TABS.BEST_SELLER;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -85,10 +87,9 @@ public class ProductCategoryFragment extends BaseFragment implements OnItemClick
 		super.onResume();
 		loadProductData();		
 	}
-
-	
-
-
+	public void setCurrentTab(HOME_TABS mTab){
+		mCurrentTab=mTab;
+	}
 	private class LoadProductsTask extends
 			AsyncTask<Void, Void, List<ProductDTO>> {
 
@@ -103,10 +104,8 @@ public class ProductCategoryFragment extends BaseFragment implements OnItemClick
 
 		@Override
 		protected List<ProductDTO> doInBackground(Void... arg0) {
-			try {
-				String url=UrlRequest.PRODUCT_HOME+"?ws_key="+OrangeConfig.App_Key+"&display="+OrangeConfig.DISPLAY_FIELDS+"&limit="+OrangeConfig.ITEMS_PAGE+"&filter[id_category_default]="+mHomeActivity.mCurCategory.id;
-				return ProductModel.getInstance().getListProduct(
-						url, null, null);
+			try {				
+				return ProductModel.getInstance().getListProductFeatures(UrlRequest.HOME_POPULAR_PRODUCT+OrangeConfig.ITEMS_PAGE, null, null);
 			} catch (Exception e) {
 				return null;
 			}

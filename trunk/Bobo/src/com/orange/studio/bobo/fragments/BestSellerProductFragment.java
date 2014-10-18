@@ -18,6 +18,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.orange.studio.bobo.R;
+import com.orange.studio.bobo.activities.HomeActivity.HOME_TABS;
 import com.orange.studio.bobo.adapters.GridProductAdapter;
 import com.orange.studio.bobo.configs.OrangeConfig;
 import com.orange.studio.bobo.configs.OrangeConfig.MENU_NAME;
@@ -26,7 +27,7 @@ import com.orange.studio.bobo.customviews.ExpandableHeightGridView;
 import com.orange.studio.bobo.models.ProductModel;
 import com.orange.studio.bobo.objects.ProductDTO;
 
-public class ProductCategoryFragment extends BaseFragment implements OnItemClickListener,
+public class BestSellerProductFragment extends BaseFragment implements OnItemClickListener,
 		OnClickListener {
 
 
@@ -85,10 +86,6 @@ public class ProductCategoryFragment extends BaseFragment implements OnItemClick
 		super.onResume();
 		loadProductData();		
 	}
-
-	
-
-
 	private class LoadProductsTask extends
 			AsyncTask<Void, Void, List<ProductDTO>> {
 
@@ -104,9 +101,7 @@ public class ProductCategoryFragment extends BaseFragment implements OnItemClick
 		@Override
 		protected List<ProductDTO> doInBackground(Void... arg0) {
 			try {
-				String url=UrlRequest.PRODUCT_HOME+"?ws_key="+OrangeConfig.App_Key+"&display="+OrangeConfig.DISPLAY_FIELDS+"&limit="+OrangeConfig.ITEMS_PAGE+"&filter[id_category_default]="+mHomeActivity.mCurCategory.id;
-				return ProductModel.getInstance().getListProduct(
-						url, null, null);
+				return ProductModel.getInstance().getListProductFeatures(UrlRequest.HOME_BEST_SELLER_PRODUCT+OrangeConfig.ITEMS_PAGE, null, null);
 			} catch (Exception e) {
 				return null;
 			}

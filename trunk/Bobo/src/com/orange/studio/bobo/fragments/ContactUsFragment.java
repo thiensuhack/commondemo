@@ -1,5 +1,6 @@
 package com.orange.studio.bobo.fragments;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ public class ContactUsFragment extends BaseFragment implements OnClickListener{
 	private Button mSendBtn=null;
 	private SendContactUsTask mSendContactUsTask=null;
 	private ContactUsDTO mContact=null;
+	private ProgressDialog mProgressDialog=null;
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -42,6 +44,8 @@ public class ContactUsFragment extends BaseFragment implements OnClickListener{
 		mFrom=(EditText)mView.findViewById(R.id.fromContact);
 		mMessage=(EditText)mView.findViewById(R.id.messageContact);
 		mSendBtn=(Button)mView.findViewById(R.id.sendContactBtn);
+		mProgressDialog=new ProgressDialog(mHomeActivity);
+		mProgressDialog.setMessage(mHomeActivity.getString(R.string.contact_waitting_message));
 	}
 	private void initListener(){
 		mSendBtn.setOnClickListener(this);
@@ -60,6 +64,7 @@ public class ContactUsFragment extends BaseFragment implements OnClickListener{
 			mContact.name=mName.getText().toString().trim();
 			mContact.from=mFrom.getText().toString().trim();
 			mContact.message=mMessage.getText().toString().trim();
+			mContact.id_contact="1";
 			if (mContact.name.length() < 1) {
 				mHomeActivity.showToast(getActivity().getString(R.string.empty_field));			
 				mName.setFocusable(true);
@@ -85,21 +90,36 @@ public class ContactUsFragment extends BaseFragment implements OnClickListener{
 	@Override
 	public void onResume() {
 		super.onResume();
-		sendContactUs();
 	}
-	class SendContactUsTask extends AsyncTask<Void, Void, Void>{
+	private void resetData(){
+		mName.setText("");
+		mFrom.setText("");
+		mMessage.setText("");
+	}
+	class SendContactUsTask extends AsyncTask<Void, Void, String>{
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
+			mProgressDialog.show();
 		}
 		@Override
-		protected Void doInBackground(Void... params) {
-			CommonModel.getInstance().sendContactUs(UrlRequest.CONTACT_US_URL, mContact);
-			return null;
+		protected String doInBackground(Void... params) {
+			return CommonModel.getInstance().sendContactUs(UrlRequest.CONTACT_US_URL, mContact);			
 		}
 		@Override
-		protected void onPostExecute(Void result) {
+		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
+			if(result!=null){
+				if(result.equals("success")){
+					resetData();
+				}
+				mHomeActivity.showToast(result);
+			}else{
+				mHomeActivity.showToast(mHomeActivity.getString(R.string.contact_send_failed));
+			}
+			if(mProgressDialog.isShowing()){
+				mProgressDialog.dismiss();
+			}
 		}
 	}
 }

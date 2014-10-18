@@ -166,15 +166,16 @@ public class ProductModel implements ProductIF{
 			List<ProductDTO> result=new ArrayList<ProductDTO>();
 			JSONArray jArr=new JSONArray(json);			
 			if(jArr!=null && jArr.length()>0){
-				ProductDTO item=new ProductDTO();
+				ProductDTO item=null;
 				for (int i = 0; i < jArr.length(); i++) {
+					item=new ProductDTO();
 					JSONObject jObject=jArr.getJSONObject(i);
-					item.id=jObject.optString("");
-					item.name=jObject.optString("");
+					item.id=jObject.optString("id_product");
+					item.name=jObject.optString("name");
 					item.price=OrangeUtils.convertStringToFloat(jObject.optString("price"));
 					item.wholesale_price=OrangeUtils.convertStringToFloat(jObject.optString("wholesale_price"));
 					item.unit_price_ratio=OrangeUtils.convertStringToFloat(jObject.optString("unit_price_ratio"));
-					item.id_default_image=jObject.optString("id_default_image");
+					item.id_default_image=UrlRequest.domain+"/images/products/"+item.id+"/"+jObject.optString("id_image")+"?ws_key="+OrangeConfig.App_Key;
 					result.add(item);
 				}
 				return result;

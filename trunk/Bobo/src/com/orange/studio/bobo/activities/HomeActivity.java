@@ -24,10 +24,12 @@ import com.orange.studio.bobo.configs.OrangeConfig.CartItemsRule;
 import com.orange.studio.bobo.configs.OrangeConfig.MENU_NAME;
 import com.orange.studio.bobo.dialogs.ExitDialog;
 import com.orange.studio.bobo.fragments.AboutFragment;
+import com.orange.studio.bobo.fragments.BestSellerProductFragment;
 import com.orange.studio.bobo.fragments.ContactUsFragment;
 import com.orange.studio.bobo.fragments.HomeFragment;
 import com.orange.studio.bobo.fragments.LoginFragment;
 import com.orange.studio.bobo.fragments.NavigationDrawerFragment;
+import com.orange.studio.bobo.fragments.PopularProductFragment;
 import com.orange.studio.bobo.fragments.ProductCategoryFragment;
 import com.orange.studio.bobo.fragments.ProductDetailFragment;
 import com.orange.studio.bobo.fragments.RegisterFragment;
@@ -64,7 +66,7 @@ public class HomeActivity extends ActionBarActivity implements
 	private ExitDialog mExitDialog = null;
 	private Fragment mCurFragment=null;
 	
-	public HOME_TABS mCurrentTab = HOME_TABS.ALL;
+	
 	public enum HOME_TABS{
 		ALL,BEST_SELLER,POPULAR
 	}
@@ -165,34 +167,47 @@ public class HomeActivity extends ActionBarActivity implements
 		Fragment mFragment = null;
 		switch (position) {
 		case 0:			
+//		case 1:
+//			if(mCurFragment!=null && mCurFragment.getClass().getName().equals(HomeFragment.class.getName())){
+//				HomeFragment mHomeFragment=((HomeFragment)mCurFragment);
+//				mHomeFragment.setCurrentTab(HOME_TABS.ALL);
+//				mHomeFragment.loadData();
+//			}
+//			mFragment = HomeFragment.instantiate(getApplicationContext(),
+//					HomeFragment.class.getName());
+//			mCurFragment=mFragment;
+//			break;
+//		case 2:
+//			if(mCurFragment!=null && mCurFragment.getClass().getName().equals(HomeFragment.class.getName())){
+//				HomeFragment mHomeFragment=((HomeFragment)mCurFragment);
+//				mHomeFragment.setCurrentTab(HOME_TABS.POPULAR);
+//				mHomeFragment.loadData();
+//			}
+//			mFragment = HomeFragment.instantiate(getApplicationContext(),
+//					HomeFragment.class.getName());
+//			mCurFragment=mFragment;
+//			break;
+//		case 3:
+//			if(mCurFragment!=null && mCurFragment.getClass().getName().equals(HomeFragment.class.getName())){
+//				HomeFragment mHomeFragment=((HomeFragment)mCurFragment);
+//				mHomeFragment.setCurrentTab(HOME_TABS.BEST_SELLER);
+//				mHomeFragment.loadData();
+//			}
+//			mFragment = HomeFragment.instantiate(getApplicationContext(),
+//					HomeFragment.class.getName());
+//			mCurFragment=mFragment;
+//			break;
 		case 1:
-			mCurrentTab=HOME_TABS.ALL;
-			if(mCurFragment!=null && mCurFragment.getClass().getName().equals(HomeFragment.class.getName())){
-				((HomeFragment)mCurFragment).onResume();
-				return;
-			}
 			mFragment = HomeFragment.instantiate(getApplicationContext(),
 					HomeFragment.class.getName());
-//			mFragment = SpinToWinFragment.instantiate(getApplicationContext(),
-//					SpinToWinFragment.class.getName());
 			break;
 		case 2:
-			mCurrentTab=HOME_TABS.POPULAR;
-			if(mCurFragment!=null && mCurFragment.getClass().getName().equals(HomeFragment.class.getName())){
-				((HomeFragment)mCurFragment).onResume();
-				return;
-			}
-			mFragment = HomeFragment.instantiate(getApplicationContext(),
-					HomeFragment.class.getName());
+			mFragment = PopularProductFragment.instantiate(getApplicationContext(),
+					PopularProductFragment.class.getName());
 			break;
 		case 3:
-			mCurrentTab=HOME_TABS.BEST_SELLER;
-			if(mCurFragment!=null && mCurFragment.getClass().getName().equals(HomeFragment.class.getName())){
-				((HomeFragment)mCurFragment).onResume();
-				return;
-			}
-			mFragment = HomeFragment.instantiate(getApplicationContext(),
-					HomeFragment.class.getName());
+			mFragment = BestSellerProductFragment.instantiate(getApplicationContext(),
+					BestSellerProductFragment.class.getName());
 			break;
 		case 9:
 			mFragment = AboutFragment.instantiate(getApplicationContext(),

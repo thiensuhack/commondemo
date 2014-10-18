@@ -83,11 +83,11 @@
         <Button android:id="@+id/sendContactBtn"
             style="@style/RegisterButtonStyle"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="35dp"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:background="@drawable/button_pink"
-            android:text="@string/contact_send_btn_label" />
+            android:text="@string/contact_send_btn_label"/>
     </LinearLayout>
 
 <!--     <include -->

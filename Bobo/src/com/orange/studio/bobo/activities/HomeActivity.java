@@ -599,12 +599,12 @@ public class HomeActivity extends ActionBarActivity implements
 		updateItemCartCounter();
 	}
 	public void checkOut(){
-		onPaypalPayment();
-//		if(mUserInfo!=null){
-//			onPaypalPayment();
-//		}else{
-//			onNavigationDrawerItemSelected(MENU_NAME.LOGIN_FRAGMENT);//login view
-//		}
+//		onPaypalPayment();
+		if(mUserInfo!=null){
+			onPaypalPayment();
+		}else{
+			onNavigationDrawerItemSelected(MENU_NAME.LOGIN_FRAGMENT);//login view
+		}
 	}
 	public CustomerDTO getUserInfo() {
 		return mUserInfo;

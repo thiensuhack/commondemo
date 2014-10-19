@@ -16,7 +16,7 @@
     <string name="msg_load_more">Loading...</string>
     <string name="search_text">Search</string>
     <string name="search_text_hint">Bobo search...</string>
-    
+    <string name="waitting_message">Please wait...</string>
     <!-- Add Cart Items -->
     <string name="add_cart_failed">Add Cart item error.</string>
     

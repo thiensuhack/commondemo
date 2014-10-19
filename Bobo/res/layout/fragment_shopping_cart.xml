@@ -33,7 +33,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/items_cart_total_price" />
+                android:text="@string/items_cart_total_price"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/itemCartTotalPrice"

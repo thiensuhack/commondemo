@@ -327,47 +327,13 @@ public class ProductDetailFragment extends BaseFragment implements
 		}
 	}
 
-	class AddCartTask extends AsyncTask<Void, Void, ItemCartDTO> {
-		private ProductDTO mProductDTO = null;
-
-		public AddCartTask(ProductDTO _product) {
-			mProductDTO = _product;
-		}
-
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-		}
-
-		@Override
-		protected ItemCartDTO doInBackground(Void... params) {
-			try {
-				String data=OrangeUtils.createCartData(mProductDTO);
-				return CommonModel.getInstance().addToCart(UrlRequest.ADD_CART_URL, data);
-			} catch (Exception e) {
-			}
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(ItemCartDTO result) {
-			super.onPostExecute(result);
-			try {
-				if(result!=null && result.id.trim().length()>0){
-					mHomeActivity.addToCart(mProductDTO);
-				}else{
-					mHomeActivity.showToast(mHomeActivity.getString(R.string.add_cart_failed));
-				}
-			} catch (Exception e) {
-			}			
-		}
-	}
+	
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.addToCardBtn:
-			mHomeActivity.addToCart(mProduct);
+			mHomeActivity.addCart(mProduct);
 			break;
 
 		default:

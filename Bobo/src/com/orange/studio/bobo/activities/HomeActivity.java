@@ -3,7 +3,10 @@ package com.orange.studio.bobo.activities;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.AsyncTask.Status;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
@@ -22,6 +25,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.configs.OrangeConfig.CartItemsRule;
 import com.orange.studio.bobo.configs.OrangeConfig.MENU_NAME;
+import com.orange.studio.bobo.configs.OrangeConfig.UrlRequest;
 import com.orange.studio.bobo.dialogs.ExitDialog;
 import com.orange.studio.bobo.fragments.AboutFragment;
 import com.orange.studio.bobo.fragments.BestSellerProductFragment;
@@ -36,8 +40,11 @@ import com.orange.studio.bobo.fragments.RegisterFragment;
 import com.orange.studio.bobo.fragments.SearchResultFragment;
 import com.orange.studio.bobo.fragments.ShoppingCartFragment;
 import com.orange.studio.bobo.fragments.SpinToWinFragment;
+import com.orange.studio.bobo.models.CommonModel;
+import com.orange.studio.bobo.objects.ItemCartDTO;
 import com.orange.studio.bobo.objects.MenuItemDTO;
 import com.orange.studio.bobo.objects.ProductDTO;
+import com.orange.studio.bobo.utils.OrangeUtils;
 
 public class HomeActivity extends ActionBarActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks, OnClickListener {
@@ -66,6 +73,8 @@ public class HomeActivity extends ActionBarActivity implements
 	private ExitDialog mExitDialog = null;
 	private Fragment mCurFragment=null;
 	
+	private ProgressDialog mProgress=null;
+	private AddCartTask mAddCartTask=null;
 	
 	public enum HOME_TABS{
 		ALL,BEST_SELLER,POPULAR
@@ -99,8 +108,16 @@ public class HomeActivity extends ActionBarActivity implements
 				});
 		initView();
 		initListener();
+		initProgress(null);
 	}
-
+	protected void initProgress(String message){
+		mProgress=new ProgressDialog(HomeActivity.this);
+		if(message!=null){
+			mProgress.setMessage(message);
+		}else{
+			mProgress.setMessage(getString(R.string.waitting_message));
+		}
+	}
 	private void initView() {
 		mNavIconMenu = (ImageView) findViewById(R.id.naviMenuIcon);
 		mAppIcon = (ImageView) findViewById(R.id.iconBobo);
@@ -131,7 +148,12 @@ public class HomeActivity extends ActionBarActivity implements
 	public void setAppTitle(String title) {
 		mAppTitle.setText(title);
 	}
-
+	public void addCart(ProductDTO product){
+		if(mAddCartTask==null || mAddCartTask.getStatus()==Status.FINISHED){
+			mAddCartTask=new AddCartTask(product);
+			mAddCartTask.execute();
+		}
+	}
 	private void updateTitleAndDrawer(Fragment fragment) {
 		String mFragmentName = fragment.getClass().getName();
 		if (mFragmentName.equals(HomeFragment.class.getName())) {
@@ -363,7 +385,7 @@ public class HomeActivity extends ActionBarActivity implements
 		}
 	}
 
-	public void addToCart(ProductDTO proItem) {
+	private void addToCart(ProductDTO proItem) {
 		if (proItem == null) {
 			return;
 		}
@@ -464,6 +486,47 @@ public class HomeActivity extends ActionBarActivity implements
 	}
 	public void showToast(String message){
 		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+	}
+	class AddCartTask extends AsyncTask<Void, Void, ItemCartDTO> {
+		private ProductDTO mProductDTO = null;
+
+		public AddCartTask(ProductDTO _product) {
+			mProductDTO = _product;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			mProgress.show();
+		}
+
+		@Override
+		protected ItemCartDTO doInBackground(Void... params) {
+			try {
+				String data=OrangeUtils.createCartData(mProductDTO);
+				return CommonModel.getInstance().addToCart(UrlRequest.ADD_CART_URL, data);
+			} catch (Exception e) {
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(ItemCartDTO result) {
+			super.onPostExecute(result);
+			try {
+				if(result!=null && result.id.trim().length()>0){
+					addToCart(mProductDTO);
+				}else{
+					showToast(getString(R.string.add_cart_failed));
+				}
+			} catch (Exception e) {
+			}	
+			finally{
+				if(mProgress.isShowing()){
+					mProgress.dismiss();
+				}
+			}
+		}
 	}
 	@Override
 	protected void onResume() {

@@ -136,7 +136,7 @@ public class ShoppingCartFragment extends BaseFragment implements
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.itemCartCheckOutBtn:
-			mHomeActivity.onNavigationDrawerItemSelected(MENU_NAME.LOGIN_FRAGMENT);
+			mHomeActivity.checkOut();
 			break;
 
 		default:

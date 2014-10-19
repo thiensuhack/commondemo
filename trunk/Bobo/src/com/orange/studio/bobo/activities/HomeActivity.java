@@ -1,12 +1,15 @@
 package com.orange.studio.bobo.activities;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.os.AsyncTask.Status;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
@@ -41,10 +44,17 @@ import com.orange.studio.bobo.fragments.SearchResultFragment;
 import com.orange.studio.bobo.fragments.ShoppingCartFragment;
 import com.orange.studio.bobo.fragments.SpinToWinFragment;
 import com.orange.studio.bobo.models.CommonModel;
+import com.orange.studio.bobo.objects.CustomerDTO;
 import com.orange.studio.bobo.objects.ItemCartDTO;
 import com.orange.studio.bobo.objects.MenuItemDTO;
 import com.orange.studio.bobo.objects.ProductDTO;
 import com.orange.studio.bobo.utils.OrangeUtils;
+import com.paypal.android.sdk.payments.PayPalConfiguration;
+import com.paypal.android.sdk.payments.PayPalItem;
+import com.paypal.android.sdk.payments.PayPalPayment;
+import com.paypal.android.sdk.payments.PayPalPaymentDetails;
+import com.paypal.android.sdk.payments.PayPalService;
+import com.paypal.android.sdk.payments.PaymentActivity;
 
 public class HomeActivity extends ActionBarActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks, OnClickListener {
@@ -62,23 +72,48 @@ public class HomeActivity extends ActionBarActivity implements
 
 	public List<ProductDTO> mListItemCart = null;
 
-	public String mSearchKey=null;
-	public MenuItemDTO mCurCategory=new MenuItemDTO();
-	
+	public String mSearchKey = null;
+	public MenuItemDTO mCurCategory = new MenuItemDTO();
+
 	public interface MainHomeActivityHandler {
 		public void exitApplication();
 	}
 
 	private MainHomeActivityHandler mHandler = null;
 	private ExitDialog mExitDialog = null;
-	private Fragment mCurFragment=null;
+	private Fragment mCurFragment = null;
+
+	private ProgressDialog mProgress = null;
+	private AddCartTask mAddCartTask = null;
+
+	private CustomerDTO mUserInfo=null;
 	
-	private ProgressDialog mProgress=null;
-	private AddCartTask mAddCartTask=null;
-	
-	public enum HOME_TABS{
-		ALL,BEST_SELLER,POPULAR
+	public enum HOME_TABS {
+		ALL, BEST_SELLER, POPULAR
 	}
+
+	// Paypal
+	private static final String CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_NO_NETWORK;
+
+	// private static final String CONFIG_CLIENT_ID =
+	// "AQkquBDf1zctJOWGKWUEtKXm6qVhueUEMvXO_-MCI4DQQ4-LWvkDLIN2fGsd";
+	private static final String CONFIG_CLIENT_ID = "";
+
+	private static final int REQUEST_CODE_PAYMENT = 1;
+	private static final int REQUEST_CODE_FUTURE_PAYMENT = 2;
+	private static final int REQUEST_CODE_PROFILE_SHARING = 3;
+	private static PayPalConfiguration config = new PayPalConfiguration()
+			.environment(CONFIG_ENVIRONMENT)
+			.clientId(CONFIG_CLIENT_ID)
+			// The following are only used in PayPalFuturePaymentActivity.
+			.merchantName("Hipster Store")
+			.merchantPrivacyPolicyUri(
+					Uri.parse("https://www.example.com/privacy"))
+			.merchantUserAgreementUri(
+					Uri.parse("https://www.example.com/legal"));
+
+	// end Paypal
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -110,15 +145,21 @@ public class HomeActivity extends ActionBarActivity implements
 		initListener();
 		initProgress(null);
 	}
-	protected void initProgress(String message){
-		mProgress=new ProgressDialog(HomeActivity.this);
-		if(message!=null){
+
+	protected void initProgress(String message) {
+		mProgress = new ProgressDialog(HomeActivity.this);
+		if (message != null) {
 			mProgress.setMessage(message);
-		}else{
+		} else {
 			mProgress.setMessage(getString(R.string.waitting_message));
 		}
 	}
+
 	private void initView() {
+		Intent intent = new Intent(HomeActivity.this, PayPalService.class);
+		intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+		startService(intent);
+
 		mNavIconMenu = (ImageView) findViewById(R.id.naviMenuIcon);
 		mAppIcon = (ImageView) findViewById(R.id.iconBobo);
 		mAppTitle = (TextView) findViewById(R.id.appTitle);
@@ -148,12 +189,14 @@ public class HomeActivity extends ActionBarActivity implements
 	public void setAppTitle(String title) {
 		mAppTitle.setText(title);
 	}
-	public void addCart(ProductDTO product){
-		if(mAddCartTask==null || mAddCartTask.getStatus()==Status.FINISHED){
-			mAddCartTask=new AddCartTask(product);
+
+	public void addCart(ProductDTO product) {
+		if (mAddCartTask == null || mAddCartTask.getStatus() == Status.FINISHED) {
+			mAddCartTask = new AddCartTask(product);
 			mAddCartTask.execute();
 		}
 	}
+
 	private void updateTitleAndDrawer(Fragment fragment) {
 		String mFragmentName = fragment.getClass().getName();
 		if (mFragmentName.equals(HomeFragment.class.getName())) {
@@ -196,47 +239,52 @@ public class HomeActivity extends ActionBarActivity implements
 	public void onNavigationDrawerItemSelected(int position) {
 		Fragment mFragment = null;
 		switch (position) {
-		case 0:			
-//		case 1:
-//			if(mCurFragment!=null && mCurFragment.getClass().getName().equals(HomeFragment.class.getName())){
-//				HomeFragment mHomeFragment=((HomeFragment)mCurFragment);
-//				mHomeFragment.setCurrentTab(HOME_TABS.ALL);
-//				mHomeFragment.loadData();
-//			}
-//			mFragment = HomeFragment.instantiate(getApplicationContext(),
-//					HomeFragment.class.getName());
-//			mCurFragment=mFragment;
-//			break;
-//		case 2:
-//			if(mCurFragment!=null && mCurFragment.getClass().getName().equals(HomeFragment.class.getName())){
-//				HomeFragment mHomeFragment=((HomeFragment)mCurFragment);
-//				mHomeFragment.setCurrentTab(HOME_TABS.POPULAR);
-//				mHomeFragment.loadData();
-//			}
-//			mFragment = HomeFragment.instantiate(getApplicationContext(),
-//					HomeFragment.class.getName());
-//			mCurFragment=mFragment;
-//			break;
-//		case 3:
-//			if(mCurFragment!=null && mCurFragment.getClass().getName().equals(HomeFragment.class.getName())){
-//				HomeFragment mHomeFragment=((HomeFragment)mCurFragment);
-//				mHomeFragment.setCurrentTab(HOME_TABS.BEST_SELLER);
-//				mHomeFragment.loadData();
-//			}
-//			mFragment = HomeFragment.instantiate(getApplicationContext(),
-//					HomeFragment.class.getName());
-//			mCurFragment=mFragment;
-//			break;
+		case 0:
+			// case 1:
+			// if(mCurFragment!=null &&
+			// mCurFragment.getClass().getName().equals(HomeFragment.class.getName())){
+			// HomeFragment mHomeFragment=((HomeFragment)mCurFragment);
+			// mHomeFragment.setCurrentTab(HOME_TABS.ALL);
+			// mHomeFragment.loadData();
+			// }
+			// mFragment = HomeFragment.instantiate(getApplicationContext(),
+			// HomeFragment.class.getName());
+			// mCurFragment=mFragment;
+			// break;
+			// case 2:
+			// if(mCurFragment!=null &&
+			// mCurFragment.getClass().getName().equals(HomeFragment.class.getName())){
+			// HomeFragment mHomeFragment=((HomeFragment)mCurFragment);
+			// mHomeFragment.setCurrentTab(HOME_TABS.POPULAR);
+			// mHomeFragment.loadData();
+			// }
+			// mFragment = HomeFragment.instantiate(getApplicationContext(),
+			// HomeFragment.class.getName());
+			// mCurFragment=mFragment;
+			// break;
+			// case 3:
+			// if(mCurFragment!=null &&
+			// mCurFragment.getClass().getName().equals(HomeFragment.class.getName())){
+			// HomeFragment mHomeFragment=((HomeFragment)mCurFragment);
+			// mHomeFragment.setCurrentTab(HOME_TABS.BEST_SELLER);
+			// mHomeFragment.loadData();
+			// }
+			// mFragment = HomeFragment.instantiate(getApplicationContext(),
+			// HomeFragment.class.getName());
+			// mCurFragment=mFragment;
+			// break;
 		case 1:
 			mFragment = HomeFragment.instantiate(getApplicationContext(),
 					HomeFragment.class.getName());
 			break;
 		case 2:
-			mFragment = PopularProductFragment.instantiate(getApplicationContext(),
+			mFragment = PopularProductFragment.instantiate(
+					getApplicationContext(),
 					PopularProductFragment.class.getName());
 			break;
 		case 3:
-			mFragment = BestSellerProductFragment.instantiate(getApplicationContext(),
+			mFragment = BestSellerProductFragment.instantiate(
+					getApplicationContext(),
 					BestSellerProductFragment.class.getName());
 			break;
 		case 9:
@@ -258,13 +306,14 @@ public class HomeActivity extends ActionBarActivity implements
 					ShoppingCartFragment.class.getName());
 			break;
 		case MENU_NAME.REGISTER_FRAGMENT:
-			mFragment = RegisterFragment.instantiate(
-					getApplicationContext(),
+			mFragment = RegisterFragment.instantiate(getApplicationContext(),
 					RegisterFragment.class.getName());
 			break;
 		case MENU_NAME.SEARCH_RESULT_FRAGMENT:
-			if(mCurFragment!=null && mCurFragment.getClass().getName().equals(SearchResultFragment.class.getName())){
-				((SearchResultFragment)mCurFragment).onResume();
+			if (mCurFragment != null
+					&& mCurFragment.getClass().getName()
+							.equals(SearchResultFragment.class.getName())) {
+				((SearchResultFragment) mCurFragment).onResume();
 				return;
 			}
 			mFragment = SearchResultFragment.instantiate(
@@ -272,28 +321,28 @@ public class HomeActivity extends ActionBarActivity implements
 					SearchResultFragment.class.getName());
 			break;
 		case MENU_NAME.PRODUCT_CATEGORY_FRAGMENT:
-			if(mCurFragment!=null && mCurFragment.getClass().getName().equals(ProductCategoryFragment.class.getName())){
-				((ProductCategoryFragment)mCurFragment).onResume();
+			if (mCurFragment != null
+					&& mCurFragment.getClass().getName()
+							.equals(ProductCategoryFragment.class.getName())) {
+				((ProductCategoryFragment) mCurFragment).onResume();
 				return;
 			}
 			mFragment = ProductCategoryFragment.instantiate(
 					getApplicationContext(),
-					ProductCategoryFragment.class.getName());			
+					ProductCategoryFragment.class.getName());
 			break;
 		case MENU_NAME.LOGIN_FRAGMENT:
-			mFragment = LoginFragment.instantiate(
-					getApplicationContext(),
+			mFragment = LoginFragment.instantiate(getApplicationContext(),
 					LoginFragment.class.getName());
 			break;
 		case MENU_NAME.SPIN_TO_WIN_FRAGMENT:
-			mFragment = SpinToWinFragment.instantiate(
-					getApplicationContext(),
+			mFragment = SpinToWinFragment.instantiate(getApplicationContext(),
 					SpinToWinFragment.class.getName());
 			break;
 		default:
 			break;
 		}
-		mCurFragment=mFragment;
+		mCurFragment = mFragment;
 		replaceFragment(mFragment);
 	}
 
@@ -463,30 +512,37 @@ public class HomeActivity extends ActionBarActivity implements
 		for (ProductDTO item : mListItemCart) {
 			result += item.price * item.cartCounter;
 		}
-		result = result*100;
+		result = result * 100;
 		result = Math.round(result);
-		result = result /100;
+		result = result / 100;
 		return result;
 	}
-	public void setSearchKey(String searchKey){
-		mSearchKey=searchKey;
-		if(mNavigationDrawerFragment!=null){
+
+	public void setSearchKey(String searchKey) {
+		mSearchKey = searchKey;
+		if (mNavigationDrawerFragment != null) {
 			mNavigationDrawerFragment.setSearchKey(searchKey);
 		}
 	}
-	public void hideSoftKeyBoard(){
-//		try {
-//			InputMethodManager inputManager = (InputMethodManager)this.getSystemService(Service.INPUT_METHOD_SERVICE);
-//			View view = this.getCurrentFocus();
-//		    if (view != null) {
-//		        inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-//		    }
-//		} catch (Exception e) {
-//		}
+
+	public void hideSoftKeyBoard() {
+		// try {
+		// InputMethodManager inputManager =
+		// (InputMethodManager)this.getSystemService(Service.INPUT_METHOD_SERVICE);
+		// View view = this.getCurrentFocus();
+		// if (view != null) {
+		// inputManager.hideSoftInputFromWindow(view.getWindowToken(),
+		// InputMethodManager.HIDE_NOT_ALWAYS);
+		// }
+		// } catch (Exception e) {
+		// }
 	}
-	public void showToast(String message){
-		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+
+	public void showToast(String message) {
+		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG)
+				.show();
 	}
+
 	class AddCartTask extends AsyncTask<Void, Void, ItemCartDTO> {
 		private ProductDTO mProductDTO = null;
 
@@ -503,8 +559,9 @@ public class HomeActivity extends ActionBarActivity implements
 		@Override
 		protected ItemCartDTO doInBackground(Void... params) {
 			try {
-				String data=OrangeUtils.createCartData(mProductDTO);
-				return CommonModel.getInstance().addToCart(UrlRequest.ADD_CART_URL, data);
+				String data = OrangeUtils.createCartData(mProductDTO);
+				return CommonModel.getInstance().addToCart(
+						UrlRequest.ADD_CART_URL, data);
 			} catch (Exception e) {
 			}
 			return null;
@@ -514,23 +571,94 @@ public class HomeActivity extends ActionBarActivity implements
 		protected void onPostExecute(ItemCartDTO result) {
 			super.onPostExecute(result);
 			try {
-				if(result!=null && result.id.trim().length()>0){
+				if (result != null && result.id.trim().length() > 0) {
 					addToCart(mProductDTO);
-				}else{
+				} else {
 					showToast(getString(R.string.add_cart_failed));
 				}
 			} catch (Exception e) {
-			}	
-			finally{
-				if(mProgress.isShowing()){
+			} finally {
+				if (mProgress.isShowing()) {
 					mProgress.dismiss();
 				}
 			}
 		}
 	}
+
 	@Override
 	protected void onResume() {
 		super.onResume();
 		updateItemCartCounter();
 	}
+	public void checkOut(){
+		onPaypalPayment();
+		if(mUserInfo==null){
+			onPaypalPayment();
+		}else{
+			onNavigationDrawerItemSelected(MENU_NAME.LOGIN_FRAGMENT);//login view
+		}
+	}
+	public CustomerDTO getUserInfo() {
+		return mUserInfo;
+	}
+
+	public void setUserInfo(CustomerDTO mUserInfo) {
+		this.mUserInfo = mUserInfo;
+	}
+	// Paypal functions
+	public void onPaypalPayment() {
+		PayPalPayment thingToBuy = getStuffToBuy(PayPalPayment.PAYMENT_INTENT_SALE);
+		Intent intent = new Intent(HomeActivity.this, PaymentActivity.class);
+		intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
+
+		startActivityForResult(intent, REQUEST_CODE_PAYMENT);
+	}
+
+	private PayPalPayment getStuffToBuy(String paymentIntent) {
+		// --- include an item list, payment amount details
+		try {
+			if(mListItemCart==null || mListItemCart.size()<1){
+				return null;
+			}
+			PayPalItem[] items= new PayPalItem[mListItemCart.size()];
+			String listItemsName="";			
+			for (int i = 0; i < mListItemCart.size(); i++) {
+				ProductDTO item=mListItemCart.get(i);
+				if(i==mListItemCart.size()-1){
+					listItemsName+=item.name;
+				}else{
+					listItemsName+=item.name+",";
+				}				
+				PayPalItem ppItem=new PayPalItem(item.name, item.cartCounter, new BigDecimal(item.price), "USD", item.reference);
+				items[i]=ppItem;
+
+			}
+//			PayPalItem[] items = {
+//					new PayPalItem("old jeans with holes", 2, new BigDecimal(
+//							"87.50"), "USD", "sku-12345678"),
+//					new PayPalItem("free rainbow patch", 1, new BigDecimal("0.00"),
+//							"USD", "sku-zero-price"),
+//					new PayPalItem(
+//							"long sleeve plaid shirt (no mustache included)", 6,
+//							new BigDecimal("37.99"), "USD", "sku-33333") 
+//					};
+			BigDecimal subtotal = PayPalItem.getItemTotal(items);
+			BigDecimal shipping = new BigDecimal("0");
+			BigDecimal tax = new BigDecimal("0");
+			PayPalPaymentDetails paymentDetails = new PayPalPaymentDetails(
+					shipping, subtotal, tax);
+			BigDecimal amount = subtotal.add(shipping).add(tax);
+			PayPalPayment payment = new PayPalPayment(amount, "USD", listItemsName, paymentIntent);
+			payment.items(items).paymentDetails(paymentDetails);
+
+			// --- set other optional fields like invoice_number, custom field, and
+			// soft_descriptor
+			payment.custom("Thanks for payment. From: Bobo-u.com");
+
+			return payment;
+		} catch (Exception e) {			
+		}
+		return null;
+	}
+	// end Paypal functions
 }

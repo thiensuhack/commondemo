@@ -28,7 +28,6 @@ import com.orange.studio.bobo.customviews.ColorHorizontalView.OnTabReselectedLis
 import com.orange.studio.bobo.models.CommonModel;
 import com.orange.studio.bobo.models.ProductModel;
 import com.orange.studio.bobo.objects.ColorDTO;
-import com.orange.studio.bobo.objects.ItemCartDTO;
 import com.orange.studio.bobo.objects.ProductDTO;
 import com.orange.studio.bobo.objects.ProductFeatureAndValueDTO;
 import com.orange.studio.bobo.objects.ProductOptionValueDTO;

@@ -1,7 +1,5 @@
 package com.orange.studio.bobo.fragments;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,7 +21,7 @@ public class BaseFragment extends Fragment{
 	protected View mLoadingView=null;
 	protected ProgressWheel mProgress=null;
 	protected HomeActivity mHomeActivity=null;
-	protected ProgressDialog mAddCartProgress=null;
+
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -62,10 +60,7 @@ public class BaseFragment extends Fragment{
 			}
 		}
 	}
-	protected void initProgress(Activity activity,String message){
-		mAddCartProgress=new ProgressDialog(activity);
-		mAddCartProgress.setMessage(message);
-	}
+	
 	public void setHomeActivity(HomeActivity _mHomeActivity){
 		mHomeActivity=_mHomeActivity;
 	}

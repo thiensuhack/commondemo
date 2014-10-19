@@ -115,7 +115,7 @@ public class GridProductAdapter extends OrangeBaseAdapter {
 			@Override
 			public void onClick(View arg0) {
 				try {
-					((HomeActivity)mActivity).addToCart(mData);
+					((HomeActivity)mActivity).addCart(mData);
 				} catch (Exception e) {
 				}
 			}

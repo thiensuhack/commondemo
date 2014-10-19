@@ -16,6 +16,7 @@ import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.configs.OrangeConfig.UrlRequest;
 import com.orange.studio.bobo.models.CommonModel;
 import com.orange.studio.bobo.objects.ContactUsDTO;
+import com.orange.studio.bobo.utils.OrangeUtils;
 
 public class ContactUsFragment extends BaseFragment implements OnClickListener{
 	private EditText mName=null;
@@ -78,6 +79,10 @@ public class ContactUsFragment extends BaseFragment implements OnClickListener{
 			if (mContact.message.length() < 1) {
 				mHomeActivity.showToast(getActivity().getString(R.string.empty_field));			
 				mMessage.setFocusable(true);
+				return;
+			}
+			if(!OrangeUtils.validateEmail(mContact.from)){
+				mHomeActivity.showToast(getActivity().getString(R.string.email_not_correct));
 				return;
 			}
 			sendContactUs();

@@ -19,6 +19,7 @@
     <!-- Register -->
     <string name="waitting_register_message">Waitting for register...</string>
     <string name="waitting_login_message">Waitting for login...</string>
+    <string name="register_failed_message">Register error</string>
     
     <string name="first_name_label">First name:</string>
     <string name="last_name_label">Last name:</string>
@@ -49,7 +50,7 @@
     <string name="password_login_label">Password:</string>
     <string name="user_name_hint">Your email</string>
     <string name="password_login_hint">Your password</string>
-
+    <string name="login_failed_message">Login error</string>
     <!-- Buttons -->
     <string name="register_btn_label">Register</string>
     <string name="login_btn_label">Login</string>

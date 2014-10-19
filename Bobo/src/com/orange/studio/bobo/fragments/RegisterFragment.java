@@ -49,6 +49,7 @@ public class RegisterFragment extends BaseFragment implements OnClickListener {
 	}
 
 	private void initView() {
+		mHomeActivity=getHomeActivity();
 		mFirstName = (EditText) mView.findViewById(R.id.firstNameRegister);
 		mLastName = (EditText) mView.findViewById(R.id.lastNameRegister);
 		mEmail = (EditText) mView.findViewById(R.id.emailRegister);
@@ -60,7 +61,6 @@ public class RegisterFragment extends BaseFragment implements OnClickListener {
 		mRegisterInfo = new RegisterDTO();
 		mProgressWaitting=new ProgressDialog(getActivity());
 		mProgressWaitting.setMessage(getActivity().getString(R.string.waitting_register_message));
-		mHomeActivity=getHomeActivity();
 	}
 
 	private void initListener() {
@@ -171,6 +171,8 @@ public class RegisterFragment extends BaseFragment implements OnClickListener {
 				if(result.id!=null && result.id.trim().length()>0){
 					Toast.makeText(getActivity(), result.email, Toast.LENGTH_LONG).show();
 				}
+			}else{
+				mHomeActivity.showToast(mHomeActivity.getString(R.string.register_failed_message));
 			}
 			if(mProgressWaitting.isShowing()){
 				mProgressWaitting.dismiss();

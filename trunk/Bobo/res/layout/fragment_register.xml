@@ -148,7 +148,7 @@
 
         <Button android:id="@+id/registerBtn"
             style="@style/RegisterButtonStyle"
-            android:layout_width="wrap_content"
+            android:layout_width="110dp"
             android:layout_height="30dp"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"

@@ -26,7 +26,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener{
 	private EditText mEmail = null;
 	private EditText mPassword = null;
 	private Button mLoginBtn = null;
-	private TextView mRegisterBtn=null;
+	private Button mRegisterBtn=null;
 	
 	private ProgressDialog mProgress=null;
 	private LoginTask mLoginTask=null;
@@ -55,7 +55,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener{
 		mLoginBtn=(Button)mView.findViewById(R.id.loginBtn);
 		mProgress=new ProgressDialog(getActivity());
 		mProgress.setMessage(getActivity().getString(R.string.waitting_login_message));
-		mRegisterBtn=(TextView)mView.findViewById(R.id.registerLoginBtn);
+		mRegisterBtn=(Button)mView.findViewById(R.id.registerLoginBtn);
 	}
 	private void initListener(){
 		mLoginBtn.setOnClickListener(this);
@@ -117,7 +117,8 @@ public class LoginFragment extends BaseFragment implements OnClickListener{
 		protected void onPostExecute(CustomerDTO result) {
 			super.onPostExecute(result);
 			if(result!=null && result.id!=null && result.id.trim().length()>0){
-				mHomeActivity.showToast("DONE");
+				mHomeActivity.showToast(mHomeActivity.getString(R.string.login_success_message));
+				mHomeActivity.setUserInfo(result);
 				mHomeActivity.onBackPressed();
 			}else{
 				mHomeActivity.showToast(mHomeActivity.getString(R.string.login_failed_message));

@@ -24,6 +24,7 @@
     <string name="waitting_register_message">Waitting for register...</string>
     <string name="waitting_login_message">Waitting for login...</string>
     <string name="register_failed_message">Register error</string>
+    <string name="register_success_message">Register success</string>
     
     <string name="first_name_label">First name:</string>
     <string name="last_name_label">Last name:</string>
@@ -55,10 +56,11 @@
     <string name="user_name_hint">Your email</string>
     <string name="password_login_hint">Your password</string>
     <string name="login_failed_message">Login error</string>
+    <string name="login_success_message">Login success</string>
     <!-- Buttons -->
     <string name="register_btn_label">Register</string>
     <string name="login_btn_label">Login</string>
-    <string name="register_login_label">Register Now</string>
+    <string name="register_login_label">Register now</string>
     <string name="spin_to_win_label">SPIN TO WIN</string>
     <string name="spin_to_win_lucy_draw_label">LUCY DRAW</string>
     <string name="stop_spin_to_win_label">STOP SPIN TO WIN</string>

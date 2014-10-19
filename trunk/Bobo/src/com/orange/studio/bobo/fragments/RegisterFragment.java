@@ -149,6 +149,13 @@ public class RegisterFragment extends BaseFragment implements OnClickListener {
 			break;
 		}
 	}
+	private void resetView(){
+		mFirstName.setText("");
+		mLastName.setText("");
+		mEmail.setText("");
+		mPassword.setText("");
+		mConfirmPassword.setText("");
+	}
 	class RegisterTask extends AsyncTask<Void, Void, CustomerDTO>{
 		String regisData="";
 		public RegisterTask(String _regisData){
@@ -168,8 +175,9 @@ public class RegisterFragment extends BaseFragment implements OnClickListener {
 		protected void onPostExecute(CustomerDTO result) {
 			super.onPostExecute(result);
 			if(result!=null){
-				if(result.id!=null && result.id.trim().length()>0){
-					Toast.makeText(getActivity(), result.email, Toast.LENGTH_LONG).show();
+				if(result.id!=null && result.id.trim().length()>0){					
+					mHomeActivity.showToast(mHomeActivity.getString(R.string.register_success_message));
+					mHomeActivity.onBackPressed();
 				}
 			}else{
 				mHomeActivity.showToast(mHomeActivity.getString(R.string.register_failed_message));

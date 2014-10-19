@@ -119,6 +119,8 @@ public class LoginFragment extends BaseFragment implements OnClickListener{
 			if(result!=null && result.id!=null && result.id.trim().length()>0){
 				mHomeActivity.showToast("DONE");
 				mHomeActivity.onBackPressed();
+			}else{
+				mHomeActivity.showToast(mHomeActivity.getString(R.string.login_failed_message));
 			}
 			if(mProgress.isShowing()){
 				mProgress.dismiss();

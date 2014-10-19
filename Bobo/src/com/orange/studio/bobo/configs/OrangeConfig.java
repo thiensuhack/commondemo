@@ -53,6 +53,7 @@ public final class OrangeConfig {
 		public static final String CONTACT_US_URL=main_domain+"/index.php?controller=CustomAPI&action=contact&ws_key=LW6TL3P7Z7KRFM3UYKWHJ3N28GEZLRBT";
 		public static String HOME_POPULAR_PRODUCT=main_domain+"/index.php?controller=CustomAPI&action=popular&limit=";
 		public static String HOME_BEST_SELLER_PRODUCT=main_domain+"/index.php?controller=CustomAPI&action=bestsales&limit=";
+		public static String ADD_CART_URL=domain+"/carts?Create=Creating"+"&ws_key="+App_Key;
 	}
 
 	public static class REQUEST_PARAMS_NAME {

@@ -48,10 +48,12 @@ import com.orange.studio.bobo.fragments.SearchResultFragment;
 import com.orange.studio.bobo.fragments.ShoppingCartFragment;
 import com.orange.studio.bobo.fragments.SpinToWinFragment;
 import com.orange.studio.bobo.models.CommonModel;
+import com.orange.studio.bobo.models.ProductModel;
 import com.orange.studio.bobo.objects.CustomerDTO;
 import com.orange.studio.bobo.objects.ItemCartDTO;
 import com.orange.studio.bobo.objects.MenuItemDTO;
 import com.orange.studio.bobo.objects.ProductDTO;
+import com.orange.studio.bobo.objects.RequestDTO;
 import com.orange.studio.bobo.utils.OrangeUtils;
 import com.paypal.android.sdk.payments.PayPalAuthorization;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
@@ -91,11 +93,12 @@ public class HomeActivity extends ActionBarActivity implements
 	private ExitDialog mExitDialog = null;
 	private Fragment mCurFragment = null;
 
-	private ProgressDialog mProgress = null;
+	private ProgressDialog mProgressDialog = null;
 	private AddCartTask mAddCartTask = null;
-
-	private CustomerDTO mUserInfo=null;
+	private LoadProductDetailAddCartTask mLoadProductDetailAddCartTask=null;
 	
+	private CustomerDTO mUserInfo = null;
+
 	public enum HOME_TABS {
 		ALL, BEST_SELLER, POPULAR
 	}
@@ -120,6 +123,7 @@ public class HomeActivity extends ActionBarActivity implements
 			.merchantUserAgreementUri(
 					Uri.parse("https://www.example.com/legal"));
 	private static final String TAG = "Bobo-u.com Paypal";
+
 	// end Paypal
 
 	@Override
@@ -155,11 +159,11 @@ public class HomeActivity extends ActionBarActivity implements
 	}
 
 	protected void initProgress(String message) {
-		mProgress = new ProgressDialog(HomeActivity.this);
+		mProgressDialog = new ProgressDialog(HomeActivity.this);
 		if (message != null) {
-			mProgress.setMessage(message);
+			mProgressDialog.setMessage(message);
 		} else {
-			mProgress.setMessage(getString(R.string.waitting_message));
+			mProgressDialog.setMessage(getString(R.string.waitting_message));
 		}
 	}
 
@@ -204,7 +208,12 @@ public class HomeActivity extends ActionBarActivity implements
 			mAddCartTask.execute();
 		}
 	}
-
+	public void addCartFromAdapter(ProductDTO product){
+		if(mLoadProductDetailAddCartTask==null || mLoadProductDetailAddCartTask.getStatus()==Status.FINISHED){
+			mLoadProductDetailAddCartTask=new LoadProductDetailAddCartTask(product);
+			mLoadProductDetailAddCartTask.execute();
+		}
+	}
 	private void updateTitleAndDrawer(Fragment fragment) {
 		String mFragmentName = fragment.getClass().getName();
 		if (mFragmentName.equals(HomeFragment.class.getName())) {
@@ -561,7 +570,9 @@ public class HomeActivity extends ActionBarActivity implements
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			mProgress.show();
+			if(!mProgressDialog.isShowing()){
+				mProgressDialog.show();
+			}			
 		}
 
 		@Override
@@ -586,8 +597,8 @@ public class HomeActivity extends ActionBarActivity implements
 				}
 			} catch (Exception e) {
 			} finally {
-				if (mProgress.isShowing()) {
-					mProgress.dismiss();
+				if (mProgressDialog.isShowing()) {
+					mProgressDialog.dismiss();
 				}
 			}
 		}
@@ -598,14 +609,17 @@ public class HomeActivity extends ActionBarActivity implements
 		super.onResume();
 		updateItemCartCounter();
 	}
-	public void checkOut(){
-//		onPaypalPayment();
-		if(mUserInfo!=null){
+
+	public void checkOut() {
+		// onPaypalPayment();
+		if (mUserInfo != null) {
 			onPaypalPayment();
-		}else{
-			onNavigationDrawerItemSelected(MENU_NAME.LOGIN_FRAGMENT);//login view
+		} else {
+			onNavigationDrawerItemSelected(MENU_NAME.LOGIN_FRAGMENT);// login
+																		// view
 		}
 	}
+
 	public CustomerDTO getUserInfo() {
 		return mUserInfo;
 	}
@@ -613,6 +627,43 @@ public class HomeActivity extends ActionBarActivity implements
 	public void setUserInfo(CustomerDTO mUserInfo) {
 		this.mUserInfo = mUserInfo;
 	}
+
+	private class LoadProductDetailAddCartTask extends
+			AsyncTask<Void, Void, ProductDTO> {
+		private ProductDTO mProduct=null;
+		public LoadProductDetailAddCartTask(ProductDTO pro){
+			mProduct=pro;
+		}
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			if(!mProgressDialog.isShowing()){
+				mProgressDialog.show();
+			}
+		}
+
+		@Override
+		protected ProductDTO doInBackground(Void... arg0) {
+			Bundle mParams = OrangeUtils.createRequestBundle2(null, null);
+			RequestDTO request = new RequestDTO();
+			request.proId = mProduct.id;
+			return ProductModel.getInstance().getProductDetail(
+					UrlRequest.PRODUCT_DETAIL, request, mParams);
+		}
+
+		@Override
+		protected void onPostExecute(ProductDTO result) {
+			super.onPostExecute(result);
+			if (result != null && result.id.trim().length()>0) {
+				addCart(result);
+			}else{
+				if(mProgressDialog.isShowing()){
+					mProgressDialog.dismiss();
+				}
+			}
+		}
+	}
+
 	// Paypal functions
 	public void onPaypalPayment() {
 		PayPalPayment thingToBuy = getStuffToBuy(PayPalPayment.PAYMENT_INTENT_SALE);
@@ -623,157 +674,168 @@ public class HomeActivity extends ActionBarActivity implements
 
 	private PayPalPayment getStuffToBuy(String paymentIntent) {
 		try {
-			if(mListItemCart==null || mListItemCart.size()<1){
+			if (mListItemCart == null || mListItemCart.size() < 1) {
 				return null;
 			}
-			PayPalItem[] items= new PayPalItem[mListItemCart.size()];
-			String listItemsName="";			
+			PayPalItem[] items = new PayPalItem[mListItemCart.size()];
+			String listItemsName = "";
 			for (int i = 0; i < mListItemCart.size(); i++) {
-				ProductDTO item=mListItemCart.get(i);
-				if(i==mListItemCart.size()-1){
-					listItemsName+=item.name;
-				}else{
-					listItemsName+=item.name+",";
-				}				
-				PayPalItem ppItem=new PayPalItem(item.name, item.cartCounter, new BigDecimal(item.price), "USD", item.reference);
-				items[i]=ppItem;
+				ProductDTO item = mListItemCart.get(i);
+				if (i == mListItemCart.size() - 1) {
+					listItemsName += item.name;
+				} else {
+					listItemsName += item.name + ",";
+				}
+				PayPalItem ppItem = new PayPalItem(item.name, item.cartCounter,
+						new BigDecimal(item.price), "USD", item.reference);
+				items[i] = ppItem;
 
 			}
-//			PayPalItem[] items = {
-//					new PayPalItem("old jeans with holes", 2, new BigDecimal(
-//							"87.50"), "USD", "sku-12345678"),
-//					new PayPalItem("free rainbow patch", 1, new BigDecimal("0.00"),
-//							"USD", "sku-zero-price"),
-//					new PayPalItem(
-//							"long sleeve plaid shirt (no mustache included)", 6,
-//							new BigDecimal("37.99"), "USD", "sku-33333") 
-//					};
+			// PayPalItem[] items = {
+			// new PayPalItem("old jeans with holes", 2, new BigDecimal(
+			// "87.50"), "USD", "sku-12345678"),
+			// new PayPalItem("free rainbow patch", 1, new BigDecimal("0.00"),
+			// "USD", "sku-zero-price"),
+			// new PayPalItem(
+			// "long sleeve plaid shirt (no mustache included)", 6,
+			// new BigDecimal("37.99"), "USD", "sku-33333")
+			// };
 			BigDecimal subtotal = PayPalItem.getItemTotal(items);
 			BigDecimal shipping = new BigDecimal("0");
 			BigDecimal tax = new BigDecimal("0");
 			PayPalPaymentDetails paymentDetails = new PayPalPaymentDetails(
 					shipping, subtotal, tax);
 			BigDecimal amount = subtotal.add(shipping).add(tax);
-			PayPalPayment payment = new PayPalPayment(amount, "USD", listItemsName, paymentIntent);
+			PayPalPayment payment = new PayPalPayment(amount, "USD",
+					listItemsName, paymentIntent);
 			payment.items(items).paymentDetails(paymentDetails);
 
-			// --- set other optional fields like invoice_number, custom field, and
+			// --- set other optional fields like invoice_number, custom field,
+			// and
 			// soft_descriptor
 			payment.custom("Thanks for payment. From: Bobo-u.com");
 
 			return payment;
-		} catch (Exception e) {			
+		} catch (Exception e) {
 		}
 		return null;
 	}
+
 	@Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE_PAYMENT) {
-            if (resultCode == Activity.RESULT_OK) {
-                PaymentConfirmation confirm =
-                        data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
-                if (confirm != null) {
-                    try {
-                        Log.i(TAG, confirm.toJSONObject().toString(4));
-                        Log.i(TAG, confirm.getPayment().toJSONObject().toString(4));
-                        /**
-                         *  TODO: send 'confirm' (and possibly confirm.getPayment() to your server for verification
-                         * or consent completion.
-                         * See https://developer.paypal.com/webapps/developer/docs/integration/mobile/verify-mobile-payment/
-                         * for more details.
-                         *
-                         * For sample mobile backend interactions, see
-                         * https://github.com/paypal/rest-api-sdk-python/tree/master/samples/mobile_backend
-                         */
-                        Toast.makeText(
-                                getApplicationContext(),
-                                "PaymentConfirmation info received from PayPal", Toast.LENGTH_LONG)
-                                .show();
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == REQUEST_CODE_PAYMENT) {
+			if (resultCode == Activity.RESULT_OK) {
+				PaymentConfirmation confirm = data
+						.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
+				if (confirm != null) {
+					try {
+						Log.i(TAG, confirm.toJSONObject().toString(4));
+						Log.i(TAG, confirm.getPayment().toJSONObject()
+								.toString(4));
+						/**
+						 * TODO: send 'confirm' (and possibly
+						 * confirm.getPayment() to your server for verification
+						 * or consent completion. See
+						 * https://developer.paypal.com
+						 * /webapps/developer/docs/integration
+						 * /mobile/verify-mobile-payment/ for more details.
+						 * 
+						 * For sample mobile backend interactions, see
+						 * https://github
+						 * .com/paypal/rest-api-sdk-python/tree/master
+						 * /samples/mobile_backend
+						 */
+						Toast.makeText(
+								getApplicationContext(),
+								"PaymentConfirmation info received from PayPal",
+								Toast.LENGTH_LONG).show();
 
-                    } catch (JSONException e) {
-                        Log.e(TAG, "an extremely unlikely failure occurred: ", e);
-                    }
-                }
-            } else if (resultCode == Activity.RESULT_CANCELED) {
-                Log.i(TAG, "The user canceled.");
-            } else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
-                Log.i(
-                        TAG,
-                        "An invalid Payment or PayPalConfiguration was submitted. Please see the docs.");
-            }
-        } else if (requestCode == REQUEST_CODE_FUTURE_PAYMENT) {
-            if (resultCode == Activity.RESULT_OK) {
-                PayPalAuthorization auth =
-                        data.getParcelableExtra(PayPalFuturePaymentActivity.EXTRA_RESULT_AUTHORIZATION);
-                if (auth != null) {
-                    try {
-                        Log.i("FuturePaymentExample", auth.toJSONObject().toString(4));
+					} catch (JSONException e) {
+						Log.e(TAG, "an extremely unlikely failure occurred: ",
+								e);
+					}
+				}
+			} else if (resultCode == Activity.RESULT_CANCELED) {
+				Log.i(TAG, "The user canceled.");
+			} else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
+				Log.i(TAG,
+						"An invalid Payment or PayPalConfiguration was submitted. Please see the docs.");
+			}
+		} else if (requestCode == REQUEST_CODE_FUTURE_PAYMENT) {
+			if (resultCode == Activity.RESULT_OK) {
+				PayPalAuthorization auth = data
+						.getParcelableExtra(PayPalFuturePaymentActivity.EXTRA_RESULT_AUTHORIZATION);
+				if (auth != null) {
+					try {
+						Log.i("FuturePaymentExample", auth.toJSONObject()
+								.toString(4));
 
-                        String authorization_code = auth.getAuthorizationCode();
-                        Log.i("FuturePaymentExample", authorization_code);
+						String authorization_code = auth.getAuthorizationCode();
+						Log.i("FuturePaymentExample", authorization_code);
 
-                        sendAuthorizationToServer(auth);
-                        Toast.makeText(
-                                getApplicationContext(),
-                                "Future Payment code received from PayPal", Toast.LENGTH_LONG)
-                                .show();
+						sendAuthorizationToServer(auth);
+						Toast.makeText(getApplicationContext(),
+								"Future Payment code received from PayPal",
+								Toast.LENGTH_LONG).show();
 
-                    } catch (JSONException e) {
-                        Log.e("FuturePaymentExample", "an extremely unlikely failure occurred: ", e);
-                    }
-                }
-            } else if (resultCode == Activity.RESULT_CANCELED) {
-                Log.i("FuturePaymentExample", "The user canceled.");
-            } else if (resultCode == PayPalFuturePaymentActivity.RESULT_EXTRAS_INVALID) {
-                Log.i(
-                        "FuturePaymentExample",
-                        "Probably the attempt to previously start the PayPalService had an invalid PayPalConfiguration. Please see the docs.");
-            } 
-        } else if (requestCode == REQUEST_CODE_PROFILE_SHARING) {
-            if (resultCode == Activity.RESULT_OK) {
-                PayPalAuthorization auth =
-                        data.getParcelableExtra(PayPalProfileSharingActivity.EXTRA_RESULT_AUTHORIZATION);
-                if (auth != null) {
-                    try {
-                        Log.i("ProfileSharingExample", auth.toJSONObject().toString(4));
+					} catch (JSONException e) {
+						Log.e("FuturePaymentExample",
+								"an extremely unlikely failure occurred: ", e);
+					}
+				}
+			} else if (resultCode == Activity.RESULT_CANCELED) {
+				Log.i("FuturePaymentExample", "The user canceled.");
+			} else if (resultCode == PayPalFuturePaymentActivity.RESULT_EXTRAS_INVALID) {
+				Log.i("FuturePaymentExample",
+						"Probably the attempt to previously start the PayPalService had an invalid PayPalConfiguration. Please see the docs.");
+			}
+		} else if (requestCode == REQUEST_CODE_PROFILE_SHARING) {
+			if (resultCode == Activity.RESULT_OK) {
+				PayPalAuthorization auth = data
+						.getParcelableExtra(PayPalProfileSharingActivity.EXTRA_RESULT_AUTHORIZATION);
+				if (auth != null) {
+					try {
+						Log.i("ProfileSharingExample", auth.toJSONObject()
+								.toString(4));
 
-                        String authorization_code = auth.getAuthorizationCode();
-                        Log.i("ProfileSharingExample", authorization_code);
+						String authorization_code = auth.getAuthorizationCode();
+						Log.i("ProfileSharingExample", authorization_code);
 
-                        sendAuthorizationToServer(auth);
-                        Toast.makeText(
-                                getApplicationContext(),
-                                "Profile Sharing code received from PayPal", Toast.LENGTH_LONG)
-                                .show();
+						sendAuthorizationToServer(auth);
+						Toast.makeText(getApplicationContext(),
+								"Profile Sharing code received from PayPal",
+								Toast.LENGTH_LONG).show();
 
-                    } catch (JSONException e) {
-                        Log.e("ProfileSharingExample", "an extremely unlikely failure occurred: ", e);
-                    }
-                }
-            } else if (resultCode == Activity.RESULT_CANCELED) {
-                Log.i("ProfileSharingExample", "The user canceled.");
-            } else if (resultCode == PayPalFuturePaymentActivity.RESULT_EXTRAS_INVALID) {
-                Log.i(
-                        "ProfileSharingExample",
-                        "Probably the attempt to previously start the PayPalService had an invalid PayPalConfiguration. Please see the docs.");
-            }
-        }
-    }
+					} catch (JSONException e) {
+						Log.e("ProfileSharingExample",
+								"an extremely unlikely failure occurred: ", e);
+					}
+				}
+			} else if (resultCode == Activity.RESULT_CANCELED) {
+				Log.i("ProfileSharingExample", "The user canceled.");
+			} else if (resultCode == PayPalFuturePaymentActivity.RESULT_EXTRAS_INVALID) {
+				Log.i("ProfileSharingExample",
+						"Probably the attempt to previously start the PayPalService had an invalid PayPalConfiguration. Please see the docs.");
+			}
+		}
+	}
+
 	private void sendAuthorizationToServer(PayPalAuthorization authorization) {
 
-        /**
-         * TODO: Send the authorization response to your server, where it can
-         * exchange the authorization code for OAuth access and refresh tokens.
-         * 
-         * Your server must then store these tokens, so that your server code
-         * can execute payments for this user in the future.
-         * 
-         * A more complete example that includes the required app-server to
-         * PayPal-server integration is available from
-         * https://github.com/paypal/rest-api-sdk-python/tree/master/samples/mobile_backend
-         */
-		Log.i("Authorzation:",authorization.toJSONObject().toString());
-    }
+		/**
+		 * TODO: Send the authorization response to your server, where it can
+		 * exchange the authorization code for OAuth access and refresh tokens.
+		 * 
+		 * Your server must then store these tokens, so that your server code
+		 * can execute payments for this user in the future.
+		 * 
+		 * A more complete example that includes the required app-server to
+		 * PayPal-server integration is available from
+		 * https://github.com/paypal/
+		 * rest-api-sdk-python/tree/master/samples/mobile_backend
+		 */
+		Log.i("Authorzation:", authorization.toJSONObject().toString());
+	}
 
 	// end Paypal functions
 }

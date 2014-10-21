@@ -76,7 +76,7 @@
     <string name="exit_label">Close</string>
     <string name="msg_empty_items_cart">Your shopping cart is empty.</string>
     <string name="txt_btn_retry">RETRY</string>
-    <string name="not_found_data_message">NOT FOUND DATA :(</string>
+    <string name="not_found_data_message">Not found data :(</string>
     <!-- menu drawer -->
     <string name="menu_drawer_home">Home</string>
     <string name="menu_drawer_product">Product</string>

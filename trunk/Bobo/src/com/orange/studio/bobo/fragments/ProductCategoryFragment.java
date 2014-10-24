@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -103,11 +104,14 @@ public class ProductCategoryFragment extends BaseFragment implements OnItemClick
 
 		@Override
 		protected List<ProductDTO> doInBackground(Void... arg0) {
+			String url="";
 			try {
-				String url=UrlRequest.PRODUCT_HOME+"?ws_key="+OrangeConfig.App_Key+"&display="+OrangeConfig.DISPLAY_FIELDS+"&limit="+OrangeConfig.ITEMS_PAGE+"&filter[id_category_default]="+mHomeActivity.mCurCategory.id;
+				url=UrlRequest.PRODUCT_HOME+"?ws_key="+OrangeConfig.App_Key+"&display="+OrangeConfig.DISPLAY_FIELDS+"&limit="+OrangeConfig.ITEMS_PAGE+"&filter[id_category_default]="+mHomeActivity.mCurCategory.id;
+//				Log.e("URL:", url);
 				return ProductModel.getInstance().getListProduct(
 						url, null, null);
 			} catch (Exception e) {
+//				Log.e("URL Exception:", url);
 				return null;
 			}
 		}

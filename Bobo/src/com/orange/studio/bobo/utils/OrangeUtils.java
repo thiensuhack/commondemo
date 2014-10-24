@@ -3,6 +3,7 @@ package com.orange.studio.bobo.utils;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,6 +28,30 @@ public class OrangeUtils {
 		} catch (Exception e) {
 			return 0;
 		}
+	}
+	public static String createCartData(List<ProductDTO> mListProducts){
+		String result="";
+		try {
+			result+="<?xml version=\"1.0\" encoding=\"UTF-8\"?><prestashop xmlns:xlink=\"http://www.w3.org/1999/xlink\">";
+			result+="<cart><id_currency>1</id_currency>";
+			result+="<id_customer></id_customer>";
+			result+="<id_guest></id_guest>";
+			result+="<id_lang>"+OrangeConfig.LANGUAGE_DEFAULT+"</id_lang>";
+			result+="<id_shop_group>"+""+"</id_shop_group>";
+			result+="<id_shop>"+""+"</id_shop>";
+			result+="<associations><cart_rows>";
+			for (ProductDTO item : mListProducts) {
+				result+="<cart_rows>";
+				result+="<id_product>"+item.stock.id+"</id_product>";
+				result+="<id_product_attribute>"+item.stock.id_product_attribute+"</id_product_attribute>";
+				result+="<id_address_delivery>0</id_address_delivery></cart_rows>";
+			}			
+			result+="</cart_rows></associations>";
+			result+="</cart></prestashop>";
+		} catch (Exception e) {
+			
+		}		
+		return result;
 	}
 	public static String createCartData(ProductDTO product){
 		String result="";

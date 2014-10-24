@@ -78,8 +78,8 @@ public class SpinToWinFragment extends BaseFragment implements OnClickListener {
 	}
 
 	private void spinToWind() {
-		final int[] imageArray = { R.drawable.ic_spin_to_win,
-				R.drawable.ic_spin_to_win, R.drawable.ic_bobo_app };
+		final int[] imageArray = { R.drawable.miss01,
+				R.drawable.miss02, R.drawable.miss03 };
 		final Random rand=new Random();
 		handler = new Handler();
 		runnable = new Runnable() {

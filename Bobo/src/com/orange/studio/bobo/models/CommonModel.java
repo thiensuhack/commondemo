@@ -55,6 +55,7 @@ public class CommonModel implements CommonIF{
 	private static final Lock createLock = new ReentrantLock();
 	private static final int STORE_EXPIRE = 1*60; //3 minutes
 	private static final int STORE_EXPIRE_FIVE = 5*60; //3 minutes
+	private static final int STORE_EXPIRE_A_DAY = 24*60*60; //3 minutes
 		
 	public CommonModel() {
 	}
@@ -500,7 +501,7 @@ public class CommonModel implements CommonIF{
 					Gson gs=new Gson();
 					String data=gs.toJson(myXMLHandler.mListCountry);
 					if(data!=null){
-						setStore(key, data,STORE_EXPIRE_FIVE);
+						setStore(key, data,STORE_EXPIRE_A_DAY);
 					}
 				}
 				return myXMLHandler.mListCountry;

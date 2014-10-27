@@ -5,7 +5,9 @@ import java.util.List;
 import android.os.Bundle;
 
 import com.orange.studio.bobo.objects.AboutUsDTO;
+import com.orange.studio.bobo.objects.AddressDTO;
 import com.orange.studio.bobo.objects.ContactUsDTO;
+import com.orange.studio.bobo.objects.CountryDTO;
 import com.orange.studio.bobo.objects.CustomerDTO;
 import com.orange.studio.bobo.objects.ItemCartDTO;
 import com.orange.studio.bobo.objects.MenuItemDTO;
@@ -27,4 +29,6 @@ public interface CommonIF {
 	public String getColorStockAvailable(String url);
 	public AboutUsDTO getAboutUs(String url);
 	public String sendContactUs(String url,ContactUsDTO contact);
+	public List<CountryDTO> getListCountry(String url);
+	public List<AddressDTO> getListAddress(String url);
 }

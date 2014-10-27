@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -20,7 +21,7 @@ import com.orange.studio.bobo.configs.OrangeConfig.UrlRequest;
 import com.orange.studio.bobo.models.CommonModel;
 import com.orange.studio.bobo.objects.CountryDTO;
 
-public class CreateAddressShoppingCartFragment extends BaseFragment implements OnItemClickListener{
+public class CreateAddressShoppingCartFragment extends BaseFragment implements OnItemSelectedListener{
 	private EditText mAddress=null;
 	private Spinner mListCountry=null;
 	private CountriesAdapter mAdapter=null;
@@ -48,7 +49,7 @@ public class CreateAddressShoppingCartFragment extends BaseFragment implements O
 		initNotFoundView();
 	}
 	private void initListener(){
-		mListCountry.setOnItemClickListener(this);
+		mListCountry.setOnItemSelectedListener(this);
 	}
 	private void loadCountries(){
 		if(mGetListContryTask==null || mGetListContryTask.getStatus()==Status.FINISHED){
@@ -62,8 +63,8 @@ public class CreateAddressShoppingCartFragment extends BaseFragment implements O
 		loadCountries();
 	}
 	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		
+	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
+			long arg3) {		
 	}
 	class GetListContryTask extends AsyncTask<Void, Void, List<CountryDTO>>{
 		@Override
@@ -85,6 +86,10 @@ public class CreateAddressShoppingCartFragment extends BaseFragment implements O
 				switchView(false, false);
 			}
 		}
+		
+	}
+	@Override
+	public void onNothingSelected(AdapterView<?> arg0) {
 		
 	}
 }

@@ -63,8 +63,13 @@ public class CreateAddressShoppingCartFragment extends BaseFragment implements O
 		loadCountries();
 	}
 	@Override
-	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
+	public void onItemSelected(AdapterView<?> arg0, View arg1, int position,
 			long arg3) {		
+		try {
+			CountryDTO country=mAdapter.getItem(position);
+			mHomeActivity.showToast("Country:"+country.name+"-ID:"+country.id);
+		} catch (Exception e) {
+		}
 	}
 	class GetListContryTask extends AsyncTask<Void, Void, List<CountryDTO>>{
 		@Override

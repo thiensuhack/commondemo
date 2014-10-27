@@ -18,6 +18,14 @@
     <string name="search_text">Search</string>
     <string name="search_text_hint">Bobo search...</string>
     <string name="waitting_message">Please wait...</string>
+    
+    <!-- Address -->
+    <string name="address_address_label">Address:</string>
+    <string name="address_address_hint">Your address</string>
+    <string name="address_contry_label">Country:</string>
+    <string name="address_contry_hint">Your country</string>
+    <string name="address_btn_create">Create</string>
+    
     <!-- Add Cart Items -->
     <string name="add_cart_failed">Add Cart item error.</string>
     
@@ -90,6 +98,8 @@
     <string name="menu_drawer_event_spin_to_win">Event-Spin To Win</string>
     <string name="menu_drawer_about_us">About Us</string>
     <string name="menu_drawer_contact_us">Contact Us</string>
+    
+    <string name="shopping_cart_create_address">Create address</string>
 
     <!-- Fragment Home Menu -->
     <string name="fragment_home_menu_all">ALL</string>

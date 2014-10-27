@@ -25,6 +25,8 @@ public final class OrangeConfig {
 		public static final int PRODUCT_CATEGORY_FRAGMENT = -15;
 		public static final int LOGIN_FRAGMENT = -16;
 		public static final int SPIN_TO_WIN_FRAGMENT = -17;
+		public static final int CREATE_ADDRESS = -18;
+		public static final int SELECT_ADDRESS = -19;
 	}
 
 	public static class CartItemsRule {

@@ -38,7 +38,9 @@ import com.orange.studio.bobo.objects.RequestDTO;
 import com.orange.studio.bobo.objects.StockDTO;
 import com.orange.studio.bobo.utils.OrangeUtils;
 import com.orange.studio.bobo.xml.XMLHandlerAboutUs;
+import com.orange.studio.bobo.xml.XMLHandlerAddress;
 import com.orange.studio.bobo.xml.XMLHandlerCategory;
+import com.orange.studio.bobo.xml.XMLHandlerCountry;
 import com.orange.studio.bobo.xml.XMLHandlerCustomer;
 import com.orange.studio.bobo.xml.XMLHandlerItemCart;
 import com.orange.studio.bobo.xml.XMLHandlerProductFeatureValues;
@@ -440,6 +442,21 @@ public class CommonModel implements CommonIF{
 	@Override
 	public List<AddressDTO> getListAddress(String url) 
 	{
+		try {			
+			SAXParserFactory saxPF = SAXParserFactory.newInstance();
+			SAXParser saxP = saxPF.newSAXParser();
+			XMLReader xmlR = saxP.getXMLReader();						
+			XMLHandlerAddress myXMLHandler = new XMLHandlerAddress(OrangeConfig.LANGUAGE_DEFAULT);
+			xmlR.setContentHandler(myXMLHandler);			
+			String result=OrangeHttpRequest.getInstance().getStringFromServer(url, null);
+			if(result!=null && result.trim().length()>0){
+				InputSource is = new InputSource(new StringReader(result));
+				xmlR.parse(is);
+				return myXMLHandler.mListAddress;
+			}			
+			return null;
+		} catch (Exception e) {
+		}
 		return null;
 	}
 	@SuppressWarnings("unchecked")
@@ -460,14 +477,36 @@ public class CommonModel implements CommonIF{
 	}
 	@Override
 	public List<CountryDTO> getListCountry(String url) {
-		List<CountryDTO> resultProductFeatureValues=null;
-		String key=String.valueOf(url.hashCode());
-		String json=getStoreAdapter().get(key);
-					if(json!=null){			
-			resultProductFeatureValues=deserializeListCountry(json);
-		}
-		if(resultProductFeatureValues!=null && resultProductFeatureValues.size()>0){			
-			return resultProductFeatureValues;
+		try {
+			List<CountryDTO> resultProductFeatureValues=null;
+			String key=String.valueOf(url.hashCode());
+			String json=getStoreAdapter().get(key);
+						if(json!=null){			
+				resultProductFeatureValues=deserializeListCountry(json);
+			}
+			if(resultProductFeatureValues!=null && resultProductFeatureValues.size()>0){			
+				return resultProductFeatureValues;
+			}
+			SAXParserFactory saxPF = SAXParserFactory.newInstance();
+			SAXParser saxP = saxPF.newSAXParser();
+			XMLReader xmlR = saxP.getXMLReader();						
+			XMLHandlerCountry myXMLHandler = new XMLHandlerCountry(OrangeConfig.LANGUAGE_DEFAULT);
+			xmlR.setContentHandler(myXMLHandler);			
+			String result=OrangeHttpRequest.getInstance().getStringFromServer(url, null);
+			if(result!=null && result.trim().length()>0){
+				InputSource is = new InputSource(new StringReader(result));
+				xmlR.parse(is);
+				if(myXMLHandler.mListCountry!=null && myXMLHandler.mListCountry.size()>0){
+					Gson gs=new Gson();
+					String data=gs.toJson(myXMLHandler.mListCountry);
+					if(data!=null){
+						setStore(key, data,STORE_EXPIRE_FIVE);
+					}
+				}
+				return myXMLHandler.mListCountry;
+			}			
+			return null;
+		} catch (Exception e) {
 		}
 		return null;
 	}

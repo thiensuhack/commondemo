@@ -25,7 +25,9 @@ import com.orange.studio.bobo.configs.OrangeConfig.UrlRequest;
 import com.orange.studio.bobo.http.OrangeHttpRequest;
 import com.orange.studio.bobo.interfaces.CommonIF;
 import com.orange.studio.bobo.objects.AboutUsDTO;
+import com.orange.studio.bobo.objects.AddressDTO;
 import com.orange.studio.bobo.objects.ContactUsDTO;
+import com.orange.studio.bobo.objects.CountryDTO;
 import com.orange.studio.bobo.objects.CustomerDTO;
 import com.orange.studio.bobo.objects.ItemCartDTO;
 import com.orange.studio.bobo.objects.MenuItemDTO;
@@ -432,6 +434,40 @@ public class CommonModel implements CommonIF{
 			}
 			
 		} catch (Exception e) {
+		}
+		return null;
+	}
+	@Override
+	public List<AddressDTO> getListAddress(String url) 
+	{
+		return null;
+	}
+	@SuppressWarnings("unchecked")
+	private List<CountryDTO> deserializeListCountry(String json) {
+		List<CountryDTO> result = null;
+		if (json == null || json.equals(""))
+			return result;
+		try {
+			result = new ArrayList<CountryDTO>();
+			Gson gson = new Gson();
+			Type listType = new TypeToken<List<CountryDTO>>() {
+			}.getType();
+			result = (List<CountryDTO>) gson.fromJson(json, listType);
+		} catch (Exception e) {
+			return null;
+		}
+		return result;
+	}
+	@Override
+	public List<CountryDTO> getListCountry(String url) {
+		List<CountryDTO> resultProductFeatureValues=null;
+		String key=String.valueOf(url.hashCode());
+		String json=getStoreAdapter().get(key);
+					if(json!=null){			
+			resultProductFeatureValues=deserializeListCountry(json);
+		}
+		if(resultProductFeatureValues!=null && resultProductFeatureValues.size()>0){			
+			return resultProductFeatureValues;
 		}
 		return null;
 	}

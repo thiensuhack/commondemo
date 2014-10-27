@@ -37,6 +37,7 @@ import com.orange.studio.bobo.dialogs.ExitDialog;
 import com.orange.studio.bobo.fragments.AboutFragment;
 import com.orange.studio.bobo.fragments.BestSellerProductFragment;
 import com.orange.studio.bobo.fragments.ContactUsFragment;
+import com.orange.studio.bobo.fragments.CreateAddressShoppingCartFragment;
 import com.orange.studio.bobo.fragments.HomeFragment;
 import com.orange.studio.bobo.fragments.LoginFragment;
 import com.orange.studio.bobo.fragments.NavigationDrawerFragment;
@@ -248,6 +249,10 @@ public class HomeActivity extends ActionBarActivity implements
 			setAppTitle(mCurCategory.name);
 			return;
 		}
+		if (mFragmentName.equals(CreateAddressShoppingCartFragment.class.getName())) {
+			setAppTitle(getString(R.string.shopping_cart_create_address));
+			return;
+		}
 		setAppTitle(getString(R.string.app_name));
 		return;
 	}
@@ -356,7 +361,13 @@ public class HomeActivity extends ActionBarActivity implements
 			mFragment = SpinToWinFragment.instantiate(getApplicationContext(),
 					SpinToWinFragment.class.getName());
 			break;
+		case MENU_NAME.CREATE_ADDRESS:
+			mFragment = CreateAddressShoppingCartFragment.instantiate(getApplicationContext(),
+					CreateAddressShoppingCartFragment.class.getName());
+			break;
 		default:
+			mFragment = HomeFragment.instantiate(getApplicationContext(),
+					HomeFragment.class.getName());
 			break;
 		}
 		mCurFragment = mFragment;
@@ -415,7 +426,8 @@ public class HomeActivity extends ActionBarActivity implements
 			onNavigationDrawerItemSelected(9);
 			break;
 		case R.id.homeShoppingCartBtn:
-			onNavigationDrawerItemSelected(-12);
+			//onNavigationDrawerItemSelected(-12);
+			onNavigationDrawerItemSelected(MENU_NAME.CREATE_ADDRESS);
 			break;
 		default:
 			break;

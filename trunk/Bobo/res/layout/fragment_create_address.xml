@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    android:orientation="vertical"
+    android:padding="7dp" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/item_corner_background"
+        android:orientation="vertical"
+        android:padding="5dp" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp" >
+
+            <TextView
+                style="@style/RegisterTextStyle"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/address_address_label" />
+
+            <EditText
+                android:id="@+id/myAddress"
+                style="@style/RegisterEdittextStyle"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:hint="@string/address_address_hint"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:minLines="1"
+                android:paddingLeft="5dp"
+                android:paddingRight="3dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp" >
+
+            <TextView
+                style="@style/RegisterTextStyle"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/address_contry_label" />
+
+            <Spinner
+                android:id="@+id/listCountry"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:paddingLeft="5dp"
+                android:paddingRight="3dp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/createBtn"
+            style="@style/RegisterButtonStyle"
+            android:layout_width="110dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_pink"
+            android:text="@string/address_btn_create" />
+    </LinearLayout>
+
+    <include
+        android:id="@+id/notFoundContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/layout_not_found_data"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/loadingContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/layout_loading"
+        android:visibility="gone" />
+
+</RelativeLayout>

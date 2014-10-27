@@ -75,7 +75,7 @@
             android:background="@drawable/btn_add_cart_grid"
             android:focusable="false"
             android:focusableInTouchMode="false"
-            android:text="@string/btn_add_to_cart_label"
+            android:text="@string/btn_detail_label"
             android:textColor="@color/white"
             android:textSize="11sp" />
     </LinearLayout>

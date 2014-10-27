@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.activities.HomeActivity;
+import com.orange.studio.bobo.configs.OrangeConfig.MENU_NAME;
 import com.orange.studio.bobo.objects.ProductDTO;
 
 public class GridProductAdapter extends OrangeBaseAdapter {
@@ -115,7 +116,9 @@ public class GridProductAdapter extends OrangeBaseAdapter {
 			@Override
 			public void onClick(View arg0) {
 				try {
-					((HomeActivity)mActivity).addCartFromAdapter(mData);
+//					((HomeActivity)mActivity).addCartFromAdapter(mData);
+					((HomeActivity)mActivity).setCurrentProduct(mData);
+					((HomeActivity)mActivity).onNavigationDrawerItemSelected(MENU_NAME.PRODUCT_DETAIL_FRAGMENT);
 				} catch (Exception e) {
 				}
 			}

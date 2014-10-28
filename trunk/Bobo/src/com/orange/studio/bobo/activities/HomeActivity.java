@@ -590,12 +590,15 @@ public class HomeActivity extends ActionBarActivity implements
 			try {
 				String data = "";
 				if(mCurItemCart==null || mCurItemCart.id==null || mCurItemCart.id.length()<1){
-					data=OrangeUtils.createCartData(mProductDTO);
+					data=OrangeUtils.createCartData(mListItemCart,mUserInfo,null);
+					return CommonModel.getInstance().addToCart(
+							UrlRequest.ADD_CART_URL, data);
 				}else{
-					
+					data=OrangeUtils.createCartData(mListItemCart,mUserInfo,mCurItemCart.id);
+					return CommonModel.getInstance().updateToCart(
+							UrlRequest.ADD_CART_URL, data);
 				}
-				return CommonModel.getInstance().addToCart(
-						UrlRequest.ADD_CART_URL, data);
+				
 			} catch (Exception e) {
 			}
 			return null;

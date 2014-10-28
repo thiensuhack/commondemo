@@ -35,6 +35,7 @@
     <string name="address_city_hint">Your city</string>
     <string name="address_btn_create">Create</string>
     <string name="address_btn_confirm">Confirm</string>
+    <string name="address_btn_create_address">Create address</string>
     <string name="address_create_success">Address created</string>
     <string name="address_create_failed">Create address failed</string>
     

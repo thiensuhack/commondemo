@@ -19,7 +19,7 @@ public class XMLHandlerItemCart extends DefaultHandler {
 	
 	private String elementValue = null;
 	private boolean elementOn = false;
-
+	private boolean isCartRowDelivery=false;
 	
 	private String mCurrentLanguage="1";
 	public XMLHandlerItemCart(String language) {
@@ -38,6 +38,7 @@ public class XMLHandlerItemCart extends DefaultHandler {
 		}
 		if (localName.equals("cart_row")) {
 			mCartRowDTO=new CartRowDTO();
+			isCartRowDelivery=true;
 			return;
 		}
 	}
@@ -59,10 +60,10 @@ public class XMLHandlerItemCart extends DefaultHandler {
 			data.id_guest = elementValue;
 			return;
 		}
-		if (localName.equalsIgnoreCase("id_product")) {
-			data.id_product = elementValue;
-			return;
-		}		
+//		if (localName.equalsIgnoreCase("id_product")) {
+//			data.id_product = elementValue;
+//			return;
+//		}		
 		if (localName.equalsIgnoreCase("date_add")) {
 			data.date_add = elementValue;
 			return;
@@ -96,7 +97,11 @@ public class XMLHandlerItemCart extends DefaultHandler {
 			return;
 		}
 		if (localName.equalsIgnoreCase("id_address_delivery")) {
-			mCartRowDTO.id_address_delivery = elementValue;
+			if(isCartRowDelivery){
+				mCartRowDTO.id_address_delivery = elementValue;
+			}else{
+				data.id_address_delivery=elementValue;
+			}
 			return;
 		}
 		if (localName.equalsIgnoreCase("quantity")) {
@@ -104,6 +109,7 @@ public class XMLHandlerItemCart extends DefaultHandler {
 			return;
 		}
 		if (localName.equalsIgnoreCase("cart_row")&& mCartRowDTO!=null && mCartRowDTO.id_product!=null && mCartRowDTO.id_product.trim().length()>0) {
+			isCartRowDelivery=false;
 			data.mListCartRow.add(mCartRowDTO);
 			return;
 		}

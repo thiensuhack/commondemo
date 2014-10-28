@@ -50,12 +50,10 @@ import com.orange.studio.bobo.fragments.SelectAddressShoppingCartFragment;
 import com.orange.studio.bobo.fragments.ShoppingCartFragment;
 import com.orange.studio.bobo.fragments.SpinToWinFragment;
 import com.orange.studio.bobo.models.CommonModel;
-import com.orange.studio.bobo.models.ProductModel;
 import com.orange.studio.bobo.objects.CustomerDTO;
 import com.orange.studio.bobo.objects.ItemCartDTO;
 import com.orange.studio.bobo.objects.MenuItemDTO;
 import com.orange.studio.bobo.objects.ProductDTO;
-import com.orange.studio.bobo.objects.RequestDTO;
 import com.orange.studio.bobo.utils.OrangeUtils;
 import com.paypal.android.sdk.payments.PayPalAuthorization;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
@@ -82,8 +80,6 @@ public class HomeActivity extends ActionBarActivity implements
 
 	private ProductDTO mCurrentProduct = null;
 
-	public List<ProductDTO> mListItemCart = null;
-
 	public String mSearchKey = null;
 	public MenuItemDTO mCurCategory = new MenuItemDTO();
 
@@ -97,11 +93,11 @@ public class HomeActivity extends ActionBarActivity implements
 
 	private ProgressDialog mProgressDialog = null;
 	private AddCartTask mAddCartTask = null;
-	private LoadProductDetailAddCartTask mLoadProductDetailAddCartTask=null;
+//	private LoadProductDetailAddCartTask mLoadProductDetailAddCartTask=null;
 	
 	private CustomerDTO mUserInfo = null;
 	private ItemCartDTO mCurItemCart=null;
-	
+	public List<ProductDTO> mListItemCart = null;
 	
 	public enum HOME_TABS {
 		ALL, BEST_SELLER, POPULAR
@@ -207,17 +203,18 @@ public class HomeActivity extends ActionBarActivity implements
 	}
 
 	public void addCart(ProductDTO product) {
+		addToCart(product);
 		if (mAddCartTask == null || mAddCartTask.getStatus() == Status.FINISHED) {
 			mAddCartTask = new AddCartTask(product);
 			mAddCartTask.execute();
 		}
 	}
-	public void addCartFromAdapter(ProductDTO product){
-		if(mLoadProductDetailAddCartTask==null || mLoadProductDetailAddCartTask.getStatus()==Status.FINISHED){
-			mLoadProductDetailAddCartTask=new LoadProductDetailAddCartTask(product);
-			mLoadProductDetailAddCartTask.execute();
-		}
-	}
+//	public void addCartFromAdapter(ProductDTO product){
+//		if(mLoadProductDetailAddCartTask==null || mLoadProductDetailAddCartTask.getStatus()==Status.FINISHED){
+//			mLoadProductDetailAddCartTask=new LoadProductDetailAddCartTask(product);
+//			mLoadProductDetailAddCartTask.execute();
+//		}
+//	}
 	private void updateTitleAndDrawer(Fragment fragment) {
 		String mFragmentName = fragment.getClass().getName();
 		if (mFragmentName.equals(HomeFragment.class.getName())) {
@@ -522,9 +519,12 @@ public class HomeActivity extends ActionBarActivity implements
 			return;
 		}
 		for (int i = 0; i < mListItemCart.size(); i++) {
-			if (mListItemCart.get(i).id.equals(proId)
-					&& mListItemCart.get(i).cartCounter > 0) {
-				mListItemCart.get(i).cartCounter--;
+			if (mListItemCart.get(i).id.equals(proId)) {
+				if(mListItemCart.get(i).cartCounter>0){
+					mListItemCart.get(i).cartCounter--;
+				}else{
+					mListItemCart.remove(i);
+				}
 				break;
 			}
 		}
@@ -565,19 +565,6 @@ public class HomeActivity extends ActionBarActivity implements
 		}
 	}
 
-	public void hideSoftKeyBoard() {
-		// try {
-		// InputMethodManager inputManager =
-		// (InputMethodManager)this.getSystemService(Service.INPUT_METHOD_SERVICE);
-		// View view = this.getCurrentFocus();
-		// if (view != null) {
-		// inputManager.hideSoftInputFromWindow(view.getWindowToken(),
-		// InputMethodManager.HIDE_NOT_ALWAYS);
-		// }
-		// } catch (Exception e) {
-		// }
-	}
-
 	public void showToast(String message) {
 		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG)
 				.show();
@@ -601,7 +588,12 @@ public class HomeActivity extends ActionBarActivity implements
 		@Override
 		protected ItemCartDTO doInBackground(Void... params) {
 			try {
-				String data = OrangeUtils.createCartData(mProductDTO);
+				String data = "";
+				if(mCurItemCart==null || mCurItemCart.id==null || mCurItemCart.id.length()<1){
+					data=OrangeUtils.createCartData(mProductDTO);
+				}else{
+					
+				}
 				return CommonModel.getInstance().addToCart(
 						UrlRequest.ADD_CART_URL, data);
 			} catch (Exception e) {
@@ -615,8 +607,9 @@ public class HomeActivity extends ActionBarActivity implements
 			try {
 				if (result != null && result.id.trim().length() > 0) {
 					mCurItemCart=result;
-					addToCart(mProductDTO);
-				} else {
+					//addToCart(mProductDTO);
+				} else {					
+					decreaseCartItem(mProductDTO.id);
 					showToast(getString(R.string.add_cart_failed));
 				}
 			} catch (Exception e) {
@@ -652,41 +645,41 @@ public class HomeActivity extends ActionBarActivity implements
 		this.mUserInfo = mUserInfo;
 	}
 
-	private class LoadProductDetailAddCartTask extends
-			AsyncTask<Void, Void, ProductDTO> {
-		private ProductDTO mProduct=null;
-		public LoadProductDetailAddCartTask(ProductDTO pro){
-			mProduct=pro;
-		}
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-			if(!mProgressDialog.isShowing()){
-				mProgressDialog.show();
-			}
-		}
-
-		@Override
-		protected ProductDTO doInBackground(Void... arg0) {
-			Bundle mParams = OrangeUtils.createRequestBundle2(null, null);
-			RequestDTO request = new RequestDTO();
-			request.proId = mProduct.id;
-			return ProductModel.getInstance().getProductDetail(
-					UrlRequest.PRODUCT_DETAIL, request, mParams);
-		}
-
-		@Override
-		protected void onPostExecute(ProductDTO result) {
-			super.onPostExecute(result);
-			if (result != null && result.id.trim().length()>0) {
-				addCart(result);
-			}else{
-				if(mProgressDialog.isShowing()){
-					mProgressDialog.dismiss();
-				}
-			}
-		}
-	}
+//	private class LoadProductDetailAddCartTask extends
+//			AsyncTask<Void, Void, ProductDTO> {
+//		private ProductDTO mProduct=null;
+//		public LoadProductDetailAddCartTask(ProductDTO pro){
+//			mProduct=pro;
+//		}
+//		@Override
+//		protected void onPreExecute() {
+//			super.onPreExecute();
+//			if(!mProgressDialog.isShowing()){
+//				mProgressDialog.show();
+//			}
+//		}
+//
+//		@Override
+//		protected ProductDTO doInBackground(Void... arg0) {
+//			Bundle mParams = OrangeUtils.createRequestBundle2(null, null);
+//			RequestDTO request = new RequestDTO();
+//			request.proId = mProduct.id;
+//			return ProductModel.getInstance().getProductDetail(
+//					UrlRequest.PRODUCT_DETAIL, request, mParams);
+//		}
+//
+//		@Override
+//		protected void onPostExecute(ProductDTO result) {
+//			super.onPostExecute(result);
+//			if (result != null && result.id.trim().length()>0) {
+//				addCart(result);
+//			}else{
+//				if(mProgressDialog.isShowing()){
+//					mProgressDialog.dismiss();
+//				}
+//			}
+//		}
+//	}
 
 	// Paypal functions
 	public void onPaypalPayment() {

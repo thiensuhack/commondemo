@@ -3,6 +3,7 @@ package com.orange.studio.bobo.utils;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,6 +18,7 @@ import android.util.DisplayMetrics;
 import com.orange.studio.bobo.OrangeApplicationContext;
 import com.orange.studio.bobo.configs.OrangeConfig;
 import com.orange.studio.bobo.configs.OrangeConfig.REQUEST_PARAMS_NAME;
+import com.orange.studio.bobo.objects.CustomerDTO;
 import com.orange.studio.bobo.objects.ProductDTO;
 import com.zuzu.db.store.SQLiteStore;
 import com.zuzu.db.store.SimpleStoreIF;
@@ -29,22 +31,31 @@ public class OrangeUtils {
 			return 0;
 		}
 	}
-	public static String createCartData(List<ProductDTO> mListProducts){
+	public static String createCartData(List<ProductDTO> mListProducts,CustomerDTO customer,String cartID){
 		String result="";
-		try {
+		try {						
 			result+="<?xml version=\"1.0\" encoding=\"UTF-8\"?><prestashop xmlns:xlink=\"http://www.w3.org/1999/xlink\">";
-			result+="<cart><id_currency>1</id_currency>";
-			result+="<id_customer></id_customer>";
+			result+="<cart>";
+			if(cartID!=null && cartID.trim().length()>0){
+				result+="<id>"+cartID+"</id>";
+			}
+			result+="<id_currency>1</id_currency>";
+			if(customer!=null){
+				result+="<id_customer>"+customer.id+"</id_customer>";	
+			}else{
+				result+="<id_customer></id_customer>";
+			}			
 			result+="<id_guest></id_guest>";
 			result+="<id_lang>"+OrangeConfig.LANGUAGE_DEFAULT+"</id_lang>";
 			result+="<id_shop_group>"+""+"</id_shop_group>";
 			result+="<id_shop>"+""+"</id_shop>";
 			result+="<associations><cart_rows>";
 			for (ProductDTO item : mListProducts) {
-				result+="<cart_rows>";
+				result+="<cart_row>";
 				result+="<id_product>"+item.stock.id+"</id_product>";
 				result+="<id_product_attribute>"+item.stock.id_product_attribute+"</id_product_attribute>";
-				result+="<id_address_delivery>0</id_address_delivery></cart_rows>";
+				result+="<id_address_delivery>0</id_address_delivery></cart_row>";
+				result+="<quantity>"+item.cartCounter+"</quantity>";
 			}			
 			result+="</cart_rows></associations>";
 			result+="</cart></prestashop>";

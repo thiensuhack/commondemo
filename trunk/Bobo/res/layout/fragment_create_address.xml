@@ -23,6 +23,60 @@
                 style="@style/RegisterTextStyle"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
+                android:text="@string/address_last_name_label" />
+
+            <EditText
+                android:id="@+id/lastName"
+                style="@style/RegisterEdittextStyle"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:hint="@string/address_last_name_hint"
+                android:inputType="text"
+                android:maxLines="1"
+                android:minLines="1"
+                android:paddingLeft="5dp"
+                android:paddingRight="3dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp" >
+
+            <TextView
+                style="@style/RegisterTextStyle"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/address_first_name_label" />
+
+            <EditText
+                android:id="@+id/firstName"
+                style="@style/RegisterEdittextStyle"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:hint="@string/address_firt_name_hint"
+                android:inputType="text"
+                android:maxLines="1"
+                android:minLines="1"
+                android:paddingLeft="5dp"
+                android:paddingRight="3dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp" >
+
+            <TextView
+                style="@style/RegisterTextStyle"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
                 android:text="@string/address_address_label" />
 
             <EditText
@@ -33,7 +87,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:hint="@string/address_address_hint"
-                android:inputType="textEmailAddress"
+                android:inputType="text"
                 android:maxLines="1"
                 android:minLines="1"
                 android:paddingLeft="5dp"
@@ -54,10 +108,38 @@
 
             <Spinner
                 android:id="@+id/listCountry"
+                style="@style/RegisterEdittextStyle"
                 android:layout_width="0dp"
                 android:layout_height="35dp"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
+                android:paddingLeft="5dp"
+                android:paddingRight="3dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp" >
+
+            <TextView
+                style="@style/RegisterTextStyle"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/address_city_label" />
+
+            <EditText
+                android:id="@+id/addressCity"
+                style="@style/RegisterEdittextStyle"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:hint="@string/address_city_hint"
+                android:inputType="text"
+                android:maxLines="1"
+                android:minLines="1"
                 android:paddingLeft="5dp"
                 android:paddingRight="3dp" />
         </LinearLayout>

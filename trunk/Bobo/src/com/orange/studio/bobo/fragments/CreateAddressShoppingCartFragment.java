@@ -20,11 +20,16 @@ import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.adapters.CountriesAdapter;
 import com.orange.studio.bobo.configs.OrangeConfig.UrlRequest;
 import com.orange.studio.bobo.models.CommonModel;
+import com.orange.studio.bobo.objects.AddressDTO;
 import com.orange.studio.bobo.objects.CountryDTO;
 import com.orange.studio.bobo.objects.CustomerDTO;
 
 public class CreateAddressShoppingCartFragment extends BaseFragment implements OnItemSelectedListener, OnClickListener{
 	private EditText mAddress=null;
+	private EditText mLastName=null;
+	private EditText mFirstName=null;
+	private EditText mCity=null;
+	
 	private Spinner mListCountry=null;
 	private Button mSubmitBtn=null;
 	
@@ -33,6 +38,10 @@ public class CreateAddressShoppingCartFragment extends BaseFragment implements O
 	private CreateAddressTask mCreateAddressTask=null;
 	
 	private String mStrAddress="";
+	private String mStrLastName="";
+	private String mStrFirstName="";
+	private String mStrCity="";
+	
 	private CountryDTO mCurrentCountry=null;
 	
 	@Override
@@ -51,6 +60,10 @@ public class CreateAddressShoppingCartFragment extends BaseFragment implements O
 	private void initView(){
 		mHomeActivity=getHomeActivity();
 		mAddress=(EditText)mView.findViewById(R.id.myAddress);
+		mLastName=(EditText)mView.findViewById(R.id.lastName);
+		mFirstName=(EditText)mView.findViewById(R.id.firstName);
+		mCity=(EditText)mView.findViewById(R.id.addressCity);
+		
 		mListCountry=(Spinner)mView.findViewById(R.id.listCountry);
 		mSubmitBtn=(Button)mView.findViewById(R.id.createBtn);
 		mAdapter=new CountriesAdapter(mHomeActivity);
@@ -84,10 +97,15 @@ public class CreateAddressShoppingCartFragment extends BaseFragment implements O
 		switch (v.getId()) {
 		case R.id.createBtn:
 			mStrAddress=mAddress.getText().toString().trim();
-			if(mStrAddress.length()<1){
-				mHomeActivity.showToast(getActivity().getString(R.string.empty_field));
+			mStrFirstName=mFirstName.getText().toString().trim();
+			mStrLastName=mLastName.getText().toString().trim();
+			mStrCity=mCity.getText().toString().trim();
+			
+			if(mStrAddress.length()<1 || mStrFirstName.length()<1 || mStrLastName.length()<1 || mStrCity.length()<1){
+				mHomeActivity.showToast(getActivity().getString(R.string.empty_field));				
 				return;
 			}
+			submitAddress();
 			break;
 
 		default:
@@ -99,7 +117,7 @@ public class CreateAddressShoppingCartFragment extends BaseFragment implements O
 			long arg3) {		
 		try {
 			mCurrentCountry =mAdapter.getItem(position);
-			mHomeActivity.showToast("Country:"+mCurrentCountry.name+"-ID:"+mCurrentCountry.id);
+			//mHomeActivity.showToast("Country:"+mCurrentCountry.name+"-ID:"+mCurrentCountry.id);
 		} catch (Exception e) {
 		}
 	}
@@ -130,18 +148,34 @@ public class CreateAddressShoppingCartFragment extends BaseFragment implements O
 		}
 		
 	}
-	class CreateAddressTask extends AsyncTask<Void, Void, Void>{
+	class CreateAddressTask extends AsyncTask<Void, Void, AddressDTO>{
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
 		}
 		@Override
-		protected Void doInBackground(Void... params) {
-			return null;
+		protected AddressDTO doInBackground(Void... params) {
+			String data=createStringAddress();
+			return CommonModel.getInstance().createListAddress(UrlRequest.CREATE_ADDRESS, data);
 		}
 		@Override
-		protected void onPostExecute(Void result) {
+		protected void onPostExecute(AddressDTO result) {
 			super.onPostExecute(result);
+			if(result!=null){
+				resetView();
+				mHomeActivity.showToast(mHomeActivity.getString(R.string.address_create_success));
+			}else{
+				mHomeActivity.showToast(mHomeActivity.getString(R.string.address_create_failed));
+			}
+		}
+	}
+	private void resetView(){
+		try {
+			mAddress.setText("");
+			mLastName.setText("");
+			mFirstName.setText("");
+			mCity.setText("");
+		} catch (Exception e) {			
 		}
 	}
 	private String createStringAddress(){
@@ -149,11 +183,13 @@ public class CreateAddressShoppingCartFragment extends BaseFragment implements O
 			CustomerDTO cus=mHomeActivity.getUserInfo();
 			String result="<?xml version=\"1.0\" encoding=\"UTF-8\"?><prestashop xmlns:xlink=\"http://www.w3.org/1999/xlink\"><address>";
 			result+="<id_customer>"+cus.id+"</id_customer>";
+			//result+="<id_customer>123</id_customer>";
 			result+="<id_manufacturer>0</id_manufacturer><id_supplier>0</id_supplier><id_warehouse>0</id_warehouse>";
 			result+="<id_country>"+mCurrentCountry.id+"</id_country><id_state></id_state>";
 			result+="<alias>"+mStrAddress+"</alias>";
-			result+="<company></company><lastname></lastname><firstname></firstname>";
-			result+="<vat_number></vat_number><address1></address1><address2></address2><postcode></postcode><city></city>";
+			result+="<company></company><lastname>"+mStrLastName+"</lastname><firstname>"+mStrFirstName+"</firstname>";
+			result+="<vat_number></vat_number><address1>"+mStrAddress+"</address1><address2></address2>";
+			result+="<postcode></postcode><city>"+mStrCity+"</city>";
 			result+="<phone></phone><phone_mobile></phone_mobile>";
 			result+="</address></prestashop>";
 			return result;

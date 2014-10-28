@@ -25,10 +25,18 @@
     <!-- Address -->    
     <string name="address_address_label">Address:</string>
     <string name="address_address_hint">Your address</string>
+    <string name="address_last_name_label">Last name:</string>
+    <string name="address_last_name_hint">Your last name</string>
+    <string name="address_first_name_label">First name:</string>
+    <string name="address_firt_name_hint">Your first name</string>
     <string name="address_contry_label">Country:</string>
     <string name="address_contry_hint">Your country</string>
+    <string name="address_city_label">City:</string>
+    <string name="address_city_hint">Your city</string>
     <string name="address_btn_create">Create</string>
     <string name="address_btn_confirm">Confirm</string>
+    <string name="address_create_success">Address created</string>
+    <string name="address_create_failed">Create address failed</string>
     
     <!-- Add Cart Items -->
     <string name="add_cart_failed">Add shopping cart item error.</string>

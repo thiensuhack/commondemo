@@ -435,7 +435,8 @@ public class HomeActivity extends ActionBarActivity implements
 			break;
 		case R.id.homeShoppingCartBtn:
 			//onNavigationDrawerItemSelected(-12);
-			onNavigationDrawerItemSelected(MENU_NAME.SELECT_ADDRESS);
+			//onNavigationDrawerItemSelected(MENU_NAME.SELECT_ADDRESS);
+			onNavigationDrawerItemSelected(MENU_NAME.CREATE_ADDRESS);
 			break;
 		default:
 			break;

@@ -16,8 +16,10 @@ import org.apache.http.StatusLine;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
@@ -180,5 +182,70 @@ public class OrangeHttpRequest implements HttpIF {
 			return null;
 		}
 	}
+	@Override
+	public String putDataToServer(String url, String rawData,int _statusCode) {
+		StringBuilder builder = new StringBuilder();
+		HttpClient client = new DefaultHttpClient();
+		HttpPut httpPost = new HttpPut(url);
 
+		try {			
+			httpPost.setHeader("Content-type", "text/xml;charset=utf-8");
+			httpPost.setEntity(new StringEntity(rawData));
+			
+			HttpResponse response = client.execute(httpPost);
+			StatusLine statusLine = response.getStatusLine();
+			int statusCode = statusLine.getStatusCode();
+			if (statusCode == _statusCode) {
+				HttpEntity entity = response.getEntity();
+				InputStream content = entity.getContent();
+				BufferedReader reader = new BufferedReader(
+						new InputStreamReader(content));
+				String line;
+				while ((line = reader.readLine()) != null) {
+					builder.append(line);
+				}
+			} else {
+			}
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+			return "";
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "";
+		}
+		return builder.toString();
+	}
+	@Override
+	public String deleteDataToServer(String url) {
+		StringBuilder builder = new StringBuilder();
+		HttpClient client = new DefaultHttpClient();
+		HttpDelete httpPost = new HttpDelete(url);
+
+		try {			
+			httpPost.setHeader("Content-type", "text/xml;charset=utf-8");
+//			httpPost.setEntity(new StringEntity(rawData));
+			
+			HttpResponse response = client.execute(httpPost);
+			StatusLine statusLine = response.getStatusLine();
+			int statusCode = statusLine.getStatusCode();
+			if (statusCode == 200) {
+				HttpEntity entity = response.getEntity();
+				InputStream content = entity.getContent();
+				BufferedReader reader = new BufferedReader(
+						new InputStreamReader(content));
+				String line;
+				while ((line = reader.readLine()) != null) {
+					builder.append(line);
+				}
+			} else {
+			}
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+			return "";
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "";
+		}
+		return builder.toString();
+	}
 }

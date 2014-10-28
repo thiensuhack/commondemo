@@ -7,13 +7,15 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import com.orange.studio.bobo.objects.CartRowDTO;
 import com.orange.studio.bobo.objects.ItemCartDTO;
 
 public class XMLHandlerItemCart extends DefaultHandler {
 
 	public List<ItemCartDTO> mListItemCart = null;
-
+	
 	public ItemCartDTO data = null;
+	private CartRowDTO mCartRowDTO=null;
 	
 	private String elementValue = null;
 	private boolean elementOn = false;
@@ -32,6 +34,10 @@ public class XMLHandlerItemCart extends DefaultHandler {
 		elementOn = true;
 		if (localName.equals("cart")) {
 			data = new ItemCartDTO();
+			return;
+		}
+		if (localName.equals("cart_row")) {
+			mCartRowDTO=new CartRowDTO();
 			return;
 		}
 	}
@@ -56,11 +62,7 @@ public class XMLHandlerItemCart extends DefaultHandler {
 		if (localName.equalsIgnoreCase("id_product")) {
 			data.id_product = elementValue;
 			return;
-		}
-		if (localName.equalsIgnoreCase("quantity")) {
-			data.quantity = convertStringToInt(elementValue);
-			return;
-		}
+		}		
 		if (localName.equalsIgnoreCase("date_add")) {
 			data.date_add = elementValue;
 			return;
@@ -85,7 +87,26 @@ public class XMLHandlerItemCart extends DefaultHandler {
 			data.secure_key = elementValue;
 			return;
 		}
-		
+		if (localName.equalsIgnoreCase("id_product")) {
+			mCartRowDTO.id_product = elementValue;
+			return;
+		}
+		if (localName.equalsIgnoreCase("id_product_attribute")) {
+			mCartRowDTO.id_product_attribute = elementValue;
+			return;
+		}
+		if (localName.equalsIgnoreCase("id_address_delivery")) {
+			mCartRowDTO.id_address_delivery = elementValue;
+			return;
+		}
+		if (localName.equalsIgnoreCase("quantity")) {
+			mCartRowDTO.quantity = convertStringToInt(elementValue);
+			return;
+		}
+		if (localName.equalsIgnoreCase("cart_row")&& mCartRowDTO!=null && mCartRowDTO.id_product!=null && mCartRowDTO.id_product.trim().length()>0) {
+			data.mListCartRow.add(mCartRowDTO);
+			return;
+		}
 		if (localName.equalsIgnoreCase("cart"))
 		{
 			mListItemCart.add(0,data);

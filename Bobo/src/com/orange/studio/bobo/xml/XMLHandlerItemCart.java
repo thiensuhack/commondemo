@@ -108,7 +108,7 @@ public class XMLHandlerItemCart extends DefaultHandler {
 			mCartRowDTO.quantity = convertStringToInt(elementValue);
 			return;
 		}
-		if (localName.equalsIgnoreCase("cart_row")&& mCartRowDTO!=null && mCartRowDTO.id_product!=null && mCartRowDTO.id_product.trim().length()>0) {
+		if (localName.equalsIgnoreCase("cart_row")&& mCartRowDTO!=null && mCartRowDTO.id_product!=null && mCartRowDTO.id_product.trim().length()>0 && !mCartRowDTO.id_product.equals("0")) {
 			isCartRowDelivery=false;
 			data.mListCartRow.add(mCartRowDTO);
 			return;

@@ -495,9 +495,9 @@ public class HomeActivity extends ActionBarActivity implements
 			proItem.cartCounter = 1;
 			mListItemCart.add(0, proItem);
 		}
-		updateItemCartCounter();
-		Toast.makeText(getApplicationContext(), "Added:" + proItem.name,
-				Toast.LENGTH_SHORT).show();
+//		updateItemCartCounter();
+//		Toast.makeText(getApplicationContext(), "Added:" + proItem.name,
+//				Toast.LENGTH_SHORT).show();
 		return;
 	}
 
@@ -511,7 +511,7 @@ public class HomeActivity extends ActionBarActivity implements
 				break;
 			}
 		}
-		updateItemCartCounter();
+		//updateItemCartCounter();
 	}
 
 	public void decreaseCartItem(String proId) {
@@ -528,13 +528,23 @@ public class HomeActivity extends ActionBarActivity implements
 				break;
 			}
 		}
-		updateItemCartCounter();
+		//updateItemCartCounter();
 	}
-
+	public int counterTotalItemsCart(){
+		if(mListItemCart==null || mListItemCart.size()<1){
+			return 0;
+		}
+		int result=0;
+		for (ProductDTO item : mListItemCart) {
+			result+=item.cartCounter;
+		}
+		return result;
+	}
 	public void updateItemCartCounter() {
 		try {
 			if (isHasItemsCart()) {
-				mTotalItemsCart.setText(String.valueOf(mListItemCart.size()));
+				int total=counterTotalItemsCart();
+				mTotalItemsCart.setText(String.valueOf(total));
 				mTotalItemsCart.setVisibility(View.VISIBLE);
 			} else {
 				mTotalItemsCart.setText("0");
@@ -610,6 +620,7 @@ public class HomeActivity extends ActionBarActivity implements
 			try {
 				if (result != null && result.id.trim().length() > 0) {
 					mCurItemCart=result;
+					showToast(getString(R.string.add_cart_success));
 					//addToCart(mProductDTO);
 				} else {					
 					decreaseCartItem(mProductDTO.id);
@@ -620,6 +631,7 @@ public class HomeActivity extends ActionBarActivity implements
 				if (mProgressDialog.isShowing()) {
 					mProgressDialog.dismiss();
 				}
+				updateItemCartCounter();
 			}
 		}
 	}

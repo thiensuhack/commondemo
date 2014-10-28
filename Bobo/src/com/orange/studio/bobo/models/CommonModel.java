@@ -502,6 +502,29 @@ public class CommonModel implements CommonIF{
 		}
 		return null;
 	}
+	@Override
+	public AddressDTO createListAddress(String url,String rawData) 
+	{
+		try {			
+			SAXParserFactory saxPF = SAXParserFactory.newInstance();
+			SAXParser saxP = saxPF.newSAXParser();
+			XMLReader xmlR = saxP.getXMLReader();						
+			XMLHandlerAddress myXMLHandler = new XMLHandlerAddress(OrangeConfig.LANGUAGE_DEFAULT);
+			xmlR.setContentHandler(myXMLHandler);			
+			String result=OrangeHttpRequest.getInstance().postDataToServer(url, rawData,201);
+			if(result!=null && result.trim().length()>0){
+				InputSource is = new InputSource(new StringReader(result));
+				xmlR.parse(is);
+				if(myXMLHandler.mListAddress!=null && myXMLHandler.mListAddress.size()>0){
+					return myXMLHandler.mListAddress.get(0);
+				}
+				return null;
+			}			
+			return null;
+		} catch (Exception e) {
+		}
+		return null;
+	}
 	@SuppressWarnings("unchecked")
 	private List<CountryDTO> deserializeListCountry(String json) {
 		List<CountryDTO> result = null;

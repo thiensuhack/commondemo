@@ -35,4 +35,5 @@ public interface CommonIF {
 	public String sendContactUs(String url,ContactUsDTO contact);
 	public List<CountryDTO> getListCountry(String url);
 	public List<AddressDTO> getListAddress(String url);
+	public AddressDTO createListAddress(String url,String rawData);
 }

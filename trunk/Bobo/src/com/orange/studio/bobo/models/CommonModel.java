@@ -273,6 +273,48 @@ public class CommonModel implements CommonIF{
 		} 
 	}
 	@Override
+	public ItemCartDTO updateToCart(String url, String data) {
+		try {			
+			SAXParserFactory saxPF = SAXParserFactory.newInstance();
+			SAXParser saxP = saxPF.newSAXParser();
+			XMLReader xmlR = saxP.getXMLReader();						
+			XMLHandlerItemCart myXMLHandler = new XMLHandlerItemCart(OrangeConfig.LANGUAGE_DEFAULT);
+			xmlR.setContentHandler(myXMLHandler);			
+			String result=OrangeHttpRequest.getInstance().putDataToServer(url, data,200);
+			if(result!=null && result.trim().length()>0){
+				InputSource is = new InputSource(new StringReader(result));
+				xmlR.parse(is);
+				if(myXMLHandler.mListItemCart!=null && myXMLHandler.mListItemCart.size()>0){
+					return myXMLHandler.mListItemCart.get(0);
+				}
+			}			
+			return null;			
+		} catch (Exception e) {
+			return null;
+		} 
+	}
+	@Override
+	public ItemCartDTO deleteToCart(String url, String data) {
+		try {			
+			SAXParserFactory saxPF = SAXParserFactory.newInstance();
+			SAXParser saxP = saxPF.newSAXParser();
+			XMLReader xmlR = saxP.getXMLReader();						
+			XMLHandlerItemCart myXMLHandler = new XMLHandlerItemCart(OrangeConfig.LANGUAGE_DEFAULT);
+			xmlR.setContentHandler(myXMLHandler);			
+			String result=OrangeHttpRequest.getInstance().deleteDataToServer(url);
+			if(result!=null && result.trim().length()>0){
+				InputSource is = new InputSource(new StringReader(result));
+				xmlR.parse(is);
+				if(myXMLHandler.mListItemCart!=null && myXMLHandler.mListItemCart.size()>0){
+					return myXMLHandler.mListItemCart.get(0);
+				}
+			}			
+			return null;			
+		} catch (Exception e) {
+			return null;
+		} 
+	}
+	@Override
 	public CustomerDTO loginUser(String url){
 		try {
 			SAXParserFactory saxPF = SAXParserFactory.newInstance();

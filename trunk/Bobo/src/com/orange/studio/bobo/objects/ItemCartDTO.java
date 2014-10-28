@@ -1,5 +1,8 @@
 package com.orange.studio.bobo.objects;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ItemCartDTO {
 	public String id;
 	public String id_customer;
@@ -11,5 +14,9 @@ public class ItemCartDTO {
 	public String date_add;
 	public String date_upd;
 	public String id_product;
-	public int quantity;
+//	public int quantity;
+	public List<CartRowDTO> mListCartRow;
+	public ItemCartDTO(){
+		mListCartRow=new ArrayList<CartRowDTO>();
+	}
 }

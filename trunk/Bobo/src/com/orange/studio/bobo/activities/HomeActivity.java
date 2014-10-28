@@ -100,7 +100,9 @@ public class HomeActivity extends ActionBarActivity implements
 	private LoadProductDetailAddCartTask mLoadProductDetailAddCartTask=null;
 	
 	private CustomerDTO mUserInfo = null;
-
+	private ItemCartDTO mCurItemCart=null;
+	
+	
 	public enum HOME_TABS {
 		ALL, BEST_SELLER, POPULAR
 	}
@@ -612,6 +614,7 @@ public class HomeActivity extends ActionBarActivity implements
 			super.onPostExecute(result);
 			try {
 				if (result != null && result.id.trim().length() > 0) {
+					mCurItemCart=result;
 					addToCart(mProductDTO);
 				} else {
 					showToast(getString(R.string.add_cart_failed));

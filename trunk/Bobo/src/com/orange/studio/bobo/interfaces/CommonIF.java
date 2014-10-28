@@ -23,7 +23,11 @@ public interface CommonIF {
 	public CustomerDTO registerUser(String url,String data);
 	public CustomerDTO loginUser(String url);
 	public StockDTO getStock(String url);
+	
 	public ItemCartDTO addToCart(String url,String data);
+	public ItemCartDTO updateToCart(String url,String data);
+	public ItemCartDTO deleteToCart(String url,String data);
+	
 	public List<ProductFeatureDTO> getListProductFeatures(String url);
 	public List<ProductFeatureValueDTO> getListProductFeatureValues(String url);
 	public String getColorStockAvailable(String url);

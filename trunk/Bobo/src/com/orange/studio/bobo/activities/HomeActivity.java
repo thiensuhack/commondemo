@@ -434,9 +434,9 @@ public class HomeActivity extends ActionBarActivity implements
 			onNavigationDrawerItemSelected(9);
 			break;
 		case R.id.homeShoppingCartBtn:
-			//onNavigationDrawerItemSelected(-12);
+			onNavigationDrawerItemSelected(MENU_NAME.SHOPING_CART_FRAGMENT);
 			//onNavigationDrawerItemSelected(MENU_NAME.SELECT_ADDRESS);
-			onNavigationDrawerItemSelected(MENU_NAME.CREATE_ADDRESS);
+			//onNavigationDrawerItemSelected(MENU_NAME.CREATE_ADDRESS);
 			break;
 		default:
 			break;
@@ -646,7 +646,8 @@ public class HomeActivity extends ActionBarActivity implements
 	public void checkOut() {
 		// onPaypalPayment();
 		if (mUserInfo != null) {
-			onPaypalPayment();
+			onNavigationDrawerItemSelected(MENU_NAME.SELECT_ADDRESS);
+			//onPaypalPayment();
 		} else {
 			onNavigationDrawerItemSelected(MENU_NAME.LOGIN_FRAGMENT);// login
 																		// view

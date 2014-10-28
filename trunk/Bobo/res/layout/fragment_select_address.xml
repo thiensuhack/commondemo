@@ -28,6 +28,7 @@
             <Spinner
                 android:id="@+id/listAddress"
                 android:layout_width="0dp"
+                style="@style/RegisterTextStyle"
                 android:layout_height="35dp"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
@@ -38,12 +39,21 @@
         <Button
             android:id="@+id/confirmBtn"
             style="@style/RegisterButtonStyle"
-            android:layout_width="110dp"
+            android:layout_width="130dp"
             android:layout_height="35dp"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:background="@drawable/button_pink"
             android:text="@string/address_btn_confirm" />
+        <Button
+            android:id="@+id/createAddressBtn"
+            style="@style/RegisterButtonStyle"
+            android:layout_width="130dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_pink"
+            android:text="@string/address_btn_create_address" />
     </LinearLayout>
 
     <include

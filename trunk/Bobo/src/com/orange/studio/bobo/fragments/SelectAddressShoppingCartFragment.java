@@ -17,6 +17,7 @@ import android.widget.Spinner;
 
 import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.adapters.AddressesAdapter;
+import com.orange.studio.bobo.configs.OrangeConfig.MENU_NAME;
 import com.orange.studio.bobo.configs.OrangeConfig.UrlRequest;
 import com.orange.studio.bobo.models.CommonModel;
 import com.orange.studio.bobo.objects.AddressDTO;
@@ -24,6 +25,7 @@ import com.orange.studio.bobo.objects.AddressDTO;
 public class SelectAddressShoppingCartFragment extends BaseFragment implements OnClickListener, OnItemSelectedListener{
 	private Spinner mListAddress=null;
 	private Button mConfirmBtn=null;
+	private Button mCreateAddressBtn=null;
 	private AddressesAdapter mAdapter=null;
 	private GetListAddressTask mGetListAddressTask=null;
 	
@@ -46,6 +48,7 @@ public class SelectAddressShoppingCartFragment extends BaseFragment implements O
 		mHomeActivity=getHomeActivity();
 		mListAddress=(Spinner)mView.findViewById(R.id.listAddress);
 		mConfirmBtn=(Button)mView.findViewById(R.id.confirmBtn);
+		mCreateAddressBtn=(Button)mView.findViewById(R.id.createAddressBtn);
 		mAdapter=new AddressesAdapter(mHomeActivity);
 		mListAddress.setAdapter(mAdapter);
 		initLoadingView();
@@ -54,6 +57,7 @@ public class SelectAddressShoppingCartFragment extends BaseFragment implements O
 	private void initListener(){
 		mListAddress.setOnItemSelectedListener(this);
 		mConfirmBtn.setOnClickListener(this);
+		mCreateAddressBtn.setOnClickListener(this);
 	}
 	private void loadAddresses(){
 		if(mGetListAddressTask==null || mGetListAddressTask.getStatus()==Status.FINISHED){
@@ -67,7 +71,9 @@ public class SelectAddressShoppingCartFragment extends BaseFragment implements O
 		case R.id.confirmBtn:
 			
 			break;
-
+		case R.id.createAddressBtn:
+			mHomeActivity.onNavigationDrawerItemSelected(MENU_NAME.CREATE_ADDRESS);
+			break;
 		default:
 			break;
 		}

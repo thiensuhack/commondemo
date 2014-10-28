@@ -64,5 +64,6 @@ public class ProductDTO {
 		stock=new StockDTO();
 		listProductFeatures=new ArrayList<ProductFeatureAndValueDTO>();
 		mListStock=new ArrayList<StockDTO>();
+		cartCounter=1;
 	}
 }

@@ -1,6 +1,7 @@
 package com.orange.studio.bobo.fragments;
 
 import android.annotation.SuppressLint;
+import android.graphics.LinearGradient;
 import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.LinearLayout;
 
 import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.configs.OrangeConfig.UrlRequest;
@@ -18,6 +20,7 @@ import com.orange.studio.bobo.objects.AboutUsDTO;
 import com.orange.studio.bobo.objects.SummaryDTO;
 
 public class SummaryCheckoutFragment extends BaseFragment {
+	private View mSummaryContainer=null;
 	private WebView mWebView=null;
 	private GetSummaryTask mGetSummaryTask=null;
 	
@@ -37,13 +40,14 @@ public class SummaryCheckoutFragment extends BaseFragment {
 	@SuppressLint("SetJavaScriptEnabled")
 	private void initView(){
 		mHomeActivity=getHomeActivity();
+		mSummaryContainer=(LinearLayout)mView.findViewById(R.id.summaryContainer);
 		mWebView=(WebView)mView.findViewById(R.id.mSummaryWebView);
 		WebSettings mSetting=mWebView.getSettings();
 		mSetting.setJavaScriptEnabled(true);	
 		initNotFoundView();
 		initLoadingView();
 		switchView(false, false);
-		mWebView.setVisibility(View.GONE);
+		mSummaryContainer.setVisibility(View.GONE);
 	}
 	private void initListener(){
 		
@@ -64,7 +68,7 @@ public class SummaryCheckoutFragment extends BaseFragment {
 		protected void onPreExecute() {
 			super.onPreExecute();
 			switchView(false, true);
-			mWebView.setVisibility(View.GONE);
+			mSummaryContainer.setVisibility(View.GONE);
 		}
 		@Override
 		protected SummaryDTO doInBackground(Void... arg0) {
@@ -79,19 +83,19 @@ public class SummaryCheckoutFragment extends BaseFragment {
 			super.onPostExecute(result);
 			if(result!=null){
 				String htmlData="<html><head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"></head><body>";
-				htmlData+="<div>"+"Country:" + result.delivery.country+"</div>";
-				htmlData+="<div>"+"City"+ result.delivery.city+"</div>";
-				htmlData+="<div>"+"Address:"+ result.delivery.address1+"</div>";
+//				htmlData+="<div>"+"Country:" + result.delivery.country+"</div>";
+//				htmlData+="<div>"+"City"+ result.delivery.city+"</div>";
+//				htmlData+="<div>"+"Address:"+ result.delivery.address1+"</div>";
 				htmlData+="<div>"+"Total price:"+ String.valueOf(result.total_price)+"</div>";
 				htmlData+="<div>"+"Total tax:"+ String.valueOf(result.total_tax)+"</div>";
 				htmlData+="<div>"+"Total price without tax:"+ String.valueOf(result.total_price_without_tax)+"</div>";
 				htmlData+="</body>";
 				mWebView.loadData(htmlData, "text/html; charset=UTF-8", null);
-				mWebView.setVisibility(View.VISIBLE);
+				mSummaryContainer.setVisibility(View.VISIBLE);
 				switchView(false, false);
 			}else{
 				switchView(true, false);
-				mWebView.setVisibility(View.GONE);
+				mSummaryContainer.setVisibility(View.GONE);
 			}
 		}
 		

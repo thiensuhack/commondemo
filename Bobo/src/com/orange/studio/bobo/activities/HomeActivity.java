@@ -49,6 +49,7 @@ import com.orange.studio.bobo.fragments.SearchResultFragment;
 import com.orange.studio.bobo.fragments.SelectAddressShoppingCartFragment;
 import com.orange.studio.bobo.fragments.ShoppingCartFragment;
 import com.orange.studio.bobo.fragments.SpinToWinFragment;
+import com.orange.studio.bobo.fragments.SummaryCheckoutFragment;
 import com.orange.studio.bobo.models.CommonModel;
 import com.orange.studio.bobo.objects.AddressDTO;
 import com.orange.studio.bobo.objects.CarrierDTO;
@@ -262,6 +263,10 @@ public class HomeActivity extends ActionBarActivity implements
 			setAppTitle(getString(R.string.shopping_cart_select_address));
 			return;
 		}
+		if (mFragmentName.equals(SummaryCheckoutFragment.class.getName())) {
+			setAppTitle(getString(R.string.shopping_cart_summary));
+			return;
+		}
 		setAppTitle(getString(R.string.app_name));
 		return;
 	}
@@ -377,6 +382,10 @@ public class HomeActivity extends ActionBarActivity implements
 		case MENU_NAME.SELECT_ADDRESS:
 			mFragment = SelectAddressShoppingCartFragment.instantiate(getApplicationContext(),
 					SelectAddressShoppingCartFragment.class.getName());
+			break;
+		case MENU_NAME.SUMMARY:
+			mFragment = SummaryCheckoutFragment.instantiate(getApplicationContext(),
+					SummaryCheckoutFragment.class.getName());
 			break;
 		default:
 			mFragment = HomeFragment.instantiate(getApplicationContext(),
@@ -605,12 +614,12 @@ public class HomeActivity extends ActionBarActivity implements
 		protected ItemCartDTO doInBackground(Void... params) {
 			try {
 				String data = "";
-				if(mCurItemCart==null || mCurItemCart.id==null || mCurItemCart.id.length()<1){
+				if(getCurItemCart()==null || getCurItemCart().id==null || getCurItemCart().id.length()<1){
 					data=OrangeUtils.createCartData(mListItemCart,mUserInfo,null);
 					return CommonModel.getInstance().addToCart(
 							UrlRequest.ADD_CART_URL, data);
 				}else{
-					data=OrangeUtils.createCartData(mListItemCart,mUserInfo,mCurItemCart.id);
+					data=OrangeUtils.createCartData(mListItemCart,mUserInfo,getCurItemCart().id);
 					return CommonModel.getInstance().updateToCart(
 							UrlRequest.ADD_CART_URL, data);
 				}
@@ -625,7 +634,7 @@ public class HomeActivity extends ActionBarActivity implements
 			super.onPostExecute(result);
 			try {
 				if (result != null && result.id.trim().length() > 0) {
-					mCurItemCart=result;
+					setCurItemCart(result);
 					showToast(getString(R.string.add_cart_success));
 					//addToCart(mProductDTO);
 				} else {					
@@ -890,5 +899,13 @@ public class HomeActivity extends ActionBarActivity implements
 
 	public void setCarrier(CarrierDTO mCarrierDTO) {
 		this.mCarrierDTO = mCarrierDTO;
+	}
+
+	public ItemCartDTO getCurItemCart() {
+		return mCurItemCart;
+	}
+
+	public void setCurItemCart(ItemCartDTO mCurItemCart) {
+		this.mCurItemCart = mCurItemCart;
 	}
 }

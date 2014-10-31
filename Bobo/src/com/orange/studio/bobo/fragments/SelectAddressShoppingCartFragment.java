@@ -89,7 +89,7 @@ public class SelectAddressShoppingCartFragment extends BaseFragment implements O
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.confirmBtn:
-			
+			mHomeActivity.onNavigationDrawerItemSelected(MENU_NAME.SUMMARY);
 			break;
 		case R.id.createAddressBtn:
 			mHomeActivity.onNavigationDrawerItemSelected(MENU_NAME.CREATE_ADDRESS);

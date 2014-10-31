@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <include
+        android:id="@+id/notFoundContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/layout_not_found_data"
+        android:clickable="true" />
+
+    <include
+        android:id="@+id/loadingContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/layout_loading"
+        android:clickable="true" />
+
+    <WebView
+        android:id="@+id/mSummaryWebView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white" />
+
+    <Button
+        android:id="@+id/confirmBtn"
+        style="@style/RegisterButtonStyle"
+        android:layout_width="130dp"
+        android:layout_height="35dp"
+        android:layout_below="@+id/mSummaryWebView"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_pink"
+        android:text="@string/address_btn_confirm"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

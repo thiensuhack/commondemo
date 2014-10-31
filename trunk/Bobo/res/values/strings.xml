@@ -35,6 +35,7 @@
     <string name="address_city_hint">Your city</string>
     <string name="address_btn_create">Create</string>
     <string name="address_btn_confirm">Confirm</string>
+    <string name="address_btn_next">Next</string>
     <string name="address_btn_create_address">Create address</string>
     <string name="address_create_success">Address created</string>
     <string name="address_create_failed">Create address failed</string>
@@ -118,6 +119,7 @@
     
     <string name="shopping_cart_create_address">Create address</string>
     <string name="shopping_cart_select_address">Select address</string>
+    <string name="shopping_cart_summary">Confirm</string>
 
     <!-- Fragment Home Menu -->
     <string name="fragment_home_menu_all">ALL</string>

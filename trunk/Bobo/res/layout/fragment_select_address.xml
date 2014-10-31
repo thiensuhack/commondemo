@@ -68,7 +68,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:background="@drawable/button_pink"
-            android:text="@string/address_btn_confirm" />
+            android:text="@string/address_btn_next" />
         <Button
             android:id="@+id/createAddressBtn"
             style="@style/RegisterButtonStyle"

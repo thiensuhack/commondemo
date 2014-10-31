@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.orange.studio.bobo.objects.AboutUsDTO;
 import com.orange.studio.bobo.objects.AddressDTO;
+import com.orange.studio.bobo.objects.CarrierDTO;
 import com.orange.studio.bobo.objects.ContactUsDTO;
 import com.orange.studio.bobo.objects.CountryDTO;
 import com.orange.studio.bobo.objects.CustomerDTO;
@@ -36,4 +37,5 @@ public interface CommonIF {
 	public List<CountryDTO> getListCountry(String url);
 	public List<AddressDTO> getListAddress(String url);
 	public AddressDTO createListAddress(String url,String rawData);
+	public List<CarrierDTO> getListCarrier(String url);
 }

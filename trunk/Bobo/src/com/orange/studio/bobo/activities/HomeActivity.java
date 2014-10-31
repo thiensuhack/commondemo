@@ -50,6 +50,8 @@ import com.orange.studio.bobo.fragments.SelectAddressShoppingCartFragment;
 import com.orange.studio.bobo.fragments.ShoppingCartFragment;
 import com.orange.studio.bobo.fragments.SpinToWinFragment;
 import com.orange.studio.bobo.models.CommonModel;
+import com.orange.studio.bobo.objects.AddressDTO;
+import com.orange.studio.bobo.objects.CarrierDTO;
 import com.orange.studio.bobo.objects.CustomerDTO;
 import com.orange.studio.bobo.objects.ItemCartDTO;
 import com.orange.studio.bobo.objects.MenuItemDTO;
@@ -97,6 +99,9 @@ public class HomeActivity extends ActionBarActivity implements
 	
 	private CustomerDTO mUserInfo = null;
 	private ItemCartDTO mCurItemCart=null;
+	private AddressDTO mAddressDTO=null;
+	private CarrierDTO mCarrierDTO=null;
+	
 	public List<ProductDTO> mListItemCart = null;
 	
 	public enum HOME_TABS {
@@ -870,6 +875,20 @@ public class HomeActivity extends ActionBarActivity implements
 		 */
 		Log.i("Authorzation:", authorization.toJSONObject().toString());
 	}
-
 	// end Paypal functions
+	public AddressDTO getAddress() {
+		return mAddressDTO;
+	}
+
+	public void setAddress(AddressDTO mAddressDTO) {
+		this.mAddressDTO = mAddressDTO;
+	}
+
+	public CarrierDTO getCarrier() {
+		return mCarrierDTO;
+	}
+
+	public void setCarrier(CarrierDTO mCarrierDTO) {
+		this.mCarrierDTO = mCarrierDTO;
+	}
 }

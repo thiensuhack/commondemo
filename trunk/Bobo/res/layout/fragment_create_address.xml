@@ -110,11 +110,12 @@
                 android:id="@+id/listCountry"
                 style="@style/RegisterEdittextStyle"
                 android:layout_width="0dp"
-                android:layout_height="35dp"
+                android:layout_height="30dp"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:paddingLeft="5dp"
-                android:paddingRight="3dp" />
+                android:paddingRight="3dp"
+                android:gravity="center_vertical" />
         </LinearLayout>
 
         <LinearLayout

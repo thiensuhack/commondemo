@@ -60,6 +60,7 @@ public final class OrangeConfig {
 		public static String GET_LIST_COUNTRY=domain+"/countries?ws_key=LW6TL3P7Z7KRFM3UYKWHJ3N28GEZLRBT&display=full";
 		public static String GET_USER_ADDRESS=domain+"/addresses?display=full&ws_key=LW6TL3P7Z7KRFM3UYKWHJ3N28GEZLRBT&output_format=JSON&filter[id_customer]=";
 		public static String CREATE_ADDRESS=domain+"/addresses?Create=Creating&ws_key=LW6TL3P7Z7KRFM3UYKWHJ3N28GEZLRBT&output_format=JSON&display=full&sort=id_DESC&limit=10";
+		public static String GET_CARRIER_URL=main_domain+"index.php?controller=CustomAPI&action=summary&id_cart=73?controller=CustomAPI&action=carrier&id_cart=73";
 	}
 
 	public static class REQUEST_PARAMS_NAME {

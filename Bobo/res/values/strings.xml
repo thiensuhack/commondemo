@@ -39,6 +39,9 @@
     <string name="address_create_success">Address created</string>
     <string name="address_create_failed">Create address failed</string>
     
+    <string name="address_list_carrier_label">Carriers:</string>
+    
+    
     <!-- Add Cart Items -->
     <string name="add_cart_failed">Add shopping cart item error.</string>
     <string name="add_cart_success">Add shopping cart success</string>

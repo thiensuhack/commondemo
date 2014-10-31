@@ -3,6 +3,7 @@ package com.orange.studio.bobo.models;
 import java.io.StringReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -26,6 +27,7 @@ import com.orange.studio.bobo.http.OrangeHttpRequest;
 import com.orange.studio.bobo.interfaces.CommonIF;
 import com.orange.studio.bobo.objects.AboutUsDTO;
 import com.orange.studio.bobo.objects.AddressDTO;
+import com.orange.studio.bobo.objects.CarrierDTO;
 import com.orange.studio.bobo.objects.ContactUsDTO;
 import com.orange.studio.bobo.objects.CountryDTO;
 import com.orange.studio.bobo.objects.CustomerDTO;
@@ -352,6 +354,25 @@ public class CommonModel implements CommonIF{
 				}
 			}			
 			return null;
+		} catch (Exception e) {
+		}
+		return null;
+	}
+	@Override
+	public List<CarrierDTO> getListCarrier(String url) {
+		try {
+			List<CarrierDTO> result=new ArrayList<CarrierDTO>();
+			CarrierDTO temp=null;
+			String data=OrangeHttpRequest.getInstance().getStringFromServer(url, null);
+			JSONObject jObject=new JSONObject(data);
+			Iterator<String> iter=jObject.keys();			
+			while (iter.hasNext()) {
+				temp=new CarrierDTO();
+				temp.key=iter.next();				
+				temp.value=jObject.getString(temp.key);
+				result.add(temp);
+			}
+			return result;
 		} catch (Exception e) {
 		}
 		return null;

@@ -38,6 +38,7 @@ import com.orange.studio.bobo.objects.ProductFeatureValueDTO;
 import com.orange.studio.bobo.objects.ProductOptionValueDTO;
 import com.orange.studio.bobo.objects.RequestDTO;
 import com.orange.studio.bobo.objects.StockDTO;
+import com.orange.studio.bobo.objects.SummaryDTO;
 import com.orange.studio.bobo.utils.OrangeUtils;
 import com.orange.studio.bobo.xml.XMLHandlerAboutUs;
 import com.orange.studio.bobo.xml.XMLHandlerAddress;
@@ -354,6 +355,35 @@ public class CommonModel implements CommonIF{
 				}
 			}			
 			return null;
+		} catch (Exception e) {
+		}
+		return null;
+	}
+	@Override
+	public SummaryDTO getSummary(String url) {
+		try {
+			String data=OrangeHttpRequest.getInstance().getStringFromServer(url, null);
+			JSONObject jObject=new JSONObject(data);
+			SummaryDTO sum=new SummaryDTO();						
+			sum.total_discounts=jObject.optDouble("total_discounts", -1);
+			sum.total_price=jObject.optDouble("total_price", -1);
+			sum.total_price_without_tax=jObject.optDouble("total_price_without_tax", -1);
+			sum.total_products=jObject.optDouble("total_products", -1);
+			sum.total_shipping=jObject.optDouble("total_shipping", -1);
+			sum.total_tax=jObject.optDouble("total_tax", -1);
+			JSONObject jObjectDelivery=jObject.getJSONObject("delivery");
+			sum.delivery.address1=jObjectDelivery.optString("address1", "");
+			sum.delivery.alias=jObjectDelivery.optString("alias", "");
+			sum.delivery.city=jObjectDelivery.optString("city", "");
+			sum.delivery.country=jObjectDelivery.optString("country", "");
+			sum.delivery.date_add=jObjectDelivery.optString("date_add", "");
+			sum.delivery.date_upd=jObjectDelivery.optString("", "");
+			sum.delivery.firstname=jObjectDelivery.optString("firstname", "");
+			sum.delivery.id_country=jObjectDelivery.optString("id_country", "");
+			sum.delivery.lastname=jObjectDelivery.optString("lastname", "");
+			sum.delivery.phone=jObjectDelivery.optString("phone", "");
+			sum.delivery.phone_mobile=jObjectDelivery.optString("phone_mobile", "");
+			return sum;
 		} catch (Exception e) {
 		}
 		return null;

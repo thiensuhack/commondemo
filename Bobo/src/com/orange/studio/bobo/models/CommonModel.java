@@ -368,8 +368,8 @@ public class CommonModel implements CommonIF{
 			Iterator<String> iter=jObject.keys();			
 			while (iter.hasNext()) {
 				temp=new CarrierDTO();
-				temp.key=iter.next();				
-				temp.value=jObject.getString(temp.key);
+				temp.id=iter.next();				
+				temp.value=jObject.getString(temp.id);
 				result.add(temp);
 			}
 			return result;

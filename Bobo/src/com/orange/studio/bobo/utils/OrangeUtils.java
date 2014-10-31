@@ -3,7 +3,6 @@ package com.orange.studio.bobo.utils;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,12 +17,67 @@ import android.util.DisplayMetrics;
 import com.orange.studio.bobo.OrangeApplicationContext;
 import com.orange.studio.bobo.configs.OrangeConfig;
 import com.orange.studio.bobo.configs.OrangeConfig.REQUEST_PARAMS_NAME;
+import com.orange.studio.bobo.objects.AddressDTO;
+import com.orange.studio.bobo.objects.CarrierDTO;
 import com.orange.studio.bobo.objects.CustomerDTO;
+import com.orange.studio.bobo.objects.ItemCartDTO;
 import com.orange.studio.bobo.objects.ProductDTO;
 import com.zuzu.db.store.SQLiteStore;
 import com.zuzu.db.store.SimpleStoreIF;
 
 public class OrangeUtils {
+	
+	public static String createStringOrder(ItemCartDTO cart,CustomerDTO customer,AddressDTO address,CarrierDTO carrier){
+		String result=null;
+		try {
+			result="<?xml version=\"1.0\" encoding=\"UTF-8\"?><prestashop xmlns:xlink=\"http://www.w3.org/1999/xlink\"><order>";
+			result+="<id_address_delivery required=\"true\" format=\"isUnsignedId\">"+address.id+"</id_address_delivery>";
+			result+="<id_address_invoice required=\"true\" format=\"isUnsignedId\">9</id_address_invoice>";
+			result+="<id_cart required=\"true\" format=\"isUnsignedId\">"+cart.id+"</id_cart>";
+			result+="<id_currency required=\"true\" format=\"isUnsignedId\">1</id_currency>";
+			result+="<id_lang required=\"true\" format=\"isUnsignedId\">2</id_lang>";
+			result+="<id_customer required=\"true\" format=\"isUnsignedId\">"+customer.id+"</id_customer>";
+			result+="<id_carrier required=\"true\" format=\"isUnsignedId\">"+carrier.id+"</id_carrier>";
+			result+="<current_state format=\"isUnsignedId\"></current_state>";
+			result+="<module required=\"true\" format=\"isModuleName\">bankwire</module>";
+			result+="<invoice_number></invoice_number>";
+			result+="<invoice_date></invoice_date>";
+			result+="<delivery_number></delivery_number>";
+			result+="<delivery_date></delivery_date>";
+			result+="<valid></valid>";
+			result+="<date_add format=\"isDate\"></date_add>";
+			result+="<date_upd format=\"isDate\"></date_upd>";
+			result+="<id_shop_group format=\"isUnsignedId\"></id_shop_group>";
+			result+="<id_shop format=\"isUnsignedId\"></id_shop>";
+			result+="<secure_key format=\"isMd5\"></secure_key>";
+			result+="<payment required=\"true\" format=\"isGenericName\">Bank wire</payment>";
+			result+="<recyclable format=\"isBool\"></recyclable>";
+			result+="<gift format=\"isBool\"></gift>";
+			result+="<gift_message format=\"isMessage\"></gift_message>";
+			result+="<mobile_theme format=\"isBool\"></mobile_theme>";
+			result+="<total_discounts format=\"isPrice\"></total_discounts>";
+			result+="<total_discounts_tax_incl format=\"isPrice\"></total_discounts_tax_incl>";
+			result+="<total_discounts_tax_excl format=\"isPrice\"></total_discounts_tax_excl>";
+			result+="<total_paid required=\"true\" format=\"isPrice\">9.8</total_paid>";
+			result+="<total_paid_tax_incl format=\"isPrice\"></total_paid_tax_incl>";
+			result+="<total_paid_tax_excl format=\"isPrice\"></total_paid_tax_excl>";
+			result+="<total_paid_real required=\"true\" format=\"isPrice\">9.8</total_paid_real>";
+			result+="<total_products required=\"true\" format=\"isPrice\">1</total_products>";
+			result+="<total_products_wt required=\"true\" format=\"isPrice\">1</total_products_wt>";
+			result+="<total_shipping format=\"isPrice\"></total_shipping>";
+			result+="<total_shipping_tax_incl format=\"isPrice\"></total_shipping_tax_incl>";
+			result+="<total_shipping_tax_excl format=\"isPrice\"></total_shipping_tax_excl>";
+			result+="<carrier_tax_rate format=\"isFloat\"></carrier_tax_rate>";
+			result+="<total_wrapping format=\"isPrice\"></total_wrapping>";
+			result+="<total_wrapping_tax_incl format=\"isPrice\"></total_wrapping_tax_incl>";
+			result+="<total_wrapping_tax_excl format=\"isPrice\"></total_wrapping_tax_excl>";
+			result+="<shipping_number format=\"isTrackingNumber\"></shipping_number>";
+			result+="<conversion_rate required=\"true\" format=\"isFloat\">1</conversion_rate>";
+			result+="<reference></reference></order></prestashop>";
+		} catch (Exception e) {
+		}
+		return result;
+	}
 	public static double convertStringToFloat(String value){
 		try {
 			return Double.valueOf(value);

@@ -17,6 +17,7 @@ import com.orange.studio.bobo.objects.ProductFeatureValueDTO;
 import com.orange.studio.bobo.objects.ProductOptionValueDTO;
 import com.orange.studio.bobo.objects.RequestDTO;
 import com.orange.studio.bobo.objects.StockDTO;
+import com.orange.studio.bobo.objects.SummaryDTO;
 
 public interface CommonIF {
 	public List<MenuItemDTO> getListMenuCategory(String url,RequestDTO request,Bundle params);
@@ -38,4 +39,5 @@ public interface CommonIF {
 	public List<AddressDTO> getListAddress(String url);
 	public AddressDTO createListAddress(String url,String rawData);
 	public List<CarrierDTO> getListCarrier(String url);
+	public SummaryDTO getSummary(String url);
 }

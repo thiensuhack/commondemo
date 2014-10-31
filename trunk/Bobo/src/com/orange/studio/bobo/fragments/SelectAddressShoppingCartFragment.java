@@ -56,6 +56,7 @@ public class SelectAddressShoppingCartFragment extends BaseFragment implements O
 		mListCarrier=(Spinner)mView.findViewById(R.id.listCarrier);
 		
 		mConfirmBtn=(Button)mView.findViewById(R.id.confirmBtn);
+		mConfirmBtn.setVisibility(View.GONE);
 		mCreateAddressBtn=(Button)mView.findViewById(R.id.createAddressBtn);
 		
 		mAdapter=new AddressesAdapter(mHomeActivity);
@@ -142,9 +143,11 @@ public class SelectAddressShoppingCartFragment extends BaseFragment implements O
 			if(result!=null && result.size()>0){
 				mAdapter.updateDataList(result);				
 				//switchView(false, false);
+				mConfirmBtn.setVisibility(View.VISIBLE);
 				loadCarrier();
 			}
 			else{
+				mConfirmBtn.setVisibility(View.GONE);
 				switchView(false, false);
 			}
 		}

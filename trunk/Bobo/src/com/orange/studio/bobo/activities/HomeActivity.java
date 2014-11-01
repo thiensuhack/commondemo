@@ -540,7 +540,19 @@ public class HomeActivity extends ActionBarActivity implements
 		}
 		// updateItemCartCounter();
 	}
-
+	public void clearAllCartItem(){
+		if(mListItemCart!=null){
+			mListItemCart.clear();
+		}
+		updateItemCartCounter();
+	}
+	private void clearDataSuccessCheckout(){
+		clearAllCartItem();
+		mCurItemCart = null;
+		mAddressDTO = null;
+		mCarrierDTO = null;
+		mSummaryDTO=null;		
+	}
 	public void decreaseCartItem(String proId) {
 		if (proId == null || mListItemCart == null) {
 			return;
@@ -853,23 +865,13 @@ public class HomeActivity extends ActionBarActivity implements
 						Log.i(TAG, confirm.toJSONObject().toString(4));
 						Log.i(TAG, confirm.getPayment().toJSONObject()
 								.toString(4));
-						/**
-						 * TODO: send 'confirm' (and possibly
-						 * confirm.getPayment() to your server for verification
-						 * or consent completion. See
-						 * https://developer.paypal.com
-						 * /webapps/developer/docs/integration
-						 * /mobile/verify-mobile-payment/ for more details.
-						 * 
-						 * For sample mobile backend interactions, see
-						 * https://github
-						 * .com/paypal/rest-api-sdk-python/tree/master
-						 * /samples/mobile_backend
-						 */
+						
 						Toast.makeText(
 								getApplicationContext(),
 								"PaymentConfirmation info received from PayPal",
 								Toast.LENGTH_LONG).show();
+						onNavigationDrawerItemSelected(1);
+						clearDataSuccessCheckout();
 
 					} catch (JSONException e) {
 						Log.e(TAG, "an extremely unlikely failure occurred: ",
@@ -898,7 +900,6 @@ public class HomeActivity extends ActionBarActivity implements
 						Toast.makeText(getApplicationContext(),
 								"Future Payment code received from PayPal",
 								Toast.LENGTH_LONG).show();
-
 					} catch (JSONException e) {
 						Log.e("FuturePaymentExample",
 								"an extremely unlikely failure occurred: ", e);
@@ -941,20 +942,7 @@ public class HomeActivity extends ActionBarActivity implements
 		}
 	}
 
-	private void sendAuthorizationToServer(PayPalAuthorization authorization) {
-
-		/**
-		 * TODO: Send the authorization response to your server, where it can
-		 * exchange the authorization code for OAuth access and refresh tokens.
-		 * 
-		 * Your server must then store these tokens, so that your server code
-		 * can execute payments for this user in the future.
-		 * 
-		 * A more complete example that includes the required app-server to
-		 * PayPal-server integration is available from
-		 * https://github.com/paypal/
-		 * rest-api-sdk-python/tree/master/samples/mobile_backend
-		 */
+	private void sendAuthorizationToServer(PayPalAuthorization authorization) {		
 		Log.i("Authorzation:", authorization.toJSONObject().toString());
 	}
 

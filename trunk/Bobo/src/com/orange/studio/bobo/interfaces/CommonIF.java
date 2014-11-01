@@ -12,6 +12,7 @@ import com.orange.studio.bobo.objects.CountryDTO;
 import com.orange.studio.bobo.objects.CustomerDTO;
 import com.orange.studio.bobo.objects.ItemCartDTO;
 import com.orange.studio.bobo.objects.MenuItemDTO;
+import com.orange.studio.bobo.objects.OrderDTO;
 import com.orange.studio.bobo.objects.ProductFeatureDTO;
 import com.orange.studio.bobo.objects.ProductFeatureValueDTO;
 import com.orange.studio.bobo.objects.ProductOptionValueDTO;
@@ -40,4 +41,5 @@ public interface CommonIF {
 	public AddressDTO createListAddress(String url,String rawData);
 	public List<CarrierDTO> getListCarrier(String url);
 	public SummaryDTO getSummary(String url);
+	public OrderDTO createOrder(String url,String rawData);
 }

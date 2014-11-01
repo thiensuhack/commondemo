@@ -33,6 +33,7 @@ import com.orange.studio.bobo.objects.CountryDTO;
 import com.orange.studio.bobo.objects.CustomerDTO;
 import com.orange.studio.bobo.objects.ItemCartDTO;
 import com.orange.studio.bobo.objects.MenuItemDTO;
+import com.orange.studio.bobo.objects.OrderDTO;
 import com.orange.studio.bobo.objects.ProductFeatureDTO;
 import com.orange.studio.bobo.objects.ProductFeatureValueDTO;
 import com.orange.studio.bobo.objects.ProductOptionValueDTO;
@@ -528,6 +529,15 @@ public class CommonModel implements CommonIF{
 			}else{
 				return jb.optString("msg");
 			}
+			
+		} catch (Exception e) {
+		}
+		return null;
+	}
+	@Override
+	public OrderDTO createOrder(String url,String rawData) {
+		try {
+			String result=OrangeHttpRequest.getInstance().postDataToServer(url, rawData, 200);
 			
 		} catch (Exception e) {
 		}

@@ -56,7 +56,9 @@ import com.orange.studio.bobo.objects.CarrierDTO;
 import com.orange.studio.bobo.objects.CustomerDTO;
 import com.orange.studio.bobo.objects.ItemCartDTO;
 import com.orange.studio.bobo.objects.MenuItemDTO;
+import com.orange.studio.bobo.objects.OrderDTO;
 import com.orange.studio.bobo.objects.ProductDTO;
+import com.orange.studio.bobo.objects.SummaryDTO;
 import com.orange.studio.bobo.utils.OrangeUtils;
 import com.paypal.android.sdk.payments.PayPalAuthorization;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
@@ -96,14 +98,17 @@ public class HomeActivity extends ActionBarActivity implements
 
 	private ProgressDialog mProgressDialog = null;
 	private AddCartTask mAddCartTask = null;
-//	private LoadProductDetailAddCartTask mLoadProductDetailAddCartTask=null;
-	
+	//private LoadProductDetailAddCartTask mLoadProductDetailAddCartTask=null;
+
 	private CustomerDTO mUserInfo = null;
-	private ItemCartDTO mCurItemCart=null;
-	private AddressDTO mAddressDTO=null;
-	private CarrierDTO mCarrierDTO=null;
+	private ItemCartDTO mCurItemCart = null;
+	private AddressDTO mAddressDTO = null;
+	private CarrierDTO mCarrierDTO = null;
+	private SummaryDTO mSummaryDTO=null;
 	
 	public List<ProductDTO> mListItemCart = null;
+
+	public CreateOrderTask mCreateOrderTask=null;
 	
 	public enum HOME_TABS {
 		ALL, BEST_SELLER, POPULAR
@@ -215,12 +220,14 @@ public class HomeActivity extends ActionBarActivity implements
 			mAddCartTask.execute();
 		}
 	}
-//	public void addCartFromAdapter(ProductDTO product){
-//		if(mLoadProductDetailAddCartTask==null || mLoadProductDetailAddCartTask.getStatus()==Status.FINISHED){
-//			mLoadProductDetailAddCartTask=new LoadProductDetailAddCartTask(product);
-//			mLoadProductDetailAddCartTask.execute();
-//		}
-//	}
+
+	// public void addCartFromAdapter(ProductDTO product){
+	// if(mLoadProductDetailAddCartTask==null ||
+	// mLoadProductDetailAddCartTask.getStatus()==Status.FINISHED){
+	// mLoadProductDetailAddCartTask=new LoadProductDetailAddCartTask(product);
+	// mLoadProductDetailAddCartTask.execute();
+	// }
+	// }
 	private void updateTitleAndDrawer(Fragment fragment) {
 		String mFragmentName = fragment.getClass().getName();
 		if (mFragmentName.equals(HomeFragment.class.getName())) {
@@ -255,11 +262,13 @@ public class HomeActivity extends ActionBarActivity implements
 			setAppTitle(mCurCategory.name);
 			return;
 		}
-		if (mFragmentName.equals(CreateAddressShoppingCartFragment.class.getName())) {
+		if (mFragmentName.equals(CreateAddressShoppingCartFragment.class
+				.getName())) {
 			setAppTitle(getString(R.string.shopping_cart_create_address));
 			return;
 		}
-		if (mFragmentName.equals(SelectAddressShoppingCartFragment.class.getName())) {
+		if (mFragmentName.equals(SelectAddressShoppingCartFragment.class
+				.getName())) {
 			setAppTitle(getString(R.string.shopping_cart_select_address));
 			return;
 		}
@@ -376,15 +385,18 @@ public class HomeActivity extends ActionBarActivity implements
 					SpinToWinFragment.class.getName());
 			break;
 		case MENU_NAME.CREATE_ADDRESS:
-			mFragment = CreateAddressShoppingCartFragment.instantiate(getApplicationContext(),
+			mFragment = CreateAddressShoppingCartFragment.instantiate(
+					getApplicationContext(),
 					CreateAddressShoppingCartFragment.class.getName());
 			break;
 		case MENU_NAME.SELECT_ADDRESS:
-			mFragment = SelectAddressShoppingCartFragment.instantiate(getApplicationContext(),
+			mFragment = SelectAddressShoppingCartFragment.instantiate(
+					getApplicationContext(),
 					SelectAddressShoppingCartFragment.class.getName());
 			break;
 		case MENU_NAME.SUMMARY:
-			mFragment = SummaryCheckoutFragment.instantiate(getApplicationContext(),
+			mFragment = SummaryCheckoutFragment.instantiate(
+					getApplicationContext(),
 					SummaryCheckoutFragment.class.getName());
 			break;
 		default:
@@ -449,8 +461,8 @@ public class HomeActivity extends ActionBarActivity implements
 			break;
 		case R.id.homeShoppingCartBtn:
 			onNavigationDrawerItemSelected(MENU_NAME.SHOPING_CART_FRAGMENT);
-			//onNavigationDrawerItemSelected(MENU_NAME.SELECT_ADDRESS);
-			//onNavigationDrawerItemSelected(MENU_NAME.CREATE_ADDRESS);
+			// onNavigationDrawerItemSelected(MENU_NAME.SELECT_ADDRESS);
+			// onNavigationDrawerItemSelected(MENU_NAME.CREATE_ADDRESS);
 			break;
 		default:
 			break;
@@ -510,9 +522,9 @@ public class HomeActivity extends ActionBarActivity implements
 			proItem.cartCounter = 1;
 			mListItemCart.add(0, proItem);
 		}
-//		updateItemCartCounter();
-//		Toast.makeText(getApplicationContext(), "Added:" + proItem.name,
-//				Toast.LENGTH_SHORT).show();
+		// updateItemCartCounter();
+		// Toast.makeText(getApplicationContext(), "Added:" + proItem.name,
+		// Toast.LENGTH_SHORT).show();
 		return;
 	}
 
@@ -526,7 +538,7 @@ public class HomeActivity extends ActionBarActivity implements
 				break;
 			}
 		}
-		//updateItemCartCounter();
+		// updateItemCartCounter();
 	}
 
 	public void decreaseCartItem(String proId) {
@@ -535,30 +547,32 @@ public class HomeActivity extends ActionBarActivity implements
 		}
 		for (int i = 0; i < mListItemCart.size(); i++) {
 			if (mListItemCart.get(i).id.equals(proId)) {
-				if(mListItemCart.get(i).cartCounter>0){
+				if (mListItemCart.get(i).cartCounter > 0) {
 					mListItemCart.get(i).cartCounter--;
-				}else{
+				} else {
 					mListItemCart.remove(i);
 				}
 				break;
 			}
 		}
-		//updateItemCartCounter();
+		// updateItemCartCounter();
 	}
-	public int counterTotalItemsCart(){
-		if(mListItemCart==null || mListItemCart.size()<1){
+
+	public int counterTotalItemsCart() {
+		if (mListItemCart == null || mListItemCart.size() < 1) {
 			return 0;
 		}
-		int result=0;
+		int result = 0;
 		for (ProductDTO item : mListItemCart) {
-			result+=item.cartCounter;
+			result += item.cartCounter;
 		}
 		return result;
 	}
+
 	public void updateItemCartCounter() {
 		try {
 			if (isHasItemsCart()) {
-				int total=counterTotalItemsCart();
+				int total = counterTotalItemsCart();
 				mTotalItemsCart.setText(String.valueOf(total));
 				mTotalItemsCart.setVisibility(View.VISIBLE);
 			} else {
@@ -605,25 +619,28 @@ public class HomeActivity extends ActionBarActivity implements
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			if(!mProgressDialog.isShowing()){
+			if (!mProgressDialog.isShowing()) {
 				mProgressDialog.show();
-			}			
+			}
 		}
 
 		@Override
 		protected ItemCartDTO doInBackground(Void... params) {
 			try {
 				String data = "";
-				if(getCurItemCart()==null || getCurItemCart().id==null || getCurItemCart().id.length()<1){
-					data=OrangeUtils.createCartData(mListItemCart,mUserInfo,null);
+				if (getCurItemCart() == null || getCurItemCart().id == null
+						|| getCurItemCart().id.length() < 1) {
+					data = OrangeUtils.createCartData(mListItemCart, mUserInfo,
+							null);
 					return CommonModel.getInstance().addToCart(
 							UrlRequest.ADD_CART_URL, data);
-				}else{
-					data=OrangeUtils.createCartData(mListItemCart,mUserInfo,getCurItemCart().id);
+				} else {
+					data = OrangeUtils.createCartData(mListItemCart, mUserInfo,
+							getCurItemCart().id);
 					return CommonModel.getInstance().updateToCart(
 							UrlRequest.ADD_CART_URL, data);
 				}
-				
+
 			} catch (Exception e) {
 			}
 			return null;
@@ -636,8 +653,8 @@ public class HomeActivity extends ActionBarActivity implements
 				if (result != null && result.id.trim().length() > 0) {
 					setCurItemCart(result);
 					showToast(getString(R.string.add_cart_success));
-					//addToCart(mProductDTO);
-				} else {					
+					// addToCart(mProductDTO);
+				} else {
 					decreaseCartItem(mProductDTO.id);
 					showToast(getString(R.string.add_cart_failed));
 				}
@@ -661,7 +678,7 @@ public class HomeActivity extends ActionBarActivity implements
 		// onPaypalPayment();
 		if (mUserInfo != null) {
 			onNavigationDrawerItemSelected(MENU_NAME.SELECT_ADDRESS);
-			//onPaypalPayment();
+			// onPaypalPayment();
 		} else {
 			onNavigationDrawerItemSelected(MENU_NAME.LOGIN_FRAGMENT);// login
 																		// view
@@ -676,41 +693,78 @@ public class HomeActivity extends ActionBarActivity implements
 		this.mUserInfo = mUserInfo;
 	}
 
-//	private class LoadProductDetailAddCartTask extends
-//			AsyncTask<Void, Void, ProductDTO> {
-//		private ProductDTO mProduct=null;
-//		public LoadProductDetailAddCartTask(ProductDTO pro){
-//			mProduct=pro;
-//		}
-//		@Override
-//		protected void onPreExecute() {
-//			super.onPreExecute();
-//			if(!mProgressDialog.isShowing()){
-//				mProgressDialog.show();
-//			}
-//		}
-//
-//		@Override
-//		protected ProductDTO doInBackground(Void... arg0) {
-//			Bundle mParams = OrangeUtils.createRequestBundle2(null, null);
-//			RequestDTO request = new RequestDTO();
-//			request.proId = mProduct.id;
-//			return ProductModel.getInstance().getProductDetail(
-//					UrlRequest.PRODUCT_DETAIL, request, mParams);
-//		}
-//
-//		@Override
-//		protected void onPostExecute(ProductDTO result) {
-//			super.onPostExecute(result);
-//			if (result != null && result.id.trim().length()>0) {
-//				addCart(result);
-//			}else{
-//				if(mProgressDialog.isShowing()){
-//					mProgressDialog.dismiss();
-//				}
-//			}
-//		}
-//	}
+	// private class LoadProductDetailAddCartTask extends
+	// AsyncTask<Void, Void, ProductDTO> {
+	// private ProductDTO mProduct=null;
+	// public LoadProductDetailAddCartTask(ProductDTO pro){
+	// mProduct=pro;
+	// }
+	// @Override
+	// protected void onPreExecute() {
+	// super.onPreExecute();
+	// if(!mProgressDialog.isShowing()){
+	// mProgressDialog.show();
+	// }
+	// }
+	//
+	// @Override
+	// protected ProductDTO doInBackground(Void... arg0) {
+	// Bundle mParams = OrangeUtils.createRequestBundle2(null, null);
+	// RequestDTO request = new RequestDTO();
+	// request.proId = mProduct.id;
+	// return ProductModel.getInstance().getProductDetail(
+	// UrlRequest.PRODUCT_DETAIL, request, mParams);
+	// }
+	//
+	// @Override
+	// protected void onPostExecute(ProductDTO result) {
+	// super.onPostExecute(result);
+	// if (result != null && result.id.trim().length()>0) {
+	// addCart(result);
+	// }else{
+	// if(mProgressDialog.isShowing()){
+	// mProgressDialog.dismiss();
+	// }
+	// }
+	// }
+	// }
+	public void createOrder(){
+		if(mCreateOrderTask==null||mCreateOrderTask.getStatus()==Status.FINISHED){
+			mCreateOrderTask=new CreateOrderTask();
+			mCreateOrderTask.execute();
+		}
+	}
+	class CreateOrderTask extends AsyncTask<Void, Void, OrderDTO> {
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			if(!mProgressDialog.isShowing()){
+				mProgressDialog.show();
+			}
+		}
+
+		@Override
+		protected OrderDTO doInBackground(Void... params) {
+			try {
+				String data=OrangeUtils.createStringOrder(mCurItemCart, mUserInfo, mAddressDTO, mCarrierDTO);
+				if(data!=null){
+					return CommonModel.getInstance().createOrder(UrlRequest.CREATE_ORDER, data);
+				}
+			} catch (Exception e) {
+			}
+			return null;
+		}
+		@Override
+		protected void onPostExecute(OrderDTO result) {
+			super.onPostExecute(result);
+			if(result!=null){
+				
+			}
+			if(mProgressDialog.isShowing()){
+				mProgressDialog.dismiss();
+			}
+		}
+	}
 
 	// Paypal functions
 	public void onPaypalPayment() {
@@ -884,6 +938,7 @@ public class HomeActivity extends ActionBarActivity implements
 		 */
 		Log.i("Authorzation:", authorization.toJSONObject().toString());
 	}
+
 	// end Paypal functions
 	public AddressDTO getAddress() {
 		return mAddressDTO;
@@ -907,5 +962,13 @@ public class HomeActivity extends ActionBarActivity implements
 
 	public void setCurItemCart(ItemCartDTO mCurItemCart) {
 		this.mCurItemCart = mCurItemCart;
+	}
+
+	public SummaryDTO getmSummaryDTO() {
+		return mSummaryDTO;
+	}
+
+	public void setSummaryDTO(SummaryDTO mSummaryDTO) {
+		this.mSummaryDTO = mSummaryDTO;
 	}
 }

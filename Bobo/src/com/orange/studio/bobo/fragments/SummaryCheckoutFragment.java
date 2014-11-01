@@ -1,7 +1,6 @@
 package com.orange.studio.bobo.fragments;
 
 import android.annotation.SuppressLint;
-import android.graphics.LinearGradient;
 import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
 import android.os.Bundle;
@@ -9,20 +8,22 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.configs.OrangeConfig.UrlRequest;
 import com.orange.studio.bobo.models.CommonModel;
-import com.orange.studio.bobo.objects.AboutUsDTO;
 import com.orange.studio.bobo.objects.SummaryDTO;
 
-public class SummaryCheckoutFragment extends BaseFragment {
+public class SummaryCheckoutFragment extends BaseFragment implements OnClickListener{
 	private View mSummaryContainer=null;
 	private WebView mWebView=null;
 	private GetSummaryTask mGetSummaryTask=null;
+	private Button mConfirmBtn=null;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -48,15 +49,27 @@ public class SummaryCheckoutFragment extends BaseFragment {
 		initLoadingView();
 		switchView(false, false);
 		mSummaryContainer.setVisibility(View.GONE);
+		mConfirmBtn=(Button)mView.findViewById(R.id.confirmBtn);
 	}
 	private void initListener(){
-		
+		mConfirmBtn.setOnClickListener(this);
 	}
 	private void loadSummary(){
 		if(mGetSummaryTask==null || mGetSummaryTask.getStatus()==Status.FINISHED){
 			mGetSummaryTask=new GetSummaryTask();
 			mGetSummaryTask.execute();
 		}		
+	}
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.confirmBtn:
+			
+			break;
+
+		default:
+			break;
+		}
 	}
 	@Override
 	public void onResume() {
@@ -82,6 +95,7 @@ public class SummaryCheckoutFragment extends BaseFragment {
 		protected void onPostExecute(SummaryDTO result) {
 			super.onPostExecute(result);
 			if(result!=null){
+				mHomeActivity.setSummaryDTO(result);
 				String htmlData="<html><head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"></head><body>";
 //				htmlData+="<div>"+"Country:" + result.delivery.country+"</div>";
 //				htmlData+="<div>"+"City"+ result.delivery.city+"</div>";

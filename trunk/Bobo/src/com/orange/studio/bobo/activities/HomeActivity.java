@@ -105,6 +105,7 @@ public class HomeActivity extends ActionBarActivity implements
 	private AddressDTO mAddressDTO = null;
 	private CarrierDTO mCarrierDTO = null;
 	private SummaryDTO mSummaryDTO=null;
+	private boolean isCheckOutSuccess=false;
 	
 	public List<ProductDTO> mListItemCart = null;
 
@@ -869,8 +870,9 @@ public class HomeActivity extends ActionBarActivity implements
 						Toast.makeText(
 								getApplicationContext(),
 								"PaymentConfirmation info received from PayPal",
-								Toast.LENGTH_LONG).show();
-						onNavigationDrawerItemSelected(1);
+								Toast.LENGTH_LONG).show();						
+						//onNavigationDrawerItemSelected(1);
+						setCheckOutSuccess(true);
 						clearDataSuccessCheckout();
 
 					} catch (JSONException e) {
@@ -977,5 +979,13 @@ public class HomeActivity extends ActionBarActivity implements
 
 	public void setSummaryDTO(SummaryDTO mSummaryDTO) {
 		this.mSummaryDTO = mSummaryDTO;
+	}
+
+	public boolean IsCheckOutSuccess() {
+		return isCheckOutSuccess;
+	}
+
+	public void setCheckOutSuccess(boolean isCheckOutSuccess) {
+		this.isCheckOutSuccess = isCheckOutSuccess;
 	}
 }

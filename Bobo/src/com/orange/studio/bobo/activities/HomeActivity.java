@@ -651,6 +651,11 @@ public class HomeActivity extends ActionBarActivity implements
 			super.onPostExecute(result);
 			try {
 				if (result != null && result.id.trim().length() > 0) {
+//					if (getCurItemCart() != null || getCurItemCart().id != null && getCurItemCart().id.trim().length()>0 && getCurItemCart().id.equals(result.id)){
+//						
+//					}
+					showToast("CartID:"+ getCurItemCart().id+ "CartID return:" + result.id);
+					
 					setCurItemCart(result);
 					showToast(getString(R.string.add_cart_success));
 					// addToCart(mProductDTO);
@@ -676,6 +681,10 @@ public class HomeActivity extends ActionBarActivity implements
 
 	public void checkOut() {
 		// onPaypalPayment();
+		if(!isHasItemsCart()){
+			showToast(getString(R.string.msg_empty_items_cart));
+			return;
+		}
 		if (mUserInfo != null) {
 			onNavigationDrawerItemSelected(MENU_NAME.SELECT_ADDRESS);
 			// onPaypalPayment();
@@ -803,8 +812,18 @@ public class HomeActivity extends ActionBarActivity implements
 			// new BigDecimal("37.99"), "USD", "sku-33333")
 			// };
 			BigDecimal subtotal = PayPalItem.getItemTotal(items);
-			BigDecimal shipping = new BigDecimal("0");
-			BigDecimal tax = new BigDecimal("0");
+			BigDecimal shipping;
+			if(mSummaryDTO.total_shipping<0){
+				shipping = new BigDecimal(0);
+			}else{
+				shipping = new BigDecimal(mSummaryDTO.total_shipping);
+			}
+			BigDecimal tax;
+			if(mSummaryDTO.total_tax<0){
+				tax = new BigDecimal(0);
+			}else{
+				tax = new BigDecimal(mSummaryDTO.total_tax);
+			}
 			PayPalPaymentDetails paymentDetails = new PayPalPaymentDetails(
 					shipping, subtotal, tax);
 			BigDecimal amount = subtotal.add(shipping).add(tax);

@@ -653,11 +653,10 @@ public class HomeActivity extends ActionBarActivity implements
 				if (result != null && result.id.trim().length() > 0) {
 //					if (getCurItemCart() != null || getCurItemCart().id != null && getCurItemCart().id.trim().length()>0 && getCurItemCart().id.equals(result.id)){
 //						
-//					}
-					showToast("CartID:"+ getCurItemCart().id+ "CartID return:" + result.id);
-					
+//					}								
 					setCurItemCart(result);
-					showToast(getString(R.string.add_cart_success));
+					//showToast("CartID:"+ getCurItemCart().id+ "CartID return:" + result.id);
+					showToast(getString(R.string.add_cart_success)+"CartID:"+ getCurItemCart().id+ "CartID return:" + result.id);
 					// addToCart(mProductDTO);
 				} else {
 					decreaseCartItem(mProductDTO.id);
@@ -767,8 +766,9 @@ public class HomeActivity extends ActionBarActivity implements
 		protected void onPostExecute(OrderDTO result) {
 			super.onPostExecute(result);
 			if(result!=null){
-				
+				//onPaypalPayment();
 			}
+			onPaypalPayment();
 			if(mProgressDialog.isShowing()){
 				mProgressDialog.dismiss();
 			}

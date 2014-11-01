@@ -64,9 +64,8 @@ public class SummaryCheckoutFragment extends BaseFragment implements OnClickList
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.confirmBtn:
-			
+			mHomeActivity.createOrder();
 			break;
-
 		default:
 			break;
 		}
@@ -96,13 +95,14 @@ public class SummaryCheckoutFragment extends BaseFragment implements OnClickList
 			super.onPostExecute(result);
 			if(result!=null){
 				mHomeActivity.setSummaryDTO(result);
-				String htmlData="<html><head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"></head><body>";
+				String htmlData="<html><head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">";
+				htmlData+="</head><body style=\"padding:20px;\">";
 //				htmlData+="<div>"+"Country:" + result.delivery.country+"</div>";
 //				htmlData+="<div>"+"City"+ result.delivery.city+"</div>";
 //				htmlData+="<div>"+"Address:"+ result.delivery.address1+"</div>";
-				htmlData+="<div>"+"Total price:"+ String.valueOf(result.total_price)+"</div>";
-				htmlData+="<div>"+"Total tax:"+ String.valueOf(result.total_tax)+"</div>";
-				htmlData+="<div>"+"Total price without tax:"+ String.valueOf(result.total_price_without_tax)+"</div>";
+				htmlData+="<div>"+"Total price:<b>"+ String.valueOf(result.total_price)+" $</b></div>";
+				htmlData+="<div>"+"Total tax:<b>"+ String.valueOf(result.total_tax)+" $</b></div>";
+				htmlData+="<div>"+"Total price without tax:<b>"+ String.valueOf(result.total_price_without_tax)+" $</b></div>";
 				htmlData+="</body>";
 				mWebView.loadData(htmlData, "text/html; charset=UTF-8", null);
 				mSummaryContainer.setVisibility(View.VISIBLE);

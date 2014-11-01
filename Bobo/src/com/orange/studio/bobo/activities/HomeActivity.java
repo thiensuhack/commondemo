@@ -550,7 +550,7 @@ public class HomeActivity extends ActionBarActivity implements
 				break;
 			}
 		}
-		// updateItemCartCounter();
+		updateItemCartCounter();
 	}
 	public void clearAllCartItem(){
 		if(mListItemCart!=null){

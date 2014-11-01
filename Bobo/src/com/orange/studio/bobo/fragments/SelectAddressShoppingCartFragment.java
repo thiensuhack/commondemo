@@ -35,8 +35,8 @@ public class SelectAddressShoppingCartFragment extends BaseFragment implements O
 	private GetListAddressTask mGetListAddressTask=null;
 	private GetListCarrierTask mGetListCarrierTask=null;
 	
-	private AddressDTO mCurrentAddress=null;
-	private CarrierDTO mCurrentCarrier=null;
+//	private AddressDTO mCurrentAddress=null;
+//	private CarrierDTO mCurrentCarrier=null;
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -103,14 +103,14 @@ public class SelectAddressShoppingCartFragment extends BaseFragment implements O
 	public void onItemSelected(AdapterView<?> arg0, View view, int position,
 			long arg3) {
 		try {
-			switch (view.getId()) {
+			switch (arg0.getId()) {
 			case R.id.listAddress:
-				mCurrentAddress =mAdapter.getItem(position);
-				mHomeActivity.setAddress(mCurrentAddress);
+				//mCurrentAddress =mAdapter.getItem(position);
+				mHomeActivity.setAddress(mAdapter.getItem(position));
 				break;
 			case R.id.listCarrier:
-				mCurrentCarrier=mCarrierAdapter.getItem(position);
-				mHomeActivity.setCarrier(mCurrentCarrier);
+				//mCurrentCarrier=mCarrierAdapter.getItem(position);
+				mHomeActivity.setCarrier(mCarrierAdapter.getItem(position));
 				break;
 			default:
 				break;

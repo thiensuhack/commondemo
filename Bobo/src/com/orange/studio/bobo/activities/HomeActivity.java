@@ -49,7 +49,7 @@ import com.orange.studio.bobo.fragments.SearchResultFragment;
 import com.orange.studio.bobo.fragments.SelectAddressShoppingCartFragment;
 import com.orange.studio.bobo.fragments.ShoppingCartFragment;
 import com.orange.studio.bobo.fragments.SpinToWinFragment;
-import com.orange.studio.bobo.fragments.SummaryCheckoutFragment;
+import com.orange.studio.bobo.fragments.PaymentCheckoutFragment;
 import com.orange.studio.bobo.models.CommonModel;
 import com.orange.studio.bobo.objects.AddressDTO;
 import com.orange.studio.bobo.objects.CarrierDTO;
@@ -273,8 +273,8 @@ public class HomeActivity extends ActionBarActivity implements
 			setAppTitle(getString(R.string.shopping_cart_select_address));
 			return;
 		}
-		if (mFragmentName.equals(SummaryCheckoutFragment.class.getName())) {
-			setAppTitle(getString(R.string.shopping_cart_summary));
+		if (mFragmentName.equals(PaymentCheckoutFragment.class.getName())) {
+			setAppTitle(getString(R.string.shopping_cart_payment));
 			return;
 		}
 		setAppTitle(getString(R.string.app_name));
@@ -396,9 +396,9 @@ public class HomeActivity extends ActionBarActivity implements
 					SelectAddressShoppingCartFragment.class.getName());
 			break;
 		case MENU_NAME.SUMMARY:
-			mFragment = SummaryCheckoutFragment.instantiate(
+			mFragment = PaymentCheckoutFragment.instantiate(
 					getApplicationContext(),
-					SummaryCheckoutFragment.class.getName());
+					PaymentCheckoutFragment.class.getName());
 			break;
 		default:
 			mFragment = HomeFragment.instantiate(getApplicationContext(),

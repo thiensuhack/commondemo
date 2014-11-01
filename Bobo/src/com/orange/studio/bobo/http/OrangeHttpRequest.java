@@ -23,6 +23,7 @@ import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
 
 import android.os.Bundle;
 
@@ -130,8 +131,11 @@ public class OrangeHttpRequest implements HttpIF {
 		HttpPost httpPost = new HttpPost(url);
 
 		try {			
-			httpPost.setHeader("Content-type", "text/xml;charset=utf-8");
-			httpPost.setEntity(new StringEntity(rawData));
+			StringEntity data=new StringEntity(rawData,HTTP.UTF_8);
+			data.setContentEncoding("text/xml");			
+			httpPost.setHeader("Accept", "application/xml");
+			httpPost.setHeader("Content-Type", "text/xml;charset=utf-8");
+			httpPost.setEntity(data);
 			
 			HttpResponse response = client.execute(httpPost);
 			StatusLine statusLine = response.getStatusLine();

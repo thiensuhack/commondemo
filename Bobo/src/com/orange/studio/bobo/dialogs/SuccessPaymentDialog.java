@@ -4,9 +4,9 @@ import android.content.Context;
 
 import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.activities.HomeActivity.MainHomeActivityHandler;
-import com.zuzu.dialogs.BaseDialogNoTitleBar;
+import com.zuzu.dialogs.BaseDialog;
 
-public class SuccessPaymentDialog extends BaseDialogNoTitleBar {
+public class SuccessPaymentDialog extends BaseDialog {
 	private MainHomeActivityHandler mHandler = null;
 
 	public SuccessPaymentDialog(Context context, MainHomeActivityHandler _handler) {

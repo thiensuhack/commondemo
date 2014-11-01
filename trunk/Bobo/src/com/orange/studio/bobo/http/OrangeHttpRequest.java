@@ -166,8 +166,13 @@ public class OrangeHttpRequest implements HttpIF {
 		HttpPost httpPost = new HttpPost(url);
 
 		try {			
-			httpPost.setHeader("Content-type", "text/xml;charset=utf-8");
-			httpPost.setEntity(new StringEntity(rawData));
+//			httpPost.setHeader("Content-type", "text/xml;charset=utf-8");
+//			httpPost.setEntity(new StringEntity(rawData));
+			StringEntity data=new StringEntity(rawData,HTTP.UTF_8);
+			data.setContentEncoding("text/xml");			
+			httpPost.setHeader("Accept", "application/xml");
+			httpPost.setHeader("Content-Type", "text/xml;charset=utf-8");
+			httpPost.setEntity(data);
 			
 			HttpResponse response = client.execute(httpPost);
 			StatusLine statusLine = response.getStatusLine();
@@ -193,8 +198,13 @@ public class OrangeHttpRequest implements HttpIF {
 		HttpPut httpPost = new HttpPut(url);
 
 		try {			
-			httpPost.setHeader("Content-type", "text/xml;charset=utf-8");
-			httpPost.setEntity(new StringEntity(rawData));
+//			httpPost.setHeader("Content-type", "text/xml;charset=utf-8");
+//			httpPost.setEntity(new StringEntity(rawData));
+			StringEntity data=new StringEntity(rawData,HTTP.UTF_8);
+			data.setContentEncoding("text/xml");			
+			httpPost.setHeader("Accept", "application/xml");
+			httpPost.setHeader("Content-Type", "text/xml;charset=utf-8");
+			httpPost.setEntity(data);
 			
 			HttpResponse response = client.execute(httpPost);
 			StatusLine statusLine = response.getStatusLine();

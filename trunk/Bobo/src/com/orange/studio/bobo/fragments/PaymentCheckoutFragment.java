@@ -76,6 +76,7 @@ public class PaymentCheckoutFragment extends BaseFragment implements OnClickList
 		if(mHomeActivity.IsCheckOutSuccess()){
 			mHomeActivity.setCheckOutSuccess(false);
 			mHomeActivity.onNavigationDrawerItemSelected(1);
+			mHomeActivity.showSuccessPaymentDilog();
 		}else{
 			loadSummary();
 		}		

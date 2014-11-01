@@ -34,6 +34,7 @@ import com.orange.studio.bobo.configs.OrangeConfig.CartItemsRule;
 import com.orange.studio.bobo.configs.OrangeConfig.MENU_NAME;
 import com.orange.studio.bobo.configs.OrangeConfig.UrlRequest;
 import com.orange.studio.bobo.dialogs.ExitDialog;
+import com.orange.studio.bobo.dialogs.SuccessPaymentDialog;
 import com.orange.studio.bobo.fragments.AboutFragment;
 import com.orange.studio.bobo.fragments.BestSellerProductFragment;
 import com.orange.studio.bobo.fragments.ContactUsFragment;
@@ -94,6 +95,8 @@ public class HomeActivity extends ActionBarActivity implements
 
 	private MainHomeActivityHandler mHandler = null;
 	private ExitDialog mExitDialog = null;
+	private SuccessPaymentDialog mSuccessPaymentDialog=null;
+	
 	private Fragment mCurFragment = null;
 
 	private ProgressDialog mProgressDialog = null;
@@ -202,6 +205,7 @@ public class HomeActivity extends ActionBarActivity implements
 			}
 		};
 		mExitDialog = new ExitDialog(this, mHandler);
+		mSuccessPaymentDialog=new SuccessPaymentDialog(this, mHandler);
 	}
 
 	private void initListener() {
@@ -213,7 +217,14 @@ public class HomeActivity extends ActionBarActivity implements
 	public void setAppTitle(String title) {
 		mAppTitle.setText(title);
 	}
-
+	public void showSuccessPaymentDilog(){
+		try {
+			if(!mSuccessPaymentDialog.isShowing()){
+				mSuccessPaymentDialog.show();
+			}			
+		} catch (Exception e) {			
+		}
+	}
 	public void addCart(ProductDTO product) {
 		addToCart(product);
 		if (mAddCartTask == null || mAddCartTask.getStatus() == Status.FINISHED) {

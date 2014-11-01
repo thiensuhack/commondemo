@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    
     <string name="app_name">BOBO-U Fashion</string>
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
@@ -18,6 +19,10 @@
     <string name="search_text">Search</string>
     <string name="search_text_hint">Bobo search...</string>
     <string name="waitting_message">Please wait...</string>
+    
+    <!-- Payment -->
+    <string name="payment_success_message">Success Payment</string>
+    <string name="payment_thank_you_message">Thank you!</string>
     
     <!-- Country -->
     <string name="address_country_loading_error">Could not found list country!</string>

@@ -29,7 +29,7 @@ public class PaymentCheckoutFragment extends BaseFragment implements OnClickList
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		if (mView == null) {
-			mView = inflater.inflate(R.layout.fragment_summary, container,
+			mView = inflater.inflate(R.layout.fragment_payment, container,
 					false);
 			initView();
 			initListener();
@@ -102,7 +102,7 @@ public class PaymentCheckoutFragment extends BaseFragment implements OnClickList
 			if(result!=null){
 				mHomeActivity.setSummaryDTO(result);
 				String htmlData="<html><head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">";
-				htmlData+="</head><body style=\"padding:20px;\">";
+				htmlData+="</head><body style=\"padding:10px;\">";
 //				htmlData+="<div>"+"Country:" + result.delivery.country+"</div>";
 //				htmlData+="<div>"+"City"+ result.delivery.city+"</div>";
 //				htmlData+="<div>"+"Address:"+ result.delivery.address1+"</div>";

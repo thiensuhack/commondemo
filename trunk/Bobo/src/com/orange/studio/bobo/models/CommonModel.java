@@ -47,6 +47,7 @@ import com.orange.studio.bobo.xml.XMLHandlerCategory;
 import com.orange.studio.bobo.xml.XMLHandlerCountry;
 import com.orange.studio.bobo.xml.XMLHandlerCustomer;
 import com.orange.studio.bobo.xml.XMLHandlerItemCart;
+import com.orange.studio.bobo.xml.XMLHandlerOrder;
 import com.orange.studio.bobo.xml.XMLHandlerProductFeatureValues;
 import com.orange.studio.bobo.xml.XMLHandlerProductFeatures;
 import com.orange.studio.bobo.xml.XMLHandlerProductOptionValue;
@@ -537,7 +538,19 @@ public class CommonModel implements CommonIF{
 	@Override
 	public OrderDTO createOrder(String url,String rawData) {
 		try {
-			String result=OrangeHttpRequest.getInstance().postDataToServer(url, rawData, 200);			
+			String result=OrangeHttpRequest.getInstance().postDataToServer(url, rawData, 200);
+			if(result!=null && result.trim().length()>0){
+				SAXParserFactory saxPF = SAXParserFactory.newInstance();
+				SAXParser saxP = saxPF.newSAXParser();
+				XMLReader xmlR = saxP.getXMLReader();						
+				XMLHandlerOrder myXMLHandler = new XMLHandlerOrder(OrangeConfig.LANGUAGE_DEFAULT);
+				xmlR.setContentHandler(myXMLHandler);
+				InputSource is = new InputSource(new StringReader(result));
+				xmlR.parse(is);
+				if(myXMLHandler.mListProduct!=null && myXMLHandler.mListProduct.size()>0){
+					return myXMLHandler.mListProduct.get(0);
+				}
+			}
 		} catch (Exception e) {
 		}
 		return null;

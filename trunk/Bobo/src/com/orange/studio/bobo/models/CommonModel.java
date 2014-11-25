@@ -537,8 +537,7 @@ public class CommonModel implements CommonIF{
 	@Override
 	public OrderDTO createOrder(String url,String rawData) {
 		try {
-			String result=OrangeHttpRequest.getInstance().postDataToServer(url, rawData, 200);
-			
+			String result=OrangeHttpRequest.getInstance().postDataToServer(url, rawData, 200);			
 		} catch (Exception e) {
 		}
 		return null;

@@ -11,7 +11,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.activities.HomeActivity;
@@ -119,6 +118,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener{
 			if(result!=null && result.id!=null && result.id.trim().length()>0){
 				mHomeActivity.showToast(mHomeActivity.getString(R.string.login_success_message));
 				mHomeActivity.setUserInfo(result);
+				mHomeActivity.updateCart();
 				mHomeActivity.onBackPressed();
 			}else{
 				mHomeActivity.showToast(mHomeActivity.getString(R.string.login_failed_message));

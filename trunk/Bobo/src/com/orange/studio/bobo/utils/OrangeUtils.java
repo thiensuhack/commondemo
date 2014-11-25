@@ -106,7 +106,7 @@ public class OrangeUtils {
 			result+="<associations><cart_rows>";
 			for (ProductDTO item : mListProducts) {
 				result+="<cart_row>";
-				result+="<id_product>"+item.stock.id+"</id_product>";
+				result+="<id_product>"+item.id+"</id_product>";
 				result+="<id_product_attribute>"+item.stock.id_product_attribute+"</id_product_attribute>";
 				result+="<id_address_delivery>0</id_address_delivery></cart_row>";
 				result+="<quantity>"+item.cartCounter+"</quantity>";

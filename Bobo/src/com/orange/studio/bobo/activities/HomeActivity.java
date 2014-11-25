@@ -226,10 +226,23 @@ public class HomeActivity extends ActionBarActivity implements
 		}
 	}
 	public void addCart(ProductDTO product) {
-		addToCart(product);
-		if (mAddCartTask == null || mAddCartTask.getStatus() == Status.FINISHED) {
-			mAddCartTask = new AddCartTask(product);
-			mAddCartTask.execute();
+		try {
+			int result=addToCart(product);
+			if(result==1){
+				if (mAddCartTask == null || mAddCartTask.getStatus() == Status.FINISHED) {
+					mAddCartTask = new AddCartTask(product);
+					mAddCartTask.execute();
+				}
+			}else{
+				if(result==-1){
+					showToast(product.name+" available: " + product.stock.quantity);
+				}
+				else{
+					showToast("Can't addCart");
+				}
+			}
+		} catch (Exception e) {
+			showToast("Add cart error!");
 		}
 	}
 
@@ -510,34 +523,42 @@ public class HomeActivity extends ActionBarActivity implements
 		}
 	}
 
-	private void addToCart(ProductDTO proItem) {
-		if (proItem == null) {
-			return;
-		}
-		if (mListItemCart == null) {
-			mListItemCart = new ArrayList<ProductDTO>();
-		}
-
-		boolean isExisted = false;
-		for (ProductDTO item : mListItemCart) {
-			if (item.id.equals(proItem.id)) {
-				if (item.cartCounter >= CartItemsRule.MAX_ITEMS_CART) {
-					return;
-				}
-				item.cartCounter++;
-				isExisted = true;
-				break;
+	private int addToCart(ProductDTO proItem) {
+		try {
+			if (proItem == null) {
+				return 0;
 			}
-		}
+			if (mListItemCart == null) {
+				mListItemCart = new ArrayList<ProductDTO>();
+			}
 
-		if (!isExisted) {
-			proItem.cartCounter = 1;
-			mListItemCart.add(0, proItem);
+			boolean isExisted = false;
+			for (ProductDTO item : mListItemCart) {
+				//if (item.id.equals(proItem.id) && item.stock.id==proItem.stock.id) {
+				if (item.id.equals(proItem.id)) {
+//					if (item.cartCounter >= CartItemsRule.MAX_ITEMS_CART) {
+//						return;
+//					}
+					if (item.cartCounter >= proItem.stock.quantity) {
+						return -1;
+					}
+					item.cartCounter++;
+					isExisted = true;
+					break;
+				}
+			}
+
+			if (!isExisted) {
+				proItem.cartCounter = 1;
+				mListItemCart.add(0, proItem);
+			}
+			// updateItemCartCounter();
+			// Toast.makeText(getApplicationContext(), "Added:" + proItem.name,
+			// Toast.LENGTH_SHORT).show();
+			return 1;
+		} catch (Exception e) {
 		}
-		// updateItemCartCounter();
-		// Toast.makeText(getApplicationContext(), "Added:" + proItem.name,
-		// Toast.LENGTH_SHORT).show();
-		return;
+		return 0;
 	}
 
 	public void removeCartItem(String proId) {

@@ -66,7 +66,8 @@ public class ProductDetailFragment extends BaseFragment implements
 	private CheckColorStockAvailableTask mCheckColorStockAvailableTask = null;
 	private ProgressDialog mProgressDialog = null;
 	private StockDTO mStock = null;
-
+	private ColorDTO mColor=null;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -133,6 +134,7 @@ public class ProductDetailFragment extends BaseFragment implements
 				try {
 					mProDetailActiveColor.setBackgroundColor(Color
 							.parseColor(color.color));
+					mColor=color;
 					checkColorAvailable(color);
 				} catch (Exception e) {
 				}
@@ -205,6 +207,7 @@ public class ProductDetailFragment extends BaseFragment implements
 			mStock = result;
 			if (mStock != null) {
 				// mHomeActivity.showToast(result);
+				mProduct.stock=mStock;
 				if (mStock != null && mStock.quantity > 0) {
 					mStockItem.setText(String.valueOf(mStock.quantity));
 					// mAddToCardBtn.setVisibility(View.VISIBLE);

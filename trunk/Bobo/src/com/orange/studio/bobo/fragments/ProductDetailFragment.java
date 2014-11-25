@@ -208,15 +208,12 @@ public class ProductDetailFragment extends BaseFragment implements
 				if (mStock != null && mStock.quantity > 0) {
 					mStockItem.setText(String.valueOf(mStock.quantity));
 					// mAddToCardBtn.setVisibility(View.VISIBLE);
-					mAddToCardBtn
-							.setBackgroundResource(R.drawable.button_black);
-					mAddToCardBtn.setEnabled(true);
+					enableAddCartButton(true);
 					mStockItem.setVisibility(View.VISIBLE);
 				} else {
 					mStockItem.setVisibility(View.INVISIBLE);
 					// mAddToCardBtn.setVisibility(View.INVISIBLE);
-					mAddToCardBtn.setBackgroundResource(R.drawable.button_gray);
-					mAddToCardBtn.setEnabled(false);
+					enableAddCartButton(false);
 				}
 			} else {
 				mStockItem.setVisibility(View.INVISIBLE);
@@ -228,6 +225,14 @@ public class ProductDetailFragment extends BaseFragment implements
 				mProgressDialog.dismiss();
 			}
 		}
+
+	}
+
+	private void enableAddCartButton(boolean isEnable) {
+
+		mAddToCardBtn.setBackgroundResource(isEnable ? R.drawable.button_black
+				: R.drawable.button_gray);
+		mAddToCardBtn.setEnabled(isEnable);
 	}
 
 	private class LoadProductDetailTask extends
@@ -286,12 +291,17 @@ public class ProductDetailFragment extends BaseFragment implements
 						"utf-8");
 				mProMoreInfo.loadData(descriptions, "text/html", "utf-8");
 				mSaleOffIcon.setText(String.valueOf(result.wholesale_price));
-				// if(result.stock!=null && result.stock.quantity>0){
-				// mStockItem.setText(String.valueOf(result.stock.quantity));
-				// mStockItem.setVisibility(View.VISIBLE);
-				// }else{
-				// mStockItem.setVisibility(View.INVISIBLE);
-				// }
+
+				mStock = mProduct.stock;
+				if (mStock != null && mStock.quantity > 0) {
+					mStockItem.setText(String.valueOf(result.stock.quantity));
+					mStockItem.setVisibility(View.VISIBLE);
+					enableAddCartButton(true);
+				} else {
+					mStockItem.setText("");
+					mStockItem.setVisibility(View.INVISIBLE);
+					enableAddCartButton(false);
+				}
 				if (result.wholesale_price > 0) {
 					mSaleOffIcon.setVisibility(View.VISIBLE);
 				} else {
@@ -325,8 +335,6 @@ public class ProductDetailFragment extends BaseFragment implements
 			}
 		}
 	}
-
-	
 
 	@Override
 	public void onClick(View v) {

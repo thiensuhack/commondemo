@@ -217,8 +217,13 @@ public class ProductModel implements ProductIF{
 							}
 						}
 					}		
-					if(product.mListStock!=null && product.mListStock.size()>1){
-						String stockUrl=product.mListStock.get(1).linkHref+"?ws_key="+OrangeConfig.App_Key;
+					if(product.mListStock!=null && product.mListStock.size()>0){
+						String stockUrl="";
+						if(product.mListStock.size()==1){
+							stockUrl=product.mListStock.get(0).linkHref+"?ws_key="+OrangeConfig.App_Key;
+						}else{
+							stockUrl=product.mListStock.get(1).linkHref+"?ws_key="+OrangeConfig.App_Key;
+						}
 						StockDTO stock=CommonModel.getInstance().getStock(stockUrl);
 						product.stock=stock;
 					}

@@ -180,9 +180,14 @@ public class XMLHandlerOrder extends DefaultHandler {
 			mOrderRow.unit_price_tax_excl = convertStringToDouble(elementValue);
 			return;
 		}
-		if (localName.equalsIgnoreCase("address") && data.id!=null && data.id.trim().length()>0)
+		if (localName.equalsIgnoreCase("order_row")) {
+			data.mListProduct.add(mOrderRow);
+			isOrderRow=false;
+		}
+		if (localName.equalsIgnoreCase("order") && data.id!=null && data.id.trim().length()>0)
 		{
-			mListProduct.add(0,data);
+			mListProduct.add(data);
+			isOrder=false;
 			return;
 		}
 	}
@@ -199,14 +204,14 @@ public class XMLHandlerOrder extends DefaultHandler {
 		try {
 			return Double.valueOf(value);
 		} catch (Exception e) {
-			return 0;
+			return -1;
 		}
 	}
 	private int convertStringToInt(String value){
 		try {
 			return Integer.valueOf(value);
 		} catch (Exception e) {
-			return 0;
+			return -1;
 		}
 	}
 }

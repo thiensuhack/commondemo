@@ -30,7 +30,6 @@ import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.orange.studio.bobo.R;
-import com.orange.studio.bobo.configs.OrangeConfig.CartItemsRule;
 import com.orange.studio.bobo.configs.OrangeConfig.MENU_NAME;
 import com.orange.studio.bobo.configs.OrangeConfig.UrlRequest;
 import com.orange.studio.bobo.dialogs.ExitDialog;
@@ -42,6 +41,7 @@ import com.orange.studio.bobo.fragments.CreateAddressShoppingCartFragment;
 import com.orange.studio.bobo.fragments.HomeFragment;
 import com.orange.studio.bobo.fragments.LoginFragment;
 import com.orange.studio.bobo.fragments.NavigationDrawerFragment;
+import com.orange.studio.bobo.fragments.PaymentCheckoutFragment;
 import com.orange.studio.bobo.fragments.PopularProductFragment;
 import com.orange.studio.bobo.fragments.ProductCategoryFragment;
 import com.orange.studio.bobo.fragments.ProductDetailFragment;
@@ -50,7 +50,6 @@ import com.orange.studio.bobo.fragments.SearchResultFragment;
 import com.orange.studio.bobo.fragments.SelectAddressShoppingCartFragment;
 import com.orange.studio.bobo.fragments.ShoppingCartFragment;
 import com.orange.studio.bobo.fragments.SpinToWinFragment;
-import com.orange.studio.bobo.fragments.PaymentCheckoutFragment;
 import com.orange.studio.bobo.models.CommonModel;
 import com.orange.studio.bobo.objects.AddressDTO;
 import com.orange.studio.bobo.objects.CarrierDTO;
@@ -245,7 +244,12 @@ public class HomeActivity extends ActionBarActivity implements
 			showToast("Add cart error!");
 		}
 	}
-
+	public void updateCart(){
+		if (mAddCartTask == null || mAddCartTask.getStatus() == Status.FINISHED) {
+			mAddCartTask = new AddCartTask(null);
+			mAddCartTask.execute();
+		}
+	}
 	// public void addCartFromAdapter(ProductDTO product){
 	// if(mLoadProductDetailAddCartTask==null ||
 	// mLoadProductDetailAddCartTask.getStatus()==Status.FINISHED){
@@ -704,7 +708,9 @@ public class HomeActivity extends ActionBarActivity implements
 					showToast(getString(R.string.add_cart_success)+"CartID:"+ getCurItemCart().id+ "CartID return:" + result.id);
 					// addToCart(mProductDTO);
 				} else {
-					decreaseCartItem(mProductDTO.id);
+					if(mProductDTO!=null){
+						decreaseCartItem(mProductDTO.id);
+					}					
 					showToast(getString(R.string.add_cart_failed));
 				}
 			} catch (Exception e) {

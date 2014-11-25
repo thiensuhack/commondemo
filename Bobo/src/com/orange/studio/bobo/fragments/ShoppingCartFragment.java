@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.activities.HomeActivity;
 import com.orange.studio.bobo.adapters.ListItemsCartAdapter;
-import com.orange.studio.bobo.configs.OrangeConfig.MENU_NAME;
 import com.orange.studio.bobo.objects.ProductDTO;
 
 public class ShoppingCartFragment extends BaseFragment implements

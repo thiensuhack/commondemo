@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDTO {
-	public int id;
-	public int id_address_delivery;
-	public int id_address_invoice;
-	public int id_cart;
-	public int id_currency;
-	public int id_customer;
-	public int id_carrier;
+	public String id;
+	public String id_address_delivery;
+	public String id_address_invoice;
+	public String id_cart;
+	public String id_currency;
+	public String id_customer;
+	public String id_carrier;
 	public String payment;
 	public double total_paid;
 	public double total_paid_tax_incl;

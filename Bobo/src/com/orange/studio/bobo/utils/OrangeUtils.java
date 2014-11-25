@@ -26,7 +26,14 @@ import com.zuzu.db.store.SQLiteStore;
 import com.zuzu.db.store.SimpleStoreIF;
 
 public class OrangeUtils {
-	
+	public static ProductDTO duplicateProduct(ProductDTO product){
+		try {
+			ProductDTO result = product;
+			return result;			
+		} catch (Exception e) {
+		}
+		return null;
+	}
 	public static String createStringOrder(ItemCartDTO cart,CustomerDTO customer,AddressDTO address,CarrierDTO carrier){
 		String result=null;
 		try {

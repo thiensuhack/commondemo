@@ -40,7 +40,7 @@ public class OrangeUtils {
 		try {
 			result="<?xml version=\"1.0\" encoding=\"UTF-8\"?><prestashop xmlns:xlink=\"http://www.w3.org/1999/xlink\"><order>";
 			result+="<id_address_delivery required=\"true\" format=\"isUnsignedId\">"+address.id+"</id_address_delivery>";
-			result+="<id_address_invoice required=\"true\" format=\"isUnsignedId\">9</id_address_invoice>";
+			result+="<id_address_invoice required=\"true\" format=\"isUnsignedId\">"+address!=null?address.id:0+"</id_address_invoice>";
 			result+="<id_cart required=\"true\" format=\"isUnsignedId\">"+cart.id+"</id_cart>";
 			result+="<id_currency required=\"true\" format=\"isUnsignedId\">1</id_currency>";
 			result+="<id_lang required=\"true\" format=\"isUnsignedId\">2</id_lang>";
@@ -93,7 +93,7 @@ public class OrangeUtils {
 			return 0;
 		}
 	}
-	public static String createCartData(List<ProductDTO> mListProducts,CustomerDTO customer,String cartID){
+	public static String createCartData(List<ProductDTO> mListProducts,CustomerDTO customer,String cartID,AddressDTO address){
 		String result="";
 		try {						
 			result+="<?xml version=\"1.0\" encoding=\"UTF-8\"?><prestashop xmlns:xlink=\"http://www.w3.org/1999/xlink\">";
@@ -116,7 +116,7 @@ public class OrangeUtils {
 				result+="<cart_row>";
 				result+="<id_product>"+item.id+"</id_product>";
 				result+="<id_product_attribute>"+item.stock.id_product_attribute+"</id_product_attribute>";
-				result+="<id_address_delivery>0</id_address_delivery>";
+				result+="<id_address_delivery>"+address!=null?address.id:0+"</id_address_delivery>";
 				result+="<quantity>"+item.cartCounter+"</quantity>";
 				result+="</cart_row>";
 			}			

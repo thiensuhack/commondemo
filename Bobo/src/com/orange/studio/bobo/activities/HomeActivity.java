@@ -48,6 +48,7 @@ import com.orange.studio.bobo.fragments.ProductDetailFragment;
 import com.orange.studio.bobo.fragments.RegisterFragment;
 import com.orange.studio.bobo.fragments.SearchResultFragment;
 import com.orange.studio.bobo.fragments.SelectAddressShoppingCartFragment;
+import com.orange.studio.bobo.fragments.SelectCarrierShoppingCartFragment;
 import com.orange.studio.bobo.fragments.ShoppingCartFragment;
 import com.orange.studio.bobo.fragments.SpinToWinFragment;
 import com.orange.studio.bobo.models.CommonModel;
@@ -301,6 +302,11 @@ public class HomeActivity extends ActionBarActivity implements
 			setAppTitle(getString(R.string.shopping_cart_select_address));
 			return;
 		}
+		if (mFragmentName.equals(SelectCarrierShoppingCartFragment.class
+				.getName())) {
+			setAppTitle(getString(R.string.shopping_cart_select_carrier));
+			return;
+		}
 		if (mFragmentName.equals(PaymentCheckoutFragment.class.getName())) {
 			setAppTitle(getString(R.string.shopping_cart_payment));
 			return;
@@ -422,6 +428,11 @@ public class HomeActivity extends ActionBarActivity implements
 			mFragment = SelectAddressShoppingCartFragment.instantiate(
 					getApplicationContext(),
 					SelectAddressShoppingCartFragment.class.getName());
+			break;
+		case MENU_NAME.SELECT_CARRIER:
+			mFragment = SelectCarrierShoppingCartFragment.instantiate(
+					getApplicationContext(),
+					SelectCarrierShoppingCartFragment.class.getName());
 			break;
 		case MENU_NAME.SUMMARY:
 			mFragment = PaymentCheckoutFragment.instantiate(
@@ -805,7 +816,7 @@ public class HomeActivity extends ActionBarActivity implements
 		@Override
 		protected OrderDTO doInBackground(Void... params) {
 			try {
-				String data=OrangeUtils.createStringOrder(mCurItemCart, mUserInfo, mAddressDTO, mCarrierDTO);
+				String data=OrangeUtils.createStringOrder(mCurItemCart, mUserInfo, mAddressDTO, mCarrierDTO,mSummaryDTO);
 				if(data!=null){
 					return CommonModel.getInstance().createOrder(UrlRequest.CREATE_ORDER, data);
 				}

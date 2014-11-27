@@ -2,8 +2,8 @@ package com.orange.studio.bobo.fragments;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.os.AsyncTask.Status;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +11,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.activities.HomeActivity;
@@ -126,7 +125,14 @@ public class RegisterFragment extends BaseFragment implements OnClickListener {
 		regisData+="<lastname>"+mRegisterInfo.lastName+"</lastname>";	
 		regisData+="<firstname>"+mRegisterInfo.firstName+"</firstname>";
 		regisData+="<email>"+mRegisterInfo.email+"</email>";
-		regisData+="<active>1</active></customer></prestashop>";
+		regisData+="<id_default_group>3</id_default_group>";
+		regisData+="<active>1</active>";
+		regisData+="<associations><groups node_type=\"group\">";
+		regisData+="<group><id><![CDATA[1]]></id></group>";
+		regisData+="<group><id><![CDATA[2]]></id></group>";
+		regisData+="<group><id><![CDATA[3]]></id></group>";
+		regisData+="</groups></associations>";
+		regisData+="</customer></prestashop>";
 		registerNow(regisData);
 		return true;
 	}

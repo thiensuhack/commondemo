@@ -28,6 +28,7 @@ public final class OrangeConfig {
 		public static final int CREATE_ADDRESS = -18;
 		public static final int SELECT_ADDRESS = -19;
 		public static final int SUMMARY = -20;
+		public static final int SELECT_CARRIER = -21;
 	}
 
 	public static class CartItemsRule {

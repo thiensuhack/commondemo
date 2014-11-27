@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.google.gson.Gson;
 import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.configs.OrangeConfig.UrlRequest;
 import com.orange.studio.bobo.models.CommonModel;
@@ -100,6 +102,9 @@ public class PaymentCheckoutFragment extends BaseFragment implements OnClickList
 		protected void onPostExecute(SummaryDTO result) {
 			super.onPostExecute(result);
 			if(result!=null){
+				Gson gs=new Gson();
+				Log.i("SUMMARY: ",gs.toJson(result));
+				
 				mHomeActivity.setSummaryDTO(result);
 				String htmlData="<html><head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">";
 				htmlData+="</head><body style=\"padding:10px;\">";

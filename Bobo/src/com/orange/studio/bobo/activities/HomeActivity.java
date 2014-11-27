@@ -28,6 +28,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.configs.OrangeConfig.MENU_NAME;
@@ -692,11 +693,13 @@ public class HomeActivity extends ActionBarActivity implements
 						|| getCurItemCart().id.length() < 1) {
 					data = OrangeUtils.createCartData(mListItemCart, mUserInfo,
 							null);
+					Log.i("CREATE CART: ",data);
 					return CommonModel.getInstance().addToCart(
 							UrlRequest.ADD_CART_URL, data);
 				} else {
 					data = OrangeUtils.createCartData(mListItemCart, mUserInfo,
 							getCurItemCart().id);
+					Log.i("UPDATE CART: ",data);
 					return CommonModel.getInstance().updateToCart(
 							UrlRequest.ADD_CART_URL, data);
 				}
@@ -713,7 +716,10 @@ public class HomeActivity extends ActionBarActivity implements
 				if (result != null && result.id.trim().length() > 0) {
 //					if (getCurItemCart() != null || getCurItemCart().id != null && getCurItemCart().id.trim().length()>0 && getCurItemCart().id.equals(result.id)){
 //						
-//					}								
+//					}					
+					Gson gs=new Gson();
+					Log.i("CART RESULT: ",gs.toJson(result));
+					
 					setCurItemCart(result);
 					//showToast("CartID:"+ getCurItemCart().id+ "CartID return:" + result.id);
 					showToast(getString(R.string.add_cart_success)+"CartID:"+ getCurItemCart().id+ "CartID return:" + result.id);

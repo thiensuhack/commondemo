@@ -124,6 +124,7 @@
     
     <string name="shopping_cart_create_address">Create address</string>
     <string name="shopping_cart_select_address">Select address</string>
+    <string name="shopping_cart_select_carrier">Select carrier</string>
     <string name="shopping_cart_payment">Payment</string>
 
     <!-- Fragment Home Menu -->

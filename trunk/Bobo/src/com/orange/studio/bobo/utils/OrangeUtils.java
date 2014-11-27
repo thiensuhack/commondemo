@@ -22,6 +22,7 @@ import com.orange.studio.bobo.objects.CarrierDTO;
 import com.orange.studio.bobo.objects.CustomerDTO;
 import com.orange.studio.bobo.objects.ItemCartDTO;
 import com.orange.studio.bobo.objects.ProductDTO;
+import com.orange.studio.bobo.objects.SummaryDTO;
 import com.zuzu.db.store.SQLiteStore;
 import com.zuzu.db.store.SimpleStoreIF;
 
@@ -34,7 +35,7 @@ public class OrangeUtils {
 		}
 		return null;
 	}
-	public static String createStringOrder(ItemCartDTO cart,CustomerDTO customer,AddressDTO address,CarrierDTO carrier){
+	public static String createStringOrder(ItemCartDTO cart,CustomerDTO customer,AddressDTO address,CarrierDTO carrier,SummaryDTO summary){
 		String result=null;
 		try {
 			result="<?xml version=\"1.0\" encoding=\"UTF-8\"?><prestashop xmlns:xlink=\"http://www.w3.org/1999/xlink\"><order>";
@@ -65,12 +66,12 @@ public class OrangeUtils {
 			result+="<total_discounts format=\"isPrice\"></total_discounts>";
 			result+="<total_discounts_tax_incl format=\"isPrice\"></total_discounts_tax_incl>";
 			result+="<total_discounts_tax_excl format=\"isPrice\"></total_discounts_tax_excl>";
-			result+="<total_paid required=\"true\" format=\"isPrice\">9.8</total_paid>";
+			result+="<total_paid required=\"true\" format=\"isPrice\">"+summary!=null?summary.total_products:0+"</total_paid>";
 			result+="<total_paid_tax_incl format=\"isPrice\"></total_paid_tax_incl>";
 			result+="<total_paid_tax_excl format=\"isPrice\"></total_paid_tax_excl>";
-			result+="<total_paid_real required=\"true\" format=\"isPrice\">9.8</total_paid_real>";
-			result+="<total_products required=\"true\" format=\"isPrice\">1</total_products>";
-			result+="<total_products_wt required=\"true\" format=\"isPrice\">1</total_products_wt>";
+			result+="<total_paid_real required=\"true\" format=\"isPrice\">"+summary!=null?summary.total_price:0+"</total_paid_real>";
+			result+="<total_products required=\"true\" format=\"isPrice\">"+summary!=null?summary.total_products:0+"</total_products>";
+			result+="<total_products_wt required=\"true\" format=\"isPrice\">"+summary!=null?summary.total_products_wt:0+"</total_products_wt>";
 			result+="<total_shipping format=\"isPrice\"></total_shipping>";
 			result+="<total_shipping_tax_incl format=\"isPrice\"></total_shipping_tax_incl>";
 			result+="<total_shipping_tax_excl format=\"isPrice\"></total_shipping_tax_excl>";

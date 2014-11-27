@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,17 +17,16 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import com.orange.studio.bobo.R;
-import com.orange.studio.bobo.adapters.AddressesAdapter;
 import com.orange.studio.bobo.adapters.CarrierAdapter;
 import com.orange.studio.bobo.configs.OrangeConfig.MENU_NAME;
 import com.orange.studio.bobo.configs.OrangeConfig.UrlRequest;
 import com.orange.studio.bobo.models.CommonModel;
-import com.orange.studio.bobo.objects.AddressDTO;
 import com.orange.studio.bobo.objects.CarrierDTO;
 
 public class SelectCarrierShoppingCartFragment extends BaseFragment implements OnClickListener, OnItemSelectedListener{
 	private Spinner mListCarrier=null;
 	private Button mConfirmBtn=null;
+	private Button mRefreshBtn=null;
 	private CarrierAdapter mCarrierAdapter=null;
 	
 	private GetListCarrierTask mGetListCarrierTask=null;
@@ -50,6 +50,10 @@ public class SelectCarrierShoppingCartFragment extends BaseFragment implements O
 		
 		mConfirmBtn=(Button)mView.findViewById(R.id.confirmBtn);
 		mConfirmBtn.setVisibility(View.GONE);
+		
+		mRefreshBtn=(Button)mView.findViewById(R.id.refreshBtn);
+		mRefreshBtn.setVisibility(View.GONE);
+		
 		mCarrierAdapter=new CarrierAdapter(mHomeActivity);
 		mListCarrier.setAdapter(mCarrierAdapter);
 		
@@ -59,6 +63,7 @@ public class SelectCarrierShoppingCartFragment extends BaseFragment implements O
 	private void initListener(){
 		mListCarrier.setOnItemSelectedListener(this);
 		mConfirmBtn.setOnClickListener(this);
+		mRefreshBtn.setOnClickListener(this);
 	}
 	private void loadCarrier(){
 		if(mGetListCarrierTask==null || mGetListCarrierTask.getStatus()==Status.FINISHED){
@@ -71,6 +76,9 @@ public class SelectCarrierShoppingCartFragment extends BaseFragment implements O
 		switch (v.getId()) {
 		case R.id.confirmBtn:
 			mHomeActivity.onNavigationDrawerItemSelected(MENU_NAME.SUMMARY);
+			break;
+		case R.id.refreshBtn:
+			loadCarrier();
 			break;
 		case R.id.createAddressBtn:
 			mHomeActivity.onNavigationDrawerItemSelected(MENU_NAME.CREATE_ADDRESS);
@@ -107,17 +115,22 @@ public class SelectCarrierShoppingCartFragment extends BaseFragment implements O
 		}
 		@Override
 		protected List<CarrierDTO> doInBackground(Void... params) {
-			return CommonModel.getInstance().getListCarrier(UrlRequest.GET_CARRIER_URL);
+			String url=UrlRequest.GET_CARRIER_URL+mHomeActivity.getCurItemCart().id;
+			Log.e("CARRIER URL: ", url);
+			return CommonModel.getInstance().getListCarrier(url);
 		}
 		@Override
 		protected void onPostExecute(List<CarrierDTO> result) {
 			super.onPostExecute(result);
 			if(result!=null && result.size()>0){
 				mCarrierAdapter.updateDataList(result);				
-				switchView(false, false);
+				mConfirmBtn.setVisibility(View.VISIBLE);
+				mRefreshBtn.setVisibility(View.GONE);
 			}else{
-				switchView(false, false);
+				mConfirmBtn.setVisibility(View.GONE);
+				mRefreshBtn.setVisibility(View.VISIBLE);
 			}
+			switchView(false, false);
 		}
 		
 	}

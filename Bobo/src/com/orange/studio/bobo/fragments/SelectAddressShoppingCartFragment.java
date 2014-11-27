@@ -113,7 +113,8 @@ public class SelectAddressShoppingCartFragment extends BaseFragment implements O
 		@Override
 		protected List<AddressDTO> doInBackground(Void... params) {
 			try {
-				return CommonModel.getInstance().getListAddress(UrlRequest.GET_USER_ADDRESS+ mHomeActivity.getUserInfo().id);
+				//return CommonModel.getInstance().getListAddress(UrlRequest.GET_USER_ADDRESS+ mHomeActivity.getUserInfo().id);
+				return CommonModel.getInstance().getListAddress(UrlRequest.GET_USER_ADDRESS+ "73");
 			} catch (Exception e) {
 			}
 			return null;

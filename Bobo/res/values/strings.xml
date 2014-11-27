@@ -41,6 +41,7 @@
     <string name="address_btn_create">Create</string>
     <string name="address_btn_confirm">Payment</string>
     <string name="address_btn_next">Next</string>
+    <string name="address_btn_refresh">Refresh</string>
     <string name="address_btn_create_address">Create address</string>
     <string name="address_create_success">Address created</string>
     <string name="address_create_failed">Create address failed</string>

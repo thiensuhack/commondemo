@@ -38,6 +38,16 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/refreshBtn"
+            style="@style/RegisterButtonStyle"
+            android:layout_width="130dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_pink"
+            android:text="@string/address_btn_refresh" />
+
+        <Button
             android:id="@+id/confirmBtn"
             style="@style/RegisterButtonStyle"
             android:layout_width="130dp"

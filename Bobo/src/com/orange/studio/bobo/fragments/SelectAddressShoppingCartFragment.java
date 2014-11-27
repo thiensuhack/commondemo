@@ -125,6 +125,7 @@ public class SelectAddressShoppingCartFragment extends BaseFragment implements O
 				mAdapter.updateDataList(result);				
 				//switchView(false, false);
 				mConfirmBtn.setVisibility(View.VISIBLE);
+				switchView(false, false);
 			}
 			else{
 				mConfirmBtn.setVisibility(View.GONE);

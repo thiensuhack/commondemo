@@ -116,8 +116,9 @@ public class OrangeUtils {
 				result+="<cart_row>";
 				result+="<id_product>"+item.id+"</id_product>";
 				result+="<id_product_attribute>"+item.stock.id_product_attribute+"</id_product_attribute>";
-				result+="<id_address_delivery>0</id_address_delivery></cart_row>";
+				result+="<id_address_delivery>0</id_address_delivery>";
 				result+="<quantity>"+item.cartCounter+"</quantity>";
+				result+="</cart_row>";
 			}			
 			result+="</cart_rows></associations>";
 			result+="</cart></prestashop>";

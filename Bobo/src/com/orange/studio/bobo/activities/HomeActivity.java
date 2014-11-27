@@ -870,7 +870,7 @@ public class HomeActivity extends ActionBarActivity implements
 				items[i] = ppItem;
 			}
 			PayPalItem ppItem = new PayPalItem(listItemsName, 1,
-					new BigDecimal(mSummaryDTO.total_price), "USD", mUserInfo.id+"-" + mCurItemCart.id);
+					new BigDecimal(mSummaryDTO.total_price_without_tax), "USD", mUserInfo.id+"-" + mCurItemCart.id);
 			items[0] = ppItem;
 			
 			BigDecimal subtotal = PayPalItem.getItemTotal(items);

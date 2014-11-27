@@ -865,9 +865,9 @@ public class HomeActivity extends ActionBarActivity implements
 				} else {
 					listItemsName += item.name + ",";
 				}
-				PayPalItem ppItem = new PayPalItem(item.name, item.cartCounter,
-						new BigDecimal(item.price), "USD", item.reference);
-				items[i] = ppItem;
+//				PayPalItem ppItem = new PayPalItem(item.name, item.cartCounter,
+//						new BigDecimal(item.price), "USD", item.reference);
+//				items[i] = ppItem;
 			}
 			PayPalItem ppItem = new PayPalItem(listItemsName, 1,
 					new BigDecimal(mSummaryDTO.total_price_without_tax), "USD", mUserInfo.id+"-" + mCurItemCart.id);

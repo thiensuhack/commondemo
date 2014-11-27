@@ -692,13 +692,13 @@ public class HomeActivity extends ActionBarActivity implements
 				if (getCurItemCart() == null || getCurItemCart().id == null
 						|| getCurItemCart().id.length() < 1) {
 					data = OrangeUtils.createCartData(mListItemCart, mUserInfo,
-							null);
+							null,mAddressDTO);
 					Log.i("CREATE CART: ",data);
 					return CommonModel.getInstance().addToCart(
 							UrlRequest.ADD_CART_URL, data);
 				} else {
 					data = OrangeUtils.createCartData(mListItemCart, mUserInfo,
-							getCurItemCart().id);
+							getCurItemCart().id,mAddressDTO);
 					Log.i("UPDATE CART: ",data);
 					return CommonModel.getInstance().updateToCart(
 							UrlRequest.ADD_CART_URL, data);
@@ -1004,6 +1004,7 @@ public class HomeActivity extends ActionBarActivity implements
 
 	public void setAddress(AddressDTO mAddressDTO) {
 		this.mAddressDTO = mAddressDTO;
+		updateCart();
 	}
 
 	public CarrierDTO getCarrier() {

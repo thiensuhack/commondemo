@@ -868,17 +868,11 @@ public class HomeActivity extends ActionBarActivity implements
 				PayPalItem ppItem = new PayPalItem(item.name, item.cartCounter,
 						new BigDecimal(item.price), "USD", item.reference);
 				items[i] = ppItem;
-
 			}
-			// PayPalItem[] items = {
-			// new PayPalItem("old jeans with holes", 2, new BigDecimal(
-			// "87.50"), "USD", "sku-12345678"),
-			// new PayPalItem("free rainbow patch", 1, new BigDecimal("0.00"),
-			// "USD", "sku-zero-price"),
-			// new PayPalItem(
-			// "long sleeve plaid shirt (no mustache included)", 6,
-			// new BigDecimal("37.99"), "USD", "sku-33333")
-			// };
+			PayPalItem ppItem = new PayPalItem(listItemsName, 1,
+					new BigDecimal(mSummaryDTO.total_price), "USD", mUserInfo.id+"-" + mCurItemCart.id);
+			items[0] = ppItem;
+			
 			BigDecimal subtotal = PayPalItem.getItemTotal(items);
 			BigDecimal shipping;
 			if(mSummaryDTO.total_shipping<0){

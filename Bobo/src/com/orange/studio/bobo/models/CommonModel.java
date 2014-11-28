@@ -539,7 +539,7 @@ public class CommonModel implements CommonIF{
 	@Override
 	public OrderDTO createOrder(String url,String rawData) {
 		try {
-			String result=OrangeHttpRequest.getInstance().postDataToServer(url, rawData, 200);
+			String result=OrangeHttpRequest.getInstance().putDataToServer(url, rawData, 201);
 			if(result!=null && result.trim().length()>0){
 				SAXParserFactory saxPF = SAXParserFactory.newInstance();
 				SAXParser saxP = saxPF.newSAXParser();

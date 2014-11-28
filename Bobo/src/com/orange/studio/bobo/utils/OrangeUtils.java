@@ -109,8 +109,8 @@ public class OrangeUtils {
 			}			
 			result+="<id_guest></id_guest>";
 			result+="<id_lang>"+OrangeConfig.LANGUAGE_DEFAULT+"</id_lang>";
-			result+="<id_shop_group>"+""+"</id_shop_group>";
-			result+="<id_shop>"+""+"</id_shop>";
+			result+="<id_shop_group>1</id_shop_group>";
+			result+="<id_shop>1</id_shop>";
 			result+="<associations><cart_rows>";
 			for (ProductDTO item : mListProducts) {
 				result+="<cart_row>";

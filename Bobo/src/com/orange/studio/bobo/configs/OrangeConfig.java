@@ -59,7 +59,7 @@ public final class OrangeConfig {
 		public static String HOME_BEST_SELLER_PRODUCT=main_domain+"/index.php?controller=CustomAPI&action=bestsales&limit=";
 		public static String ADD_CART_URL=domain+"/carts?Create=Creating"+"&ws_key="+App_Key;
 		//public static String UPDATE_CART_URL=domain+"/carts?Create=Creating"+"&ws_key="+App_Key;
-		public static String GET_LIST_COUNTRY=domain+"/countries?ws_key=LW6TL3P7Z7KRFM3UYKWHJ3N28GEZLRBT&display=full";
+		public static String GET_LIST_COUNTRY=domain+"/countries?ws_key=LW6TL3P7Z7KRFM3UYKWHJ3N28GEZLRBT&display=full&filter[active]=1";
 		public static String GET_USER_ADDRESS=domain+"/addresses?display=full&ws_key=LW6TL3P7Z7KRFM3UYKWHJ3N28GEZLRBT&output_format=JSON&filter[id_customer]=";
 		public static String CREATE_ADDRESS=domain+"/addresses?Create=Creating&ws_key=LW6TL3P7Z7KRFM3UYKWHJ3N28GEZLRBT&output_format=JSON&display=full&sort=id_DESC&limit=10";
 		public static String GET_CARRIER_URL=main_domain+"index.php?controller=CustomAPI&action=carrier&id_cart=";

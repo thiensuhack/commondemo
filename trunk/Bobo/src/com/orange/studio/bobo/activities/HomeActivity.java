@@ -838,6 +838,8 @@ public class HomeActivity extends ActionBarActivity implements
 				Gson gs=new Gson();
 				Log.i("OBJECT ORDER: ",gs.toJson(result));
 				onPaypalPayment();
+			}else{
+				showToast("Create cart order failed :(");
 			}
 			//onPaypalPayment();
 			if(mProgressDialog.isShowing()){

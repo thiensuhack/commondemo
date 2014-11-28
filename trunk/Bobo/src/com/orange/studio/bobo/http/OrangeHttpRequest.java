@@ -195,18 +195,18 @@ public class OrangeHttpRequest implements HttpIF {
 	public String putDataToServer(String url, String rawData,int _statusCode) {
 		StringBuilder builder = new StringBuilder();
 		HttpClient client = new DefaultHttpClient();
-		HttpPut httpPost = new HttpPut(url);
+		HttpPut httpPut = new HttpPut(url);
 
 		try {			
 //			httpPost.setHeader("Content-type", "text/xml;charset=utf-8");
 //			httpPost.setEntity(new StringEntity(rawData));
 			StringEntity data=new StringEntity(rawData,HTTP.UTF_8);
 			data.setContentEncoding("text/xml");			
-			httpPost.setHeader("Accept", "application/xml");
-			httpPost.setHeader("Content-Type", "text/xml;charset=utf-8");
-			httpPost.setEntity(data);
+			httpPut.setHeader("Accept", "application/xml");
+			httpPut.setHeader("Content-Type", "text/xml;charset=utf-8");
+			httpPut.setEntity(data);
 			
-			HttpResponse response = client.execute(httpPost);
+			HttpResponse response = client.execute(httpPut);
 			StatusLine statusLine = response.getStatusLine();
 			int statusCode = statusLine.getStatusCode();
 			if (statusCode == _statusCode) {

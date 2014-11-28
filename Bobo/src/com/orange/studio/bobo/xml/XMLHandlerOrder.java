@@ -12,7 +12,7 @@ import com.orange.studio.bobo.objects.OrderRowDTO;
 
 public class XMLHandlerOrder extends DefaultHandler {
 
-	public List<OrderDTO> mListProduct = null;
+	public List<OrderDTO> mListOrder = null;
 
 	public OrderDTO data = null;
 	public OrderRowDTO mOrderRow=null;
@@ -26,7 +26,7 @@ public class XMLHandlerOrder extends DefaultHandler {
 	public XMLHandlerOrder(String language) {
 		super();
 		mCurrentLanguage=language;
-		mListProduct = new ArrayList<OrderDTO>();
+		mListOrder = new ArrayList<OrderDTO>();
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class XMLHandlerOrder extends DefaultHandler {
 			Attributes attributes) throws SAXException {
 		elementOn = true;
 		if (localName.equals("order")) {
-			mListProduct=new ArrayList<OrderDTO>();
+			mListOrder=new ArrayList<OrderDTO>();
 			data = new OrderDTO();
 			isOrder=true;
 			return;
@@ -186,7 +186,7 @@ public class XMLHandlerOrder extends DefaultHandler {
 		}
 		if (localName.equalsIgnoreCase("order") && data.id!=null && data.id.trim().length()>0)
 		{
-			mListProduct.add(data);
+			mListOrder.add(data);
 			isOrder=false;
 			return;
 		}

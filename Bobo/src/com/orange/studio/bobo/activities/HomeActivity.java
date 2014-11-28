@@ -824,6 +824,7 @@ public class HomeActivity extends ActionBarActivity implements
 			try {
 				String data=OrangeUtils.createStringOrder(mCurItemCart, mUserInfo, mAddressDTO, mCarrierDTO,mSummaryDTO);
 				if(data!=null){
+					Log.i("STR ORDER: ",data);
 					return CommonModel.getInstance().createOrder(UrlRequest.CREATE_ORDER, data);
 				}
 			} catch (Exception e) {
@@ -834,9 +835,11 @@ public class HomeActivity extends ActionBarActivity implements
 		protected void onPostExecute(OrderDTO result) {
 			super.onPostExecute(result);
 			if(result!=null){
-				//onPaypalPayment();
+				Gson gs=new Gson();
+				Log.i("OBJECT ORDER: ",gs.toJson(result));
+				onPaypalPayment();
 			}
-			onPaypalPayment();
+			//onPaypalPayment();
 			if(mProgressDialog.isShowing()){
 				mProgressDialog.dismiss();
 			}

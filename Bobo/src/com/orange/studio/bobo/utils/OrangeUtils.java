@@ -39,13 +39,13 @@ public class OrangeUtils {
 		String result=null;
 		try {
 			result="<?xml version=\"1.0\" encoding=\"UTF-8\"?><prestashop xmlns:xlink=\"http://www.w3.org/1999/xlink\"><order>";
-			result+="<id_address_delivery required=\"true\" format=\"isUnsignedId\">"+address.id+"</id_address_delivery>";
-			result+="<id_address_invoice required=\"true\" format=\"isUnsignedId\">"+address!=null?address.id:0+"</id_address_invoice>";
+			result+="<id_address_delivery required=\"true\" format=\"isUnsignedId\">"+ address.id+"</id_address_delivery>";
+			result+="<id_address_invoice required=\"true\" format=\"isUnsignedId\">"+ address.id +"</id_address_invoice>";
 			result+="<id_cart required=\"true\" format=\"isUnsignedId\">"+cart.id+"</id_cart>";
 			result+="<id_currency required=\"true\" format=\"isUnsignedId\">1</id_currency>";
 			result+="<id_lang required=\"true\" format=\"isUnsignedId\">2</id_lang>";
-			result+="<id_customer required=\"true\" format=\"isUnsignedId\">"+customer.id+"</id_customer>";
-			result+="<id_carrier required=\"true\" format=\"isUnsignedId\">"+carrier.id+"</id_carrier>";
+			result+="<id_customer required=\"true\" format=\"isUnsignedId\">"+ customer.id+"</id_customer>";
+			result+="<id_carrier required=\"true\" format=\"isUnsignedId\">"+ carrier.id+"</id_carrier>";
 			result+="<current_state format=\"isUnsignedId\"></current_state>";
 			result+="<module required=\"true\" format=\"isModuleName\">bankwire</module>";
 			result+="<invoice_number></invoice_number>";
@@ -66,12 +66,12 @@ public class OrangeUtils {
 			result+="<total_discounts format=\"isPrice\"></total_discounts>";
 			result+="<total_discounts_tax_incl format=\"isPrice\"></total_discounts_tax_incl>";
 			result+="<total_discounts_tax_excl format=\"isPrice\"></total_discounts_tax_excl>";
-			result+="<total_paid required=\"true\" format=\"isPrice\">"+summary!=null?summary.total_products:0+"</total_paid>";
+			result+="<total_paid required=\"true\" format=\"isPrice\">"+ (summary!=null?summary.total_products: "0")+"</total_paid>";
 			result+="<total_paid_tax_incl format=\"isPrice\"></total_paid_tax_incl>";
 			result+="<total_paid_tax_excl format=\"isPrice\"></total_paid_tax_excl>";
-			result+="<total_paid_real required=\"true\" format=\"isPrice\">"+summary!=null?summary.total_price:0+"</total_paid_real>";
-			result+="<total_products required=\"true\" format=\"isPrice\">"+summary!=null?summary.total_products:0+"</total_products>";
-			result+="<total_products_wt required=\"true\" format=\"isPrice\">"+summary!=null?summary.total_products_wt:0+"</total_products_wt>";
+			result+="<total_paid_real required=\"true\" format=\"isPrice\">"+ (summary!=null?summary.total_price: "0") +"</total_paid_real>";
+			result+="<total_products required=\"true\" format=\"isPrice\">"+ (summary!=null?summary.total_products: "0") +"</total_products>";
+			result+="<total_products_wt required=\"true\" format=\"isPrice\">"+ (summary!=null?summary.total_products_wt : "0") +"</total_products_wt>";
 			result+="<total_shipping format=\"isPrice\"></total_shipping>";
 			result+="<total_shipping_tax_incl format=\"isPrice\"></total_shipping_tax_incl>";
 			result+="<total_shipping_tax_excl format=\"isPrice\"></total_shipping_tax_excl>";

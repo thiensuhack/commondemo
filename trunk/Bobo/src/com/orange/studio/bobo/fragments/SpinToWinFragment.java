@@ -2,6 +2,7 @@ package com.orange.studio.bobo.fragments;
 
 import java.util.Random;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.orange.studio.bobo.R;
+import com.orange.studio.bobo.objects.GameDTO;
 
 public class SpinToWinFragment extends BaseFragment implements OnClickListener {
 	private ImageView mFirstCard;
@@ -22,6 +24,8 @@ public class SpinToWinFragment extends BaseFragment implements OnClickListener {
 	private boolean isSpining=false;
 	private Handler handler=null;
 	private Runnable runnable=null;
+	private boolean isWinner=false;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -41,6 +45,7 @@ public class SpinToWinFragment extends BaseFragment implements OnClickListener {
 		mSecondCard = (ImageView) mView.findViewById(R.id.cartItemSecond);
 		mThirdCard = (ImageView) mView.findViewById(R.id.cartItemThird);
 		mSpinBtn = (Button) mView.findViewById(R.id.spinToWinBtn);
+		
 	}
 
 	private void initListener() {
@@ -63,11 +68,12 @@ public class SpinToWinFragment extends BaseFragment implements OnClickListener {
 			if(!isSpining){
 				isSpining=true;
 				mSpinBtn.setText(getActivity().getString(R.string.stop_spin_to_win_label));
-				spinToWind();
+				spinToWin();
 			}else{
 				isSpining=false;
 				mSpinBtn.setText(getActivity().getString(R.string.spin_to_win_label));
-				handler.removeCallbacks(runnable);
+				isWinner=true;
+				//handler.removeCallbacks(runnable);
 			}
 			
 			break;
@@ -77,7 +83,7 @@ public class SpinToWinFragment extends BaseFragment implements OnClickListener {
 		}
 	}
 
-	private void spinToWind() {
+	private void spinToWin() {
 		final int[] imageArray = { R.drawable.miss01,
 				R.drawable.miss02, R.drawable.miss03 };
 		final Random rand=new Random();
@@ -85,24 +91,47 @@ public class SpinToWinFragment extends BaseFragment implements OnClickListener {
 		runnable = new Runnable() {
 			int i = 0;
 			public void run() {
-				i = rand.nextInt(3);
-				mFirstCard.setBackgroundResource(imageArray[i]);
-//				handler.postDelayed(this, 100); // for interval...
-				i = rand.nextInt(3);
-				mSecondCard.setBackgroundResource(imageArray[i]);
-//				handler.postDelayed(this, 100); // for interval...
-				i = rand.nextInt(3);
-				mThirdCard.setBackgroundResource(imageArray[i]);
-				i++;
-//				if (i > imageArray.length - 1) {
-//					i = 0;
-//				}
-				handler.postDelayed(this, 50); // for interval...			
+				if(isWinner){
+					i = rand.nextInt(3);
+					mFirstCard.setBackgroundResource(imageArray[i]);
+					mSecondCard.setBackgroundResource(imageArray[i]);
+					mThirdCard.setBackgroundResource(imageArray[i]);
+					isWinner=false;
+					handler.removeCallbacks(runnable);
+				}else{
+					i = rand.nextInt(3);
+					mFirstCard.setBackgroundResource(imageArray[i]);
+//					handler.postDelayed(this, 100); // for interval...
+					i = rand.nextInt(3);
+					mSecondCard.setBackgroundResource(imageArray[i]);
+//					handler.postDelayed(this, 100); // for interval...
+					i = rand.nextInt(3);
+					mThirdCard.setBackgroundResource(imageArray[i]);
+					i++;
+//					if (i > imageArray.length - 1) {
+//						i = 0;
+//					}
+					handler.postDelayed(this, 50); // for interval...	
+				}					
 			}
 		};
 		
 		handler.postDelayed(runnable, 50); // for initial delay..
 		
 	}
-
+	class SpinToWinTask extends AsyncTask<Void, Void, GameDTO>{
+		
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+		}
+		@Override
+		protected GameDTO doInBackground(Void... params) {
+			return null;
+		}
+		@Override
+		protected void onPostExecute(GameDTO result) {
+			super.onPostExecute(result);
+		}
+	}
 }

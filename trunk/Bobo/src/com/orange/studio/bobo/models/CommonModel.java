@@ -371,6 +371,7 @@ public class CommonModel implements CommonIF{
 			sum.total_price=jObject.optDouble("total_price", -1);
 			sum.total_price_without_tax=jObject.optDouble("total_price_without_tax", -1);
 			sum.total_products=jObject.optDouble("total_products", -1);
+			sum.total_products_wt=jObject.optDouble("total_products_wt", -1);
 			sum.total_shipping=jObject.optDouble("total_shipping", -1);
 			sum.total_tax=jObject.optDouble("total_tax", -1);
 			JSONObject jObjectDelivery=jObject.getJSONObject("delivery");
@@ -547,8 +548,8 @@ public class CommonModel implements CommonIF{
 				xmlR.setContentHandler(myXMLHandler);
 				InputSource is = new InputSource(new StringReader(result));
 				xmlR.parse(is);
-				if(myXMLHandler.mListProduct!=null && myXMLHandler.mListProduct.size()>0){
-					return myXMLHandler.mListProduct.get(0);
+				if(myXMLHandler.mListOrder!=null && myXMLHandler.mListOrder.size()>0){
+					return myXMLHandler.mListOrder.get(0);
 				}
 			}
 		} catch (Exception e) {

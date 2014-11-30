@@ -103,6 +103,7 @@ public class SpinToWinFragment extends BaseFragment implements OnClickListener {
 		if(data==null){
 			return;
 		}		
+		mWebView.loadData("", "text/html; charset=UTF-8", null);
 		String htmlData="<html><head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"></head><body style=\"background: #EDEDEF; text-align: center; color: #CB0078;\">"+data+"</body>";
 		mWebView.loadData(htmlData, "text/html; charset=UTF-8", null);
 	}

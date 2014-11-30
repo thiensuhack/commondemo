@@ -65,6 +65,7 @@ public final class OrangeConfig {
 		public static String GET_CARRIER_URL=main_domain+"index.php?controller=CustomAPI&action=carrier&id_cart=";
 		public static String GET_SUMMARY_URL=main_domain+"?controller=CustomAPI&action=summary&id_cart=";
 		public static String CREATE_ORDER=domain+"/orders?Create=Creating&ws_key=LW6TL3P7Z7KRFM3UYKWHJ3N28GEZLRBT";
+		public static String HOME_SLIDER=main_domain+"index.php?controller=CustomAPI&action=slide";
 		
 	}
 

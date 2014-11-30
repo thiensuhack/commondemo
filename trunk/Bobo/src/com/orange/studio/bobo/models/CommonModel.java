@@ -11,6 +11,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
@@ -31,6 +32,7 @@ import com.orange.studio.bobo.objects.CarrierDTO;
 import com.orange.studio.bobo.objects.ContactUsDTO;
 import com.orange.studio.bobo.objects.CountryDTO;
 import com.orange.studio.bobo.objects.CustomerDTO;
+import com.orange.studio.bobo.objects.HomeSliderDTO;
 import com.orange.studio.bobo.objects.ItemCartDTO;
 import com.orange.studio.bobo.objects.MenuItemDTO;
 import com.orange.studio.bobo.objects.OrderDTO;
@@ -649,5 +651,66 @@ public class CommonModel implements CommonIF{
 		} catch (Exception e) {
 		}
 		return null;
+	}
+	@Override
+	public List<HomeSliderDTO> getHomeSlider() {
+		try {
+			String url=UrlRequest.HOME_SLIDER;
+			List<HomeSliderDTO> result=null;		
+			String key=String.valueOf(url.hashCode());
+			String json=getStoreAdapter().get(key);			
+			if(json!=null){
+				
+				result=deserializeHomeSliderData(json);
+			}
+			if(result!=null && result.size()>0){
+				return result;
+			}
+			String data=OrangeHttpRequest.getInstance().getStringFromServer(UrlRequest.HOME_SLIDER, null);
+			if(data!=null && data.length()>0){
+				JSONArray jArr=new JSONArray(data);
+				result=new ArrayList<HomeSliderDTO>();
+				if(jArr!=null && jArr.length()>0){
+					HomeSliderDTO temp=null;
+					for (int i = 0; i < jArr.length(); i++) {
+						temp=new HomeSliderDTO();
+						JSONObject jb=jArr.getJSONObject(i);
+						temp.imageURL=jb.optString("image", "");
+						temp.desc=jb.optString("desc", "");
+						temp.url=jb.optString("url","");
+						if(temp.imageURL!=null && temp.imageURL.trim().length()>0){
+							result.add(temp);	
+						}						
+					}
+					if(result!=null && result.size()>0){
+						Gson gs=new Gson();
+						String jsonData=gs.toJson(result);
+						if(data!=null){
+							setStore(key, jsonData,STORE_EXPIRE_FIVE);
+						}
+					}
+					return result;
+				}				
+			}			
+		} catch (Exception e) {
+			
+		}
+		return null;
+	}
+	@SuppressWarnings("unchecked")
+	private List<HomeSliderDTO> deserializeHomeSliderData(String json) {
+		List<HomeSliderDTO> result = null;
+		if (json == null || json.equals(""))
+			return result;
+		try {
+			result = new ArrayList<HomeSliderDTO>();
+			Gson gson = new Gson();
+			Type listType = new TypeToken<List<MenuItemDTO>>() {
+			}.getType();
+			result = (List<HomeSliderDTO>) gson.fromJson(json, listType);
+		} catch (Exception e) {
+			return null;
+		}
+		return result;
 	}
 }

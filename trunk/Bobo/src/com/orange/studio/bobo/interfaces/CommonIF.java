@@ -10,6 +10,7 @@ import com.orange.studio.bobo.objects.CarrierDTO;
 import com.orange.studio.bobo.objects.ContactUsDTO;
 import com.orange.studio.bobo.objects.CountryDTO;
 import com.orange.studio.bobo.objects.CustomerDTO;
+import com.orange.studio.bobo.objects.GameDTO;
 import com.orange.studio.bobo.objects.HomeSliderDTO;
 import com.orange.studio.bobo.objects.ItemCartDTO;
 import com.orange.studio.bobo.objects.MenuItemDTO;
@@ -44,4 +45,5 @@ public interface CommonIF {
 	public SummaryDTO getSummary(String url);
 	public OrderDTO createOrder(String url,String rawData);
 	public List<HomeSliderDTO> getHomeSlider();
+	public GameDTO getSpinToWin();
 }

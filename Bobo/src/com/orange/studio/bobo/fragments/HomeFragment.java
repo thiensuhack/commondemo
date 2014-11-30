@@ -95,6 +95,10 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 		initLoadingView();
 		initNotFoundView();
 		switchView(false, false);
+		
+		mSilderAdapter = new ImageHomeSlider();
+		mViewPager.setAdapter(mSilderAdapter);
+		mCirclePageIndicator.setViewPager(mViewPager);
 	}
 
 	private void initListener() {
@@ -140,11 +144,15 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 		private LayoutInflater inflater;
 		private List<HomeSliderDTO> mData = new ArrayList<HomeSliderDTO>();
 
-		public ImageHomeSlider(List<HomeSliderDTO> _mData) {
+		public ImageHomeSlider() {
 			inflater = LayoutInflater.from(getActivity());
-			mData = _mData;
+			mData=new ArrayList<HomeSliderDTO>();
 		}
-
+		public void updateDataList(List<HomeSliderDTO> _mListData) {
+			mData.clear();
+			mData.addAll(_mListData);
+			notifyDataSetChanged();
+		}		
 		@Override
 		public int getCount() {
 			return mData.size();
@@ -162,10 +170,16 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 			assert mContainer != null;
 			ImageView imageView = (ImageView) mContainer
 					.findViewById(R.id.imageHomeSlider);
-
-			ImageLoader.getInstance().displayImage(
-					mData.get(position).imageURL, imageView, options,null);
-
+			try {
+				if(mData!=null&&mData.size()>0){
+					HomeSliderDTO slider=mData.get(position);
+					if(slider!=null){
+						ImageLoader.getInstance().displayImage(
+								slider.imageURL, imageView, options,null);
+					}	
+				}
+			} catch (Exception e) {	
+			}
 			view.addView(mContainer, 0);
 			return mContainer;
 		}
@@ -211,9 +225,7 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 		protected void onPostExecute(List<HomeSliderDTO> result) {
 			super.onPostExecute(result);
 			if (result != null && result.size() > 0) {
-				mSilderAdapter = new ImageHomeSlider(result);
-				mViewPager.setAdapter(mSilderAdapter);
-				mCirclePageIndicator.setViewPager(mViewPager);
+				mSilderAdapter.updateDataList(result);
 			}
 		}
 	}

@@ -705,7 +705,7 @@ public class CommonModel implements CommonIF{
 		try {
 			result = new ArrayList<HomeSliderDTO>();
 			Gson gson = new Gson();
-			Type listType = new TypeToken<List<MenuItemDTO>>() {
+			Type listType = new TypeToken<List<HomeSliderDTO>>() {
 			}.getType();
 			result = (List<HomeSliderDTO>) gson.fromJson(json, listType);
 		} catch (Exception e) {

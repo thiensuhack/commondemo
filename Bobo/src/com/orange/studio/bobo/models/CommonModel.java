@@ -32,6 +32,7 @@ import com.orange.studio.bobo.objects.CarrierDTO;
 import com.orange.studio.bobo.objects.ContactUsDTO;
 import com.orange.studio.bobo.objects.CountryDTO;
 import com.orange.studio.bobo.objects.CustomerDTO;
+import com.orange.studio.bobo.objects.GameDTO;
 import com.orange.studio.bobo.objects.HomeSliderDTO;
 import com.orange.studio.bobo.objects.ItemCartDTO;
 import com.orange.studio.bobo.objects.MenuItemDTO;
@@ -648,6 +649,27 @@ public class CommonModel implements CommonIF{
 				return myXMLHandler.mListCountry;
 			}			
 			return null;
+		} catch (Exception e) {
+		}
+		return null;
+	}
+	@Override
+	public GameDTO getSpinToWin() {
+		try {
+			String data=OrangeHttpRequest.getInstance().getStringFromServer(UrlRequest.GET_GAME_RESULT, null);
+			if(data!=null && data.length()>0){
+				JSONObject jb=new JSONObject(data);
+				if(jb!=null){
+					GameDTO result=new GameDTO();
+					result.id=jb.getString("id");
+					result.date=jb.optString("date");
+					result.msg=jb.optString("msg");
+					result.value=jb.optInt("value",0);
+					result.voucher=jb.getString("voucher");
+					return result;
+				}
+			}
+			
 		} catch (Exception e) {
 		}
 		return null;

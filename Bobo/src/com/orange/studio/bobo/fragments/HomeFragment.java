@@ -31,6 +31,7 @@ import com.orange.studio.bobo.configs.OrangeConfig;
 import com.orange.studio.bobo.configs.OrangeConfig.MENU_NAME;
 import com.orange.studio.bobo.configs.OrangeConfig.UrlRequest;
 import com.orange.studio.bobo.customviews.ExpandableHeightGridView;
+import com.orange.studio.bobo.models.CommonModel;
 import com.orange.studio.bobo.models.ProductModel;
 import com.orange.studio.bobo.objects.HomeSliderDTO;
 import com.orange.studio.bobo.objects.ProductDTO;
@@ -195,12 +196,14 @@ public class HomeFragment extends BaseFragment implements OnItemClickListener,
 
 		@Override
 		protected List<HomeSliderDTO> doInBackground(Void... arg0) {
-			List<HomeSliderDTO> result = new ArrayList<HomeSliderDTO>();
-			for (int i = 0; i < OrangeConfig.IMAGES.length; i++) {
-				HomeSliderDTO item = new HomeSliderDTO();
-				item.imageURL = OrangeConfig.IMAGES[i];
-				result.add(item);
-			}
+			
+			List<HomeSliderDTO> result=CommonModel.getInstance().getHomeSlider();
+//			result = new ArrayList<HomeSliderDTO>();
+//			for (int i = 0; i < OrangeConfig.IMAGES.length; i++) {
+//				HomeSliderDTO item = new HomeSliderDTO();
+//				item.imageURL = OrangeConfig.IMAGES[i];
+//				result.add(item);
+//			}
 			return result;
 		}
 

@@ -43,6 +43,7 @@ import com.orange.studio.bobo.objects.ProductOptionValueDTO;
 import com.orange.studio.bobo.objects.RequestDTO;
 import com.orange.studio.bobo.objects.StockDTO;
 import com.orange.studio.bobo.objects.SummaryDTO;
+import com.orange.studio.bobo.objects.TaxDTO;
 import com.orange.studio.bobo.utils.OrangeUtils;
 import com.orange.studio.bobo.xml.XMLHandlerAboutUs;
 import com.orange.studio.bobo.xml.XMLHandlerAddress;
@@ -55,6 +56,7 @@ import com.orange.studio.bobo.xml.XMLHandlerProductFeatureValues;
 import com.orange.studio.bobo.xml.XMLHandlerProductFeatures;
 import com.orange.studio.bobo.xml.XMLHandlerProductOptionValue;
 import com.orange.studio.bobo.xml.XMLHandlerStock;
+import com.orange.studio.bobo.xml.XMLHandlerTax;
 import com.zuzu.db.store.SimpleStoreIF;
 
 public class CommonModel implements CommonIF{
@@ -62,7 +64,7 @@ public class CommonModel implements CommonIF{
 	private static CommonIF _instance;
 	private static final Lock createLock = new ReentrantLock();
 	private static final int STORE_EXPIRE = 1*60; //3 minutes
-	private static final int STORE_EXPIRE_FIVE = 5*60; //3 minutes
+	private static final int STORE_EXPIRE_FIVE = 5*60; //5 minutes
 	private static final int STORE_EXPIRE_A_DAY = 24*60*60; //3 minutes
 		
 	public CommonModel() {
@@ -730,6 +732,58 @@ public class CommonModel implements CommonIF{
 			Type listType = new TypeToken<List<HomeSliderDTO>>() {
 			}.getType();
 			result = (List<HomeSliderDTO>) gson.fromJson(json, listType);
+		} catch (Exception e) {
+			return null;
+		}
+		return result;
+	}
+	@Override
+	public List<TaxDTO> getListTax() {
+		try {
+			String url=UrlRequest.GET_LIST_TAXES;
+			List<TaxDTO> resultTax=null;
+			String key=String.valueOf(url.hashCode());
+			String json=getStoreAdapter().get(key);
+						if(json!=null){			
+				resultTax=deserializeListTax(json);
+			}
+			if(resultTax!=null && resultTax.size()>0){			
+				return resultTax;
+			}
+			SAXParserFactory saxPF = SAXParserFactory.newInstance();
+			SAXParser saxP = saxPF.newSAXParser();
+			XMLReader xmlR = saxP.getXMLReader();						
+			XMLHandlerTax myXMLHandler = new XMLHandlerTax(OrangeConfig.LANGUAGE_DEFAULT);
+			xmlR.setContentHandler(myXMLHandler);			
+			String result=OrangeHttpRequest.getInstance().getStringFromServer(url, null);
+			if(result!=null && result.trim().length()>0){
+				InputSource is = new InputSource(new StringReader(result));
+				xmlR.parse(is);
+				if(myXMLHandler.mListTaxes!=null && myXMLHandler.mListTaxes.size()>0){
+					Gson gs=new Gson();
+					String data=gs.toJson(myXMLHandler.mListTaxes);
+					if(data!=null){
+						setStore(key, data,STORE_EXPIRE_FIVE);
+					}
+				}
+				return myXMLHandler.mListTaxes;
+			}			
+			return null;
+		} catch (Exception e) {
+		}
+		return null;
+	}
+	@SuppressWarnings("unchecked")
+	private List<TaxDTO> deserializeListTax(String json) {
+		List<TaxDTO> result = null;
+		if (json == null || json.equals(""))
+			return result;
+		try {
+			result = new ArrayList<TaxDTO>();
+			Gson gson = new Gson();
+			Type listType = new TypeToken<List<TaxDTO>>() {
+			}.getType();
+			result = (List<TaxDTO>) gson.fromJson(json, listType);
 		} catch (Exception e) {
 			return null;
 		}

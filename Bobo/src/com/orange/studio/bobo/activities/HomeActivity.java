@@ -650,7 +650,7 @@ public class HomeActivity extends ActionBarActivity implements
 		}
 		double result = 0;
 		for (ProductDTO item : mListItemCart) {
-			result += item.price * item.cartCounter;
+			result += OrangeUtils.getPriceBeforeTax(item) * item.cartCounter;
 		}
 		result = result * 100;
 		result = Math.round(result);

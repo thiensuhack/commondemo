@@ -18,6 +18,7 @@ import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.activities.HomeActivity;
 import com.orange.studio.bobo.configs.OrangeConfig.MENU_NAME;
 import com.orange.studio.bobo.objects.ProductDTO;
+import com.orange.studio.bobo.utils.OrangeUtils;
 
 public class GridProductAdapter extends OrangeBaseAdapter {
 
@@ -101,7 +102,7 @@ public class GridProductAdapter extends OrangeBaseAdapter {
 		}
 		final ProductDTO mData = mListData.get(position);
 		viewHolder.proName.setText(mData.name);
-		viewHolder.proPrice.setText("$"+String.format("%,.2f", mData.price));
+		viewHolder.proPrice.setText("$"+String.format("%,.2f", OrangeUtils.getPriceBeforeTax(mData)));
 		
 		viewHolder.proPriceDiscount.setText("$"+String.format("%,.2f", mData.wholesale_price));
 		

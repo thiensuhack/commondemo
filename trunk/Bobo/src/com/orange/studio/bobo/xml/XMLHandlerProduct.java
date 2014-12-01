@@ -195,6 +195,10 @@ public class XMLHandlerProduct extends DefaultHandler {
 			isShortDescription = false;
 			return;
 		}
+		if (localName.equalsIgnoreCase("id_tax_rules_group")) {
+			data.id_tax_rules_group = convertStringToInt(elementValue);
+			return;
+		}
 		if (localName.equalsIgnoreCase("quantity")) {
 			data.quantity = elementValue;
 			return;
@@ -254,6 +258,13 @@ public class XMLHandlerProduct extends DefaultHandler {
 	private double convertStringToFloat(String value){
 		try {
 			return Double.valueOf(value);
+		} catch (Exception e) {
+			return 0;
+		}
+	}
+	private int convertStringToInt(String value){
+		try {
+			return Integer.valueOf(value);
 		} catch (Exception e) {
 			return 0;
 		}

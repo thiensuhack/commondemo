@@ -16,6 +16,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.fragments.ShoppingCartFragment.ShoppingCartHandler;
 import com.orange.studio.bobo.objects.ProductDTO;
+import com.orange.studio.bobo.utils.OrangeUtils;
 
 public class ListItemsCartAdapter extends OrangeBaseAdapter {
 
@@ -103,7 +104,7 @@ public class ListItemsCartAdapter extends OrangeBaseAdapter {
 		}
 		final ProductDTO mData = mListData.get(position);
 		viewHolder.proName.setText(mData.name);
-		viewHolder.proPrice.setText("$" + String.valueOf(mData.price));
+		viewHolder.proPrice.setText("$" + String.format("%,.2f",OrangeUtils.getPriceBeforeTax(mData)));
 		viewHolder.proPriceDiscount.setText("$"
 				+ String.valueOf(mData.wholesale_price));
 		viewHolder.proCounter.setText(String.valueOf(mData.cartCounter));

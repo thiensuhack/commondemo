@@ -66,7 +66,8 @@ public class CommonModel implements CommonIF{
 	private static final int STORE_EXPIRE = 1*60; //3 minutes
 	private static final int STORE_EXPIRE_FIVE = 5*60; //5 minutes
 	private static final int STORE_EXPIRE_A_DAY = 24*60*60; //3 minutes
-		
+	private static final int STORE_EXPIRE_FIFTEEN = 15*60; //15 minutes
+	
 	public CommonModel() {
 	}
 
@@ -710,7 +711,7 @@ public class CommonModel implements CommonIF{
 						Gson gs=new Gson();
 						String jsonData=gs.toJson(result);
 						if(data!=null){
-							setStore(key, jsonData,STORE_EXPIRE_FIVE);
+							setStore(key, jsonData,STORE_EXPIRE_FIFTEEN);
 						}
 					}
 					return result;
@@ -788,5 +789,19 @@ public class CommonModel implements CommonIF{
 			return null;
 		}
 		return result;
+	}
+	@Override
+	public TaxDTO getTax(int id) {
+		if(OrangeConfig.mListTax ==null || OrangeConfig.mListTax.size()<1){
+			OrangeConfig.mListTax=getListTax();
+		}
+		if(OrangeConfig.mListTax!=null && OrangeConfig.mListTax.size()>0){
+			for (int i = 0; i < OrangeConfig.mListTax.size(); i++) {
+				if(id==OrangeConfig.mListTax.get(i).id){
+					return OrangeConfig.mListTax.get(i);
+				}
+			}
+		}
+		return null;
 	}
 }

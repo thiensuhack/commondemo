@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.orange.studio.bobo.objects.ProductFeatureDTO;
 import com.orange.studio.bobo.objects.ProductFeatureValueDTO;
+import com.orange.studio.bobo.objects.TaxDTO;
 
 public final class OrangeConfig {
 
@@ -16,7 +17,8 @@ public final class OrangeConfig {
 
 	public static List<ProductFeatureDTO> mListProductFeatures = null;
 	public static List<ProductFeatureValueDTO> mListProductFeatureValues = null;
-
+	public static List<TaxDTO> mListTax=null;
+	
 	public static class MENU_NAME {
 		public static final int PRODUCT_DETAIL_FRAGMENT = -11;
 		public static final int SHOPING_CART_FRAGMENT = -12;

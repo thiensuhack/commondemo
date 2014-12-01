@@ -48,4 +48,5 @@ public interface CommonIF {
 	public List<HomeSliderDTO> getHomeSlider();
 	public GameDTO getSpinToWin();
 	public List<TaxDTO> getListTax();
+	public TaxDTO getTax(int id);
 }

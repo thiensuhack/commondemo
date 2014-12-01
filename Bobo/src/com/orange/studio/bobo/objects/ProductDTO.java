@@ -9,7 +9,7 @@ public class ProductDTO {
 	public String id_supplier;
 	public String id_category_default;
 	public String id_default_image;
-	public String id_tax_rules_group;
+	public int id_tax_rules_group;
 	public String quantity;
 	public String id_shop_default;
 	public String width;
@@ -20,7 +20,7 @@ public class ProductDTO {
 	public String on_sale;
 	public String online_only;
 	public String ecotax;
-	public String minimal_quantity;
+	public String minimal_quantity;	
 	public double price;
 	public double wholesale_price;
 	public double unit_price_ratio;
@@ -53,6 +53,7 @@ public class ProductDTO {
 	public StockDTO stock;
 	
 	public int cartCounter;
+	public TaxDTO tax;
 	
 	public ProductDTO(){
 		cartCounter=0;
@@ -65,5 +66,7 @@ public class ProductDTO {
 		listProductFeatures=new ArrayList<ProductFeatureAndValueDTO>();
 		mListStock=new ArrayList<StockDTO>();
 		cartCounter=1;
+		id_tax_rules_group=0;
+		tax=new TaxDTO();
 	}
 }

@@ -74,8 +74,8 @@ public class XMLHandlerTax extends DefaultHandler {
 			attrId="";
 			return;
 		}
-		if (localName.equalsIgnoreCase("id_customer")) {
-			data.rate = convertStringToFloat(elementValue);
+		if (localName.equalsIgnoreCase("rate")) {
+			data.rate = convertStringToDouble(elementValue);
 			return;
 		}	
 		
@@ -102,7 +102,7 @@ public class XMLHandlerTax extends DefaultHandler {
 			elementOn = false;
 		}
 	}
-	private double convertStringToFloat(String value){
+	private double convertStringToDouble(String value){
 		try {
 			return Double.valueOf(value);
 		} catch (Exception e) {

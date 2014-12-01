@@ -6,4 +6,7 @@ public class TaxDTO {
 	public int active;
 	public int deleted;
 	public String name;	
+	public TaxDTO(){
+		rate=0;
+	}
 }

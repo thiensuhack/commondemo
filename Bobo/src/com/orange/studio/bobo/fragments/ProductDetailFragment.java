@@ -262,7 +262,7 @@ public class ProductDetailFragment extends BaseFragment implements
 			if (result != null) {
 				mProduct = result;
 				mProName.setText(mProduct.name);
-				mProPrice.setText("$" + String.format("%,.2f", mProduct.price));
+				mProPrice.setText("$" + String.format("%,.2f", OrangeUtils.getPriceBeforeTax(mProduct)));
 				mProPriceDiscount.setText("$"
 						+ String.format("%,.2f", mProduct.wholesale_price));
 				mProCondition.setText(mProduct.condition);

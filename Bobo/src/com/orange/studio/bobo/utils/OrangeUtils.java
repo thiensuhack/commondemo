@@ -27,6 +27,28 @@ import com.zuzu.db.store.SQLiteStore;
 import com.zuzu.db.store.SimpleStoreIF;
 
 public class OrangeUtils {
+	public static double getPriceBeforeTax(ProductDTO product){
+		
+		if(product.tax!=null){
+			return (product.price / (1+product.tax.rate/100));
+		}
+		
+		return product.price;
+	}
+	public static double convertStringToDouble(String value){
+		try {
+			return Double.valueOf(value);
+		} catch (Exception e) {
+			return 0;
+		}
+	}
+	public static int convertStringToInt(String value){
+		try {
+			return Integer.valueOf(value);
+		} catch (Exception e) {
+			return 0;
+		}
+	}
 	public static ProductDTO duplicateProduct(ProductDTO product){
 		try {
 			ProductDTO result = product;
@@ -85,13 +107,6 @@ public class OrangeUtils {
 		} catch (Exception e) {
 		}
 		return result;
-	}
-	public static double convertStringToFloat(String value){
-		try {
-			return Double.valueOf(value);
-		} catch (Exception e) {
-			return 0;
-		}
 	}
 	public static String createCartData(List<ProductDTO> mListProducts,CustomerDTO customer,String cartID,AddressDTO address){
 		String result="";

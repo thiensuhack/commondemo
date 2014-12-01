@@ -33,6 +33,7 @@ import com.orange.studio.bobo.objects.ProductFeatureValueDTO;
 import com.orange.studio.bobo.objects.ProductOptionValueDTO;
 import com.orange.studio.bobo.objects.RequestDTO;
 import com.orange.studio.bobo.objects.StockDTO;
+import com.orange.studio.bobo.objects.TaxDTO;
 import com.orange.studio.bobo.utils.OrangeUtils;
 import com.orange.studio.bobo.xml.XMLHandlerProduct;
 import com.zuzu.db.store.SimpleStoreIF;
@@ -114,6 +115,13 @@ public class ProductModel implements ProductIF{
 				InputSource is = new InputSource(new StringReader(strResult));
 				xmlR.parse(is);
 				if(myXMLHandler.mListProducts!=null && myXMLHandler.mListProducts.size()>0){
+					TaxDTO tax=null;
+					for (int i = 0; i < myXMLHandler.mListProducts.size(); i++) {
+						if(tax==null || tax.id!=myXMLHandler.mListProducts.get(i).id_tax_rules_group){
+							tax=CommonModel.getInstance().getTax(myXMLHandler.mListProducts.get(i).id_tax_rules_group);
+						}
+						myXMLHandler.mListProducts.get(i).tax=tax;
+					}
 					Gson gs=new Gson();
 					String data=gs.toJson(myXMLHandler.mListProducts);
 					if(data!=null){
@@ -167,14 +175,20 @@ public class ProductModel implements ProductIF{
 			JSONArray jArr=new JSONArray(json);			
 			if(jArr!=null && jArr.length()>0){
 				ProductDTO item=null;
+//				TaxDTO tax=null;
 				for (int i = 0; i < jArr.length(); i++) {
 					item=new ProductDTO();
 					JSONObject jObject=jArr.getJSONObject(i);
 					item.id=jObject.optString("id_product");
 					item.name=jObject.optString("name");
-					item.price=OrangeUtils.convertStringToFloat(jObject.optString("price"));
-					item.wholesale_price=OrangeUtils.convertStringToFloat(jObject.optString("wholesale_price"));
-					item.unit_price_ratio=OrangeUtils.convertStringToFloat(jObject.optString("unit_price_ratio"));
+					item.id_tax_rules_group=OrangeUtils.convertStringToInt(jObject.optString("id_tax_rules_group"));
+//					if(tax==null || tax.id!=item.id_tax_rules_group){
+//						tax = CommonModel.getInstance().getTax(item.id_tax_rules_group);
+//					}
+//					item.tax=tax;
+					item.price=OrangeUtils.convertStringToDouble(jObject.optString("price"));
+					item.wholesale_price=OrangeUtils.convertStringToDouble(jObject.optString("wholesale_price"));
+					item.unit_price_ratio=OrangeUtils.convertStringToDouble(jObject.optString("unit_price_ratio"));
 					item.id_default_image=UrlRequest.domain+"/images/products/"+item.id+"/"+jObject.optString("id_image")+"?ws_key="+OrangeConfig.App_Key;
 					result.add(item);
 				}
@@ -202,6 +216,10 @@ public class ProductModel implements ProductIF{
 				xmlR.parse(is);
 				if(myXMLHandler.mListProducts!=null && myXMLHandler.mListProducts.size()>0){
 					ProductDTO product=myXMLHandler.mListProducts.get(0);
+					TaxDTO tax = CommonModel.getInstance().getTax(product.id_tax_rules_group);
+					if(tax!=null){
+						product.tax=tax;
+					}
 					if(product.productOptionValues!=null && product.productOptionValues.size()>0){
 						product.listProductOptionValues=new ArrayList<ProductOptionValueDTO>();
 						

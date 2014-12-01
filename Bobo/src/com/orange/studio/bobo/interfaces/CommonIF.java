@@ -21,6 +21,7 @@ import com.orange.studio.bobo.objects.ProductOptionValueDTO;
 import com.orange.studio.bobo.objects.RequestDTO;
 import com.orange.studio.bobo.objects.StockDTO;
 import com.orange.studio.bobo.objects.SummaryDTO;
+import com.orange.studio.bobo.objects.TaxDTO;
 
 public interface CommonIF {
 	public List<MenuItemDTO> getListMenuCategory(String url,RequestDTO request,Bundle params);
@@ -46,4 +47,5 @@ public interface CommonIF {
 	public OrderDTO createOrder(String url,String rawData);
 	public List<HomeSliderDTO> getHomeSlider();
 	public GameDTO getSpinToWin();
+	public List<TaxDTO> getListTax();
 }

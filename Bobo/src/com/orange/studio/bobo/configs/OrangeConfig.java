@@ -67,6 +67,7 @@ public final class OrangeConfig {
 		public static String CREATE_ORDER=domain+"/orders?Create=Creating&ws_key=LW6TL3P7Z7KRFM3UYKWHJ3N28GEZLRBT";
 		public static String HOME_SLIDER=main_domain+"index.php?controller=CustomAPI&action=slide";
 		public static String GET_GAME_RESULT=main_domain+"index.php?controller=CustomAPI&action=game";
+		public static String GET_LIST_TAXES= domain+"/taxes?ws_key=LW6TL3P7Z7KRFM3UYKWHJ3N28GEZLRBT&filter[active]=1&display=full";
 		
 	}
 

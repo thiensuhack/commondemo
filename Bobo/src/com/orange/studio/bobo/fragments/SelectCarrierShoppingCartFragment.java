@@ -115,10 +115,14 @@ public class SelectCarrierShoppingCartFragment extends BaseFragment implements O
 		}
 		@Override
 		protected List<CarrierDTO> doInBackground(Void... params) {
-			//String url=UrlRequest.GET_CARRIER_URL+mHomeActivity.getCurItemCart().id;
-			String url=UrlRequest.GET_CARRIER_URL+"73";
-			Log.i("CARRIER URL: ", url);
-			return CommonModel.getInstance().getListCarrier(url);
+			try {
+				String url=UrlRequest.GET_CARRIER_URL+mHomeActivity.getCurItemCart().id;
+				//String url=UrlRequest.GET_CARRIER_URL+"73";
+				Log.i("CARRIER URL: ", url);
+				return CommonModel.getInstance().getListCarrier(url);
+			} catch (Exception e) {
+			}
+			return null;
 		}
 		@Override
 		protected void onPostExecute(List<CarrierDTO> result) {

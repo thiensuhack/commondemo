@@ -248,4 +248,11 @@ public class OrangeUtils {
 		}
 		return result;
 	}
+	public static String getVersionName(Context c) {
+		try {
+			return c.getPackageManager().getPackageInfo(c.getPackageName(), 0).versionName;
+		} catch (Exception e) {
+			return null;
+		}
+	}
 }

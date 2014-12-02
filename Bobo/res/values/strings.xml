@@ -19,6 +19,7 @@
     <string name="search_text">Search</string>
     <string name="search_text_hint">Bobo search...</string>
     <string name="waitting_message">Please wait...</string>
+    <string name="versionNameLabel">Version</string>
     
     <!-- Payment -->
     <string name="payment_success_message">Success Payment</string>

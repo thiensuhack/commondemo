@@ -11,9 +11,10 @@
         android:layout_centerInParent="true" />
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:gravity="center"
         android:orientation="horizontal"
         android:layout_marginBottom="5dp">
@@ -22,7 +23,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
-            android:gravity="center"
             android:text="@string/versionNameLabel"
             android:textColor="@color/pink"
             android:textSize="12sp"
@@ -32,7 +32,6 @@
             android:id="@+id/txtViewVersion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:textColor="@color/pink"
             android:textSize="12sp" 
             android:textStyle="italic"/>

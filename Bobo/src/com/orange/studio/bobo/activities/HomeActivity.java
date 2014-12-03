@@ -550,14 +550,18 @@ public class HomeActivity extends ActionBarActivity implements
 
 			boolean isExisted = false;
 			for (ProductDTO item : mListItemCart) {
-				//if (item.id.equals(proItem.id) && item.stock.id==proItem.stock.id) {
 				if (item.id.equals(proItem.id)) {
-//					if (item.cartCounter >= CartItemsRule.MAX_ITEMS_CART) {
-//						return;
-//					}
 					if (item.cartCounter >= proItem.stock.quantity) {
 						return -1;
 					}
+					if(item.color!=null && proItem.color!=null && item.color.id!=proItem.color.id){
+						isExisted=false;
+						break;
+					}
+				//if (item.id.equals(proItem.id)) {
+//					if (item.cartCounter >= CartItemsRule.MAX_ITEMS_CART) {
+//						return;
+//					}					
 					item.cartCounter++;
 					isExisted = true;
 					break;
@@ -568,9 +572,6 @@ public class HomeActivity extends ActionBarActivity implements
 				proItem.cartCounter = 1;
 				mListItemCart.add(0, proItem);
 			}
-			// updateItemCartCounter();
-			// Toast.makeText(getApplicationContext(), "Added:" + proItem.name,
-			// Toast.LENGTH_SHORT).show();
 			return 1;
 		} catch (Exception e) {
 		}
@@ -602,18 +603,22 @@ public class HomeActivity extends ActionBarActivity implements
 		mCarrierDTO = null;
 		mSummaryDTO=null;		
 	}
-	public void decreaseCartItem(String proId) {
-		if (proId == null || mListItemCart == null) {
+	public void decreaseCartItem(ProductDTO product) {
+		if (product.id == null || mListItemCart == null) {
 			return;
 		}
 		for (int i = 0; i < mListItemCart.size(); i++) {
-			if (mListItemCart.get(i).id.equals(proId)) {
-				if (mListItemCart.get(i).cartCounter > 0) {
-					mListItemCart.get(i).cartCounter--;
-				} else {
-					mListItemCart.remove(i);
-				}
-				break;
+			ProductDTO temp = mListItemCart.get(i);
+			if (temp.id.equals(product.id)) {				
+				if(temp.color.id.equals(product.color.id))
+				{
+					if (temp.cartCounter > 0) {
+						mListItemCart.get(i).cartCounter--;
+					} else {
+						mListItemCart.remove(i);
+					}
+					break;
+				}													
 			}
 		}
 		// updateItemCartCounter();
@@ -726,7 +731,7 @@ public class HomeActivity extends ActionBarActivity implements
 					// addToCart(mProductDTO);
 				} else {
 					if(mProductDTO!=null){
-						decreaseCartItem(mProductDTO.id);
+						decreaseCartItem(mProductDTO);
 					}					
 					showToast(getString(R.string.add_cart_failed));
 				}

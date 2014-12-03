@@ -80,7 +80,7 @@ public class ShoppingCartFragment extends BaseFragment implements
 			@Override
 			public void decreaseItemCart(ProductDTO item) {
 				try {
-					mHomeActivity.decreaseCartItem(item.id);
+					mHomeActivity.decreaseCartItem(item);
 					mAdapter.updateDataList(mHomeActivity.mListItemCart);
 					checkItemsCart();
 					updateTotalPrice();

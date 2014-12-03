@@ -22,6 +22,7 @@ public class ProductDTO {
 	public String ecotax;
 	public String minimal_quantity;	
 	public double price;
+	public double priceBeforeTax;
 	public double wholesale_price;
 	public double unit_price_ratio;
 	public String additional_shipping_cost;

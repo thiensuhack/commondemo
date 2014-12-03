@@ -107,7 +107,7 @@ public class ListItemsCartAdapter extends OrangeBaseAdapter {
 		}
 		final ProductDTO mData = mListData.get(position);
 		viewHolder.proName.setText(mData.name);
-		viewHolder.proPrice.setText("$" + String.format("%,.2f",OrangeUtils.getPriceBeforeTax(mData)));
+		viewHolder.proPrice.setText("$" + String.format("%,.2f", mData.priceBeforeTax));
 		viewHolder.proPriceDiscount.setText("$"
 				+ String.valueOf(mData.wholesale_price));
 		viewHolder.proCounter.setText(String.valueOf(mData.cartCounter));

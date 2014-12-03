@@ -6,5 +6,6 @@ public class ColorDTO {
 	public int index;
 	public ColorDTO(){
 		color="";
+		id= "-11";
 	}
 }

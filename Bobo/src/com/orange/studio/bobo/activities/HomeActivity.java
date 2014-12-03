@@ -612,7 +612,7 @@ public class HomeActivity extends ActionBarActivity implements
 			if (temp.id.equals(product.id)) {				
 				if(temp.color.id.equals(product.color.id))
 				{
-					if (temp.cartCounter > 0) {
+					if (temp.cartCounter > 1) {
 						mListItemCart.get(i).cartCounter--;
 					} else {
 						mListItemCart.remove(i);

@@ -41,6 +41,7 @@ import com.orange.studio.bobo.objects.ProductFeatureDTO;
 import com.orange.studio.bobo.objects.ProductFeatureValueDTO;
 import com.orange.studio.bobo.objects.ProductOptionValueDTO;
 import com.orange.studio.bobo.objects.RequestDTO;
+import com.orange.studio.bobo.objects.ResultDTO;
 import com.orange.studio.bobo.objects.StockDTO;
 import com.orange.studio.bobo.objects.SummaryDTO;
 import com.orange.studio.bobo.objects.TaxDTO;
@@ -801,6 +802,21 @@ public class CommonModel implements CommonIF{
 					return OrangeConfig.mListTax.get(i);
 				}
 			}
+		}
+		return null;
+	}
+	@Override
+	public ResultDTO sendPaypalCheckoutInfo(String url, Bundle params) {
+		try {
+			String result=OrangeHttpRequest.getInstance().postDataToServer(url, params);
+			if(result!=null && result.trim().length()>0){
+				ResultDTO resultData=new ResultDTO();
+				JSONObject jb=new JSONObject(result);
+				resultData.result = jb.optInt("result", 0);
+				resultData.msg=jb.optString("msg", "unknown");
+				return resultData;
+			}
+		} catch (Exception e) {
 		}
 		return null;
 	}

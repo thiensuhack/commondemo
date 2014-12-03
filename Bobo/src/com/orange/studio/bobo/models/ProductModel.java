@@ -121,6 +121,11 @@ public class ProductModel implements ProductIF{
 							tax=CommonModel.getInstance().getTax(myXMLHandler.mListProducts.get(i).id_tax_rules_group);
 						}
 						myXMLHandler.mListProducts.get(i).tax=tax;
+						if(myXMLHandler.mListProducts.get(i).tax!=null){
+							myXMLHandler.mListProducts.get(i).priceBeforeTax=(myXMLHandler.mListProducts.get(i).price/(1+myXMLHandler.mListProducts.get(i).tax.rate/100));
+							myXMLHandler.mListProducts.get(i).priceBeforeTax = Math.round(myXMLHandler.mListProducts.get(i).priceBeforeTax * 100);
+							myXMLHandler.mListProducts.get(i).priceBeforeTax = myXMLHandler.mListProducts.get(i).priceBeforeTax/100;
+						}
 					}
 					Gson gs=new Gson();
 					String data=gs.toJson(myXMLHandler.mListProducts);
@@ -219,6 +224,12 @@ public class ProductModel implements ProductIF{
 					TaxDTO tax = CommonModel.getInstance().getTax(product.id_tax_rules_group);
 					if(tax!=null){
 						product.tax=tax;
+						product.priceBeforeTax=(product.price/(1+product.tax.rate/100));
+						product.priceBeforeTax = Math.round(product.priceBeforeTax * 100);
+						product.priceBeforeTax = product.priceBeforeTax/100;
+					}
+					else{
+						product.priceBeforeTax=product.price;
 					}
 					if(product.productOptionValues!=null && product.productOptionValues.size()>0){
 						product.listProductOptionValues=new ArrayList<ProductOptionValueDTO>();

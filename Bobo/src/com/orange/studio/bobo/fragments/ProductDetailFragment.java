@@ -316,7 +316,7 @@ public class ProductDetailFragment extends BaseFragment implements
 					mViewPager.setAdapter(mSilderAdapter);
 					mCirclePageIndicator.setViewPager(mViewPager);
 				}
-
+				mColor=null;
 				if (result.listProductOptionValues != null
 						&& result.listProductOptionValues.size() > 0) {
 					List<ColorDTO> listColor = new ArrayList<ColorDTO>();
@@ -344,7 +344,10 @@ public class ProductDetailFragment extends BaseFragment implements
 		switch (v.getId()) {
 		case R.id.addToCardBtn:
 			ProductDTO product=OrangeUtils.duplicateProduct(mProduct);
-			if(product!=null){
+			if(mColor==null){
+				mColor=new ColorDTO();
+			}
+			if(product!=null){				
 				mProduct.color=mColor;
 				mHomeActivity.addCart(mProduct);
 			}			

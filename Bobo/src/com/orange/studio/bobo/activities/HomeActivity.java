@@ -620,6 +620,10 @@ public class HomeActivity extends ActionBarActivity implements
 					break;
 				}													
 			}
+		}		
+		if (mAddCartTask == null || mAddCartTask.getStatus() == Status.FINISHED) {
+			mAddCartTask = new AddCartTask(product);
+			mAddCartTask.execute();
 		}
 		// updateItemCartCounter();
 	}
@@ -655,7 +659,7 @@ public class HomeActivity extends ActionBarActivity implements
 		}
 		double result = 0;
 		for (ProductDTO item : mListItemCart) {
-			result += OrangeUtils.getPriceBeforeTax(item) * item.cartCounter;
+			result += item.priceBeforeTax * item.cartCounter;
 		}
 		result = result * 100;
 		result = Math.round(result);

@@ -941,7 +941,7 @@ public class HomeActivity extends ActionBarActivity implements
 								"PaymentConfirmation info received from PayPal",
 								Toast.LENGTH_LONG).show();						
 						//onNavigationDrawerItemSelected(1);
-						new SendPaypalCheckoutInfo(mOrderDTO.id, confirm.toJSONObject().toString()).execute();
+						new SendPaypalCheckoutInfo(mOrderDTO.id, "TotalPayment Info:" + confirm.toJSONObject().toString() +" - Detail Payment Info: "+ confirm.getPayment().toJSONObject().toString()).execute();
 						setCheckOutSuccess(true);
 						clearDataSuccessCheckout();
 
@@ -1075,7 +1075,7 @@ public class HomeActivity extends ActionBarActivity implements
 			Bundle mParams=new Bundle();
 			mParams.putString("order_id", orderID);
 			mParams.putString("transaction_id", transactionId);
-			return CommonModel.getInstance().sendPaypalCheckoutInfo(UrlRequest.ABOUT_US_URL, mParams);
+			return CommonModel.getInstance().sendPaypalCheckoutInfo(UrlRequest.POST_PAYPAL_PAYMENT_INFO, mParams);
 		}
 		@Override
 		protected void onPostExecute(ResultDTO result) {

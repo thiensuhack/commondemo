@@ -4,4 +4,7 @@ public class ColorDTO {
 	public String color;
 	public String id;	
 	public int index;
+	public ColorDTO(){
+		color="";
+	}
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,6 +30,7 @@ public class ListItemsCartAdapter extends OrangeBaseAdapter {
 		public ImageView proRemoveImage;
 		public ImageView proDecrease;
 		public ImageView proIncrease;
+		public View color;
 	}
 
 	private Activity mActivity;
@@ -98,6 +100,7 @@ public class ListItemsCartAdapter extends OrangeBaseAdapter {
 					.findViewById(R.id.itemCartDecreaseBtn);
 			viewHolder.proIncrease = (ImageView) convertView
 					.findViewById(R.id.itemCartIncreaseBtn);
+			viewHolder.color=(View)convertView.findViewById(R.id.itemColor);
 			convertView.setTag(viewHolder);
 		} else {
 			viewHolder = (ProductViewHolder) convertView.getTag();
@@ -140,6 +143,14 @@ public class ListItemsCartAdapter extends OrangeBaseAdapter {
 				}
 			}
 		});
+		try {
+			if(mData.color!=null && mData.color.color!=null){
+				viewHolder.color.setBackgroundColor(Color.parseColor(mData.color.color));
+			}
+		} catch (Exception e) {
+			viewHolder.color.setBackgroundColor(Color.WHITE);
+		}
+		
 		ImageLoader.getInstance().displayImage(mData.id_default_image,
 				viewHolder.proImage, options, null);
 		return convertView;

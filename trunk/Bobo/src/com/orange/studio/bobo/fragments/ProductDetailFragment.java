@@ -343,7 +343,11 @@ public class ProductDetailFragment extends BaseFragment implements
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.addToCardBtn:
-			mHomeActivity.addCart(mProduct);
+			ProductDTO product=OrangeUtils.duplicateProduct(mProduct);
+			if(product!=null){
+				mProduct.color=mColor;
+				mHomeActivity.addCart(mProduct);
+			}			
 			break;
 
 		default:

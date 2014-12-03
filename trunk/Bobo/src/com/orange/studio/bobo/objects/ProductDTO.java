@@ -55,6 +55,8 @@ public class ProductDTO {
 	public int cartCounter;
 	public TaxDTO tax;
 	
+	public ColorDTO color;
+	
 	public ProductDTO(){
 		cartCounter=0;
 		associations=new AssociationDTO();
@@ -68,5 +70,6 @@ public class ProductDTO {
 		cartCounter=1;
 		id_tax_rules_group=0;
 		tax=new TaxDTO();
+		color=new ColorDTO();
 	}
 }

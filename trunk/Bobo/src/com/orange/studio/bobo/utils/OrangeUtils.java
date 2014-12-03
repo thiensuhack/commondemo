@@ -1,8 +1,10 @@
 package com.orange.studio.bobo.utils;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,9 +13,12 @@ import org.apache.commons.codec.binary.Hex;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.orange.studio.bobo.OrangeApplicationContext;
 import com.orange.studio.bobo.configs.OrangeConfig;
 import com.orange.studio.bobo.configs.OrangeConfig.REQUEST_PARAMS_NAME;
@@ -23,10 +28,18 @@ import com.orange.studio.bobo.objects.CustomerDTO;
 import com.orange.studio.bobo.objects.ItemCartDTO;
 import com.orange.studio.bobo.objects.ProductDTO;
 import com.orange.studio.bobo.objects.SummaryDTO;
+import com.orange.studio.bobo.objects.TaxDTO;
 import com.zuzu.db.store.SQLiteStore;
 import com.zuzu.db.store.SimpleStoreIF;
 
 public class OrangeUtils {
+	public static int parserColor(String color){
+		try {
+			return Color.parseColor(color);
+		} catch (Exception e) {
+		}
+		return 0;
+	}
 	public static double getPriceBeforeTax(ProductDTO product){
 		
 		if(product.tax!=null){
@@ -51,11 +64,28 @@ public class OrangeUtils {
 	}
 	public static ProductDTO duplicateProduct(ProductDTO product){
 		try {
-			ProductDTO result = product;
+			Gson gs=new Gson();
+			String data= gs.toJson(product);
+			ProductDTO result=deserializeProduct(data);
 			return result;			
 		} catch (Exception e) {
 		}
 		return null;
+	}
+	public static ProductDTO deserializeProduct(String json) {
+		ProductDTO result = null;
+		if (json == null || json.equals(""))
+			return result;
+		try {
+			result = new ProductDTO();
+			Gson gson = new Gson();
+			Type listType = new TypeToken<ProductDTO>() {
+			}.getType();
+			result = (ProductDTO) gson.fromJson(json, listType);
+		} catch (Exception e) {
+			return null;
+		}
+		return result;
 	}
 	public static String createStringOrder(ItemCartDTO cart,CustomerDTO customer,AddressDTO address,CarrierDTO carrier,SummaryDTO summary){
 		String result=null;

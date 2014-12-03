@@ -60,6 +60,7 @@ import com.orange.studio.bobo.objects.ItemCartDTO;
 import com.orange.studio.bobo.objects.MenuItemDTO;
 import com.orange.studio.bobo.objects.OrderDTO;
 import com.orange.studio.bobo.objects.ProductDTO;
+import com.orange.studio.bobo.objects.ResultDTO;
 import com.orange.studio.bobo.objects.SummaryDTO;
 import com.orange.studio.bobo.utils.OrangeUtils;
 import com.paypal.android.sdk.payments.PayPalAuthorization;
@@ -109,6 +110,8 @@ public class HomeActivity extends ActionBarActivity implements
 	private AddressDTO mAddressDTO = null;
 	private CarrierDTO mCarrierDTO = null;
 	private SummaryDTO mSummaryDTO=null;
+	private OrderDTO mOrderDTO=null;
+	
 	private boolean isCheckOutSuccess=false;
 	
 	public List<ProductDTO> mListItemCart = null;
@@ -602,6 +605,7 @@ public class HomeActivity extends ActionBarActivity implements
 		mAddressDTO = null;
 		mCarrierDTO = null;
 		mSummaryDTO=null;		
+		mOrderDTO=null;
 	}
 	public void decreaseCartItem(ProductDTO product) {
 		if (product.id == null || mListItemCart == null) {
@@ -844,6 +848,7 @@ public class HomeActivity extends ActionBarActivity implements
 		protected void onPostExecute(OrderDTO result) {
 			super.onPostExecute(result);
 			if(result!=null){
+				mOrderDTO=result;
 				Gson gs=new Gson();
 				Log.i("OBJECT ORDER: ",gs.toJson(result));
 				onPaypalPayment();
@@ -925,16 +930,18 @@ public class HomeActivity extends ActionBarActivity implements
 				PaymentConfirmation confirm = data
 						.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
 				if (confirm != null) {
-					try {
+					try {				
 						Log.i(TAG, confirm.toJSONObject().toString(4));
 						Log.i(TAG, confirm.getPayment().toJSONObject()
 								.toString(4));
+						//Log.i("DATA INFO: ",confirm.getPayment().toJSONObject().getString(""));
 						
 						Toast.makeText(
 								getApplicationContext(),
 								"PaymentConfirmation info received from PayPal",
 								Toast.LENGTH_LONG).show();						
 						//onNavigationDrawerItemSelected(1);
+						new SendPaypalCheckoutInfo(mOrderDTO.id, confirm.toJSONObject().toString()).execute();
 						setCheckOutSuccess(true);
 						clearDataSuccessCheckout();
 
@@ -1051,5 +1058,33 @@ public class HomeActivity extends ActionBarActivity implements
 
 	public void setCheckOutSuccess(boolean isCheckOutSuccess) {
 		this.isCheckOutSuccess = isCheckOutSuccess;
+	}
+	class SendPaypalCheckoutInfo extends AsyncTask<Void, Void, ResultDTO>{
+		private String orderID;
+		private String transactionId;
+		public SendPaypalCheckoutInfo(String _orderID,String _transactionID){
+			orderID=_orderID;
+			transactionId=_transactionID;
+		}
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+		}
+		@Override
+		protected ResultDTO doInBackground(Void... params) {
+			Bundle mParams=new Bundle();
+			mParams.putString("order_id", orderID);
+			mParams.putString("transaction_id", transactionId);
+			return CommonModel.getInstance().sendPaypalCheckoutInfo(UrlRequest.ABOUT_US_URL, mParams);
+		}
+		@Override
+		protected void onPostExecute(ResultDTO result) {
+			super.onPostExecute(result);
+			if(result!=null && result.result==1){
+				Toast.makeText(getApplicationContext(), result.msg, Toast.LENGTH_LONG).show();
+			}else{
+				
+			}
+		}
 	}
 }

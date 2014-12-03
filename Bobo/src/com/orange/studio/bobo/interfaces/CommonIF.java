@@ -19,6 +19,7 @@ import com.orange.studio.bobo.objects.ProductFeatureDTO;
 import com.orange.studio.bobo.objects.ProductFeatureValueDTO;
 import com.orange.studio.bobo.objects.ProductOptionValueDTO;
 import com.orange.studio.bobo.objects.RequestDTO;
+import com.orange.studio.bobo.objects.ResultDTO;
 import com.orange.studio.bobo.objects.StockDTO;
 import com.orange.studio.bobo.objects.SummaryDTO;
 import com.orange.studio.bobo.objects.TaxDTO;
@@ -49,4 +50,5 @@ public interface CommonIF {
 	public GameDTO getSpinToWin();
 	public List<TaxDTO> getListTax();
 	public TaxDTO getTax(int id);
+	public ResultDTO sendPaypalCheckoutInfo(String url,Bundle params);
 }

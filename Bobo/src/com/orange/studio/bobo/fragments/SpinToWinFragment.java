@@ -9,6 +9,7 @@ import android.os.AsyncTask.Status;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.models.CommonModel;
@@ -26,7 +28,7 @@ public class SpinToWinFragment extends BaseFragment implements OnClickListener {
 	private ImageView mSecondCard;
 	private ImageView mThirdCard;
 	private Button mSpinBtn;
-	private WebView mWebView;
+	private TextView mWebView;
 	
 	private boolean isSpining=false;
 	private Handler handler=null;
@@ -58,7 +60,7 @@ public class SpinToWinFragment extends BaseFragment implements OnClickListener {
 		mSecondCard = (ImageView) mView.findViewById(R.id.cartItemSecond);
 		mThirdCard = (ImageView) mView.findViewById(R.id.cartItemThird);
 		mSpinBtn = (Button) mView.findViewById(R.id.spinToWinBtn);
-		mWebView=(WebView) mView.findViewById(R.id.spinToWinWebView);		
+		mWebView=(TextView) mView.findViewById(R.id.spinToWinWebView);		
 	}
 
 	private void initListener() {
@@ -84,6 +86,7 @@ public class SpinToWinFragment extends BaseFragment implements OnClickListener {
 			}else{
 				checkGameResult();
 				createContentGameResult();
+				loadDataContent(mContent);
 				isSpining=false;
 				mSpinBtn.setText(getActivity().getString(R.string.spin_to_win_label));
 				isWinner=true;
@@ -103,9 +106,11 @@ public class SpinToWinFragment extends BaseFragment implements OnClickListener {
 		if(data==null){
 			return;
 		}		
-		mWebView.loadData("", "text/html; charset=UTF-8", null);
-		String htmlData="<html><head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"></head><body style=\"background: #EDEDEF; text-align: center; color: #CB0078;\">"+data+"</body>";
-		mWebView.loadData(htmlData, "text/html; charset=UTF-8", null);
+		//mWebView.loadData("", "text/html; charset=UTF-8", null);
+		//String htmlData="<html><head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"></head><body style=\"background: #EDEDEF; text-align: center; color: #CB0078;\">"+data+"</body></html>";
+		String htmlData="<div style=\"background: #EDEDEF; text-align: center; color: #CB0078;\"><font color=\"#CB0078\">"+data+"</font></div>";
+		mWebView.setText(Html.fromHtml(htmlData));
+		//mWebView.loadData(htmlData, "text/html; charset=UTF-8", null);
 	}
 	private void getGameResult(){
 		if(mSpinToWinTask==null || mSpinToWinTask.getStatus()==Status.FINISHED){
@@ -126,7 +131,7 @@ public class SpinToWinFragment extends BaseFragment implements OnClickListener {
 						mFirstCard.setBackgroundResource(imageArray[mGameResult.get(0)]);
 						mSecondCard.setBackgroundResource(imageArray[mGameResult.get(1)]);
 						mThirdCard.setBackgroundResource(imageArray[mGameResult.get(2)]);
-						loadDataContent(mContent);
+						//loadDataContent(mContent);
 						isWinner=false;
 						handler.removeCallbacks(runnable);
 					}else{
@@ -199,10 +204,10 @@ public class SpinToWinFragment extends BaseFragment implements OnClickListener {
 		try {
 			if(mGame!=null){
 				if(mGame.msg.trim().equals("Successful")){
-					mContent="<b>CONGRATULATION!!!</b></br>";
-					mContent+="Your code id: <b>"+ mGame.voucher+"</b></br>";
-					mContent+="Value: <b>$"+mGame.value+"</b>. Expire date: <b>"+ mGame.date+"</b></br>";
-					mContent+="You can use it on the next purchase.";
+					mContent="<div><b>CONGRATULATION!!!</b></div>";
+					mContent+="<div>Your code id: <b>"+ mGame.voucher+"</b></div>";
+					mContent+="<div>Value: <b>$"+mGame.value+"</b>. Expire date: <b>"+ mGame.date+"</b></div>";
+					mContent+="<div>You can use it on the next purchase.";
 				}else{
 					mContent="<b>FAILED!!!</b>";
 				}

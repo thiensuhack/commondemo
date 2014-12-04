@@ -14,11 +14,15 @@
         android:textSize="17sp"
         android:textStyle="bold" />
 
-    <WebView
+    <TextView
         android:id="@+id/spinToWinWebView"
         android:layout_width="match_parent"
-        android:layout_height="110dp"
-        android:layout_margin="10dp" />
+        android:layout_height="120dp"
+        android:background="#EDEDEF"
+        android:layout_margin="10dp"
+        android:textSize="12sp"
+        android:singleLine="false"
+        android:padding="5dp" />
 
     <TextView
         android:layout_width="match_parent"

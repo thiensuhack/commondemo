@@ -557,20 +557,15 @@ public class HomeActivity extends ActionBarActivity implements
 					if (item.cartCounter >= proItem.stock.quantity) {
 						return -1;
 					}
-					if(item.color!=null && proItem.color!=null && item.color.id!=proItem.color.id){
-						isExisted=false;
-						break;
-					}
-				//if (item.id.equals(proItem.id)) {
-//					if (item.cartCounter >= CartItemsRule.MAX_ITEMS_CART) {
-//						return;
-//					}					
-					item.cartCounter++;
-					isExisted = true;
-					break;
+					if(item.color!=null && proItem.color!=null){
+						if(item.color.id == proItem.color.id){
+							item.cartCounter++;
+							isExisted = true;
+							break;
+						}
+					}											
 				}
 			}
-
 			if (!isExisted) {
 				proItem.cartCounter = 1;
 				mListItemCart.add(0, proItem);

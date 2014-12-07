@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.orange.studio.bobo.R;
 import com.orange.studio.bobo.models.CommonModel;
@@ -28,7 +27,7 @@ public class SpinToWinFragment extends BaseFragment implements OnClickListener {
 	private ImageView mSecondCard;
 	private ImageView mThirdCard;
 	private Button mSpinBtn;
-	private TextView mWebView;
+	private WebView mWebView;
 	
 	private boolean isSpining=false;
 	private Handler handler=null;
@@ -60,7 +59,7 @@ public class SpinToWinFragment extends BaseFragment implements OnClickListener {
 		mSecondCard = (ImageView) mView.findViewById(R.id.cartItemSecond);
 		mThirdCard = (ImageView) mView.findViewById(R.id.cartItemThird);
 		mSpinBtn = (Button) mView.findViewById(R.id.spinToWinBtn);
-		mWebView=(TextView) mView.findViewById(R.id.spinToWinWebView);		
+		mWebView=(WebView) mView.findViewById(R.id.spinToWinWebView);		
 	}
 
 	private void initListener() {
@@ -102,15 +101,21 @@ public class SpinToWinFragment extends BaseFragment implements OnClickListener {
 		mContent=mHomeActivity.getString(R.string.spin_to_win_description);
 		loadDataContent(mContent);
 	}
+	@SuppressLint("SetJavaScriptEnabled")
 	private void loadDataContent(String data){
 		if(data==null){
 			return;
 		}		
 		//mWebView.loadData("", "text/html; charset=UTF-8", null);
-		//String htmlData="<html><head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"></head><body style=\"background: #EDEDEF; text-align: center; color: #CB0078;\">"+data+"</body></html>";
-		String htmlData="<div style=\"background: #EDEDEF; text-align: center; color: #CB0078;\"><font color=\"#CB0078\">"+data+"</font></div>";
-		mWebView.setText(Html.fromHtml(htmlData));
+		String htmlData="<html><head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"></head><body style=\"width:100%; height: 120px;background: #EDEDEF; text-align: center; color: #CB0078;\">"+data+"</body></html>";
+		//String htmlData="<div style=\"background: #EDEDEF; text-align: center; color: #CB0078;\"><font color=\"#CB0078\">"+data+"</font><br/>";
+		//mWebView.setText(Html.fromHtml(htmlData));
 		//mWebView.loadData(htmlData, "text/html; charset=UTF-8", null);
+		
+		String mime = "text/html";
+		String encoding = "utf-8";
+		mWebView.getSettings().setJavaScriptEnabled(true);
+		mWebView.loadDataWithBaseURL(null, htmlData, mime, encoding, null);
 	}
 	private void getGameResult(){
 		if(mSpinToWinTask==null || mSpinToWinTask.getStatus()==Status.FINISHED){
@@ -203,14 +208,16 @@ public class SpinToWinFragment extends BaseFragment implements OnClickListener {
 	private void createContentGameResult(){
 		try {
 			if(mGame!=null){
-				if(mGame.msg.trim().equals("Successful")){
-					mContent="<div><b>CONGRATULATION!!!</b></div>";
-					mContent+="<div>Your code id: <b>"+ mGame.voucher+"</b></div>";
-					mContent+="<div>Value: <b>$"+mGame.value+"</b>. Expire date: <b>"+ mGame.date+"</b></div>";
-					mContent+="<div>You can use it on the next purchase.";
+				mContent="<div style=\"margin: auto;position: relative;top: 25%;\">";
+				if(mGame.msg.trim().equals("Successful")){					
+					mContent="<b>CONGRATULATION!!!</b><br />";
+					mContent+="Your code id: <b>"+ mGame.voucher+"</b><br/>";
+					mContent+="Value: <b>$"+mGame.value+"</b>. Expire date: <b>"+ mGame.date+"</b><br/>";
+					mContent+="You can use it on the next purchase.";
 				}else{
 					mContent="<b>FAILED!!!</b>";
 				}
+				mContent+="</div>";
 			}else{
 				mContent=mHomeActivity.getString(R.string.spin_to_win_description);
 			}

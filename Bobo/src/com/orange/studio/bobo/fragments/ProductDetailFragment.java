@@ -347,9 +347,10 @@ public class ProductDetailFragment extends BaseFragment implements
 			if(mColor==null){
 				mColor=new ColorDTO();
 			}
-			if(product!=null){				
-				mProduct.color=mColor;
-				mHomeActivity.addCart(mProduct);
+			if(product!=null){	
+				ColorDTO temp=OrangeUtils.duplicateColor(mColor);
+				product.color=temp;
+				mHomeActivity.addCart(product);
 			}			
 			break;
 

@@ -42,7 +42,7 @@ import com.orange.studio.bobo.fragments.CreateAddressShoppingCartFragment;
 import com.orange.studio.bobo.fragments.HomeFragment;
 import com.orange.studio.bobo.fragments.LoginFragment;
 import com.orange.studio.bobo.fragments.NavigationDrawerFragment;
-import com.orange.studio.bobo.fragments.PaymentCheckoutConfirmFragment;
+import com.orange.studio.bobo.fragments.PaymentConfirmFragment;
 import com.orange.studio.bobo.fragments.PopularProductFragment;
 import com.orange.studio.bobo.fragments.ProductCategoryFragment;
 import com.orange.studio.bobo.fragments.ProductDetailFragment;
@@ -113,11 +113,12 @@ public class HomeActivity extends ActionBarActivity implements
 	private OrderDTO mOrderDTO=null;
 	
 	private boolean isCheckOutSuccess=false;
+	private boolean isCreatingOrderSuccess=false;
 	
 	public List<ProductDTO> mListItemCart = null;
 
 	public CreateOrderTask mCreateOrderTask=null;
-	
+
 	public enum HOME_TABS {
 		ALL, BEST_SELLER, POPULAR
 	}
@@ -311,7 +312,7 @@ public class HomeActivity extends ActionBarActivity implements
 			setAppTitle(getString(R.string.shopping_cart_select_carrier));
 			return;
 		}
-		if (mFragmentName.equals(PaymentCheckoutConfirmFragment.class.getName())) {
+		if (mFragmentName.equals(PaymentConfirmFragment.class.getName())) {
 			setAppTitle(getString(R.string.shopping_cart_payment));
 			return;
 		}
@@ -439,9 +440,9 @@ public class HomeActivity extends ActionBarActivity implements
 					SelectCarrierShoppingCartFragment.class.getName());
 			break;
 		case MENU_NAME.SUMMARY:
-			mFragment = PaymentCheckoutConfirmFragment.instantiate(
+			mFragment = PaymentConfirmFragment.instantiate(
 					getApplicationContext(),
-					PaymentCheckoutConfirmFragment.class.getName());
+					PaymentConfirmFragment.class.getName());
 			break;
 		default:
 			mFragment = HomeFragment.instantiate(getApplicationContext(),
@@ -553,12 +554,12 @@ public class HomeActivity extends ActionBarActivity implements
 
 			boolean isExisted = false;
 			for (ProductDTO item : mListItemCart) {
-				if (item.id.equals(proItem.id)) {
-					if (item.cartCounter >= proItem.stock.quantity) {
-						return -1;
-					}
+				if (item.id.equals(proItem.id)) {					
 					if(item.color!=null && proItem.color!=null){
 						if(item.color.id == proItem.color.id){
+							if (item.cartCounter >= proItem.stock.quantity) {
+								return -1;
+							}
 							item.cartCounter++;
 							isExisted = true;
 							break;
@@ -702,6 +703,7 @@ public class HomeActivity extends ActionBarActivity implements
 					data = OrangeUtils.createCartData(mListItemCart, mUserInfo,
 							null,mAddressDTO);
 					Log.i("CREATE CART: ",data);
+					isCreatingOrderSuccess=false;
 					return CommonModel.getInstance().addToCart(
 							UrlRequest.ADD_CART_URL, data);
 				} else {
@@ -779,10 +781,14 @@ public class HomeActivity extends ActionBarActivity implements
 
 	
 	public void createOrder(){
-		if(mCreateOrderTask==null||mCreateOrderTask.getStatus()==Status.FINISHED){
-			mCreateOrderTask=new CreateOrderTask();
-			mCreateOrderTask.execute();
-		}
+		if(isCreatingOrderSuccess){
+			onPaypalPayment();
+		}else{
+			if(mCreateOrderTask==null||mCreateOrderTask.getStatus()==Status.FINISHED){
+				mCreateOrderTask=new CreateOrderTask();
+				mCreateOrderTask.execute();
+			}	
+		}		
 	}
 	class CreateOrderTask extends AsyncTask<Void, Void, OrderDTO> {
 		@Override
@@ -809,6 +815,7 @@ public class HomeActivity extends ActionBarActivity implements
 		protected void onPostExecute(OrderDTO result) {
 			super.onPostExecute(result);
 			if(result!=null){
+				isCreatingOrderSuccess=true;
 				mOrderDTO=result;
 				Gson gs=new Gson();
 				Log.i("OBJECT ORDER: ",gs.toJson(result));
@@ -836,7 +843,7 @@ public class HomeActivity extends ActionBarActivity implements
 			if (mListItemCart == null || mListItemCart.size() < 1) {
 				return null;
 			}
-			PayPalItem[] items = new PayPalItem[mListItemCart.size()];
+			PayPalItem[] items = new PayPalItem[1];
 			String listItemsName = "";
 			for (int i = 0; i < mListItemCart.size(); i++) {
 				ProductDTO item = mListItemCart.get(i);
@@ -847,7 +854,7 @@ public class HomeActivity extends ActionBarActivity implements
 				}
 //				PayPalItem ppItem = new PayPalItem(item.name, item.cartCounter,
 //						new BigDecimal(item.price), "USD", item.reference);
-//				items[i] = ppItem;
+//				items[i] = item;
 			}
 			PayPalItem ppItem = new PayPalItem(listItemsName, 1,
 					new BigDecimal(mSummaryDTO.total_price_without_tax), "USD", mUserInfo.id+"-" + mCurItemCart.id);
@@ -880,6 +887,7 @@ public class HomeActivity extends ActionBarActivity implements
 
 			return payment;
 		} catch (Exception e) {
+			Log.i("Create Paypal Order Failed: ", e.getMessage());
 		}
 		return null;
 	}
@@ -903,9 +911,9 @@ public class HomeActivity extends ActionBarActivity implements
 								Toast.LENGTH_LONG).show();						
 						//onNavigationDrawerItemSelected(1);
 						new SendPaypalCheckoutInfo(mOrderDTO.id, "TotalPayment Info:" + confirm.toJSONObject().toString() +" - Detail Payment Info: "+ confirm.getPayment().toJSONObject().toString()).execute();
+						isCreatingOrderSuccess=false;
 						setCheckOutSuccess(true);
-						clearDataSuccessCheckout();
-
+						clearDataSuccessCheckout();						
 					} catch (JSONException e) {
 						Log.e(TAG, "an extremely unlikely failure occurred: ",
 								e);

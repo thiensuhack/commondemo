@@ -24,6 +24,7 @@ import com.orange.studio.bobo.configs.OrangeConfig;
 import com.orange.studio.bobo.configs.OrangeConfig.REQUEST_PARAMS_NAME;
 import com.orange.studio.bobo.objects.AddressDTO;
 import com.orange.studio.bobo.objects.CarrierDTO;
+import com.orange.studio.bobo.objects.ColorDTO;
 import com.orange.studio.bobo.objects.CustomerDTO;
 import com.orange.studio.bobo.objects.ItemCartDTO;
 import com.orange.studio.bobo.objects.ProductDTO;
@@ -71,7 +72,7 @@ public class OrangeUtils {
 		} catch (Exception e) {
 		}
 		return null;
-	}
+	}	
 	public static ProductDTO deserializeProduct(String json) {
 		ProductDTO result = null;
 		if (json == null || json.equals(""))
@@ -82,6 +83,31 @@ public class OrangeUtils {
 			Type listType = new TypeToken<ProductDTO>() {
 			}.getType();
 			result = (ProductDTO) gson.fromJson(json, listType);
+		} catch (Exception e) {
+			return null;
+		}
+		return result;
+	}
+	public static ColorDTO duplicateColor(ColorDTO color){
+		try {
+			Gson gs=new Gson();
+			String data= gs.toJson(color);
+			ColorDTO result=deserializeColor(data);
+			return result;			
+		} catch (Exception e) {			
+		}
+		return null;
+	}
+	public static ColorDTO deserializeColor(String json) {
+		ColorDTO result = null;
+		if (json == null || json.equals(""))
+			return result;
+		try {
+			result = new ColorDTO();
+			Gson gson = new Gson();
+			Type listType = new TypeToken<ColorDTO>() {
+			}.getType();
+			result = (ColorDTO) gson.fromJson(json, listType);
 		} catch (Exception e) {
 			return null;
 		}

@@ -31,6 +31,7 @@ public final class OrangeConfig {
 		public static final int SELECT_ADDRESS = -19;
 		public static final int SUMMARY = -20;
 		public static final int SELECT_CARRIER = -21;
+		public static final int PAYPAL_CHECKOUT = -22;
 	}
 
 	public static class CartItemsRule {

@@ -21,7 +21,7 @@ import com.orange.studio.bobo.configs.OrangeConfig.UrlRequest;
 import com.orange.studio.bobo.models.CommonModel;
 import com.orange.studio.bobo.objects.SummaryDTO;
 
-public class PaymentCheckoutConfirmFragment extends BaseFragment implements OnClickListener{
+public class PaymentConfirmFragment extends BaseFragment implements OnClickListener{
 	private View mSummaryContainer=null;
 	private WebView mWebView=null;
 	private GetSummaryTask mGetSummaryTask=null;

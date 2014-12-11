@@ -40,7 +40,8 @@
     <string name="address_city_label">City:</string>
     <string name="address_city_hint">Your city</string>
     <string name="address_btn_create">Create</string>
-    <string name="address_btn_confirm">Payment</string>
+    <string name="address_btn_confirm">Confirm</string>
+    <string name="address_btn_paypal">Paypal</string>
     <string name="address_btn_next">Next</string>
     <string name="address_btn_refresh">Refresh</string>
     <string name="address_btn_create_address">Create address</string>
@@ -128,6 +129,7 @@
     <string name="shopping_cart_select_address">Select address</string>
     <string name="shopping_cart_select_carrier">Select carrier</string>
     <string name="shopping_cart_payment">Payment</string>
+    <string name="shopping_cart_confirm">Confirm</string>
 
     <!-- Fragment Home Menu -->
     <string name="fragment_home_menu_all">ALL</string>

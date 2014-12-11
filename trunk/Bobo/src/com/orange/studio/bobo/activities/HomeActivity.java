@@ -42,7 +42,7 @@ import com.orange.studio.bobo.fragments.CreateAddressShoppingCartFragment;
 import com.orange.studio.bobo.fragments.HomeFragment;
 import com.orange.studio.bobo.fragments.LoginFragment;
 import com.orange.studio.bobo.fragments.NavigationDrawerFragment;
-import com.orange.studio.bobo.fragments.PaymentCheckoutFragment;
+import com.orange.studio.bobo.fragments.PaymentCheckoutConfirmFragment;
 import com.orange.studio.bobo.fragments.PopularProductFragment;
 import com.orange.studio.bobo.fragments.ProductCategoryFragment;
 import com.orange.studio.bobo.fragments.ProductDetailFragment;
@@ -311,7 +311,7 @@ public class HomeActivity extends ActionBarActivity implements
 			setAppTitle(getString(R.string.shopping_cart_select_carrier));
 			return;
 		}
-		if (mFragmentName.equals(PaymentCheckoutFragment.class.getName())) {
+		if (mFragmentName.equals(PaymentCheckoutConfirmFragment.class.getName())) {
 			setAppTitle(getString(R.string.shopping_cart_payment));
 			return;
 		}
@@ -439,9 +439,9 @@ public class HomeActivity extends ActionBarActivity implements
 					SelectCarrierShoppingCartFragment.class.getName());
 			break;
 		case MENU_NAME.SUMMARY:
-			mFragment = PaymentCheckoutFragment.instantiate(
+			mFragment = PaymentCheckoutConfirmFragment.instantiate(
 					getApplicationContext(),
-					PaymentCheckoutFragment.class.getName());
+					PaymentCheckoutConfirmFragment.class.getName());
 			break;
 		default:
 			mFragment = HomeFragment.instantiate(getApplicationContext(),
@@ -697,7 +697,7 @@ public class HomeActivity extends ActionBarActivity implements
 		protected ItemCartDTO doInBackground(Void... params) {
 			try {
 				String data = "";
-				if (getCurItemCart() == null || getCurItemCart().id == null
+				if (mListItemCart==null || mListItemCart.size()<1 || getCurItemCart() == null || getCurItemCart().id == null
 						|| getCurItemCart().id.length() < 1) {
 					data = OrangeUtils.createCartData(mListItemCart, mUserInfo,
 							null,mAddressDTO);
@@ -777,41 +777,7 @@ public class HomeActivity extends ActionBarActivity implements
 		this.mUserInfo = mUserInfo;
 	}
 
-	// private class LoadProductDetailAddCartTask extends
-	// AsyncTask<Void, Void, ProductDTO> {
-	// private ProductDTO mProduct=null;
-	// public LoadProductDetailAddCartTask(ProductDTO pro){
-	// mProduct=pro;
-	// }
-	// @Override
-	// protected void onPreExecute() {
-	// super.onPreExecute();
-	// if(!mProgressDialog.isShowing()){
-	// mProgressDialog.show();
-	// }
-	// }
-	//
-	// @Override
-	// protected ProductDTO doInBackground(Void... arg0) {
-	// Bundle mParams = OrangeUtils.createRequestBundle2(null, null);
-	// RequestDTO request = new RequestDTO();
-	// request.proId = mProduct.id;
-	// return ProductModel.getInstance().getProductDetail(
-	// UrlRequest.PRODUCT_DETAIL, request, mParams);
-	// }
-	//
-	// @Override
-	// protected void onPostExecute(ProductDTO result) {
-	// super.onPostExecute(result);
-	// if (result != null && result.id.trim().length()>0) {
-	// addCart(result);
-	// }else{
-	// if(mProgressDialog.isShowing()){
-	// mProgressDialog.dismiss();
-	// }
-	// }
-	// }
-	// }
+	
 	public void createOrder(){
 		if(mCreateOrderTask==null||mCreateOrderTask.getStatus()==Status.FINISHED){
 			mCreateOrderTask=new CreateOrderTask();
@@ -848,7 +814,7 @@ public class HomeActivity extends ActionBarActivity implements
 				Log.i("OBJECT ORDER: ",gs.toJson(result));
 				onPaypalPayment();
 			}else{
-				showToast("Create cart order failed :(");
+				showToast("Can't create order. Please try again.");
 			}
 			//onPaypalPayment();
 			if(mProgressDialog.isShowing()){

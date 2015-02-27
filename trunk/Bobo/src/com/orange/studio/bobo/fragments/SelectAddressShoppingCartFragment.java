@@ -78,11 +78,14 @@ public class SelectAddressShoppingCartFragment extends BaseFragment implements O
 			mHomeActivity.onNavigationDrawerItemSelected(MENU_NAME.SELECT_CARRIER);
 			break;
 		case R.id.createAddressBtn:
-			mHomeActivity.onNavigationDrawerItemSelected(MENU_NAME.CREATE_ADDRESS);
+			goToCreateAddressFragment();
 			break;
 		default:
 			break;
 		}
+	}
+	private void goToCreateAddressFragment() {
+		mHomeActivity.onNavigationDrawerItemSelected(MENU_NAME.CREATE_ADDRESS);
 	}
 	@Override
 	public void onItemSelected(AdapterView<?> arg0, View view, int position,
@@ -131,6 +134,7 @@ public class SelectAddressShoppingCartFragment extends BaseFragment implements O
 			else{
 				mConfirmBtn.setVisibility(View.GONE);
 				switchView(false, false);
+				goToCreateAddressFragment();//go 2 page create address if have no address
 			}
 		}
 		

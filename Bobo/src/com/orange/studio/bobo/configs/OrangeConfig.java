@@ -72,6 +72,8 @@ public final class OrangeConfig {
 		public static String GET_GAME_RESULT=main_domain+"index.php?controller=CustomAPI&action=game";
 		public static String GET_LIST_TAXES= domain+"/taxes?ws_key=LW6TL3P7Z7KRFM3UYKWHJ3N28GEZLRBT&filter[active]=1&display=full";
 		public static String POST_PAYPAL_PAYMENT_INFO=main_domain+"index.php?controller=CustomAPI&action=paypal";
+		
+		public static String ADD_GIFTCODE=main_domain+"index.php?controller=CustomAPI&action=discount&id_cart=325&code=rVcmjP";
 	}
 
 	public static class REQUEST_PARAMS_NAME {

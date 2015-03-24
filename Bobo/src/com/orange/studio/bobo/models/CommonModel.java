@@ -669,7 +669,7 @@ public class CommonModel implements CommonIF{
 					result.date=jb.optString("date");
 					result.msg=jb.optString("msg");
 					result.value=jb.optInt("value",0);
-					result.voucher=jb.getString("voucher");
+					result.voucher=jb.optString("voucher");
 					return result;
 				}
 			}

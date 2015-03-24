@@ -82,19 +82,24 @@ public class SpinToWinFragment extends BaseFragment implements OnClickListener {
 				loadDefaultContent();
 				getGameResult();
 				spinToWin();
-			}else{
-				checkGameResult();
-				createContentGameResult();
-				loadDataContent(mContent);
-				isSpining=false;
-				mSpinBtn.setText(getActivity().getString(R.string.spin_to_win_label));
-				isWinner=true;
 			}
+//			else{
+//				showSpinResult();
+//			}
 			break;
 
 		default:
 			break;
 		}
+	}
+
+	private void showSpinResult() {
+		checkGameResult();
+		createContentGameResult();
+		loadDataContent(mContent);
+		isSpining=false;
+		mSpinBtn.setText(getActivity().getString(R.string.spin_to_win_label));
+		isWinner=true;
 	}
 
 	private void loadDefaultContent() {
@@ -183,6 +188,7 @@ public class SpinToWinFragment extends BaseFragment implements OnClickListener {
 		protected void onPostExecute(GameDTO result) {
 			super.onPostExecute(result);
 			mGame=result;
+			showSpinResult();
 		}
 	}
 	private void checkGameResult(){
@@ -212,7 +218,7 @@ public class SpinToWinFragment extends BaseFragment implements OnClickListener {
 				if(mGame.msg.trim().equals("Successful")){					
 					mContent="<b>CONGRATULATION!!!</b><br />";
 					mContent+="Your code id: <b>"+ mGame.voucher+"</b><br/>";
-					mContent+="Value: <b>$"+mGame.value+"</b>. Expire date: <b>"+ mGame.date+"</b><br/>";
+					mContent+="Value: <b>$"+mGame.value+"</b>. <br/>Expire date: <b>"+ mGame.date+"</b><br/>";
 					mContent+="You can use it on the next purchase.";
 				}else{
 					mContent="<b>FAILED!!!</b>";

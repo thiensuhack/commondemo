@@ -49,6 +49,7 @@
     <string name="address_create_failed">Create address failed</string>
     
     <string name="address_list_carrier_label">Carriers:</string>
+    <string name="address_giftcode_label">Voucher:</string>
     
     
     <!-- Add Cart Items -->

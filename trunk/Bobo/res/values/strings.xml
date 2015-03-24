@@ -98,7 +98,7 @@
     <string name="register_login_label">Register now</string>
     <string name="spin_to_win_label">SPIN TO WIN</string>
     <string name="spin_to_win_lucy_draw_label">LUCY DRAW</string>
-    <string name="stop_spin_to_win_label">STOP SPIN TO WIN</string>
+    <string name="stop_spin_to_win_label">SPINING...</string>
         <!-- Cart Items -->
     <string name="items_cart_total_price">Total Price:</string>
     <string name="items_cart_check_out">Check Out</string>

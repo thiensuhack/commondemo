@@ -13,7 +13,33 @@
         android:orientation="vertical"
         android:padding="5dp" >
 
+        <RadioGroup
+            android:id="@+id/radioGroupVoucher"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton                
+                style="@style/RadioGroupStyle"
+                android:id="@+id/radioNoVoucher"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="@string/radio_group_no_voucher" />
+
+            <RadioButton
+                android:id="@+id/radioVoucher"
+                style="@style/RadioGroupStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="false"
+                android:text="@string/radio_group_voucher" />
+        </RadioGroup>
+
         <LinearLayout
+            android:id="@+id/groupVourcher"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -21,11 +47,11 @@
 
             <TextView
                 style="@style/RegisterTextStyle"
-                android:layout_width="90dp"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:text="@string/address_giftcode_label" />
 
-            <TextView
+            <EditText
                 android:id="@+id/txtVoucher"
                 style="@style/RegisterEdittextStyle"
                 android:layout_width="0dp"
@@ -38,24 +64,24 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/refreshBtn"
+            android:id="@+id/voucherBtn"
             style="@style/RegisterButtonStyle"
             android:layout_width="130dp"
             android:layout_height="35dp"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/button_pink"
-            android:text="@string/address_btn_refresh" />
+            android:text="@string/address_btn_voucher" />
 
-        <Button
-            android:id="@+id/confirmBtn"
-            style="@style/RegisterButtonStyle"
-            android:layout_width="130dp"
-            android:layout_height="35dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/button_pink"
-            android:text="@string/address_btn_next" />
+        <!-- <Button -->
+        <!-- android:id="@+id/confirmBtn" -->
+        <!-- style="@style/RegisterButtonStyle" -->
+        <!-- android:layout_width="130dp" -->
+        <!-- android:layout_height="35dp" -->
+        <!-- android:layout_gravity="center" -->
+        <!-- android:layout_marginTop="20dp" -->
+        <!-- android:background="@drawable/button_pink" -->
+        <!-- android:text="@string/address_btn_next" /> -->
     </LinearLayout>
 
     <include

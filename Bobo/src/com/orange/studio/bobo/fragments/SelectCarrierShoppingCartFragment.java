@@ -75,7 +75,8 @@ public class SelectCarrierShoppingCartFragment extends BaseFragment implements O
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.confirmBtn:
-			mHomeActivity.onNavigationDrawerItemSelected(MENU_NAME.SUMMARY);
+//			mHomeActivity.onNavigationDrawerItemSelected(MENU_NAME.SUMMARY);
+			mHomeActivity.onNavigationDrawerItemSelected(MENU_NAME.VOUCHER_FRAGMENT);
 			break;
 		case R.id.refreshBtn:
 			loadCarrier();

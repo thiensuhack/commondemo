@@ -32,6 +32,7 @@ public final class OrangeConfig {
 		public static final int SUMMARY = -20;
 		public static final int SELECT_CARRIER = -21;
 		public static final int PAYPAL_CHECKOUT = -22;
+		public static final int VOUCHER_FRAGMENT = -23;
 	}
 
 	public static class CartItemsRule {
@@ -73,7 +74,7 @@ public final class OrangeConfig {
 		public static String GET_LIST_TAXES= domain+"/taxes?ws_key=LW6TL3P7Z7KRFM3UYKWHJ3N28GEZLRBT&filter[active]=1&display=full";
 		public static String POST_PAYPAL_PAYMENT_INFO=main_domain+"index.php?controller=CustomAPI&action=paypal";
 		
-		public static String ADD_GIFTCODE=main_domain+"index.php?controller=CustomAPI&action=discount&id_cart=325&code=rVcmjP";
+		public static String VOUCHER_URL=main_domain+"index.php?controller=CustomAPI&action=discount";
 	}
 
 	public static class REQUEST_PARAMS_NAME {

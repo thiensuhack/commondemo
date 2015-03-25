@@ -45,6 +45,7 @@ import com.orange.studio.bobo.objects.ResultDTO;
 import com.orange.studio.bobo.objects.StockDTO;
 import com.orange.studio.bobo.objects.SummaryDTO;
 import com.orange.studio.bobo.objects.TaxDTO;
+import com.orange.studio.bobo.objects.VoucherResultDTO;
 import com.orange.studio.bobo.utils.OrangeUtils;
 import com.orange.studio.bobo.xml.XMLHandlerAboutUs;
 import com.orange.studio.bobo.xml.XMLHandlerAddress;
@@ -416,6 +417,18 @@ public class CommonModel implements CommonIF{
 		} catch (Exception e) {
 		}
 		return null;
+	}
+	public VoucherResultDTO submitVoucher(String url){
+		try {
+			VoucherResultDTO result=new VoucherResultDTO();			
+			String data=OrangeHttpRequest.getInstance().getStringFromServer(url, null);
+			JSONObject jObject=new JSONObject(data);
+			result.status=jObject.optInt("status", -11);
+			result.msg = jObject.optString("msg", "Unknow error!");
+			return result;
+		} catch (Exception e) {
+			return null;
+		}	
 	}
 	@Override
 	public List<ProductFeatureDTO> getListProductFeatures(String url) {

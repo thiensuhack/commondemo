@@ -12,22 +12,31 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.orange.studio.bobo.R;
-import com.orange.studio.bobo.adapters.CarrierAdapter;
 import com.orange.studio.bobo.configs.OrangeConfig.MENU_NAME;
 import com.orange.studio.bobo.configs.OrangeConfig.UrlRequest;
 import com.orange.studio.bobo.models.CommonModel;
 import com.orange.studio.bobo.objects.CarrierDTO;
+import com.orange.studio.bobo.objects.VoucherResultDTO;
 
-public class GiftCodeFragment extends BaseFragment implements OnClickListener{
-	private TextView mVoucher=null;
-	private Button mConfirmBtn=null;
-	private Button mRefreshBtn=null;
-	private CarrierAdapter mCarrierAdapter=null;
-	
-	private GetListCarrierTask mGetListCarrierTask=null;
+public class GiftCodeFragment extends BaseFragment implements OnClickListener,
+		OnCheckedChangeListener {
+	private EditText mVoucher = null;
+	private Button mVoucherBtn = null;
+	private View mGroupVourcher = null;
+	private RadioGroup mRadioGroup = null;
+	private RadioButton mNoVoucher = null;
+	private RadioButton mHaveVoucher = null;
+
+	private SubmitVoucherCodeTask mSubmitVoucherCodeTask = null;
+	private String mGiftCode=null;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -42,104 +51,128 @@ public class GiftCodeFragment extends BaseFragment implements OnClickListener{
 		}
 		return mView;
 	}
-	private void initView(){
-		mHomeActivity=getHomeActivity();
-		mVoucher=(TextView)mView.findViewById(R.id.txtVoucher);
-		
-		mConfirmBtn=(Button)mView.findViewById(R.id.confirmBtn);
-		mConfirmBtn.setVisibility(View.GONE);
-		
-		mRefreshBtn=(Button)mView.findViewById(R.id.refreshBtn);
-		mRefreshBtn.setVisibility(View.GONE);
-		
-		mCarrierAdapter=new CarrierAdapter(mHomeActivity);
-		//mVoucher.setAdapter(mCarrierAdapter);
-		
+
+	private void initView() {
+		mHomeActivity = getHomeActivity();
+		mRadioGroup = (RadioGroup) mView.findViewById(R.id.radioGroupVoucher);
+		mGroupVourcher = (LinearLayout) mView.findViewById(R.id.groupVourcher);
+		switchVoucherView(false);
+		mVoucher = (EditText) mView.findViewById(R.id.txtVoucher);
+		mVoucherBtn = (Button) mView.findViewById(R.id.voucherBtn);
+		// mVoucherBtn.setVisibility(View.GONE);
+
+		mNoVoucher = (RadioButton) mView.findViewById(R.id.radioNoVoucher);
+		mHaveVoucher = (RadioButton) mView.findViewById(R.id.radioVoucher);
+
 		initLoadingView();
 		initNotFoundView();
 	}
-	private void initListener(){
-		//mVoucher.setOnItemSelectedListener(this);
-		mConfirmBtn.setOnClickListener(this);
-		mRefreshBtn.setOnClickListener(this);
+
+	private void switchVoucherView(boolean isShow) {
+		mGroupVourcher.setVisibility(isShow ? View.VISIBLE : View.INVISIBLE);
 	}
-	private void loadCarrier(){
-		if(mGetListCarrierTask==null || mGetListCarrierTask.getStatus()==Status.FINISHED){
-			mGetListCarrierTask=new GetListCarrierTask();
-			mGetListCarrierTask.execute();
-		}
+
+	private void initListener() {
+		// mVoucher.setOnItemSelectedListener(this);
+		mVoucherBtn.setOnClickListener(this);
+		// mRadioGroup.setOnCheckedChangeListener(this);
+		mNoVoucher.setOnCheckedChangeListener(this);
+		mHaveVoucher.setOnCheckedChangeListener(this);
 	}
+
 	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.confirmBtn:
-			mHomeActivity.onNavigationDrawerItemSelected(MENU_NAME.SUMMARY);
+	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+		switch (buttonView.getId()) {
+		case R.id.radioNoVoucher:
+			if (isChecked) {
+				switchVoucherView(false);
+			}
 			break;
-		case R.id.refreshBtn:
-			loadCarrier();
-			break;
-		case R.id.createAddressBtn:
-			mHomeActivity.onNavigationDrawerItemSelected(MENU_NAME.CREATE_ADDRESS);
+		case R.id.radioVoucher:
+			if (isChecked) {
+				switchVoucherView(true);
+			}
 			break;
 		default:
 			break;
 		}
 	}
-//	@Override
-//	public void onItemSelected(AdapterView<?> arg0, View view, int position,
-//			long arg3) {
-//		try {
-//			switch (arg0.getId()) {
-//			case R.id.listCarrier:
-//				//mCurrentCarrier=mCarrierAdapter.getItem(position);
-//				mHomeActivity.setCarrier(mCarrierAdapter.getItem(position));
-//				break;
-//			default:
-//				break;
-//			}			
-//			//mHomeActivity.showToast("Address:"+mCurrentAddress.alias+"-ID:" + mCurrentAddress.id);
-//		} catch (Exception e) {
-//		}
-//	}
-//	@Override
-//	public void onNothingSelected(AdapterView<?> arg0) {
-//		
-//	}
-	class GetListCarrierTask extends AsyncTask<Void, Void, List<CarrierDTO>>{
+
+	private void submitVoucherCode() {
+		if (mSubmitVoucherCodeTask == null
+				|| mSubmitVoucherCodeTask.getStatus() == Status.FINISHED) {
+			mSubmitVoucherCodeTask = new SubmitVoucherCodeTask();
+			mSubmitVoucherCodeTask.execute();
+		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.voucherBtn:
+			if(mHaveVoucher.isChecked()){
+				mGiftCode=mHaveVoucher.getText().toString();
+				if(mGiftCode==null || mGiftCode.trim().length()<3){
+					mHomeActivity.showToast(mHomeActivity.getString(R.string.voucher_fragment_invalid_code));
+					return;
+				}else{
+					submitVoucherCode();
+				}
+			}else{
+				goToSummaryFragment();	
+			}			
+			break;		
+		default:
+			break;
+		}
+	}
+
+	private void goToSummaryFragment() {
+		mHomeActivity.onNavigationDrawerItemSelected(MENU_NAME.SUMMARY);
+	}
+
+	class SubmitVoucherCodeTask extends AsyncTask<Void, Void, VoucherResultDTO> {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
 			switchView(false, true);
 		}
+
 		@Override
-		protected List<CarrierDTO> doInBackground(Void... params) {
+		protected VoucherResultDTO doInBackground(Void... params) {
 			try {
-				String url=UrlRequest.GET_CARRIER_URL+mHomeActivity.getCurItemCart().id;
-				//String url=UrlRequest.GET_CARRIER_URL+"73";
+				//id_cart=325&code=rVcmjP
+				String url = UrlRequest.VOUCHER_URL+"&id_cart="
+						+ mHomeActivity.getCurItemCart().id+"&code=";
+				// String url=UrlRequest.GET_CARRIER_URL+"73";
 				Log.i("CARRIER URL: ", url);
-				return CommonModel.getInstance().getListCarrier(url);
+				return CommonModel.getInstance().submitVoucher(url);
 			} catch (Exception e) {
 			}
 			return null;
 		}
+
 		@Override
-		protected void onPostExecute(List<CarrierDTO> result) {
+		protected void onPostExecute(VoucherResultDTO result) {
 			super.onPostExecute(result);
-			if(result!=null && result.size()>0){
-				mCarrierAdapter.updateDataList(result);				
-				mConfirmBtn.setVisibility(View.VISIBLE);
-				mRefreshBtn.setVisibility(View.GONE);
-			}else{
-				mConfirmBtn.setVisibility(View.GONE);
-				mRefreshBtn.setVisibility(View.VISIBLE);
+			if (result != null && result.status == 1 ) {
+				if(result.msg!=null){
+					mHomeActivity.showToast(result.msg);
+				}
+				goToSummaryFragment();
+			}else {
+				if(result!=null && result.msg!=null){
+					mHomeActivity.showToast(result.msg);
+				}
 			}
 			switchView(false, false);
 		}
-		
+
 	}
+
 	@Override
 	public void onResume() {
 		super.onResume();
-		loadCarrier();
+		// loadCarrier();
 	}
 }

@@ -23,6 +23,7 @@ import com.orange.studio.bobo.objects.ResultDTO;
 import com.orange.studio.bobo.objects.StockDTO;
 import com.orange.studio.bobo.objects.SummaryDTO;
 import com.orange.studio.bobo.objects.TaxDTO;
+import com.orange.studio.bobo.objects.VoucherResultDTO;
 
 public interface CommonIF {
 	public List<MenuItemDTO> getListMenuCategory(String url,RequestDTO request,Bundle params);
@@ -51,4 +52,5 @@ public interface CommonIF {
 	public List<TaxDTO> getListTax();
 	public TaxDTO getTax(int id);
 	public ResultDTO sendPaypalCheckoutInfo(String url,Bundle params);
+	public VoucherResultDTO submitVoucher(String url);
 }

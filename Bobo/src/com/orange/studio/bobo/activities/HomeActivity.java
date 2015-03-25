@@ -39,6 +39,7 @@ import com.orange.studio.bobo.fragments.AboutFragment;
 import com.orange.studio.bobo.fragments.BestSellerProductFragment;
 import com.orange.studio.bobo.fragments.ContactUsFragment;
 import com.orange.studio.bobo.fragments.CreateAddressShoppingCartFragment;
+import com.orange.studio.bobo.fragments.GiftCodeFragment;
 import com.orange.studio.bobo.fragments.HomeFragment;
 import com.orange.studio.bobo.fragments.LoginFragment;
 import com.orange.studio.bobo.fragments.NavigationDrawerFragment;
@@ -316,6 +317,10 @@ public class HomeActivity extends ActionBarActivity implements
 			setAppTitle(getString(R.string.shopping_cart_payment));
 			return;
 		}
+		if (mFragmentName.equals(GiftCodeFragment.class.getName())) {
+			setAppTitle(getString(R.string.shopping_cart_voucher));
+			return;
+		}
 		setAppTitle(getString(R.string.app_name));
 		return;
 	}
@@ -443,6 +448,11 @@ public class HomeActivity extends ActionBarActivity implements
 			mFragment = PaymentConfirmFragment.instantiate(
 					getApplicationContext(),
 					PaymentConfirmFragment.class.getName());
+			break;
+		case MENU_NAME.VOUCHER_FRAGMENT:
+			mFragment = GiftCodeFragment.instantiate(
+					getApplicationContext(),
+					GiftCodeFragment.class.getName());
 			break;
 		default:
 			mFragment = HomeFragment.instantiate(getApplicationContext(),

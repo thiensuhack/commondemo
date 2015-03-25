@@ -21,6 +21,12 @@
     <string name="waitting_message">Please wait...</string>
     <string name="versionNameLabel">Version</string>
     
+    <string name="voucher_fragment_invalid_code">Voucher invalid!</string>
+    
+    <!-- Radio group -->
+    <string name="radio_group_voucher">Voucher</string>
+    <string name="radio_group_no_voucher">None</string>
+    
     <!-- Payment -->
     <string name="payment_success_message">Success Payment</string>
     <string name="payment_thank_you_message">Thank you!</string>
@@ -42,6 +48,7 @@
     <string name="address_btn_create">Create</string>
     <string name="address_btn_confirm">Confirm</string>
     <string name="address_btn_paypal">Payment</string>
+    <string name="address_btn_voucher">Next</string>
     <string name="address_btn_next">Next</string>
     <string name="address_btn_refresh">Refresh</string>
     <string name="address_btn_create_address">Create address</string>
@@ -129,6 +136,7 @@
     <string name="shopping_cart_create_address">Create address</string>
     <string name="shopping_cart_select_address">Select address</string>
     <string name="shopping_cart_select_carrier">Select carrier</string>
+    <string name="shopping_cart_voucher">Voucher</string>
     <string name="shopping_cart_payment">Payment</string>
     <string name="shopping_cart_confirm">Confirm</string>
 

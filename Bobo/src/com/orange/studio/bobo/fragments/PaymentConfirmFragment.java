@@ -26,6 +26,7 @@ public class PaymentConfirmFragment extends BaseFragment implements OnClickListe
 	private WebView mWebView=null;
 	private GetSummaryTask mGetSummaryTask=null;
 	private Button mConfirmBtn=null;
+	private Button mVoucherBtn=null;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -52,9 +53,11 @@ public class PaymentConfirmFragment extends BaseFragment implements OnClickListe
 		switchView(false, false);
 		mSummaryContainer.setVisibility(View.GONE);
 		mConfirmBtn=(Button)mView.findViewById(R.id.confirmBtn);
+		mVoucherBtn=(Button)mView.findViewById(R.id.voucherBtn);
 	}
 	private void initListener(){
 		mConfirmBtn.setOnClickListener(this);
+		mVoucherBtn.setOnClickListener(this);
 	}
 	private void loadSummary(){
 		if(mGetSummaryTask==null || mGetSummaryTask.getStatus()==Status.FINISHED){
@@ -67,6 +70,9 @@ public class PaymentConfirmFragment extends BaseFragment implements OnClickListe
 		switch (v.getId()) {
 		case R.id.confirmBtn:
 			mHomeActivity.createOrder();
+			break;
+		case R.id.voucherBtn:
+			
 			break;
 		default:
 			break;

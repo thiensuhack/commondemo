@@ -13,7 +13,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 
 	public GCMIntentService() {
 		super(CommonUtilities.SENDER_ID);
-	}
+	}   
 
 	@Override
 	protected void onRegistered(Context context, String registrationId) {

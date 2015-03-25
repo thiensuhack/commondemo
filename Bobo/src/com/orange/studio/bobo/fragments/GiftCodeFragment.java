@@ -28,7 +28,7 @@ import com.orange.studio.bobo.objects.VoucherResultDTO;
 
 public class GiftCodeFragment extends BaseFragment implements OnClickListener,
 		OnCheckedChangeListener {
-	private EditText mVoucher = null;
+	private EditText mVoucherCodeTxt = null;
 	private Button mVoucherBtn = null;
 	private View mGroupVourcher = null;
 	private RadioGroup mRadioGroup = null;
@@ -36,8 +36,8 @@ public class GiftCodeFragment extends BaseFragment implements OnClickListener,
 	private RadioButton mHaveVoucher = null;
 
 	private SubmitVoucherCodeTask mSubmitVoucherCodeTask = null;
-	private String mGiftCode=null;
-	
+	private String mGiftCode = null;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public class GiftCodeFragment extends BaseFragment implements OnClickListener,
 		mRadioGroup = (RadioGroup) mView.findViewById(R.id.radioGroupVoucher);
 		mGroupVourcher = (LinearLayout) mView.findViewById(R.id.groupVourcher);
 		switchVoucherView(false);
-		mVoucher = (EditText) mView.findViewById(R.id.txtVoucher);
+		mVoucherCodeTxt = (EditText) mView.findViewById(R.id.txtVoucher);
 		mVoucherBtn = (Button) mView.findViewById(R.id.voucherBtn);
 		// mVoucherBtn.setVisibility(View.GONE);
 
@@ -110,18 +110,20 @@ public class GiftCodeFragment extends BaseFragment implements OnClickListener,
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.voucherBtn:
-			if(mHaveVoucher.isChecked()){
-				mGiftCode=mHaveVoucher.getText().toString();
-				if(mGiftCode==null || mGiftCode.trim().length()<3){
-					mHomeActivity.showToast(mHomeActivity.getString(R.string.voucher_fragment_invalid_code));
+			if (mHaveVoucher.isChecked()) {
+				mGiftCode = mVoucherCodeTxt.getText().toString();
+				if (mGiftCode == null || mGiftCode.trim().length() < 3) {
+					mHomeActivity.showToast(mHomeActivity
+							.getString(R.string.voucher_fragment_invalid_code));
+					mVoucherCodeTxt.setFocusable(true);
 					return;
-				}else{
+				} else {
 					submitVoucherCode();
 				}
-			}else{
-				goToSummaryFragment();	
-			}			
-			break;		
+			} else {
+				goToSummaryFragment();
+			}
+			break;
 		default:
 			break;
 		}
@@ -141,9 +143,10 @@ public class GiftCodeFragment extends BaseFragment implements OnClickListener,
 		@Override
 		protected VoucherResultDTO doInBackground(Void... params) {
 			try {
-				//id_cart=325&code=rVcmjP
-				String url = UrlRequest.VOUCHER_URL+"&id_cart="
-						+ mHomeActivity.getCurItemCart().id+"&code=";
+				// id_cart=325&code=rVcmjP
+				String url = UrlRequest.VOUCHER_URL + "&id_cart="
+						+ mHomeActivity.getCurItemCart().id + "&code="
+						+ mGiftCode;
 				// String url=UrlRequest.GET_CARRIER_URL+"73";
 				Log.i("CARRIER URL: ", url);
 				return CommonModel.getInstance().submitVoucher(url);
@@ -155,13 +158,13 @@ public class GiftCodeFragment extends BaseFragment implements OnClickListener,
 		@Override
 		protected void onPostExecute(VoucherResultDTO result) {
 			super.onPostExecute(result);
-			if (result != null && result.status == 1 ) {
-				if(result.msg!=null){
+			if (result != null && result.status == 1) {
+				if (result.msg != null) {
 					mHomeActivity.showToast(result.msg);
 				}
 				goToSummaryFragment();
-			}else {
-				if(result!=null && result.msg!=null){
+			} else {
+				if (result != null && result.msg != null) {
 					mHomeActivity.showToast(result.msg);
 				}
 			}

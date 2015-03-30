@@ -113,7 +113,7 @@ public class PaymentConfirmFragment extends BaseFragment implements OnClickListe
 				
 				mHomeActivity.setSummaryDTO(result);
 				String htmlData="<html><head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">";
-				htmlData+="</head><body style=\"padding:10px;\">";
+				htmlData+="</head><body style=\"padding:10px;\"></b>";
 //				htmlData+="<div>"+"Country:" + result.delivery.country+"</div>";
 //				htmlData+="<div>"+"City"+ result.delivery.city+"</div>";
 //				htmlData+="<div>"+"Address:"+ result.delivery.address1+"</div>";

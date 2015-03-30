@@ -231,7 +231,7 @@ public class SpinToWinFragment extends BaseFragment implements OnClickListener {
 					mContent+="Value: <b>$"+mGame.value+"</b>. <br/>Expire date: <b>"+ mGame.date+"</b><br/>";
 					mContent+="You can use it on the next purchase.";
 				}else{
-					mContent="<b>FAILED!!!</b>";
+					mContent="<b> LET'S TRY AGAIN TO GET VOUCHER :D </b>";
 				}
 				mContent+="</div>";
 			}else{

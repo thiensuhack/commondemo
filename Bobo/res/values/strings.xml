@@ -31,6 +31,7 @@
     <string name="payment_success_message">Success Payment</string>
     <string name="payment_thank_you_message">Thank you!</string>
     
+    <string name="confirm_checkout_shipping_tax">Free shipping!</string>
     <!-- Country -->
     <string name="address_country_loading_error">Could not found list country!</string>
     

@@ -117,9 +117,10 @@ public class PaymentConfirmFragment extends BaseFragment implements OnClickListe
 //				htmlData+="<div>"+"Country:" + result.delivery.country+"</div>";
 //				htmlData+="<div>"+"City"+ result.delivery.city+"</div>";
 //				htmlData+="<div>"+"Address:"+ result.delivery.address1+"</div>";
-				htmlData+="<div>"+"Total price:<b> "+ String.valueOf(result.total_price)+"$</b></div>";
+				htmlData+="<div>"+"Total products(tax excl.):<b> "+ String.valueOf(result.total_price)+"$</b></div>";
 				htmlData+="<div>"+"Total tax:<b> "+ String.valueOf(result.total_tax)+"$</b></div>";
-				htmlData+="<div>"+"Total price without tax:<b> "+ String.valueOf(result.total_price_without_tax)+"$</b></div>";
+				htmlData+="<div>"+"Total shipping(tax excl.):<b> "+ (result.total_shipping<0 ? mHomeActivity.getString(R.string.confirm_checkout_shipping_tax) : String.valueOf(result.total_shipping))+"$</b></div>";
+				htmlData+="<div>"+"Total (tax excl.):<b> "+ String.valueOf(result.total_price_without_tax)+"$</b></div>";
 				htmlData+="</body>";
 				mWebView.loadData(htmlData, "text/html; charset=UTF-8", null);
 				mSummaryContainer.setVisibility(View.VISIBLE);

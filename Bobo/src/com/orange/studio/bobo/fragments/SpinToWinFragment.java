@@ -3,6 +3,8 @@ package com.orange.studio.bobo.fragments;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.annotation.SuppressLint;
 import android.os.AsyncTask;
@@ -133,6 +135,7 @@ public class SpinToWinFragment extends BaseFragment implements OnClickListener {
 				R.drawable.miss02, R.drawable.miss03 };
 		final Random rand=new Random();
 		handler = new Handler();
+		
 		runnable = new Runnable() {
 			int i = 0;
 			public void run() {
@@ -173,6 +176,13 @@ public class SpinToWinFragment extends BaseFragment implements OnClickListener {
 		
 		handler.postDelayed(runnable, 50); // for initial delay..
 		
+		//final Handler handler = new Handler(); 
+        Timer t = new Timer(); 
+        t.schedule(new TimerTask() { 
+                public void run() { 
+                	showSpinResult();
+                } 
+        }, 5000); 
 	}
 	class SpinToWinTask extends AsyncTask<Void, Void, GameDTO>{
 		
@@ -188,7 +198,7 @@ public class SpinToWinFragment extends BaseFragment implements OnClickListener {
 		protected void onPostExecute(GameDTO result) {
 			super.onPostExecute(result);
 			mGame=result;
-			showSpinResult();
+			//showSpinResult();
 		}
 	}
 	private void checkGameResult(){

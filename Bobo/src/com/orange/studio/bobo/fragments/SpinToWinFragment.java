@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -176,13 +177,12 @@ public class SpinToWinFragment extends BaseFragment implements OnClickListener {
 		
 		handler.postDelayed(runnable, 50); // for initial delay..
 		
-		//final Handler handler = new Handler(); 
-        Timer t = new Timer(); 
-        t.schedule(new TimerTask() { 
-                public void run() { 
-                	showSpinResult();
-                } 
-        }, 5000); 
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+            	showSpinResult();
+            }
+        }, 5000);
 	}
 	class SpinToWinTask extends AsyncTask<Void, Void, GameDTO>{
 		

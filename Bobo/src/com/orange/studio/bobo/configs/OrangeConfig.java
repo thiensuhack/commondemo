@@ -14,7 +14,8 @@ public final class OrangeConfig {
 	public static final String App_Key = "LW6TL3P7Z7KRFM3UYKWHJ3N28GEZLRBT";
 	public static final String App_Private_Key = "CCXKyMUaJk20zROniIOMhJDiUCxxiKnMvN9xvF7WMGtzVzyu5an362rq";
 	public static String DISPLAY_FIELDS = "full";
-
+	public static final String USER_NAME_LOGIN_KEY="usernameloginkey";
+	
 	public static List<ProductFeatureDTO> mListProductFeatures = null;
 	public static List<ProductFeatureValueDTO> mListProductFeatureValues = null;
 	public static List<TaxDTO> mListTax=null;

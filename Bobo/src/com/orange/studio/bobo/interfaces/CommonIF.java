@@ -53,4 +53,7 @@ public interface CommonIF {
 	public TaxDTO getTax(int id);
 	public ResultDTO sendPaypalCheckoutInfo(String url,Bundle params);
 	public VoucherResultDTO submitVoucher(String url);
+	
+	public void saveUserLoginInfo(String userName);
+	public String getUserLoginInfo();
 }

@@ -74,6 +74,7 @@ public class LoginFragment extends BaseFragment implements OnClickListener{
 				mHomeActivity.showToast(getActivity().getString(R.string.email_not_correct));
 				return;
 			}
+			CommonModel.getInstance().saveUserLoginInfo(strEmail);
 			login();
 			break;
 		case R.id.registerLoginBtn:
@@ -126,6 +127,21 @@ public class LoginFragment extends BaseFragment implements OnClickListener{
 			if(mProgress.isShowing()){
 				mProgress.dismiss();
 			}
+		}
+	}
+	@Override
+	public void onResume() {
+		super.onResume();
+		loadUserNameLogin();
+		
+	}
+	private void loadUserNameLogin() {
+		try {
+			String userNameLogin=CommonModel.getInstance().getUserLoginInfo();
+			if(userNameLogin!=null && mEmail!=null){
+				mEmail.setText(userNameLogin);
+			}
+		} catch (Exception e) {
 		}
 	}
 }

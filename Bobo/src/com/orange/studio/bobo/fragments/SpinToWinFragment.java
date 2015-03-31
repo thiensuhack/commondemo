@@ -3,8 +3,6 @@ package com.orange.studio.bobo.fragments;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import android.annotation.SuppressLint;
 import android.os.AsyncTask;
@@ -231,14 +229,16 @@ public class SpinToWinFragment extends BaseFragment implements OnClickListener {
 					mContent+="Value: <b>$"+mGame.value+"</b>. <br/>Expire date: <b>"+ mGame.date+"</b><br/>";
 					mContent+="You can use it on the next purchase.";
 				}else{
-					mContent="<b> LET'S TRY AGAIN TO GET VOUCHER :D </b>";
+					mContent="<b> Let's try again to GET VOUCHER :D </b>";
 				}
 				mContent+="</div>";
 			}else{
-				mContent=mHomeActivity.getString(R.string.spin_to_win_description);
+				mContent="<b> Let's try again to GET VOUCHER :D </b>";
+				//mContent=mHomeActivity.getString(R.string.spin_to_win_description);
 			}
 		} catch (Exception e) {
-			mContent=mHomeActivity.getString(R.string.spin_to_win_description);
+			mContent="<b> Let's try again to GET VOUCHER :D </b>";
+			//mContent=mHomeActivity.getString(R.string.spin_to_win_description);
 		}
 	}
 }

@@ -833,4 +833,14 @@ public class CommonModel implements CommonIF{
 		}
 		return null;
 	}
+	@Override
+	public void saveUserLoginInfo(String userName){
+		if(userName!=null){
+			setStore(OrangeConfig.USER_NAME_LOGIN_KEY, userName, -1);
+		}
+	}
+	@Override
+	public String getUserLoginInfo(){
+		return getStoreAdapter().get(OrangeConfig.USER_NAME_LOGIN_KEY);	
+	}
 }

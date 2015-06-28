@@ -44,7 +44,7 @@ public final class OrangeConfig {
 	}
 
 	public static class UrlRequest {
-		public static final String main_domain = "http://bobo.vdigi.vn/";
+		public static final String main_domain = "http://boboshop.oso.vn/";
 		public static final String domain = "http://bobo.vdigi.vn/api";
 		public static String PRODUCT_HOME = domain + "/products";
 		public static String PRODUCT_DETAIL = domain + "/products/"; // products/{proId}/

@@ -47,7 +47,9 @@ public class GiftCodeFragment extends BaseFragment implements OnClickListener,
 			initView();
 			initListener();
 		} else {
-			((ViewGroup) mView.getParent()).removeView(mView);
+			if((ViewGroup) mView.getParent() != null){
+				((ViewGroup) mView.getParent()).removeView(mView);
+			}
 		}
 		return mView;
 	}

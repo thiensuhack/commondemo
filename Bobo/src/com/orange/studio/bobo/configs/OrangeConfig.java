@@ -45,34 +45,34 @@ public final class OrangeConfig {
 
 	public static class UrlRequest {
 		public static final String main_domain = "http://boboshop.oso.vn/";
-		public static final String domain = "http://bobo.vdigi.vn/api";
-		public static String PRODUCT_HOME = domain + "/products";
-		public static String PRODUCT_DETAIL = domain + "/products/"; // products/{proId}/
-		public static String CATEGORY_MENU = domain + "/categories/";
-		public static String REGISTER = domain + "/customers?Create=Creating";
-		public static String PRODUCT_OPTION_VALUES = domain
+		public static final String domain_api = main_domain + "api";
+		public static String PRODUCT_HOME = domain_api + "/products";
+		public static String PRODUCT_DETAIL = domain_api + "/products/"; // products/{proId}/
+		public static String CATEGORY_MENU = domain_api + "/categories/";
+		public static String REGISTER = domain_api + "/customers?Create=Creating";
+		public static String PRODUCT_OPTION_VALUES = domain_api
 				+ "/product_option_values/";
-		public static String LOGN_URL = domain + "/customers";
-		public static String PRODUCT_FEATURE_URL = domain
+		public static String LOGN_URL = domain_api + "/customers";
+		public static String PRODUCT_FEATURE_URL = domain_api
 				+ "/product_features?ws_key=" + App_Key + "&display=full";
-		public static String PRODUCT_FEATURE_VALUE_URL = domain
+		public static String PRODUCT_FEATURE_VALUE_URL = domain_api
 				+ "/product_feature_values?ws_key=" + App_Key + "&display=full";		
-		public static final String ABOUT_US_URL=domain+"/content_management_system/4?ws_key=LW6TL3P7Z7KRFM3UYKWHJ3N28GEZLRBT&output_format=JSON&id=1";		
+		public static final String ABOUT_US_URL=domain_api+"/content_management_system/4?ws_key=LW6TL3P7Z7KRFM3UYKWHJ3N28GEZLRBT&output_format=JSON&id=1";		
 		public static String PRODUCT_COLOR_ITEM_STOCK ="http://www.bobo-u.com/modules/paypal/express_checkout/ajax.php?get_qty=1&id_product=%s&id_product_attribute=%s";
 		public static final String CONTACT_US_URL=main_domain+"/index.php?controller=CustomAPI&action=contact&ws_key=LW6TL3P7Z7KRFM3UYKWHJ3N28GEZLRBT";
 		public static String HOME_POPULAR_PRODUCT=main_domain+"/index.php?controller=CustomAPI&action=popular&limit=";
 		public static String HOME_BEST_SELLER_PRODUCT=main_domain+"/index.php?controller=CustomAPI&action=bestsales&limit=";
-		public static String ADD_CART_URL=domain+"/carts?Create=Creating"+"&ws_key="+App_Key;
+		public static String ADD_CART_URL=domain_api+"/carts?Create=Creating"+"&ws_key="+App_Key;
 		//public static String UPDATE_CART_URL=domain+"/carts?Create=Creating"+"&ws_key="+App_Key;
-		public static String GET_LIST_COUNTRY=domain+"/countries?ws_key=LW6TL3P7Z7KRFM3UYKWHJ3N28GEZLRBT&display=full&filter[active]=1";
-		public static String GET_USER_ADDRESS=domain+"/addresses?display=full&ws_key=LW6TL3P7Z7KRFM3UYKWHJ3N28GEZLRBT&output_format=JSON&filter[id_customer]=";
-		public static String CREATE_ADDRESS=domain+"/addresses?Create=Creating&ws_key=LW6TL3P7Z7KRFM3UYKWHJ3N28GEZLRBT&output_format=JSON&display=full&sort=id_DESC&limit=10";
+		public static String GET_LIST_COUNTRY=domain_api+"/countries?ws_key=LW6TL3P7Z7KRFM3UYKWHJ3N28GEZLRBT&display=full&filter[active]=1";
+		public static String GET_USER_ADDRESS=domain_api+"/addresses?display=full&ws_key=LW6TL3P7Z7KRFM3UYKWHJ3N28GEZLRBT&output_format=JSON&filter[id_customer]=";
+		public static String CREATE_ADDRESS=domain_api+"/addresses?Create=Creating&ws_key=LW6TL3P7Z7KRFM3UYKWHJ3N28GEZLRBT&output_format=JSON&display=full&sort=id_DESC&limit=10";
 		public static String GET_CARRIER_URL=main_domain+"index.php?controller=CustomAPI&action=carrier&id_cart=";
 		public static String GET_SUMMARY_URL=main_domain+"?controller=CustomAPI&action=summary&id_cart=";
-		public static String CREATE_ORDER=domain+"/orders?Create=Creating&ws_key=LW6TL3P7Z7KRFM3UYKWHJ3N28GEZLRBT";
+		public static String CREATE_ORDER=domain_api+"/orders?Create=Creating&ws_key=LW6TL3P7Z7KRFM3UYKWHJ3N28GEZLRBT";
 		public static String HOME_SLIDER=main_domain+"index.php?controller=CustomAPI&action=slide";
 		public static String GET_GAME_RESULT=main_domain+"index.php?controller=CustomAPI&action=game";
-		public static String GET_LIST_TAXES= domain+"/taxes?ws_key=LW6TL3P7Z7KRFM3UYKWHJ3N28GEZLRBT&filter[active]=1&display=full";
+		public static String GET_LIST_TAXES= domain_api+"/taxes?ws_key=LW6TL3P7Z7KRFM3UYKWHJ3N28GEZLRBT&filter[active]=1&display=full";
 		public static String POST_PAYPAL_PAYMENT_INFO=main_domain+"index.php?controller=CustomAPI&action=paypal";
 		
 		public static String VOUCHER_URL=main_domain+"index.php?controller=CustomAPI&action=discount";

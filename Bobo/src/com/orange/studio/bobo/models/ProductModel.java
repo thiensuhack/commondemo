@@ -194,7 +194,7 @@ public class ProductModel implements ProductIF{
 					item.price=OrangeUtils.convertStringToDouble(jObject.optString("price"));
 					item.wholesale_price=OrangeUtils.convertStringToDouble(jObject.optString("wholesale_price"));
 					item.unit_price_ratio=OrangeUtils.convertStringToDouble(jObject.optString("unit_price_ratio"));
-					item.id_default_image=UrlRequest.domain+"/images/products/"+item.id+"/"+jObject.optString("id_image")+"?ws_key="+OrangeConfig.App_Key;
+					item.id_default_image=UrlRequest.domain_api+"/images/products/"+item.id+"/"+jObject.optString("id_image")+"?ws_key="+OrangeConfig.App_Key;
 					result.add(item);
 				}
 				return result;
